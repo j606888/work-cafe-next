@@ -43,4 +43,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 6. 還沒 API 之前怎麼 mock API?
 7. 配色會怎麼控制？
 8. @mui/material vs @mui/system
-9. Image not working
+9. Image not working ( everything broken)

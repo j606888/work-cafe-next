@@ -1,4 +1,5 @@
 import Button from "@/components/Button"
+import CityList from "@/components/CityList"
 import Introduce from "@/components/Introduce"
 import Navbar from "@/components/Navbar"
 import SearchBar from "@/components/SearchBar"
@@ -27,7 +28,7 @@ export default function RootPage() {
         </Container>
       </Box>
       <Introduce />
-      
+      <CityList />
     </>
   )
 }
