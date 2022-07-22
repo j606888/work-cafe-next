@@ -37,4 +37,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 1. https://www.figma.com/file/dNz7D1Q4BNK6aMSlzbOu4G/Work-Cafe-Project?node-id=61%3A2
 如果像圖案中有一行是橫向跨整頁的，需要多個 container 嗎？
+4. 用 MUI 做這些 customize component 是不是不太方便？有什麼優缺點
 2. SearchBar customize
+3. fontsize 怎麼挑選？用 palatte?
+6. 還沒 API 之前怎麼 mock API?
+7. 配色會怎麼控制？
+8. @mui/material vs @mui/system
+9. Image not working
