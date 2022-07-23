@@ -64,3 +64,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 1. Searchbar customize
 2. Next button ( with maybe animations)
 3. Any Learning resource?
+
+# 2022/07/23
+
+* After install story book, a lot of warnings
