@@ -6,7 +6,7 @@ import React from 'react'
 const SearchBarContainer = styled.div`
   border: 1px solid black;
   border-radius: 8px;
-  padding: 8px;
+  padding: 6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,6 +15,7 @@ const SearchBarContainer = styled.div`
     display: flex;
     gap: 6px;
     align-items: center;
+    position: relative;
 
     .filter {
       flex: 1;
@@ -22,13 +23,15 @@ const SearchBarContainer = styled.div`
       background: none;
       border: none;
       color: #757575;
+      font-size: 16px;
     }
     .search-btn {
       border: none;
       background-color: #d9d9d9;
       color: #fff;
       border-radius: 8px;
-      padding: 6px 18px;
+      padding: 0 16px;
+      height: 30px;
       font-size: 16px;
     }
   }
@@ -36,7 +39,7 @@ const SearchBarContainer = styled.div`
 
 const TextSearch = styled.input`
   border: none;
-  color: #d9d9d9;
+  font-size: 16px;
   &:focus {
     outline: none;
   }
@@ -57,12 +60,21 @@ const Splitter = styled.span`
   padding-right: 4px;
 `
 
+const AutoComplete = styled.div`
+  border: 1px solid black;
+  border-radius: 8px;
+  position: absolute;
+  top: 48px;
+  left: -8px;
+  padding: 8px;
+  width: 320px;
+`
 export default {
   title: "components/searchbar",
 }
 
 const Template = (args) => {
-  const [showAutoComplete, setShowAutoComplete] = useState(false)
+  const [showAutoComplete, setShowAutoComplete] = useState(true)
 
   const handleClickOutside = () => {
     setShowAutoComplete(false)
@@ -80,15 +92,16 @@ const Template = (args) => {
             placeholder="找哪裡的咖啡店？"
             onClick={() => setShowAutoComplete(true)}
           />
+          {showAutoComplete && <AutoComplete>Show Auto!</AutoComplete>}
         </div>
         <Splitter />
         <div>
           <Circle />
           <button className="filter">營業時間 (預設不限)</button>
           <button className="search-btn">搜尋</button>
+          {showAutoComplete && <AutoComplete>Show Auto!</AutoComplete>}
         </div>
       </SearchBarContainer>
-      {showAutoComplete && <div>Show Auto!</div>}
     </>
   )
 }

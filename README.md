@@ -68,3 +68,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 # 2022/07/23
 
 * After install story book, a lot of warnings
+* 兩個選單不一樣高，因為被按鈕撐開了，absolute position 不同
