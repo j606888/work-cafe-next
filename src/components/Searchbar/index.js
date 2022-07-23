@@ -2,6 +2,50 @@ import { useState } from "react"
 import useOutsideClick from "src/hooks/useOutsideClick"
 import styled from "styled-components"
 import React from "react"
+import AutoComplete from "./AutoComplete"
+import Filter from "./Filter"
+
+const AreaMap = [
+  '台北市', '台南市', '高雄市', '新竹市'
+]
+
+const SearchBar = () => {
+  const [showAutoComplete, setShowAutoComplete] = useState(false)
+  const [showFilter, setShowFilter] = useState(false)
+
+  const autoCompleteRef = useOutsideClick(() => setShowAutoComplete(false))
+  const filterRef = useOutsideClick(() => setShowFilter(false))
+
+  return (
+    <>
+      <SearchBarContainer>
+        <div>
+          <Circle />
+          <TextSearch
+            ref={autoCompleteRef}
+            type="text"
+            placeholder="找哪裡的咖啡店？"
+            onClick={() => setShowAutoComplete(true)}
+          />
+        </div>
+        <Splitter />
+        <div>
+          <Circle />
+          <button
+            className="filter"
+            onClick={() => setShowFilter(true)}
+            ref={filterRef}
+          >
+            營業時間 (預設不限)
+          </button>
+          <button className="search-btn">搜尋</button>
+        </div>
+      </SearchBarContainer>
+      {showAutoComplete && <AutoComplete texts={AreaMap} keyword="台" />}
+      {showFilter && <Filter />}
+    </>
+  )
+}
 
 const SearchBarContainer = styled.div`
   border: 1px solid black;
@@ -36,7 +80,7 @@ const SearchBarContainer = styled.div`
 
 const TextSearch = styled.input`
   border: none;
-  color: #d9d9d9;
+  color: #757575;
   &:focus {
     outline: none;
   }
@@ -56,37 +100,5 @@ const Splitter = styled.span`
   margin-left: 4px;
   padding-right: 4px;
 `
-
-const SearchBar = (args) => {
-  const [showAutoComplete, setShowAutoComplete] = useState(false)
-
-  const handleClickOutside = () => {
-    setShowAutoComplete(false)
-  }
-
-  const ref = useOutsideClick(handleClickOutside)
-  return (
-    <>
-      <SearchBarContainer>
-        <div>
-          <Circle />
-          <TextSearch
-            ref={ref}
-            type="text"
-            placeholder="找哪裡的咖啡店？"
-            onClick={() => setShowAutoComplete(true)}
-          />
-        </div>
-        <Splitter />
-        <div>
-          <Circle />
-          <button className="filter">營業時間 (預設不限)</button>
-          <button className="search-btn">搜尋</button>
-        </div>
-      </SearchBarContainer>
-      {showAutoComplete && <div>Show Auto!</div>}
-    </>
-  )
-}
 
 export default SearchBar
