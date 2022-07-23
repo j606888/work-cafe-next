@@ -1,8 +1,8 @@
 import Filter from "./Filter";
 
 export default {
-  title: "components/filter",
-  component: Filter
+  title: "Searchbar/Filter",
+  component: Filter,
 }
 
 export const Template = (args) => <Filter {...args} />

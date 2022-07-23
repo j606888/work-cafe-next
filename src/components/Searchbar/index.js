@@ -89,5 +89,4 @@ const SearchBar = (args) => {
   )
 }
 
-
 export default SearchBar

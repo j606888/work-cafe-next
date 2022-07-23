@@ -2,7 +2,7 @@ import React from "react"
 import AutoComplete from "./AutoComplete"
 
 export default {
-  title: "components/autocomplete",
+  title: "Searchbar/AutoComplete",
   component: AutoComplete,
 }
 

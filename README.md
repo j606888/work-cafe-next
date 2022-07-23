@@ -65,6 +65,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 2. Next button ( with maybe animations)
 3. Any Learning resource?
 
+## Note
+
+https://styled-components.com/
+https://arc-next-storybook-2022.netlify.app/?path=/story/chat-custommessages-jobopening--dev-message-inviting
+https://mswjs.io/
+https://mui.com/material-ui/react-autocomplete/
+https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
+https://www.framer.com/motion/
+
 # 2022/07/23
 
 * After install story book, a lot of warnings
