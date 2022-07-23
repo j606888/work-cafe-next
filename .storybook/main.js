@@ -8,9 +8,6 @@ module.exports = {
     "@storybook/addon-interactions",
   ],
   framework: "@storybook/react",
-  core: {
-    builder: "@storybook/builder-webpack5",
-  },
   webpackFinal: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
