@@ -32,6 +32,7 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  top: 62px;
 `
 
 const CountryItem = styled.div`

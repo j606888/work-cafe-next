@@ -9,6 +9,10 @@ const AreaMap = [
   '台北市', '台南市', '高雄市', '新竹市'
 ]
 
+const Hi = styled.div`
+  position: relative;
+`
+
 const SearchBar = () => {
   const [showAutoComplete, setShowAutoComplete] = useState(false)
   const [showFilter, setShowFilter] = useState(false)
@@ -17,7 +21,7 @@ const SearchBar = () => {
   const filterRef = useOutsideClick(() => setShowFilter(false))
 
   return (
-    <>
+    <Hi>
       <SearchBarContainer>
         <div>
           <Circle />
@@ -31,19 +35,15 @@ const SearchBar = () => {
         <Splitter />
         <div>
           <Circle />
-          <button
-            className="filter"
-            onClick={() => setShowFilter(true)}
-            ref={filterRef}
-          >
+          <button className="filter" onClick={() => setShowFilter(true)}>
             營業時間 (預設不限)
           </button>
           <button className="search-btn">搜尋</button>
         </div>
       </SearchBarContainer>
       {showAutoComplete && <AutoComplete texts={AreaMap} keyword="台" />}
-      {showFilter && <Filter />}
-    </>
+      {showFilter && <Filter ref={filterRef} />}
+    </Hi>
   )
 }
 
@@ -54,6 +54,7 @@ const SearchBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
   & > div {
     flex: 1;
     display: flex;

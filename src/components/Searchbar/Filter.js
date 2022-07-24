@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const Filter = () => {
+const Filter = React.forwardRef((props, ref) => {
   const [opening, setOpening] = useState(false)
   const [openWeekdays, setOpenWeekdays] = useState([])
 
@@ -20,7 +20,7 @@ const Filter = () => {
   }
 
   return (
-    <FilterContainer>
+    <FilterContainer ref={ref}>
       <span>套用標籤</span>
       <div>
         <OpeningBox isSelect={!opening} onClick={() => setOpening(false)}>
@@ -43,7 +43,7 @@ const Filter = () => {
       </div>
     </FilterContainer>
   )
-}
+})
 
 
 const OpeningBox = ({ isSelect, children, onClick }) => {
@@ -79,7 +79,10 @@ const FilterContainer = styled.div`
   padding: 24px;
   display: flex;
   flex-direction: column;
-  color: #757575;
+  z-index: 100;
+  position: absolute;
+  left: 50%;
+  top: 62px;
 
   & > div {
     display: flex;
