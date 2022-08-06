@@ -5,4 +5,6 @@ export default {
 }
 
 export const Default = (args) => <AdminLayout {...args} />
-Default.args = {}
+Default.args = {
+  children: <p>Hi</p>
+}

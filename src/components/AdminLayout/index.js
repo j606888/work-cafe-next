@@ -39,7 +39,7 @@ const lists = [
   },
 ]
 
-const AdminLayout = () => {
+const AdminLayout = ({ children }) => {
   const [open, setOpen] = React.useState(false)
 
   const toggleDrawer = () => {
@@ -53,7 +53,7 @@ const AdminLayout = () => {
       <MiniDrawer open={open} lists={lists} />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Dashboard />
+        {children}
       </Box>
     </Box>
   )

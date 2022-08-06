@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import {
-  Home as HomeIcon,
-  Map as MapIcon,
+  InsertPhoto as InsertPhotoIcon,
+  Comment as CommentIcon,
   Store as StoreIcon,
   Person as PersonIcon,
 } from '@mui/icons-material'
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto"
-import CommentIcon from "@mui/icons-material/Comment"
 import Card from './Card'
 
 const Container = styled.div`
