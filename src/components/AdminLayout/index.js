@@ -33,7 +33,7 @@ const lists = [
   },
   {
     text: "Stores",
-    url: "/admin/dashboard",
+    url: "/admin/stores",
     icon: <StoreIcon />,
   },
   {
