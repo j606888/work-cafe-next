@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Wrapper } from "@googlemaps/react-wrapper"
 import MapComponent from 'src/components/MapComponent'
 import AdminLayout from "src/components/AdminLayout"

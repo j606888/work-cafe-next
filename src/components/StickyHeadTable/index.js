@@ -8,59 +8,7 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import Header from "./Header"
 
-const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "city", label: "City", minWidth: 100 },
-  {
-    id: "likes",
-    label: "Likes",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "photos",
-    label: "Photos",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "comments",
-    label: "Comments",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-]
-
-function createData(name, city, likes, photos, comments) {
-  return { name, city, likes, photos, comments }
-}
-
-const rows = [
-  createData("南島夢遊", "台南市", 124, 20, 15),
-  createData("亮家", "台南市", 15, 2, 2),
-  createData("自己的房間", "台南市", 240, 43, 24),
-  createData("叁七茶房", "台南市", 15, 22, 5),
-  createData("木卯咖啡", "台南市", 31, 2, 0),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
-  createData("南島夢遊", "台南市", 124, 20, 15),
-  createData("亮家", "台南市", 15, 2, 2),
-  createData("自己的房間", "台南市", 240, 43, 24),
-  createData("叁七茶房", "台南市", 15, 22, 5),
-  createData("木卯咖啡", "台南市", 31, 2, 0),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
-  createData("南島夢遊", "台南市", 124, 20, 15),
-  createData("亮家", "台南市", 15, 2, 2),
-  createData("自己的房間", "台南市", 240, 43, 24),
-  createData("叁七茶房", "台南市", 15, 22, 5),
-  createData("木卯咖啡", "台南市", 31, 2, 0),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
-]
-
-export default function StickyHeadTable() {
+export default function StickyHeadTable({ columns, rows }) {
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
 

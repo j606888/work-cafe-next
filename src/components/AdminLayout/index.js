@@ -9,7 +9,6 @@ import {
 } from '@mui/icons-material'
 import AppBar from '../AppBar'
 import MiniDrawer from '../MiniDrawer'
-import Dashboard from '../Dashboard'
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -38,7 +37,7 @@ const lists = [
   },
   {
     text: "Users",
-    url: "/admin/dashboard",
+    url: "/admin/users",
     icon: <PersonIcon />,
   },
 ]
