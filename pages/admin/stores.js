@@ -12,8 +12,8 @@ function createCol(name, align) {
   }
 }
 
-function createData(name, city, likes, photos, comments) {
-  return { name, city, likes, photos, comments }
+function createData(id, name, city, likes, photos, comments) {
+  return { id, name, city, likes, photos, comments }
 }
 
 const columns = [
@@ -25,25 +25,25 @@ const columns = [
 ]
 
 const rows = [
-  createData("南島夢遊", "台南市", 124, 20, 15),
-  createData("亮家", "台南市", 15, 2, 2),
-  createData("自己的房間", "台南市", 240, 43, 24),
-  createData("叁七茶房", "台南市", 15, 22, 5),
-  createData("木卯咖啡", "台南市", 31, 2, 0),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
-  createData("南島夢遊", "台南市", 124, 20, 15),
-  createData("亮家", "台南市", 15, 2, 2),
-  createData("自己的房間", "台南市", 240, 43, 24),
-  createData("叁七茶房", "台南市", 15, 22, 5),
-  createData("木卯咖啡", "台南市", 31, 2, 0),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
-  createData("南島夢遊", "台南市", 124, 20, 15),
-  createData("亮家", "台南市", 15, 2, 2),
-  createData("自己的房間", "台南市", 240, 43, 24),
-  createData("叁七茶房", "台南市", 15, 22, 5),
-  createData("木卯咖啡", "台南市", 31, 2, 0),
-  createData("鬼咖啡", "台南市", 312, 22, 9),
+  createData(1, "南島夢遊", "台南市", 124, 20, 15),
+  createData(2, "亮家", "台南市", 15, 2, 2),
+  createData(3, "自己的房間", "台南市", 240, 43, 24),
+  createData(4, "叁七茶房", "台南市", 15, 22, 5),
+  createData(5, "木卯咖啡", "台南市", 31, 2, 0),
+  createData(6, "鬼咖啡", "台南市", 312, 22, 9),
+  createData(7, "南島夢遊", "台南市", 124, 20, 15),
+  createData(8, "亮家", "台南市", 15, 2, 2),
+  createData(9, "自己的房間", "台南市", 240, 43, 24),
+  createData(10, "叁七茶房", "台南市", 15, 22, 5),
+  createData(11, "木卯咖啡", "台南市", 31, 2, 0),
+  createData(12, "鬼咖啡", "台南市", 312, 22, 9),
+  createData(13, "鬼咖啡", "台南市", 312, 22, 9),
+  createData(14, "南島夢遊", "台南市", 124, 20, 15),
+  createData(15, "亮家", "台南市", 15, 2, 2),
+  createData(16, "自己的房間", "台南市", 240, 43, 24),
+  createData(17, "叁七茶房", "台南市", 15, 22, 5),
+  createData(18, "木卯咖啡", "台南市", 31, 2, 0),
+  createData(19, "鬼咖啡", "台南市", 312, 22, 9),
 ]
 
 const Stores = () => {
