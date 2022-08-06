@@ -1,14 +1,15 @@
 import React from 'react'
 import { styled } from "@mui/material/styles"
 import { Box, CssBaseline, Typography } from '@mui/material'
-import AppBar from '../AppBar'
-import MiniDrawer from '../MiniDrawer'
 import {
   Home as HomeIcon,
   Map as MapIcon,
   Store as StoreIcon,
   Person as PersonIcon,
 } from '@mui/icons-material'
+import AppBar from '../AppBar'
+import MiniDrawer from '../MiniDrawer'
+import Dashboard from '../Dashboard'
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -46,13 +47,13 @@ const AdminLayout = () => {
   }
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", bgcolor: "#f6f7fb", minHeight: '100vh' }}>
       <CssBaseline />
       <AppBar toggleDrawer={toggleDrawer} />
       <MiniDrawer open={open} lists={lists} />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>some text</Typography>
+        <Dashboard />
       </Box>
     </Box>
   )
