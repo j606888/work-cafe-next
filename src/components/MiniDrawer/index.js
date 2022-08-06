@@ -54,15 +54,14 @@ const Drawer = styled(MuiDrawer, {
   }),
 }))
 
-
 export default function MiniDrawer({ open, lists }) {
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader />
       <Divider />
       <List>
-        {lists.map(({ text, icon }) => (
-          <NavItem key={text} open={open} text={text} icon={icon} />
+        {lists.map(({ text, icon, url }) => (
+          <NavItem key={text} open={open} text={text} icon={icon} url={url} />
         ))}
       </List>
     </Drawer>

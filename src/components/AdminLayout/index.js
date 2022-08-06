@@ -9,7 +9,6 @@ import {
 } from '@mui/icons-material'
 import AppBar from '../AppBar'
 import MiniDrawer from '../MiniDrawer'
-import Dashboard from '../Dashboard'
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -23,18 +22,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const lists = [
   {
     text: "Home",
+    url: "/admin/dashboard",
     icon: <HomeIcon />,
   },
   {
     text: "GoogleMap",
+    url: "/admin/map",
     icon: <MapIcon />,
   },
   {
     text: "Stores",
+    url: "/admin/stores",
     icon: <StoreIcon />,
   },
   {
     text: "Users",
+    url: "/admin/users",
     icon: <PersonIcon />,
   },
 ]
