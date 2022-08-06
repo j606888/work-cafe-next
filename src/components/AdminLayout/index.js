@@ -23,18 +23,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const lists = [
   {
     text: "Home",
+    url: "/admin/dashboard",
     icon: <HomeIcon />,
   },
   {
     text: "GoogleMap",
+    url: "/admin/map",
     icon: <MapIcon />,
   },
   {
     text: "Stores",
+    url: "/admin/dashboard",
     icon: <StoreIcon />,
   },
   {
     text: "Users",
+    url: "/admin/dashboard",
     icon: <PersonIcon />,
   },
 ]
