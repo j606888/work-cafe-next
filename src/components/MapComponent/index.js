@@ -3,6 +3,8 @@ import Circle from './Circle'
 import { useEffect, useState } from 'react'
 import Button from "@mui/material/Button"
 import { Box } from '@mui/material'
+import SearchModal from "./SearchModal"
+import ControlPanel from './ControlPanel'
 
 function buildCircle({ id, lat, lng, radius, color}) {
   return {
@@ -15,20 +17,50 @@ function buildCircle({ id, lat, lng, radius, color}) {
   }
 }
 
-const buttonStyle = {
-  position: 'absolute',
-  top: 50,
-  left: '50%',
-  transform: 'translateX(-50%)',
-  zIndex: 10
-}
 
 const MapComponent = () => {
   const [crawlRecords, setCrawlRecords] = useState([])
   const [show, setShow] = useState(true)
+  const [open, setOpen] = useState(false)
+  const [radius, setRadius] = useState(100)
+  const [tempOptions, setTempOptions] = useState(null)
+
+  const handleClose = () => {
+    setOpen(false)
+  }
   
+  const handleSearch = async () => {
+    const lastId = crawlRecords[crawlRecords.length - 1].id
+    const crawlRecord = {
+      id: lastId + 1,
+      lat: tempOptions.center.lat,
+      lng: tempOptions.center.lng,
+      radius: tempOptions.radius,
+      color: "#009688"
+    }
+    const config = {
+      method: "POST",
+      headers: {
+        'content-Type': 'application/json'
+      },
+      body: JSON.stringify(crawlRecord),
+    }
+    await fetch(`http://localhost:3003/crawl-records`, config)
+    await callAPI()
+    setOpen(false)
+  }
+
   const onClick = (e) => {
-    console.log("You click ", e.latLng.toJSON())
+    const center = e.latLng.toJSON()
+    const op = {
+      center,
+      radius: radius,
+      fillColor: "#F1C40F",
+      fillOpacity: 0.4,
+      strokeOpacity: 8,
+    }
+    setTempOptions(op)
+    setOpen(true)
   }
 
   const onIdle = (m) => {
@@ -58,11 +90,16 @@ const MapComponent = () => {
 
   return (
     <Box sx={{ position: "relative" }}>
-      <Button variant="contained" sx={buttonStyle} onClick={() => setShow(cur => !cur)}>
-        Show Area
-      </Button>
+      <ControlPanel
+        show={show}
+        setShow={setShow}
+        radius={radius}
+        setRadius={setRadius}
+      />
+      <SearchModal open={open} handleClose={handleClose} handleSearch={handleSearch} />
       <Map onClick={onClick} onIdle={onIdle}>
         {show && circles}
+        {open && <Circle options={tempOptions} />}
       </Map>
     </Box>
   )
