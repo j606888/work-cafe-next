@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
-  height: calc(100vh - 64px - 10rem);
+  height: calc(100vh - 64px - 3rem);
   width: 100%;
 `
 const DEFAULT_SETUP = {

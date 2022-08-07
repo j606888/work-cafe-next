@@ -3,9 +3,9 @@ import { Box, Paper, Slider, Stack, Switch } from '@mui/material'
 
 const ControlPanel = ({ show, setShow, radius, setRadius }) => {
   return (
-    <Paper sx={{ marginBottom: 3, p: 2 }}>
+    <Paper sx={{ marginBottom: 3, p: 2, position: 'absolute', zIndex: 10, left: 12, top: 12 }}>
       <Stack direction="row" spacing={2}>
-        <Box sx={{ width: 300 }}>
+        <Box sx={{ width: 200 }}>
           <span>Radius</span>
           <Slider
             value={radius}

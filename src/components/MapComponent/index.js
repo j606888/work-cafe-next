@@ -23,8 +23,15 @@ const MapComponent = () => {
   const [open, setOpen] = useState(false)
   const [radius, setRadius] = useState(100)
   const [tempOptions, setTempOptions] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const sleep = async (delay) => {
+     return new Promise((res) => setTimeout(res, delay))
+  }
 
   const handleSearch = async () => {
+    setLoading(true)
+    await sleep(1000)
     const lastId = crawlRecords[crawlRecords.length - 1].id
     const crawlRecord = {
       id: lastId + 1,
@@ -36,6 +43,7 @@ const MapComponent = () => {
     await Api.createCrawlRecord(crawlRecord)
     await callAPI()
     setOpen(false)
+    setLoading(false)
   }
 
   const onClick = (e) => {
@@ -79,7 +87,7 @@ const MapComponent = () => {
         radius={radius}
         setRadius={setRadius}
       />
-      <SearchModal open={open} handleClose={() => setOpen(false)} handleSearch={handleSearch} />
+      <SearchModal open={open} handleClose={() => setOpen(false)} handleSearch={handleSearch} loading={loading} />
       <Map onClick={onClick} onIdle={onIdle}>
         {show && circles}
         {open && <Circle options={tempOptions} />}
