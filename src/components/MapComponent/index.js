@@ -1,34 +1,27 @@
 import { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
+import useGoogleMap from '@/hooks/useGoogleMap'
+import useGoogleMarker from '@/hooks/useGoogleMarker'
 
 const Container = styled.div`
   height: calc(100vh - 64px - 3rem);
   width: 100%;
 `
 
+const options = {
+  position: {
+    lat: 22.9976545,
+    lng: 120.2117627,
+  },
+  label: "Cool",
+}
+
 const MapComponent = () => {
   const ref = useRef(null)
-  const [map, setMap] = useState()
+  const map = useGoogleMap({ ref })
+  useGoogleMarker({map, options})
 
-  useEffect(() => {
-    if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {
-        center: {
-          lat: 22.9918511,
-          lng: 120.2066457,
-        },
-        zoom: 16,
-        fullscreenControl: false,
-        mapTypeControl: false,
-        styles: [
-          {
-            featureType: "poi.business",
-            stylers: [{ visibility: "off" }],
-          },
-        ],
-      }))
-    }
-  }, [ref, map])
+  
 
   return <Container ref={ref} />
 }
