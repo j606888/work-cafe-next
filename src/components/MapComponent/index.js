@@ -6,15 +6,20 @@ import SearchModal from "./SearchModal"
 import ControlPanel from './ControlPanel'
 import Api from '@/api/index'
 
-function buildCircle({ id, lat, lng, radius, color}) {
+function buildCircle({ id, lat, lng, radius }) {
   return {
     id,
     radius,
-    fillColor: color,
+    fillColor: "#009688",
     center: { lat, lng },
     fillOpacity: 0.4,
     strokeOpacity: 0,
   }
+}
+
+const params = {
+  lat: 22.9918511,
+    lng: 120.2066457,
 }
 
 const MapComponent = () => {
@@ -66,7 +71,7 @@ const MapComponent = () => {
   }
 
   const callAPI = async () => {
-    const data = await Api.getCrawlRecords()
+    const data = await Api.getCrawlRecords(params)
     const formattedData = data.map((d) => buildCircle(d))
     setCrawlRecords(formattedData)
   }
