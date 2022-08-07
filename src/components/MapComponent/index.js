@@ -1,6 +1,8 @@
 import Map from './Map'
 import Circle from './Circle'
 import { useEffect, useState } from 'react'
+import Button from "@mui/material/Button"
+import { Box } from '@mui/material'
 
 function buildCircle({ id, lat, lng, radius, color}) {
   return {
@@ -13,8 +15,28 @@ function buildCircle({ id, lat, lng, radius, color}) {
   }
 }
 
+const buttonStyle = {
+  position: 'absolute',
+  top: 50,
+  left: '50%',
+  transform: 'translateX(-50%)',
+  zIndex: 10
+}
+
 const MapComponent = () => {
   const [crawlRecords, setCrawlRecords] = useState([])
+  const [show, setShow] = useState(true)
+  
+  const onClick = (e) => {
+    console.log("You click ", e.latLng.toJSON())
+  }
+
+  const onIdle = (m) => {
+    console.log("onIdle")
+    console.log(m.getZoom())
+    console.log(m.getCenter().toJSON())
+  }
+
   const callAPI = async () => {
     try {
       const res = await fetch(`http://localhost:3003/crawl-records`)
@@ -30,12 +52,19 @@ const MapComponent = () => {
     callAPI()
   }, [])
 
+  const circles = crawlRecords.map((circle) => (
+    <Circle key={circle.id} options={circle} />
+  ))
+
   return (
-    <Map>
-      {crawlRecords.map((circle) => (
-        <Circle key={circle.id} options={circle} />
-      ))}
-    </Map>
+    <Box sx={{ position: "relative" }}>
+      <Button variant="contained" sx={buttonStyle} onClick={() => setShow(cur => !cur)}>
+        Show Area
+      </Button>
+      <Map onClick={onClick} onIdle={onIdle}>
+        {show && circles}
+      </Map>
+    </Box>
   )
 }
 
