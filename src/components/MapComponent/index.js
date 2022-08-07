@@ -1,29 +1,38 @@
 import Map from './Map'
 import Circle from './Circle'
+import { useEffect, useState } from 'react'
 
-function buildCircle(id, lat, lng, radius, fillColor) {
+function buildCircle({ id, lat, lng, radius, color}) {
   return {
     id,
     center: { lat, lng },
     radius,
-    fillColor,
+    fillColor: color,
     fillOpacity: 0.4,
     strokeOpacity: 0,
   }
 }
 
-const circles = [
-  buildCircle(1, 22.9976545, 120.2117627, 100, "#F44336"),
-  buildCircle(3, 23.0042387, 120.2222701, 1300, "#009688"),
-  buildCircle(4, 22.983208, 120.220497, 2000, "#FFEB3B"),
-  buildCircle(2, 23.003753, 120.205631, 1500, "#5C6BC0"),
-  buildCircle(5, 22.9976545, 120.2117627, 200, "#795548"),
-]
-
 const MapComponent = () => {
+  const [crawlRecords, setCrawlRecords] = useState([])
+  const callAPI = async () => {
+    try {
+      const res = await fetch(`http://localhost:3003/crawl-records`)
+      const data = await res.json()
+      const formattedData = data.map((d) => buildCircle(d))
+      setCrawlRecords(formattedData)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    callAPI()
+  }, [])
+
   return (
     <Map>
-      {circles.map((circle) => (
+      {crawlRecords.map((circle) => (
         <Circle key={circle.id} options={circle} />
       ))}
     </Map>
