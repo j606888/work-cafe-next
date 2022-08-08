@@ -6,11 +6,11 @@ import SearchModal from "./SearchModal"
 import ControlPanel from './ControlPanel'
 import Api from '@/api/index'
 
-function buildCircle({ id, lat, lng, radius }) {
+function buildCircle({ id, lat, lng, radius, total_found }) {
   return {
     id,
     radius,
-    fillColor: "#009688",
+    fillColor: total_found === 60 ? "#E67E22" : "#009688",
     center: { lat, lng },
     fillOpacity: 0.4,
     strokeOpacity: 0,
@@ -30,16 +30,9 @@ const MapComponent = () => {
   const [tempOptions, setTempOptions] = useState(null)
   const [loading, setLoading] = useState(false)
 
-  const sleep = async (delay) => {
-     return new Promise((res) => setTimeout(res, delay))
-  }
-
   const handleSearch = async () => {
     setLoading(true)
-    await sleep(1000)
-    const lastId = crawlRecords[crawlRecords.length - 1].id
     const crawlRecord = {
-      id: lastId + 1,
       lat: tempOptions.center.lat,
       lng: tempOptions.center.lng,
       radius: tempOptions.radius,
