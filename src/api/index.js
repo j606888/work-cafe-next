@@ -17,7 +17,17 @@ export async function getCrawlRecords({lat, lng}) {
   return res.data
 }
 
+export async function getStores({page, per, cities}) {
+  const params = { page, per }
+  if (cities) {
+    params.cities = cities
+  }
+  const res = await instance.get("/admin/stores", { params })
+  return res.data
+}
+
 export default {
   createCrawlRecord,
   getCrawlRecords,
+  getStores,
 }

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminLayout from "src/components/AdminLayout"
 import StickyHeadTable from 'src/components/StickyHeadTable'
+import Api from '@/api/index'
 
-function createCol(name, align) {
+function createCol(id, name, align) {
   return {
-    id: name.toLowerCase(),
+    id: id,
     label: name,
     align,
     minWidth: 170,
@@ -12,44 +13,56 @@ function createCol(name, align) {
   }
 }
 
-function createData(id, name, city, likes, photos, comments) {
-  return { id, name, city, likes, photos, comments }
+function createData({ id, name, city, rating, user_ratings_total, phone }) {
+  return {
+    id, name, city, rating, user_ratings_total, phone
+  }
 }
 
 const columns = [
-  createCol("Name"),
-  createCol("City"),
-  createCol("Likes", "right"),
-  createCol("Photos", "right"),
-  createCol("Comments", "right"),
-]
-
-const rows = [
-  createData(1, "南島夢遊", "台南市", 124, 20, 15),
-  createData(2, "亮家", "台南市", 15, 2, 2),
-  createData(3, "自己的房間", "台南市", 240, 43, 24),
-  createData(4, "叁七茶房", "台南市", 15, 22, 5),
-  createData(5, "木卯咖啡", "台南市", 31, 2, 0),
-  createData(6, "鬼咖啡", "台南市", 312, 22, 9),
-  createData(7, "南島夢遊", "台南市", 124, 20, 15),
-  createData(8, "亮家", "台南市", 15, 2, 2),
-  createData(9, "自己的房間", "台南市", 240, 43, 24),
-  createData(10, "叁七茶房", "台南市", 15, 22, 5),
-  createData(11, "木卯咖啡", "台南市", 31, 2, 0),
-  createData(12, "鬼咖啡", "台南市", 312, 22, 9),
-  createData(13, "鬼咖啡", "台南市", 312, 22, 9),
-  createData(14, "南島夢遊", "台南市", 124, 20, 15),
-  createData(15, "亮家", "台南市", 15, 2, 2),
-  createData(16, "自己的房間", "台南市", 240, 43, 24),
-  createData(17, "叁七茶房", "台南市", 15, 22, 5),
-  createData(18, "木卯咖啡", "台南市", 31, 2, 0),
-  createData(19, "鬼咖啡", "台南市", 312, 22, 9),
+  createCol("name", "Name"),
+  createCol("city", "City"),
+  createCol("rating", "Rating", "right"),
+  createCol("phone", "Phone", "right"),
+  createCol("user_ratings_total", "UserRatingsTotal", "right"),
 ]
 
 const Stores = () => {
+  const [rows, setRows] = useState([])
+  const [page, setPage] = useState(1)
+  const [per, setPer] = useState(5)
+  const [paging, setPaging] = useState({
+    current_page: 1,
+    total_count: 0,
+    total_pages: 0
+  })
+
+  const fetchStores = async () => {
+    const params = {
+      page: page,
+      per: per
+    }
+    const data = await Api.getStores(params)
+    const formattedData = data.stores.map((d) => createData(d))
+    setRows(formattedData)
+    setPaging(data.paging)
+  }
+
+  useEffect(() => {
+    fetchStores()
+  }, [per, page])
+
   return (
     <AdminLayout>
-      <StickyHeadTable columns={columns} rows={rows} />
+      <StickyHeadTable
+        columns={columns}
+        rows={rows}
+        page={page-1}
+        setPage={setPage}
+        paging={paging}
+        per={per}
+        setPer={setPer}
+      />
     </AdminLayout>
   )
 }
