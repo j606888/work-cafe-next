@@ -5,6 +5,7 @@ import Api from '@/api/index'
 import Select from '@/components/Select'
 import cityMap from '@/config/cityMap'
 import { Box } from '@mui/material'
+import RatingSelect from '@/components/Select/RatingSelect'
 
 const cityList = cityMap.map((city) => city.name)
 
@@ -36,6 +37,7 @@ const Stores = () => {
   const [rows, setRows] = useState([])
   const [page, setPage] = useState(1)
   const [per, setPer] = useState(5)
+  const [rate, setRate] = useState(null)
   const [cities, setCities] = useState([])
   const [paging, setPaging] = useState({
     current_page: 1,
@@ -48,6 +50,7 @@ const Stores = () => {
       page: page,
       per: per,
       cities: cities,
+      rating: rate,
     }
     const data = await Api.getStores(params)
     const formattedData = data.stores.map((d) => createData(d))
@@ -61,11 +64,14 @@ const Stores = () => {
 
   useEffect(() => {
     fetchStores()
-  }, [per, page, cities])
+  }, [per, page, cities, rate])
 
   return (
     <AdminLayout>
-      <Box mb={3}>
+      <Box mb={1}>
+        <RatingSelect rate={rate} setRate={setRate} />
+      </Box>
+      <Box mb={2}>
         <Select options={cityList} handleChange={handleChange} />
       </Box>
       <StickyHeadTable

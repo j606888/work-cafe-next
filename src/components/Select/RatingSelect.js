@@ -29,12 +29,14 @@ const Container = styled.div`
 
   .options {
     display: ${(props) => (props.show ? "inline-flex" : "none")};
+    background-color: white;
     position: absolute;
     left: 0;
     top: 2.5rem;
     flex-direction: column;
     border: 1px solid #ccc;
     border-radius: 4px;
+    z-index: 10;
 
     & > span {
       color: #444;
@@ -94,15 +96,9 @@ const StarList = ({ rating, onClick }) => {
   )
 }
 
-const RatingSelect = () => {
-  const [rate, setRate] = useState(null)
+const RatingSelect = ({ rate, setRate }) => {
   const [show, setShow] = useState(false)
-
   const selectorRef = useOutsideClick(() => setShow(false))
-
-  useEffect(() => {
-    console.log("Rate: ", rate)
-  }, [rate])
 
   const beforeChoose = (
     <>
