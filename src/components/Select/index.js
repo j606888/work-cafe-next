@@ -2,7 +2,7 @@ import React from "react"
 import { default as ReactSelect } from "react-select"
 
 const colourStyles = {
-  control: (styles, {}) => ({ ...styles, backgroundColor: "white"}),
+  control: (styles, {}) => ({ ...styles, backgroundColor: "white" }),
   option: (styles, {}) => {
     return {
       ...styles,
@@ -18,17 +18,15 @@ const colourStyles = {
   multiValueLabel: (styles, { data }) => ({
     ...styles,
     backgroundColor: "#E1F5FE",
-  })
+  }),
+  menu: (styles=> ({ ...styles, zIndex: 10}))
 }
 
-const Select = ({ options }) => {
+const Select = ({ options, handleChange }) => {
   const labelOptions = options.map(option => {
     return {value: option, label: option}
   })
 
-  const handleChange = (e) => {
-    console.log(e)
-  }
   return (
     <ReactSelect
       options={labelOptions}

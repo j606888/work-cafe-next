@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react'
 import AdminLayout from "src/components/AdminLayout"
 import StickyHeadTable from 'src/components/StickyHeadTable'
 import Api from '@/api/index'
+import Select from '@/components/Select'
+import cityMap from '@/config/cityMap'
+import { Box } from '@mui/material'
+
+const cityList = cityMap.map((city) => city.name)
 
 function createCol(id, name, align) {
   return {
@@ -31,6 +36,7 @@ const Stores = () => {
   const [rows, setRows] = useState([])
   const [page, setPage] = useState(1)
   const [per, setPer] = useState(5)
+  const [cities, setCities] = useState([])
   const [paging, setPaging] = useState({
     current_page: 1,
     total_count: 0,
@@ -40,7 +46,8 @@ const Stores = () => {
   const fetchStores = async () => {
     const params = {
       page: page,
-      per: per
+      per: per,
+      cities: cities,
     }
     const data = await Api.getStores(params)
     const formattedData = data.stores.map((d) => createData(d))
@@ -48,16 +55,23 @@ const Stores = () => {
     setPaging(data.paging)
   }
 
+  const handleChange = (e) => {
+    setCities(e.map((l) => l.value))
+  }
+
   useEffect(() => {
     fetchStores()
-  }, [per, page])
+  }, [per, page, cities])
 
   return (
     <AdminLayout>
+      <Box mb={3}>
+        <Select options={cityList} handleChange={handleChange} />
+      </Box>
       <StickyHeadTable
         columns={columns}
         rows={rows}
-        page={page-1}
+        page={page - 1}
         setPage={setPage}
         paging={paging}
         per={per}

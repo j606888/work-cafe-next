@@ -1,6 +1,6 @@
 const cityMap = [
   {
-    name: "臺北市",
+    name: "台北市",
     area: [
       "中正區",
       "大同區",
@@ -69,7 +69,7 @@ const cityMap = [
     ],
   },
   {
-    name: "臺中市",
+    name: "台中市",
     area: [
       "中區",
       "東區",
