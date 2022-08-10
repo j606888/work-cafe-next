@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AdminLayout from "src/components/AdminLayout"
 import StickyHeadTable from 'src/components/StickyHeadTable'
+import Api from '@/api/index'
+import Select from '@/components/Select'
+import cityMap from '@/config/cityMap'
+import { Box } from '@mui/material'
+import RatingSelect from '@/components/Select/RatingSelect'
 
-function createCol(name, align) {
+const cityList = cityMap.map((city) => city.name)
+
+function createCol(id, name, align) {
   return {
-    id: name.toLowerCase(),
+    id: id,
     label: name,
     align,
     minWidth: 170,
@@ -12,44 +19,65 @@ function createCol(name, align) {
   }
 }
 
-function createData(id, name, city, likes, photos, comments) {
-  return { id, name, city, likes, photos, comments }
+function createData({ id, name, city, rating, user_ratings_total, phone, url }) {
+  return {
+    id, name, city, rating, user_ratings_total, phone, url
+  }
 }
 
 const columns = [
-  createCol("Name"),
-  createCol("City"),
-  createCol("Likes", "right"),
-  createCol("Photos", "right"),
-  createCol("Comments", "right"),
-]
-
-const rows = [
-  createData(1, "南島夢遊", "台南市", 124, 20, 15),
-  createData(2, "亮家", "台南市", 15, 2, 2),
-  createData(3, "自己的房間", "台南市", 240, 43, 24),
-  createData(4, "叁七茶房", "台南市", 15, 22, 5),
-  createData(5, "木卯咖啡", "台南市", 31, 2, 0),
-  createData(6, "鬼咖啡", "台南市", 312, 22, 9),
-  createData(7, "南島夢遊", "台南市", 124, 20, 15),
-  createData(8, "亮家", "台南市", 15, 2, 2),
-  createData(9, "自己的房間", "台南市", 240, 43, 24),
-  createData(10, "叁七茶房", "台南市", 15, 22, 5),
-  createData(11, "木卯咖啡", "台南市", 31, 2, 0),
-  createData(12, "鬼咖啡", "台南市", 312, 22, 9),
-  createData(13, "鬼咖啡", "台南市", 312, 22, 9),
-  createData(14, "南島夢遊", "台南市", 124, 20, 15),
-  createData(15, "亮家", "台南市", 15, 2, 2),
-  createData(16, "自己的房間", "台南市", 240, 43, 24),
-  createData(17, "叁七茶房", "台南市", 15, 22, 5),
-  createData(18, "木卯咖啡", "台南市", 31, 2, 0),
-  createData(19, "鬼咖啡", "台南市", 312, 22, 9),
+  createCol("name", "Name"),
+  createCol("city", "City"),
+  createCol("rating", "Rating", "right"),
+  createCol("phone", "Phone", "right"),
+  createCol("user_ratings_total", "UserRatingsTotal", "right"),
 ]
 
 const Stores = () => {
+  const [rows, setRows] = useState([])
+  const [params, setParams] = useState({
+    page: 1,
+    per: 10,
+    rating: null,
+    cities: [],
+    order: 'desc',
+    orderBy: 'name',
+  })
+  const [totalCount, setTotalCount] = useState(0)
+
+  const fetchStores = async () => {
+    const data = await Api.getStores(params)
+    const formattedData = data.stores.map((d) => createData(d))
+    setRows(formattedData)
+    setTotalCount(data.paging.total_count)
+  }
+
+  const handleChange = (e) => {
+    const cities = e.map((l) => l.value)
+    setParams(curParams => ({ ...curParams, cities: cities }))
+  }
+
+  useEffect(() => {
+    fetchStores()
+  }, [params])
+
   return (
     <AdminLayout>
-      <StickyHeadTable columns={columns} rows={rows} />
+      <Box mb={1}>
+        <RatingSelect params={params} setParams={setParams} />
+      </Box>
+      <Box mb={2}>
+        <Select options={cityList} handleChange={handleChange} />
+      </Box>
+      {rows && (
+        <StickyHeadTable
+          columns={columns}
+          rows={rows}
+          params={params}
+          setParams={setParams}
+          totalCount={totalCount}
+        />
+      )}
     </AdminLayout>
   )
 }

@@ -8,52 +8,59 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import Header from "./Header"
 
-export default function StickyHeadTable({ columns, rows }) {
-  const [page, setPage] = React.useState(0)
-  const [rowsPerPage, setRowsPerPage] = React.useState(10)
-
+export default function StickyHeadTable({ columns, rows, params, setParams, totalCount }) {
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
+    setParams((curParams) => ({ ...curParams, page: newPage+1 }))
   }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value)
-    setPage(0)
+    setParams((curParams) => ({
+      ...curParams,
+      per: +event.target.value,
+      page: 1,
+    }))
   }
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ height: 'calc(100vh - 18rem)' }}>
         <Table stickyHeader aria-label="sticky table">
-          <Header columns={columns} />
+          <Header columns={columns} params={params} setParams={setParams} />
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    {columns.map((column) => {
-                      const value = row[column.id]
+            {rows.map((row) => {
+              return (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  {columns.map((column) => {
+                    const value = row[column.id]
+                    if (column.id === "name") {
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          <a target="_blank" href={row.url}>
+                            {value}
+                          </a>
                         </TableCell>
                       )
-                    })}
-                  </TableRow>
-                )
-              })}
+                    }
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {column.format && typeof value === "number"
+                          ? column.format(value)
+                          : value}
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
+        count={totalCount}
+        rowsPerPage={params.per}
+        page={params.page-1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

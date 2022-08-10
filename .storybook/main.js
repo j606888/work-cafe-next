@@ -19,6 +19,9 @@ module.exports = {
       components: path.resolve(__dirname, "../src/components"),
       hooks: path.resolve(__dirname, "../src/hooks"),
       src: path.resolve(__dirname, "../src"),
+      "@/components": path.resolve(__dirname, "../src/components"),
+      "@/config": path.resolve(__dirname, "../src/config"),
+      "@/hooks": path.resolve(__dirname, "../src/hooks")
     }
     return config
   },

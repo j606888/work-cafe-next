@@ -2,8 +2,17 @@ import * as React from "react"
 import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
+import TableSortLabel from '@mui/material/TableSortLabel';
 
-const Header = ({ columns }) => {
+const Header = ({ columns, params, setParams }) => {
+  const handleSort = (id) => {
+    if (params.orderBy === id) {
+      setParams((curParams) => ({ ...curParams, order: curParams.order === 'asc' ? 'desc' : 'asc' }))
+    } else {
+      setParams((curParams) => ({ ...curParams, orderBy: id, order: 'asc'}))
+    }
+  }
+
   return (
     <TableHead>
       <TableRow>
@@ -12,8 +21,15 @@ const Header = ({ columns }) => {
             key={column.id}
             align={column.align}
             style={{ minWidth: column.minWidth }}
+            sortDirection={params.order}
           >
-            {column.label}
+            <TableSortLabel
+              active={column.id === params.orderBy}
+              direction={params.order}
+              onClick={() => handleSort(column.id)}
+            >
+              {column.label}
+            </TableSortLabel>
           </TableCell>
         ))}
       </TableRow>

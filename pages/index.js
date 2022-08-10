@@ -1,15 +1,16 @@
-import Button from "@/components/Button"
-import CityList from "@/components/CityList"
-import Introduce from "@/components/Introduce"
-import Navbar from "@/components/Navbar"
-import SearchBar from "@/components/SearchBar"
-import TimeSelector from "@/components/TimeSelector"
-import { Box, Container, Grid, Typography } from "@mui/material"
+// import Button from "@/components/Button"
+// import CityList from "@/components/CityList"
+// import Introduce from "@/components/Introduce"
+// import Navbar from "@/components/Navbar"
+// import SearchBar from "@/components/SearchBar"
+// import TimeSelector from "@/components/TimeSelector"
+// import { Box, Container, Grid, Typography } from "@mui/material"
 
 export default function RootPage() {
   return (
     <>
-      <Navbar />
+    Index
+      {/* <Navbar />
       <Box>
         <Container maxWidth="md">
           <Box mt={6}>
@@ -28,7 +29,7 @@ export default function RootPage() {
         </Container>
       </Box>
       <Introduce />
-      <CityList />
+      <CityList /> */}
     </>
   )
 }
