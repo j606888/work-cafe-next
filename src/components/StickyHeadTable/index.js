@@ -8,22 +8,17 @@ import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import Header from "./Header"
 
-export default function StickyHeadTable({
-  columns,
-  rows,
-  page,
-  setPage,
-  paging,
-  per,
-  setPer,
-}) {
+export default function StickyHeadTable({ columns, rows, params, setParams, totalCount }) {
   const handleChangePage = (event, newPage) => {
-    setPage(newPage + 1)
+    setParams((curParams) => ({ ...curParams, page: newPage+1 }))
   }
 
   const handleChangeRowsPerPage = (event) => {
-    setPer(+event.target.value)
-    setPage(1)
+    setParams((curParams) => ({
+      ...curParams,
+      per: +event.target.value,
+      page: 1,
+    }))
   }
 
   return (
@@ -37,6 +32,15 @@ export default function StickyHeadTable({
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id]
+                    if (column.id === "name") {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          <a target="_blank" href={row.url}>
+                            {value}
+                          </a>
+                        </TableCell>
+                      )
+                    }
                     return (
                       <TableCell key={column.id} align={column.align}>
                         {column.format && typeof value === "number"
@@ -52,11 +56,11 @@ export default function StickyHeadTable({
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 100]}
+        rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={paging.total_count}
-        rowsPerPage={per}
-        page={page}
+        count={totalCount}
+        rowsPerPage={params.per}
+        page={params.page-1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />

@@ -19,9 +19,9 @@ function createCol(id, name, align) {
   }
 }
 
-function createData({ id, name, city, rating, user_ratings_total, phone }) {
+function createData({ id, name, city, rating, user_ratings_total, phone, url }) {
   return {
-    id, name, city, rating, user_ratings_total, phone
+    id, name, city, rating, user_ratings_total, phone, url
   }
 }
 
@@ -35,54 +35,47 @@ const columns = [
 
 const Stores = () => {
   const [rows, setRows] = useState([])
-  const [page, setPage] = useState(1)
-  const [per, setPer] = useState(5)
-  const [rate, setRate] = useState(null)
-  const [cities, setCities] = useState([])
-  const [paging, setPaging] = useState({
-    current_page: 1,
-    total_count: 0,
-    total_pages: 0
+  const [params, setParams] = useState({
+    page: 1,
+    per: 10,
+    rating: null,
+    cities: []
   })
+  const [totalCount, setTotalCount] = useState(0)
 
   const fetchStores = async () => {
-    const params = {
-      page: page,
-      per: per,
-      cities: cities,
-      rating: rate,
-    }
     const data = await Api.getStores(params)
     const formattedData = data.stores.map((d) => createData(d))
     setRows(formattedData)
-    setPaging(data.paging)
+    setTotalCount(data.paging.total_count)
   }
 
   const handleChange = (e) => {
-    setCities(e.map((l) => l.value))
+    const cities = e.map((l) => l.value)
+    setParams(curParams => ({ ...curParams, cities: cities }))
   }
 
   useEffect(() => {
     fetchStores()
-  }, [per, page, cities, rate])
+  }, [params])
 
   return (
     <AdminLayout>
       <Box mb={1}>
-        <RatingSelect rate={rate} setRate={setRate} />
+        <RatingSelect params={params} setParams={setParams} />
       </Box>
       <Box mb={2}>
         <Select options={cityList} handleChange={handleChange} />
       </Box>
-      <StickyHeadTable
-        columns={columns}
-        rows={rows}
-        page={page - 1}
-        setPage={setPage}
-        paging={paging}
-        per={per}
-        setPer={setPer}
-      />
+      {rows && (
+        <StickyHeadTable
+          columns={columns}
+          rows={rows}
+          params={params}
+          setParams={setParams}
+          totalCount={totalCount}
+        />
+      )}
     </AdminLayout>
   )
 }

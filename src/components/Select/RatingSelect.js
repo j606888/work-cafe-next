@@ -96,7 +96,7 @@ const StarList = ({ rating, onClick }) => {
   )
 }
 
-const RatingSelect = ({ rate, setRate }) => {
+const RatingSelect = ({ params, setParams }) => {
   const [show, setShow] = useState(false)
   const selectorRef = useOutsideClick(() => setShow(false))
 
@@ -111,16 +111,20 @@ const RatingSelect = ({ rate, setRate }) => {
   const afterChoose = (
     <>
       <DoneIcon sx={{ fontSize: 18, marginLeft: 1, color: "#1565C0" }} />
-      <span style={{ color: "#1565C0", fontWeight: 'bold' }}>{rate}+</span>
+      <span style={{ color: "#1565C0", fontWeight: 'bold' }}>{params.rating}+</span>
       <StarIcon sx={{ fontSize: 22, color: "#E7915A" }} />
       <ArrowDropDownIcon sx={{ color: "#1565C0" }} />
     </>
   )
 
+  const setRate = (rating) => {
+    setParams(curParams => ({ ...curParams, rating }))
+  }
+
   return (
-    <Container show={show} rate={rate}>
+    <Container show={show} rate={params.rating}>
       <div className="selector" onClick={() => setShow(true)} ref={selectorRef}>
-        {rate ? afterChoose : beforeChoose }
+        {params.rating ? afterChoose : beforeChoose }
       </div>
       <div className="options">
         <span onClick={() => setRate(null)}>不限評分</span>

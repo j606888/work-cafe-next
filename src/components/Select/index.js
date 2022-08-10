@@ -29,11 +29,12 @@ const Select = ({ options, handleChange }) => {
 
   return (
     <ReactSelect
+    // Need this uniq key to prevent warning
+      instanceId="selectbox"
       options={labelOptions}
       isMulti
       placeholder="Choose City..."
       styles={colourStyles}
-      defaultValue={[labelOptions[0], labelOptions[1]]}
       onChange={handleChange}
     />
   )
