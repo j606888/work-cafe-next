@@ -19,7 +19,7 @@ function buildCircle({ id, lat, lng, radius, total_found }) {
 
 const params = {
   lat: 22.9918511,
-    lng: 120.2066457,
+  lng: 120.2066457,
 }
 
 const MapComponent = () => {

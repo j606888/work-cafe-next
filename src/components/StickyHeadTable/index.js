@@ -23,9 +23,9 @@ export default function StickyHeadTable({ columns, rows, params, setParams, tota
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ height: 640 }}>
+      <TableContainer sx={{ height: 'calc(100vh - 18rem)' }}>
         <Table stickyHeader aria-label="sticky table">
-          <Header columns={columns} />
+          <Header columns={columns} params={params} setParams={setParams} />
           <TableBody>
             {rows.map((row) => {
               return (

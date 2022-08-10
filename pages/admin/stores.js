@@ -39,7 +39,9 @@ const Stores = () => {
     page: 1,
     per: 10,
     rating: null,
-    cities: []
+    cities: [],
+    order: 'desc',
+    orderBy: 'name',
   })
   const [totalCount, setTotalCount] = useState(0)
 

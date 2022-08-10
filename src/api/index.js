@@ -17,8 +17,8 @@ export async function getCrawlRecords({lat, lng}) {
   return res.data
 }
 
-export async function getStores({page, per, cities, rating}) {
-  const params = { page, per }
+export async function getStores({page, per, cities, rating, order, orderBy}) {
+  const params = { page, per, order, order_by: orderBy }
   if (cities) {
     params.cities = cities
   }
@@ -26,6 +26,7 @@ export async function getStores({page, per, cities, rating}) {
     params.rating = rating
   }
   const res = await instance.get("/admin/stores", { params })
+
   return res.data
 }
 
