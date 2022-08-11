@@ -6,21 +6,24 @@ import SearchModal from "./SearchModal"
 import ControlPanel from './ControlPanel'
 import Api from '@/api/index'
 
+function pickColor(total_found) {
+  if (total_found === 60) return "#E67E22"
+  else if (total_found === 0) return "#111"
+  else if (total_found < 10) return "#888"
+  else return "#009688"
+}
+
 function buildCircle({ id, lat, lng, radius, total_found }) {
   return {
     id,
     radius,
-    fillColor: total_found === 60 ? "#E67E22" : "#009688",
+    fillColor: pickColor(total_found),
     center: { lat, lng },
     fillOpacity: 0.4,
     strokeOpacity: 0,
   }
 }
 
-const params = {
-  lat: 22.9918511,
-  lng: 120.2066457,
-}
 
 const MapComponent = () => {
   const [crawlRecords, setCrawlRecords] = useState([])
@@ -29,6 +32,12 @@ const MapComponent = () => {
   const [radius, setRadius] = useState(100)
   const [tempOptions, setTempOptions] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [params, setParams] = useState({
+    lat: 22.9918511,
+    lng: 120.2066457,
+    zoom: 15,
+  })
+  const [showButton, setShowButton] = useState(false)
 
   const handleSearch = async () => {
     setLoading(true)
@@ -39,7 +48,6 @@ const MapComponent = () => {
       color: "#009688"
     }
     await Api.createCrawlRecord(crawlRecord)
-    await callAPI()
     setOpen(false)
     setLoading(false)
   }
@@ -58,15 +66,16 @@ const MapComponent = () => {
   }
 
   const onIdle = (m) => {
-    // console.log("onIdle")
-    // console.log(m.getZoom())
-    // console.log(m.getCenter().toJSON())
+    const { lat, lng } = m.getCenter().toJSON()
+    setParams({ lat, lng, zoom: m.getZoom() })
+    setShowButton(true)
   }
 
   const callAPI = async () => {
     const data = await Api.getCrawlRecords(params)
     const formattedData = data.map((d) => buildCircle(d))
     setCrawlRecords(formattedData)
+    setShowButton(false)
   }
 
   useEffect(() => {
@@ -84,8 +93,15 @@ const MapComponent = () => {
         setShow={setShow}
         radius={radius}
         setRadius={setRadius}
+        handleReload={() => callAPI()}
+        showButton={showButton}
       />
-      <SearchModal open={open} handleClose={() => setOpen(false)} handleSearch={handleSearch} loading={loading} />
+      <SearchModal
+        open={open}
+        handleClose={() => setOpen(false)}
+        handleSearch={handleSearch}
+        loading={loading}
+      />
       <Map onClick={onClick} onIdle={onIdle}>
         {show && circles}
         {open && <Circle options={tempOptions} />}

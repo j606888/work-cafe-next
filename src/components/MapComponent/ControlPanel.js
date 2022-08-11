@@ -1,10 +1,25 @@
-import { Box, Paper, Slider, Stack, Switch } from '@mui/material'
+import { Box, Button, Paper, Slider, Stack, Switch } from '@mui/material'
 
-
-const ControlPanel = ({ show, setShow, radius, setRadius }) => {
+const ControlPanel = ({
+  show,
+  setShow,
+  radius,
+  setRadius,
+  handleReload,
+  showButton,
+}) => {
   return (
-    <Paper sx={{ marginBottom: 3, p: 2, position: 'absolute', zIndex: 10, left: 12, top: 12 }}>
-      <Stack direction="row" spacing={2}>
+    <Paper
+      sx={{
+        marginBottom: 3,
+        p: 2,
+        position: "absolute",
+        zIndex: 10,
+        left: 12,
+        top: 12,
+      }}
+    >
+      <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
         <Box sx={{ width: 200 }}>
           <span>Radius</span>
           <Slider
@@ -21,6 +36,17 @@ const ControlPanel = ({ show, setShow, radius, setRadius }) => {
           <span>Show Area</span>
           <br />
           <Switch checked={show} onChange={() => setShow((cur) => !cur)} />
+        </Box>
+        <Box>
+          <Button
+            variant="contained"
+            disabled={!showButton}
+            onClick={() => {
+              handleReload()
+            }}
+          >
+            Search Here
+          </Button>
         </Box>
       </Stack>
     </Paper>
