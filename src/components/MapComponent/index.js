@@ -5,6 +5,7 @@ import { Box } from '@mui/material'
 import SearchModal from "./SearchModal"
 import ControlPanel from './ControlPanel'
 import Api from '@/api/index'
+import Router from 'next/router'
 
 function pickColor(total_found) {
   if (total_found === 60) return "#E67E22"
@@ -68,6 +69,13 @@ const MapComponent = () => {
   const onIdle = (m) => {
     const { lat, lng } = m.getCenter().toJSON()
     setParams({ lat, lng, zoom: m.getZoom() })
+    Router.push({
+      query: {
+        lat: lat.toFixed(6),
+        lng: lng.toFixed(6),
+        zoom: m.getZoom()
+      }
+    })
     setShowButton(true)
   }
 
