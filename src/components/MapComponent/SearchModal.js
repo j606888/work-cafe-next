@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Modal from '@/components/Modal'
 import styled from 'styled-components'
 import CloseIcon from "@mui/icons-material/Close"
 import { Box } from '@mui/material'
-import CircularProgress from "@mui/material/CircularProgress"
 
 const Container = styled.div`
   position: relative;
@@ -34,7 +33,7 @@ const Container = styled.div`
   }
 `
 
-const SearchModal = ({ open, handleClose, handleSearch, loading }) => {
+const SearchModal = ({ open, handleClose, handleSearch }) => {
   return (
     <Modal open={open} handleClose={handleClose}>
       <Container>
@@ -52,10 +51,9 @@ const SearchModal = ({ open, handleClose, handleSearch, loading }) => {
           The Max results is <b>30</b>, make sure your radius is not too wide
         </p>
         <Box sx={{ position: "relative" }}>
-          <button onClick={handleSearch} disabled={loading}>
+          <button onClick={handleSearch}>
             Search
           </button>
-          {loading && <CircularProgress size={24} sx={{ position: 'absolute', top: 10, left: 48}}/>}
         </Box>
       </Container>
     </Modal>

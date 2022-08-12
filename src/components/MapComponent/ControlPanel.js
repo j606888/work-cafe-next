@@ -8,7 +8,16 @@ const ControlPanel = ({
   handleReload,
   showButton,
   handleFindMe,
+  
 }) => {
+  function showAreaOnchange() {
+    if (setShow) setShow()
+  }
+
+  function sliderOnChange(e) {
+    if (setRadius) setRadius(e.target.value)
+  }
+
   return (
     <Paper
       sx={{
@@ -30,13 +39,13 @@ const ControlPanel = ({
             marks
             min={100}
             max={2000}
-            onChange={(e) => setRadius(e.target.value)}
+            onChange={sliderOnChange}
           />
         </Box>
         <Box>
           <span>Show Area</span>
           <br />
-          <Switch checked={show} onChange={() => setShow((cur) => !cur)} />
+          <Switch checked={show} onChange={showAreaOnchange} />
         </Box>
         <Box>
           <Button
