@@ -39,6 +39,10 @@ const MapComponent = () => {
     zoom: 15,
   })
   const [showButton, setShowButton] = useState(false)
+  const [center, setCenter] = useState({
+    lat: 22.9918511,
+    lng: 120.2066457,
+  })
 
   const handleSearch = async () => {
     setLoading(true)
@@ -86,6 +90,20 @@ const MapComponent = () => {
     setShowButton(false)
   }
 
+  const handleFineMe = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          }
+          setCenter(pos)
+        }
+      )
+    }
+  }
+
   useEffect(() => {
     callAPI()
   }, [])
@@ -103,6 +121,7 @@ const MapComponent = () => {
         setRadius={setRadius}
         handleReload={() => callAPI()}
         showButton={showButton}
+        handleFindMe={() => handleFineMe()}
       />
       <SearchModal
         open={open}
@@ -110,7 +129,7 @@ const MapComponent = () => {
         handleSearch={handleSearch}
         loading={loading}
       />
-      <Map onClick={onClick} onIdle={onIdle}>
+      <Map onClick={onClick} onIdle={onIdle} center={center}>
         {show && circles}
         {open && <Circle options={tempOptions} />}
       </Map>

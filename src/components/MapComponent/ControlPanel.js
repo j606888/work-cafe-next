@@ -7,6 +7,7 @@ const ControlPanel = ({
   setRadius,
   handleReload,
   showButton,
+  handleFindMe,
 }) => {
   return (
     <Paper
@@ -46,6 +47,16 @@ const ControlPanel = ({
             }}
           >
             Search Here
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            variant="contained"
+            onClick={() => {
+              handleFindMe()
+            }}
+          >
+            Find me
           </Button>
         </Box>
       </Stack>

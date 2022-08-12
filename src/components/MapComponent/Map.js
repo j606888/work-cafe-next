@@ -21,7 +21,7 @@ const DEFAULT_SETUP = {
   ],
 }
 
-const Map = ({ onClick, onIdle, children }) => {
+const Map = ({ onClick, onIdle, center, children }) => {
   const ref = useRef(null)
   const [map, setMap] = useState()
 
@@ -30,6 +30,12 @@ const Map = ({ onClick, onIdle, children }) => {
       setMap(new window.google.maps.Map(ref.current, DEFAULT_SETUP))
     }
   })
+
+  useEffect(() => {
+    if (map && center) {
+      map.setCenter(center)
+    }
+  }, [map, center])
 
   useEffect(() => {
     if (map) {
