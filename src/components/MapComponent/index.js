@@ -5,7 +5,7 @@ import { Box } from '@mui/material'
 import SearchModal from "./SearchModal"
 import ControlPanel from './ControlPanel'
 import Api from '@/api/index'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 
 function pickColor(total_found) {
   if (total_found === 60) return "#E67E22"
@@ -40,9 +40,30 @@ const MapComponent = () => {
   })
   const [showButton, setShowButton] = useState(false)
   const [center, setCenter] = useState({
-    lat: 22.9918511,
-    lng: 120.2066457,
+    center: {
+      lat: 23.546162,
+      lng: 120.6402133
+    },
+    zoom: 8
   })
+  const [myLocation, setMyLocation] = useState(null)
+  const router = useRouter()
+  const [map, setMap] = useState(null)
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const pos = {
+          center: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          },
+          zoom: 14,
+        }
+        setMyLocation(pos)
+      })
+    }
+  }, [navigator])
 
   const handleSearch = async () => {
     setLoading(true)
@@ -71,16 +92,19 @@ const MapComponent = () => {
   }
 
   const onIdle = (m) => {
-    const { lat, lng } = m.getCenter().toJSON()
-    setParams({ lat, lng, zoom: m.getZoom() })
-    Router.push({
-      query: {
-        lat: lat.toFixed(6),
-        lng: lng.toFixed(6),
-        zoom: m.getZoom()
-      }
-    })
-    setShowButton(true)
+    const center = m.getCenter()
+    if (center) {
+      const { lat, lng } = m.getCenter().toJSON()
+      setParams({ lat, lng, zoom: m.getZoom() })
+      Router.push({
+        query: {
+          lat: lat.toFixed(6),
+          lng: lng.toFixed(6),
+          zoom: m.getZoom()
+        }
+      })
+      setShowButton(true)
+    }
   }
 
   const callAPI = async () => {
@@ -91,20 +115,25 @@ const MapComponent = () => {
   }
 
   const handleFineMe = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          }
-          setCenter(pos)
-        }
-      )
+    if (myLocation) {
+      map.setCenter(myLocation.center)
+      map.setZoom(myLocation.zoom)
     }
   }
 
   useEffect(() => {
+    const query = router.query
+
+    if (query.lng && query.lat && query.zoom) {
+      const { lng, lat, zoom } = query
+      setCenter({
+        center: {
+          lat: +lat,
+          lng: +lng,
+        },
+        zoom: +zoom
+      })
+    }
     callAPI()
   }, [])
 
@@ -129,7 +158,7 @@ const MapComponent = () => {
         handleSearch={handleSearch}
         loading={loading}
       />
-      <Map onClick={onClick} onIdle={onIdle} center={center}>
+      <Map onClick={onClick} onIdle={onIdle} center={center} map={map} setMap={setMap}>
         {show && circles}
         {open && <Circle options={tempOptions} />}
       </Map>

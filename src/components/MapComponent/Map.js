@@ -21,9 +21,8 @@ const DEFAULT_SETUP = {
   ],
 }
 
-const Map = ({ onClick, onIdle, center, children }) => {
+const Map = ({ onClick, onIdle, center, children, map, setMap }) => {
   const ref = useRef(null)
-  const [map, setMap] = useState()
 
   useEffect(() => {
     if (ref.current && !map) {
@@ -31,11 +30,12 @@ const Map = ({ onClick, onIdle, center, children }) => {
     }
   })
 
-  useEffect(() => {
-    if (map && center) {
-      map.setCenter(center)
-    }
-  }, [map, center])
+  // useEffect(() => {
+  //   if (map && center) {
+  //     map.setCenter(center.center)
+  //     map.setZoom(center.zoom)
+  //   }
+  // }, [map, center])
 
   useEffect(() => {
     if (map) {
