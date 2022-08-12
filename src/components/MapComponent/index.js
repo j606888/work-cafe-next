@@ -6,15 +6,16 @@ import SearchModal from "./SearchModal"
 import ControlPanel from './ControlPanel'
 import Api from '@/api/index'
 import Router, { useRouter } from 'next/router'
-
-function pickColor(total_found) {
-  if (total_found === 60) return "#E67E22"
-  else if (total_found === 0) return "#111"
-  else if (total_found < 10) return "#888"
-  else return "#009688"
-}
+import { alreadyGranted, getCurrentPosition } from 'src/utils/navigator'
 
 function buildCircle({ id, lat, lng, radius, total_found }) {
+  const pickColor = (totalFound) => {
+    if (totalFound === 60) return "#E67E22"
+    else if (totalFound === 0) return "#111"
+    else if (totalFound < 10) return "#888"
+    else return "#009688"
+  }
+
   return {
     id,
     radius,
@@ -25,9 +26,11 @@ function buildCircle({ id, lat, lng, radius, total_found }) {
   }
 }
 
-
 const MapComponent = () => {
-  const [crawlRecords, setCrawlRecords] = useState([])
+  const [mapCrawlers, setMapCrawlers] = useState([])
+  const [map, setMap] = useState(null)
+  const [myLocation, setMyLocation] = useState(null)
+
   const [show, setShow] = useState(true)
   const [open, setOpen] = useState(false)
   const [radius, setRadius] = useState(100)
@@ -46,24 +49,40 @@ const MapComponent = () => {
     },
     zoom: 8
   })
-  const [myLocation, setMyLocation] = useState(null)
+  
   const router = useRouter()
-  const [map, setMap] = useState(null)
 
+  // Try to init current location
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const pos = {
-          center: {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          },
-          zoom: 14,
-        }
-        setMyLocation(pos)
+    async function trySetLocation() {
+      const already = await alreadyGranted()
+      if (!already) return
+
+      const position = await getCurrentPosition()
+      setMyLocation({
+        center: position,
+        zoom: 14,
       })
     }
-  }, [navigator])
+
+    trySetLocation()
+  }, [])
+
+  const handleFineMe = async () => {
+    if (!myLocation) {
+      const position = await getCurrentPosition()
+
+      setMyLocation({
+        center: position,
+        zoom: 14,
+      })
+      map.setCenter(position)
+      map.setZoom(14)
+    } else {
+      map.setCenter(myLocation.center)
+      map.setZoom(myLocation.zoom)
+    }
+  }
 
   const handleSearch = async () => {
     setLoading(true)
@@ -110,16 +129,11 @@ const MapComponent = () => {
   const callAPI = async () => {
     const data = await Api.getCrawlRecords(params)
     const formattedData = data.map((d) => buildCircle(d))
-    setCrawlRecords(formattedData)
+    setMapCrawlers(formattedData)
     setShowButton(false)
   }
 
-  const handleFineMe = () => {
-    if (myLocation) {
-      map.setCenter(myLocation.center)
-      map.setZoom(myLocation.zoom)
-    }
-  }
+  
 
   useEffect(() => {
     const query = router.query
@@ -137,7 +151,7 @@ const MapComponent = () => {
     callAPI()
   }, [])
 
-  const circles = crawlRecords.map((circle) => (
+  const circles = mapCrawlers.map((circle) => (
     <Circle key={circle.id} options={circle} />
   ))
 
