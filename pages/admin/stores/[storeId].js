@@ -82,7 +82,10 @@ const Store = () => {
           <>
             <StoreDetail {...store} />
             <br />
-            <StoreOpeningHours opening_hours={store.opening_hours} />
+            <StoreOpeningHours
+              opening_hours={store.opening_hours}
+              isOpen={store.is_open_now}
+            />
           </>
         )}
       </Container>
