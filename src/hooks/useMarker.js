@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react"
 
-export default function useGoogleMarker({ map, options, onClick }) {
+export default function useMarker({ map, options, onClick }) {
   const [marker, setMarker] = useState(null)
 
   useEffect(() => {
-    if (map && !marker) {
-      setMarker(new window.google.maps.Marker())
-    }
+    if (map && !marker) setMarker(new window.google.maps.Marker())
 
     return () => {
-      if (marker) {
-        marker.setMap(null)
-      }
+      if (marker) marker.setMap(null)
     }
   }, [map, marker])
 
   useEffect(() => {
+    console.log("Here")
     if (marker) {
+      console.log("Here2")
+      console.log(map)
       options.map = map 
       marker.setOptions(options)
     }
