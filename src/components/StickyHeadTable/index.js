@@ -7,6 +7,7 @@ import TableContainer from "@mui/material/TableContainer"
 import TablePagination from "@mui/material/TablePagination"
 import TableRow from "@mui/material/TableRow"
 import Header from "./Header"
+import Link from 'next/link'
 
 export default function StickyHeadTable({ columns, rows, params, setParams, totalCount }) {
   const handleChangePage = (event, newPage) => {
@@ -35,8 +36,18 @@ export default function StickyHeadTable({ columns, rows, params, setParams, tota
                     if (column.id === "name") {
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          <a target="_blank" href={row.url}>
+                          <Link href={`/admin/stores/${row.place_id}`}>{value}</Link>
+                          {/* <a target="_blank" href={row.url}>
                             {value}
+                          </a> */}
+                        </TableCell>
+                      )
+                    }
+                    if (column.id === "url") {
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          <a target="_blank" href={row.url}>
+                            Google Map
                           </a>
                         </TableCell>
                       )

@@ -7,7 +7,7 @@ export default {
 function build_intervals(label, intervalHours) {
   return {
     label,
-    intervals: intervalHours.map((hours) => ({
+    periods: intervalHours.map((hours) => ({
       start: hours[0],
       end: hours[1],
     })),
@@ -17,7 +17,7 @@ function build_intervals(label, intervalHours) {
 export const Default = (args) => <StoreOpeningHours {...args} />
 Default.args = {
   isOpen: false,
-  openHours: [
+  opening_hours: [
     build_intervals("星期日", []),
     build_intervals("星期一", [
       ["10:30", "14:00"],
@@ -49,7 +49,7 @@ Default.args = {
 export const OneInterval = (args) => <StoreOpeningHours {...args} />
 OneInterval.args = {
   isOpen: true,
-  openHours: [
+  opening_hours: [
     build_intervals("星期日", []),
     build_intervals("星期一", [["10:30", "14:00"]]),
     build_intervals("星期二", [["10:30", "14:00"]]),

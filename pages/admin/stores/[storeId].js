@@ -1,55 +1,90 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import AdminLayout from '@/components/AdminLayout'
+import StoreDetail from '@/components/StoreDetail'
+import StoreOpeningHours from '@/components/StoreOpeningHours'
+import { getStore } from '@/api/index'
 
 const Container = styled.div`
 `
 
+const DEFAULT_VALUE = {
+  imgUrl:
+    "https://work-cafe-staging.s3.ap-southeast-1.amazonaws.com/stores/ChIJ329cT56rQjQRvOWUDdzYG1E.jpeg",
+  name: "龍華眷村麵食館咖啡",
+  tags: ["永久歇業", "隱藏中"],
+  rating: 3.5,
+  ratingAmount: 223,
+  address: "115台灣台北市南港區中坡北路74號No",
+  phone: "0976226552",
+  googleUrl: "https://maps.google.com/?cid=361587838149290455",
+}
+
+const DEFAULT_OPEN = {
+  isOpen: false,
+  openHours: [
+    build_intervals("星期日", []),
+    build_intervals("星期一", [
+      ["10:30", "14:00"],
+      ["16:30", "19:30"],
+    ]),
+    build_intervals("星期二", [
+      ["10:30", "14:00"],
+      ["16:30", "19:30"],
+    ]),
+    build_intervals("星期三", [
+      ["10:30", "14:00"],
+      ["16:30", "19:30"],
+    ]),
+    build_intervals("星期四", [
+      ["10:30", "14:00"],
+      ["16:30", "19:30"],
+    ]),
+    build_intervals("星期五", [
+      ["10:30", "14:00"],
+      ["16:30", "19:30"],
+    ]),
+    build_intervals("星期六", [
+      ["10:30", "14:00"],
+      ["16:30", "19:30"],
+    ]),
+  ],
+}
+function build_intervals(label, intervalHours) {
+  return {
+    label,
+    intervals: intervalHours.map((hours) => ({
+      start: hours[0],
+      end: hours[1],
+    })),
+  }
+}
+
 const Store = () => {
   const router = useRouter()
   const { storeId } = router.query
+  const [store, setStore] = useState(null)
+
+  useEffect(() => {
+    async function callAPI() {
+      const res = await getStore(storeId)
+      setStore(res)
+    }
+
+    if (storeId) callAPI()
+  }, [storeId])
+
   return (
     <AdminLayout>
       <Container>
-        <div className="basic-info">
-          <div className="imgBox">
-            <img
-              src="https://work-cafe-staging.s3.ap-southeast-1.amazonaws.com/stores/ChIJ329cT56rQjQRvOWUDdzYG1E.jpeg"
-              alt="store"
-            />
-          </div>
-          <div className="store-info">
-            <h2>龍華眷村麵食館咖啡</h2>
-            <h4>台北市</h4>
-            <h4>南港區</h4>
-            <h4>115台灣台北市南港區中坡北路74號No</h4>
-            <p>Phone: 0911233123</p>
-            <p>CreatedAt: 2022-08-11T15:24:18.771Z</p>
-            <p>UpdatedAt: 2022-08-11T15:24:18.771Z</p>
-          </div>
-          <div>
-            <button>Go to GoogleMap</button>
-            <p>placeId: ChIJ329cT56rQjQRvOWUDdzYG1E</p>
-            <p>website: https://google.com</p>
-          </div>
-        </div>
-        <div>
-          <p>Total Ratings: 6</p>
-          <p>Rating: 3.3</p>
-          <p>some reviews2</p>
-          <p>Some reviews2</p>
-        </div>
-        <div>
-          <p>Opening Hour</p>
-          <p>週一 10:00am ~ 8:30pm</p>
-          <p>週一 10:00am ~ 8:30pm</p>
-          <p>週一 10:00am ~ 8:30pm</p>
-          <p>週一 10:00am ~ 8:30pm</p>
-          <p>週一 10:00am ~ 8:30pm</p>
-          <p>週一 10:00am ~ 8:30pm</p>
-          <p>週一 10:00am ~ 8:30pm</p>
-        </div>
+        {store && (
+          <>
+            <StoreDetail {...store} />
+            <br />
+            <StoreOpeningHours opening_hours={store.opening_hours} />
+          </>
+        )}
       </Container>
     </AdminLayout>
   )

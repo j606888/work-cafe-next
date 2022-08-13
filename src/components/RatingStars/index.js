@@ -8,6 +8,11 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline"
 const Container = styled.div`
   display: flex;
   align-items: center;
+
+  span {
+    margin-right: 0.5rem;
+    color: #666;
+  }
 `
 
 const style = {
@@ -29,6 +34,7 @@ function chooseStar(limit, rating) {
 const RatingStars = ({rating}) => {
   return (
     <Container>
+      <span>{rating}</span>
       {chooseStar(1, rating)}
       {chooseStar(2, rating)}
       {chooseStar(3, rating)}

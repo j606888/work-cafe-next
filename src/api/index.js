@@ -30,8 +30,15 @@ export async function getStores({page, per, cities, rating, order, orderBy}) {
   return res.data
 }
 
+export async function getStore(placeId) {
+  const res = await instance.get(`/admin/stores/${placeId}`)
+
+  return res.data
+}
+
 export default {
   createCrawlRecord,
   getCrawlRecords,
   getStores,
+  getStore,
 }
