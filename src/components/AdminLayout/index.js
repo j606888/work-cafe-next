@@ -6,6 +6,7 @@ import {
   Map as MapIcon,
   Store as StoreIcon,
   Person as PersonIcon,
+  BugReport as BugReportIcon,
 } from '@mui/icons-material'
 import AppBar from '../AppBar'
 import MiniDrawer from '../MiniDrawer'
@@ -26,14 +27,19 @@ const lists = [
     icon: <HomeIcon />,
   },
   {
-    text: "GoogleMap",
+    text: "Crawl Store",
     url: "/admin/crawls",
-    icon: <MapIcon />,
+    icon: <BugReportIcon />,
   },
   {
     text: "Stores",
     url: "/admin/stores",
     icon: <StoreIcon />,
+  },
+  {
+    text: "GoogleMap",
+    url: "/admin/map",
+    icon: <MapIcon />,
   },
   {
     text: "Users",
