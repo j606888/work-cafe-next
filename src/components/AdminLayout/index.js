@@ -27,7 +27,7 @@ const lists = [
   },
   {
     text: "GoogleMap",
-    url: "/admin/map",
+    url: "/admin/crawls",
     icon: <MapIcon />,
   },
   {
