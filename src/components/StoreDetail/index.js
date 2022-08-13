@@ -96,7 +96,7 @@ const StoreDetail = ({
         </div>
         <div className="rating">
           <RatingStars rating={rating} />
-          <span>{user_ratings_total}則評論</span>
+          <span>{user_ratings_total || 0}則評論</span>
         </div>
         <div className="icon-info">
           <LocationOnIcon />
