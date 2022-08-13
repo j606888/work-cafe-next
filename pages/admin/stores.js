@@ -19,9 +19,16 @@ function createCol(id, name, align) {
   }
 }
 
-function createData({ id, name, city, rating, user_ratings_total, phone, url }) {
+function createData({ id, place_id, name, city, rating, user_ratings_total, phone, url }) {
   return {
-    id, name, city, rating, user_ratings_total, phone, url
+    id,
+    place_id,
+    name,
+    city,
+    rating,
+    user_ratings_total,
+    phone,
+    url,
   }
 }
 
@@ -31,6 +38,7 @@ const columns = [
   createCol("rating", "Rating", "right"),
   createCol("phone", "Phone", "right"),
   createCol("user_ratings_total", "UserRatingsTotal", "right"),
+  createCol("url", "googleUrl", "right"),
 ]
 
 const Stores = () => {
