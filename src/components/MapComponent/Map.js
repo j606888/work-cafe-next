@@ -7,10 +7,10 @@ const Container = styled.div`
 `
 const DEFAULT_SETUP = {
   center: {
-    lat: 22.9918511,
-    lng: 120.2066457,
+    lat: 23.546162,
+    lng: 120.6402133
   },
-  zoom: 16,
+  zoom: 8,
   fullscreenControl: false,
   mapTypeControl: false,
   styles: [
@@ -21,15 +21,14 @@ const DEFAULT_SETUP = {
   ],
 }
 
-const Map = ({ onClick, onIdle, children }) => {
+const Map = ({ onClick, onIdle, children, map, setMap }) => {
   const ref = useRef(null)
-  const [map, setMap] = useState()
 
   useEffect(() => {
     if (ref.current && !map) {
       setMap(new window.google.maps.Map(ref.current, DEFAULT_SETUP))
     }
-  })
+  }, [ref, map])
 
   useEffect(() => {
     if (map) {
@@ -37,13 +36,8 @@ const Map = ({ onClick, onIdle, children }) => {
         google.maps.event.clearListeners(map, eventName)
       )
 
-      if (onClick) {
-        map.addListener("click", onClick)
-      }
-
-      if (onIdle) {
-        map.addListener("idle", () => onIdle(map))
-      }
+      if (onClick) map.addListener("click", onClick)
+      if (onIdle) map.addListener("idle", () => onIdle(map))
     }
   }, [map, onClick, onIdle])
 

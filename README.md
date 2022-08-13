@@ -74,7 +74,7 @@ https://mui.com/material-ui/react-autocomplete/
 https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
 https://www.framer.com/motion/
 
-# 2022/07/23
+\rt12q  
+# TODO
 
-* After install story book, a lot of warnings
-* 兩個選單不一樣高，因為被按鈕撐開了，absolute position 不同
+* admin/stores change url
