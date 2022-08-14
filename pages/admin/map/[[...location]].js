@@ -11,8 +11,7 @@ const DEFAULT_CENTER = {
   lng: 120.216569,
 }
 
-// TODO, Try hover effect
-// TODO, Click marker open new Tab
+// TODO, snake to camel
 // TODO, Show store_list beside
 // TODO, Blacklist Tab
 
@@ -55,8 +54,20 @@ const MapPage = () => {
     setShowButton(true)
   }
 
-  const handleMarkerClick = (id) => {
-    console.log(`id ${id} was clicked`)
+  const handleMarkerClick = (placeId) => {
+    // Router.push(`/admin/stores/${placeId}`)
+    const origin = window.location.origin
+    const path = `/admin/stores/${placeId}`
+    
+    window.open(`${origin}${path}`, '_blank')
+  }
+
+  const handleMarkerOver = (id) => {
+    console.log(`id ${id} was hovered`)
+  }
+
+  const handleMarkerOut = (id) => {
+    console.log(`id ${id} was out`)
   }
 
   const markers = stores.map((store) => {
@@ -71,7 +82,10 @@ const MapPage = () => {
         options={options}
         key={store.id}
         id={store.id}
+        store={store}
         onClick={handleMarkerClick}
+        onMouseover={handleMarkerOver}
+        onMouseout={handleMarkerOut}
       />
     )
   })
