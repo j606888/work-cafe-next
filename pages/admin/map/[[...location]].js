@@ -5,13 +5,18 @@ import Marker from "@/components/GoogleMapWrapper/Marker"
 import { getStoresByLocation } from "@/api/index"
 import Router, { useRouter } from "next/router"
 import { Box, Button } from "@mui/material"
+import styled from "styled-components"
+import StoreSideList from "@/components/StoreSideList"
+
+const Container = styled.div`
+  display: flex;
+`
 
 const DEFAULT_CENTER = {
   lat: 23.003043,
   lng: 120.216569,
 }
 
-// TODO, Show store_list beside
 // TODO, Blacklist Tab
 
 const MapPage = () => {
@@ -19,6 +24,7 @@ const MapPage = () => {
   const [stores, setStores] = useState([])
   const [center, setCenter] = useState(DEFAULT_CENTER)
   const [showButton, setShowButton] = useState(false)
+  const [bouncingId, setBouncingId] = useState(null)
   const router = useRouter()
 
   async function callAPI() {
@@ -54,19 +60,17 @@ const MapPage = () => {
   }
 
   const handleMarkerClick = (placeId) => {
-    // Router.push(`/admin/stores/${placeId}`)
     const origin = window.location.origin
     const path = `/admin/stores/${placeId}`
-    
-    window.open(`${origin}${path}`, '_blank')
+    window.open(`${origin}${path}`, "_blank")
   }
 
   const handleMarkerOver = (id) => {
-    console.log(`id ${id} was hovered`)
+    // console.log(`id ${id} was hovered`)
   }
 
   const handleMarkerOut = (id) => {
-    console.log(`id ${id} was out`)
+    // console.log(`id ${id} was out`)
   }
 
   const markers = stores.map((store) => {
@@ -76,6 +80,11 @@ const MapPage = () => {
         lng: store.lng,
       },
     }
+
+    if (store.id === bouncingId) {
+      options.animation = google.maps.Animation.BOUNCE
+    }
+
     return (
       <Marker
         options={options}
@@ -98,24 +107,41 @@ const MapPage = () => {
     display: showButton ? "block" : "none",
   }
 
+  function handleMouseEnter(id) {
+    setBouncingId(id)
+  }
+
+  function handleMouseLeave(id) {
+    setBouncingId(null)
+  }
+
   return (
     <AdminLayout>
-      <Box sx={{ position: "relative" }}>
-        <Button variant="contained" sx={buttonStyle} onClick={callAPI}>
-          Search Here
-        </Button>
-        {router.isReady && (
-          <GoogleMapWrapper
-            map={map}
-            setMap={setMap}
-            onIdle={handleOnIdle}
-            initCenter={{ lat: center.lat, lng: center.lng }}
-            initZoom={center.zoom}
-          >
-            {markers}
-          </GoogleMapWrapper>
-        )}
-      </Box>
+      <Container>
+        <Box sx={{ height: "90vh" }}>
+          <StoreSideList
+            stores={stores}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+        </Box>
+        <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+          <Button variant="contained" sx={buttonStyle} onClick={callAPI}>
+            Search Here
+          </Button>
+          {router.isReady && (
+            <GoogleMapWrapper
+              map={map}
+              setMap={setMap}
+              onIdle={handleOnIdle}
+              initCenter={{ lat: center.lat, lng: center.lng }}
+              initZoom={center.zoom}
+            >
+              {markers}
+            </GoogleMapWrapper>
+          )}
+        </Box>
+      </Container>
     </AdminLayout>
   )
 }
