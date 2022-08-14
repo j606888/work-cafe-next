@@ -21,12 +21,16 @@ const DEFAULT_SETUP = {
   ],
 }
 
-const GoogleMap = ({ onClick, onIdle, children, map, setMap }) => {
+const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoom }) => {
   const ref = useRef(null)
 
   useEffect(() => {
     if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, DEFAULT_SETUP))
+      const setup = DEFAULT_SETUP
+      if (initCenter) setup.center = { lat: +initCenter.lat, lng: +initCenter.lng }
+      if (initZoom) setup.zoom = +initZoom
+
+      setMap(new window.google.maps.Map(ref.current, setup))
     }
   }, [ref, map])
 
