@@ -8,7 +8,7 @@ import Api from "@/api/index"
 import Router, { useRouter } from "next/router"
 import { alreadyGranted, getCurrentPosition } from "src/utils/navigator"
 
-function buildCircle({ id, lat, lng, radius, total_found }) {
+function buildCircle({ id, lat, lng, radius, totalFound }) {
   const pickColor = (totalFound) => {
     if (totalFound === 60) return "#E67E22"
     else if (totalFound === 0) return "#111"
@@ -19,7 +19,7 @@ function buildCircle({ id, lat, lng, radius, total_found }) {
   return {
     id,
     radius,
-    fillColor: pickColor(total_found),
+    fillColor: pickColor(totalFound),
     center: { lat, lng },
     fillOpacity: 0.4,
     strokeOpacity: 0,
