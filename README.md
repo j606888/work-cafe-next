@@ -75,6 +75,3 @@ https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
 https://www.framer.com/motion/
 
 \rt12q  
-# TODO
-
-* admin/stores change url

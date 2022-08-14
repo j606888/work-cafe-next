@@ -11,7 +11,6 @@ const DEFAULT_CENTER = {
   lng: 120.216569,
 }
 
-// TODO, snake to camel
 // TODO, Show store_list beside
 // TODO, Blacklist Tab
 
