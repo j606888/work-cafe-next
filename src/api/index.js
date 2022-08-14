@@ -1,10 +1,19 @@
 import axios from "axios"
+import camelcaseKeys from 'camelcase-keys';
 
 const instance = axios.create({
   baseURL: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },
+})
+
+instance.interceptors.response.use((response) => {
+  if (response.data) {
+    response.data = camelcaseKeys(response.data, {deep: true})
+  }
+
+  return response
 })
 
 export async function createCrawlRecord(crawlRecord) {
