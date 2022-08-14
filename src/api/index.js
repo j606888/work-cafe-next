@@ -1,11 +1,20 @@
 import axios from "axios"
-import camelcaseKeys from 'camelcase-keys';
+import camelcaseKeys from 'camelcase-keys'
+import snakecaseKeys from 'snakecase-keys'
 
 const instance = axios.create({
   baseURL: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },
+})
+
+instance.interceptors.request.use((config) => {
+  if (config.params) {
+    config.params = snakecaseKeys(config.params, { deep: true })
+  }
+
+  return config
 })
 
 instance.interceptors.response.use((response) => {
@@ -27,7 +36,7 @@ export async function getCrawlRecords({ lat, lng }) {
 }
 
 export async function getStores({ page, per, cities, rating, order, orderBy }) {
-  const params = { page, per, order, order_by: orderBy }
+  const params = { page, per, order, orderBy }
   if (cities) {
     params.cities = cities
   }
