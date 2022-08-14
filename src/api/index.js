@@ -49,7 +49,7 @@ export async function getStores({ page, per, cities, rating, order, orderBy }) {
 }
 
 export async function getStoresByLocation({ lat, lng }) {
-  const params = { lat, lng }
+  const params = { lat, lng, limit: 30 }
   const res = await instance.get("/admin/stores/location", { params })
 
   return res.data

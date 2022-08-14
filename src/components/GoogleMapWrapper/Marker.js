@@ -4,6 +4,14 @@ export default function Marker({ map, options, id, store, onClick, onMouseover, 
   const [marker, setMarker] = useState(null)
   const [windowInfo, setWindowInfo] = useState(null)
 
+  if (marker) {
+    if (options.animation) {
+      marker.setOptions(options)
+    } else {
+      marker.setAnimation(null)
+    }
+  }
+
   useEffect(() => {
     if (map && !marker) {
       setMarker(new window.google.maps.Marker())

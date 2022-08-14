@@ -41,17 +41,37 @@ const Container = styled.div`
   }
 `
 
-const Card = ({ imageUrl, name, rating, userRatingsTotal, placeId }) => {
+const Card = ({
+  id,
+  imageUrl,
+  name,
+  rating,
+  userRatingsTotal,
+  placeId,
+  onMouseEnter,
+  onMouseLeave,
+}) => {
+  function handleMouseEnter() {
+    if (onMouseEnter) onMouseEnter(id)
+  }
+
+  function handleMouseLeave() {
+    if (onMouseLeave) onMouseLeave(id)
+  }
+
   return (
-    <Container>
-      <div className='imgBox'>
+    <Container
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div className="imgBox">
         <img src={imageUrl} alt={name} />
       </div>
-      <div className='content'>
+      <div className="content">
         <a href={`/admin/stores/${placeId}`} target="_blank">
           <h4>{name}</h4>
         </a>
-        <p><RatingStars rating={rating} /></p>
+        <RatingStars rating={rating} />
         <span>{userRatingsTotal} 則評論</span>
       </div>
     </Container>
