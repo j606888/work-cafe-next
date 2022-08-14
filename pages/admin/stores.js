@@ -19,25 +19,12 @@ function createCol(id, name, align) {
   }
 }
 
-function createData({ id, place_id, name, city, rating, user_ratings_total, phone, url }) {
-  return {
-    id,
-    place_id,
-    name,
-    city,
-    rating,
-    user_ratings_total,
-    phone,
-    url,
-  }
-}
-
 const columns = [
   createCol("name", "Name"),
   createCol("city", "City"),
   createCol("rating", "Rating", "right"),
   createCol("phone", "Phone", "right"),
-  createCol("user_ratings_total", "UserRatingsTotal", "right"),
+  createCol("userRatingsTotal", "UserRatingsTotal", "right"),
   createCol("url", "googleUrl", "right"),
 ]
 
@@ -55,9 +42,8 @@ const Stores = () => {
 
   const fetchStores = async () => {
     const data = await Api.getStores(params)
-    const formattedData = data.stores.map((d) => createData(d))
-    setRows(formattedData)
-    setTotalCount(data.paging.total_count)
+    setRows(data.stores)
+    setTotalCount(data.paging.totalCount)
   }
 
   const handleChange = (e) => {

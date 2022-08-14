@@ -65,25 +65,24 @@ const Container = styled.div`
 `
 
 const StoreDetail = ({
-  image_url,
+  imageUrl,
   url,
   name,
   rating,
-  user_ratings_total,
+  userRatingsTotal,
   address,
   phone,
-  googleUrl,
-  permanently_closed,
+  permanentlyClosed,
   hidden,
 }) => {
   const tags = []
-  if (permanently_closed) tags.push("永久歇業")
+  if (permanentlyClosed) tags.push("永久歇業")
   if (hidden) tags.push("隱藏中")
 
   return (
     <Container>
       <div className="imgBox">
-        <img src={image_url} alt={name} />
+        <img src={imageUrl} alt={name} />
       </div>
       <div className="content">
         <div className="title">
@@ -96,7 +95,7 @@ const StoreDetail = ({
         </div>
         <div className="rating">
           <RatingStars rating={rating} />
-          <span>{user_ratings_total || 0}則評論</span>
+          <span>{userRatingsTotal || 0}則評論</span>
         </div>
         <div className="icon-info">
           <LocationOnIcon />
