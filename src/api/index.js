@@ -2,7 +2,7 @@ import axios from "axios"
 import camelcaseKeys from 'camelcase-keys'
 import snakecaseKeys from 'snakecase-keys'
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
@@ -62,6 +62,7 @@ export async function getStore(placeId) {
 }
 
 export default {
+  instance,
   createCrawlRecord,
   getCrawlRecords,
   getStores,
