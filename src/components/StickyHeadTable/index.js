@@ -36,7 +36,7 @@ export default function StickyHeadTable({ columns, rows, params, setParams, tota
                     if (column.id === "name") {
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          <Link href={`/admin/stores/${row.place_id}`}>{value}</Link>
+                          <Link href={`/admin/stores/${row.placeId}`}>{value}</Link>
                           {/* <a target="_blank" href={row.url}>
                             {value}
                           </a> */}

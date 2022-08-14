@@ -21,7 +21,7 @@ const Container = styled.div`
   }
 `
 
-const StoreOpeningHours = ({ opening_hours, isOpen }) => {
+const StoreOpeningHours = ({ openingHours, isOpen }) => {
   return (
     <Container>
       <Grid container spacing={2}>
@@ -38,8 +38,8 @@ const StoreOpeningHours = ({ opening_hours, isOpen }) => {
         <Grid item xs={6}>
           <KeyboardArrowUpIcon />
         </Grid>
-        {opening_hours.map((opening_hour) => {
-          const periods = opening_hour.periods.map((period) => {
+        {openingHours.map((openingHour) => {
+          const periods = openingHour.periods.map((period) => {
             return (
               <p>
                 {period.start} - {period.end}
@@ -50,7 +50,7 @@ const StoreOpeningHours = ({ opening_hours, isOpen }) => {
             <>
               <Grid item xs={2}></Grid>
               <Grid item xs={4}>
-                {opening_hour.label}
+                {openingHour.label}
               </Grid>
               <Grid item xs={6}>
                 {periods.length === 0 ? "休息" : periods}
