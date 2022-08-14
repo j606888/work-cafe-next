@@ -5,6 +5,12 @@ import Marker from "@/components/GoogleMapWrapper/Marker"
 import { getStoresByLocation } from "@/api/index"
 import Router, { useRouter } from "next/router"
 import { Box, Button } from "@mui/material"
+import styled from "styled-components"
+import StoreSideList from "@/components/StoreSideList"
+
+const Container = styled.div`
+  display: flex;
+`
 
 const DEFAULT_CENTER = {
   lat: 23.003043,
@@ -100,22 +106,27 @@ const MapPage = () => {
 
   return (
     <AdminLayout>
-      <Box sx={{ position: "relative" }}>
-        <Button variant="contained" sx={buttonStyle} onClick={callAPI}>
-          Search Here
-        </Button>
-        {router.isReady && (
-          <GoogleMapWrapper
-            map={map}
-            setMap={setMap}
-            onIdle={handleOnIdle}
-            initCenter={{ lat: center.lat, lng: center.lng }}
-            initZoom={center.zoom}
-          >
-            {markers}
-          </GoogleMapWrapper>
-        )}
-      </Box>
+      <Container>
+        <Box sx={{ height: "90vh" }}>
+          <StoreSideList stores={stores} />
+        </Box>
+        <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+          <Button variant="contained" sx={buttonStyle} onClick={callAPI}>
+            Search Here
+          </Button>
+          {router.isReady && (
+            <GoogleMapWrapper
+              map={map}
+              setMap={setMap}
+              onIdle={handleOnIdle}
+              initCenter={{ lat: center.lat, lng: center.lng }}
+              initZoom={center.zoom}
+            >
+              {markers}
+            </GoogleMapWrapper>
+          )}
+        </Box>
+      </Container>
     </AdminLayout>
   )
 }
