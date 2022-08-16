@@ -2,49 +2,20 @@ import { styled } from "@mui/material/styles"
 import { IconButton, Toolbar, Typography, AppBar as MuiAppBar, Button } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import { useRouter } from "next/router"
-import { useState } from "react"
-import { useEffect } from "react"
+import { useEffect, useContext } from "react"
+import AuthContext from "@/context/authContext"
 
 const Container = styled(MuiAppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1
 }))
 
-const LogoutBtn = ({ setIsLogin }) => {
-  function handleLogout() {
-    localStorage.clear()
-    setIsLogin(false)
-  }
-
-  return (
-    <Button color="inherit" onClick={handleLogout}>
-      Logout
-    </Button>
-  )
-}
-
-const LoginBtn = () => {
+const AppBar = ({ toggleDrawer }) => {
+  const { user, isLoading, logout } = useContext(AuthContext)
   const router = useRouter()
 
-  function handleLogin() {
-    router.push("/login")
-  }
-
-  return (
-    <Button color="inherit" onClick={handleLogin}>
-      Login
-    </Button>
-  )
-}
-
-const AppBar = ({ toggleDrawer  }) => {
-  const [isLogin, setIsLogin] = useState(false)
-
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken')
-    if (accessToken) setIsLogin(true)
-  }, [])
-
-  const button = isLogin ? <LogoutBtn setIsLogin={setIsLogin} /> : <LoginBtn />
+    if (!isLoading && !user) router.push("/login")
+  }, [isLoading, user])
 
   return (
     <Container position="fixed">
@@ -63,7 +34,14 @@ const AppBar = ({ toggleDrawer  }) => {
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           Work Cafe Dashboard
         </Typography>
-        {button}
+        {user && (
+          <>
+            {"Hello, " + user.name}
+            <Button color="inherit" onClick={() => logout()}>
+              Logout
+            </Button>
+          </>
+        )}
       </Toolbar>
     </Container>
   )
