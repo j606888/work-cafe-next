@@ -2,11 +2,11 @@ import Map from "./Map"
 import Circle from "./Circle"
 import { useEffect, useState, useReducer } from "react"
 import { Box } from "@mui/material"
-import SearchModal from "./SearchModal"
 import ControlPanel from "./ControlPanel"
 import Api from "@/api/index"
 import Router, { useRouter } from "next/router"
 import { alreadyGranted, getCurrentPosition } from "src/utils/navigator"
+import SearchDialog from "./SearchDialog"
 
 function buildCircle({ id, lat, lng, radius, totalFound }) {
   const pickColor = (totalFound) => {
@@ -188,7 +188,12 @@ const MapComponent = () => {
         showButton={controls.allowRefresh}
         handleFindMe={() => handleFineMe()}
       />
-      <SearchModal
+      {/* <SearchModal
+        open={controls.showModal}
+        handleClose={() => dispatch({ type: "TOGGLE_MODAL" })}
+        handleSearch={handleSearch}
+      /> */}
+      <SearchDialog
         open={controls.showModal}
         handleClose={() => dispatch({ type: "TOGGLE_MODAL" })}
         handleSearch={handleSearch}
