@@ -7,8 +7,8 @@ import jwt_decode from "jwt-decode"
 export const AuthContext = createContext({
   user: "",
   isLoading: true,
-  login: () => {},
-  logout: () => {}
+  googleLogin: () => {},
+  logout: () => {},
 })
 
 // TODO, use Auth Component to prevent flash render
@@ -28,9 +28,9 @@ export const AuthProvider = ({ children }) => {
     tryLogin()
   }, [])
 
-  async function login(tokenResponse, to) {
+  async function loginGoogle(tokenResponse, to) {
     setIsLoading(true)
-    
+
     const res = await googleLogin({ credential: tokenResponse.credential })
     localStorage.setItem("accessToken", res.accessToken)
     localStorage.setItem("refreshToken", res.refreshToken)
@@ -41,8 +41,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       router.push("/admin/stores")
     }
-
-  }
+  }  
 
   function logout() {
     console.log("Say bye bye")
@@ -52,9 +51,9 @@ export const AuthProvider = ({ children }) => {
 
   let contextData = {
     user,
-    login,
+    loginGoogle,
     logout,
-    isLoading
+    isLoading,
   }
 
   return <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>

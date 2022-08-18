@@ -13,3 +13,10 @@ export async function signup({ name, email, password }) {
 
   return res.data
 }
+
+export async function login({ email, password }) {
+  const params = { email, password }
+  const res = await instance.post("/auth/login", params)
+
+  return res.data
+}
