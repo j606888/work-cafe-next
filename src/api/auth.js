@@ -7,6 +7,9 @@ export async function googleLogin({ credential }) {
   return res.data
 }
 
-export default {
-  googleLogin,
+export async function signup({ name, email, password }) {
+  const params = { name, email, password }
+  const res = await instance.post("/auth/signup", params)
+
+  return res.data
 }
