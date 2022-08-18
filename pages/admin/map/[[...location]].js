@@ -17,8 +17,6 @@ const DEFAULT_CENTER = {
   lng: 120.216569,
 }
 
-// TODO, Blacklist Tab
-
 const MapPage = () => {
   const [map, setMap] = useState(null)
   const [stores, setStores] = useState([])

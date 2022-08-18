@@ -75,3 +75,6 @@ https://nextjs.org/docs/basic-features/data-fetching/get-server-side-props
 https://www.framer.com/motion/
 
 \rt12q  
+
+ 
+* Play with react-toastify https://fkhadra.github.io/react-toastify/introduction/

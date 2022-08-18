@@ -1,6 +1,19 @@
 import axios from "axios"
-import camelcaseKeys from 'camelcase-keys'
-import snakecaseKeys from 'snakecase-keys'
+import camelcaseKeys from "camelcase-keys"
+import snakecaseKeys from "snakecase-keys"
+
+// TODO, move crawl other file
+// TODO, 401 not-login vs 401 not-admin
+
+async function refreshAccessToken() {
+  const refreshToken = localStorage.getItem("refreshToken")
+  const { data } = await instance.post("/auth/refresh", {
+    refresh_token: refreshToken,
+  })
+
+  localStorage.setItem("accessToken", data.accessToken)
+  localStorage.setItem("refreshToken", data.refreshToken)
+}
 
 export const instance = axios.create({
   baseURL: "http://localhost:3001",
@@ -14,16 +27,34 @@ instance.interceptors.request.use((config) => {
     config.params = snakecaseKeys(config.params, { deep: true })
   }
 
+  const accessToken = localStorage.getItem("accessToken")
+  if (accessToken) {
+    config.headers["Authorization"] = `Bearer ${accessToken}`
+  }
+
   return config
 })
 
-instance.interceptors.response.use((response) => {
-  if (response.data) {
-    response.data = camelcaseKeys(response.data, {deep: true})
-  }
+instance.interceptors.response.use(
+  (response) => {
+    if (response.data) {
+      response.data = camelcaseKeys(response.data, { deep: true })
+    }
 
-  return response
-})
+    return response
+  },
+  async function (error) {
+    const originalRequest = error.config
+    if (error.response.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      await refreshAccessToken()
+      return instance(originalRequest)
+    }
+
+    return Promise.reject(error)
+  }
+)
 
 export async function createCrawlRecord(crawlRecord) {
   await instance.post("/admin/map-crawlers", crawlRecord)
