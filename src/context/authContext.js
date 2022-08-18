@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     tryLogin()
   }, [])
 
-  async function login(tokenResponse) {
+  async function login(tokenResponse, to) {
     setIsLoading(true)
     
     const res = await googleLogin({ credential: tokenResponse.credential })
@@ -36,7 +36,12 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("refreshToken", res.refreshToken)
     tryLogin()
 
-    router.push("/admin/stores")
+    if (to) {
+      router.push(to)
+    } else {
+      router.push("/admin/stores")
+    }
+
   }
 
   function logout() {

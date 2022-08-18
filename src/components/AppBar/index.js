@@ -14,7 +14,8 @@ const AppBar = ({ toggleDrawer }) => {
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && !user) router.push("/login")
+    const currentUrl = window.location.href
+    if (!isLoading && !user) router.push(`/login?to=${currentUrl}`)
   }, [isLoading, user])
 
   return (
