@@ -56,16 +56,6 @@ instance.interceptors.response.use(
   }
 )
 
-export async function createCrawlRecord(crawlRecord) {
-  await instance.post("/admin/map-crawlers", crawlRecord)
-}
-
-export async function getCrawlRecords({ lat, lng }) {
-  const params = { lat, lng }
-  const res = await instance.get("/admin/map-crawlers", { params })
-  return res.data
-}
-
 export async function getStores({ page, per, cities, rating, order, orderBy }) {
   const params = { page, per, order, orderBy }
   if (cities) {
@@ -94,8 +84,6 @@ export async function getStore(placeId) {
 
 export default {
   instance,
-  createCrawlRecord,
-  getCrawlRecords,
   getStores,
   getStoresByLocation,
   getStore,
