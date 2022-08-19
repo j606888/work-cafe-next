@@ -1,5 +1,5 @@
-import Select from "components/Select"
-import cityMap from "config/cityMap"
+import Select from "./index"
+import cityMap from "../../config/cityMap"
 
 export default {
   title: "components/Select",

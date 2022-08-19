@@ -1,4 +1,4 @@
-import AdminLayout from "../components/AdminLayout"
+import AdminLayout from "./index"
 
 export default {
   title: "components/AdminLayout",
