@@ -1,4 +1,4 @@
-import StoreOpeningHours from "@/components/StoreOpeningHours"
+import StoreOpeningHours from "components/StoreOpeningHours"
 
 export default {
   title: "components/StoreOpeningHours",

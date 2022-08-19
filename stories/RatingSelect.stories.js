@@ -1,4 +1,4 @@
-import RatingSelect from "@/components/Select/RatingSelect"
+import RatingSelect from "components/Select/RatingSelect"
 
 export default {
   title: "components/RatingSelect",

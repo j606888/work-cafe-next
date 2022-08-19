@@ -1,4 +1,4 @@
-import StoreDetail from "@/components/StoreDetail"
+import StoreDetail from "components/StoreDetail"
 
 export default {
   title: "components/StoreDetail",

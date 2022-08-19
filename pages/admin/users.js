@@ -1,6 +1,6 @@
 import React from "react"
-import AdminLayout from "src/components/AdminLayout"
-import StickyHeadTable from "src/components/StickyHeadTable"
+import AdminLayout from "components/AdminLayout"
+import StickyHeadTable from "components/StickyHeadTable"
 
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
