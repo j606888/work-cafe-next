@@ -6,7 +6,7 @@
         "src/components/*"
       ],
       "@/hooks/*": [
-        "src/hooks/*"
+        "hooks/*"
       ],
       "@api/*": [
         "api/*"

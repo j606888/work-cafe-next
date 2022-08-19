@@ -1,5 +1,5 @@
 import { useState } from "react"
-import useOutsideClick from "src/hooks/useOutsideClick"
+import useOutsideClick from "hooks/useOutsideClick"
 import styled from "styled-components"
 import React from "react"
 import AutoComplete from "./AutoComplete"
