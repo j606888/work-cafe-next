@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "src/components/AdminLayout"
 import StickyHeadTable from 'src/components/StickyHeadTable'
-import Api from '@/api/index'
+import { getStores  } from "@/api/stores"
 import Select from '@/components/Select'
 import cityMap from '@/config/cityMap'
 import { Box } from '@mui/material'
@@ -41,7 +41,7 @@ const Stores = () => {
   const [totalCount, setTotalCount] = useState(0)
 
   const fetchStores = async () => {
-    const data = await Api.getStores(params)
+    const data = await getStores(params)
     setRows(data.stores)
     setTotalCount(data.paging.totalCount)
   }
