@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react"
-import AuthContext from "@/context/authContext"
+import AuthContext from "context/authContext"
 import styled from "styled-components"
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google"
 import { Button, IconButton, Paper, TextField, Divider } from "@mui/material"

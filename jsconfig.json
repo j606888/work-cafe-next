@@ -12,10 +12,7 @@
         "api/*"
       ],
       "@/config/*": [
-        "src/config/*"
-      ],
-      "@/context/*": [
-        "src/context/*"
+        "config/*"
       ]
     }
   }

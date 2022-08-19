@@ -5,7 +5,7 @@ import { Box } from "@mui/material"
 import ControlPanel from "./ControlPanel"
 import { createCrawlRecord, getCrawlRecords } from "@api/map-crawlers"
 import Router, { useRouter } from "next/router"
-import { alreadyGranted, getCurrentPosition } from "src/utils/navigator"
+import { alreadyGranted, getCurrentPosition } from "utils/navigator"
 import SearchDialog from "./SearchDialog"
 
 function buildCircle({ id, lat, lng, radius, totalFound }) {
