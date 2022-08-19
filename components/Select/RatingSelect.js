@@ -4,7 +4,7 @@ import StarIcon from "@mui/icons-material/Star"
 import StarHalfIcon from "@mui/icons-material/StarHalf"
 import StarOutlineIcon from "@mui/icons-material/StarOutline"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
-import useOutsideClick from '@/hooks/useOutsideClick'
+import useOutsideClick from 'hooks/useOutsideClick'
 import DoneIcon from "@mui/icons-material/Done"
 
 const Container = styled.div`

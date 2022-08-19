@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useRouter } from 'next/router'
-import AdminLayout from '@/components/AdminLayout'
-import StoreDetail from '@/components/StoreDetail'
-import StoreOpeningHours from '@/components/StoreOpeningHours'
-import { getStore } from '@/api/index'
+import AdminLayout from 'components/AdminLayout'
+import StoreDetail from 'components/StoreDetail'
+import StoreOpeningHours from 'components/StoreOpeningHours'
+import { getStore } from 'api/stores'
 
 const Container = styled.div`
 `

@@ -3,9 +3,9 @@ import Circle from "./Circle"
 import { useEffect, useState, useReducer } from "react"
 import { Box } from "@mui/material"
 import ControlPanel from "./ControlPanel"
-import Api from "@/api/index"
+import { createCrawlRecord, getCrawlRecords } from "api/map-crawlers"
 import Router, { useRouter } from "next/router"
-import { alreadyGranted, getCurrentPosition } from "src/utils/navigator"
+import { alreadyGranted, getCurrentPosition } from "utils/navigator"
 import SearchDialog from "./SearchDialog"
 
 function buildCircle({ id, lat, lng, radius, totalFound }) {
@@ -124,7 +124,7 @@ const MapComponent = () => {
       radius: tempOptions.radius,
       color: "#009688",
     }
-    await Api.createCrawlRecord(crawlRecord)
+    await createCrawlRecord(crawlRecord)
     dispatch({ type: "TOGGLE_MODAL" })
   }
 
@@ -167,7 +167,7 @@ const MapComponent = () => {
       lng: center.lng,
       zoom: center.zoom,
     }
-    const data = await Api.getCrawlRecords(params)
+    const data = await getCrawlRecords(params)
     const formattedData = data.map((d) => buildCircle(d))
     setMapCrawlers(formattedData)
     dispatch({ type: "TOGGLE_REFRESH", payload: { refresh: false } })

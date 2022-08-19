@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import RatingStars from '@/components/RatingStars'
+import RatingStars from 'components/RatingStars'
 
 const Container = styled.div`
   box-sizing: border-box;

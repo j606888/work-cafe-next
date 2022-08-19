@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import RatingStars from "@/components/RatingStars"
+import RatingStars from "components/RatingStars"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
 import MapIcon from "@mui/icons-material/Map"

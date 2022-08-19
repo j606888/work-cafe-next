@@ -3,7 +3,7 @@ import { IconButton, Toolbar, Typography, AppBar as MuiAppBar, Button } from "@m
 import MenuIcon from "@mui/icons-material/Menu"
 import { useRouter } from "next/router"
 import { useEffect, useContext } from "react"
-import AuthContext from "@/context/authContext"
+import AuthContext from "context/authContext"
 
 const Container = styled(MuiAppBar)(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1

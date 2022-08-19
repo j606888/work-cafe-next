@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import AdminLayout from "src/components/AdminLayout"
-import GoogleMapWrapper from "@/components/GoogleMapWrapper"
-import Marker from "@/components/GoogleMapWrapper/Marker"
-import { getStoresByLocation } from "@/api/index"
+import AdminLayout from "components/AdminLayout"
+import GoogleMapWrapper from "components/GoogleMapWrapper"
+import Marker from "components/GoogleMapWrapper/Marker"
+import { getStoresByLocation } from "api/stores"
 import Router, { useRouter } from "next/router"
 import { Box, Button } from "@mui/material"
 import styled from "styled-components"
-import StoreSideList from "@/components/StoreSideList"
+import StoreSideList from "components/StoreSideList"
 
 const Container = styled.div`
   display: flex;

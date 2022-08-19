@@ -10,14 +10,14 @@ import {
 } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import React from "react"
-import AdminLayout from "src/components/AdminLayout"
+import AdminLayout from "components/AdminLayout"
 import { useState } from "react"
 import { useEffect } from "react"
 import {
   getBlacklists,
   createBlacklist,
   deleteBlacklist,
-} from "@/api/blacklist"
+} from "api/blacklist"
 
 const BlacklistPage = () => {
   const [blacklists, setBlacklists] = useState([])

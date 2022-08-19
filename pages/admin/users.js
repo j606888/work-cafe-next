@@ -1,6 +1,6 @@
-import React from "react"
-import AdminLayout from "src/components/AdminLayout"
-import StickyHeadTable from "src/components/StickyHeadTable"
+import React, { useState } from "react"
+import AdminLayout from "components/AdminLayout"
+import StickyHeadTable from "components/StickyHeadTable"
 
 function camelize(str) {
   return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
@@ -9,9 +9,9 @@ function camelize(str) {
   })
 }
 
-function createCol(name, align) {
+function createCol(id, name, align) {
   return {
-    id: camelize(name),
+    id: id,
     label: name,
     align,
     minWidth: 170,
@@ -19,16 +19,17 @@ function createCol(name, align) {
   }
 }
 
+
 function createData(id, name, email, addStore, likes, createdAt) {
   return { id, name, email, addStore, likes, createdAt }
 }
 
 const columns = [
-  createCol("Name"),
-  createCol("Email"),
-  createCol("AddStore", "right"),
-  createCol("Likes", "right"),
-  createCol("CreatedAt", "right"),
+  createCol("name", "Name"),
+  createCol("email", "Email"),
+  createCol("addStore", "AddStore", "right"),
+  createCol("likes", "Likes", "right"),
+  createCol("createdAt", "CreatedAt", "right"),
 ]
 
 const rows = [
@@ -53,9 +54,19 @@ const rows = [
 ]
 
 const Users = () => {
+  const [params, setParams] = useState({
+    page: 1,
+    per: 10
+  })
   return (
     <AdminLayout>
-      <StickyHeadTable columns={columns} rows={rows} />
+      <StickyHeadTable
+        columns={columns}
+        rows={rows}
+        params={params}
+        setParams={setParams}
+        totalCount={10}
+      />
     </AdminLayout>
   )
 }
