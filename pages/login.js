@@ -9,7 +9,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { login } from "@api/auth"
+import { login } from "api/auth"
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 

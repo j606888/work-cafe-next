@@ -7,7 +7,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { signup } from "@api/auth"
+import { signup } from "api/auth"
 
 // TODO, use SWR to simplify
 
