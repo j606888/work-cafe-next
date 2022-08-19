@@ -2,6 +2,8 @@ import axios from "axios"
 import camelcaseKeys from "camelcase-keys"
 import snakecaseKeys from "snakecase-keys"
 
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST
+
 async function refreshAccessToken() {
   const refreshToken = localStorage.getItem("refreshToken")
   const { data } = await instance.post("/auth/refresh", {
@@ -13,7 +15,7 @@ async function refreshAccessToken() {
 }
 
 export const instance = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: API_HOST,
   headers: {
     "Content-Type": "application/json",
   },
