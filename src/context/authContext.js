@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { createContext, useState } from 'react'
-import { googleLogin } from '@/api/auth'
+import { googleLogin } from '@api/auth'
 import { useRouter } from 'next/router'
 import jwt_decode from "jwt-decode"
 

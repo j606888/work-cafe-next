@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AdminLayout from "src/components/AdminLayout"
 import StickyHeadTable from 'src/components/StickyHeadTable'
-import { getStores  } from "@/api/stores"
+import { getStores  } from "@api/stores"
 import Select from '@/components/Select'
 import cityMap from '@/config/cityMap'
 import { Box } from '@mui/material'

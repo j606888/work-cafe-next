@@ -8,8 +8,8 @@
       "@/hooks/*": [
         "src/hooks/*"
       ],
-      "@/api/*": [
-        "src/api/*"
+      "@api/*": [
+        "api/*"
       ],
       "@/config/*": [
         "src/config/*"

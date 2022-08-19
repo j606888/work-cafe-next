@@ -17,7 +17,7 @@ import {
   getBlacklists,
   createBlacklist,
   deleteBlacklist,
-} from "@/api/blacklist"
+} from "@api/blacklist"
 
 const BlacklistPage = () => {
   const [blacklists, setBlacklists] = useState([])
