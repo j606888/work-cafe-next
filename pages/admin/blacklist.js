@@ -18,6 +18,7 @@ import {
   createBlacklist,
   deleteBlacklist,
 } from "api/blacklist"
+import { hideUnqualifiedStores } from "api/stores"
 
 const BlacklistPage = () => {
   const [blacklists, setBlacklists] = useState([])
@@ -47,6 +48,11 @@ const BlacklistPage = () => {
     fetchBlacklists()
   }
 
+  async function handleRefreshStore() {
+    await hideUnqualifiedStores()
+    console.log("Done")
+  }
+
   return (
     <AdminLayout>
       <Paper sx={{ p: 4 }}>
@@ -64,6 +70,9 @@ const BlacklistPage = () => {
             />
             <Button variant="contained" type="submit">
               Create
+            </Button>
+            <Button sx={{ marginLeft: 'auto' }} onClick={handleRefreshStore}>
+              Refresh Hiding Store
             </Button>
           </Box>
         </form>
