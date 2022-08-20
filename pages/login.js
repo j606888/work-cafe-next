@@ -1,5 +1,4 @@
-import React, { useState, useContext } from "react"
-import AuthContext from "context/authContext"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google"
 import { Button, IconButton, Paper, TextField, Divider } from "@mui/material"
@@ -9,7 +8,7 @@ import { useFormik } from "formik"
 import * as Yup from "yup"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { login } from "api/auth"
+import { googleLogin, login } from "api/auth"
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
@@ -91,11 +90,18 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 
 const Login = () => {
   const router = useRouter()
-  const { loginGoogle } = useContext(AuthContext)
 
-  function handleLogin(tokenResponse) {
+  async function handleLogin(tokenResponse) {
     const to = router.query.to
-    loginGoogle(tokenResponse, to)
+    const { accessToken, refreshToken } = await googleLogin({ credential: tokenResponse.credential })
+    localStorage.setItem("accessToken", accessToken)
+    localStorage.setItem("refreshToken", refreshToken)
+
+    if (to) {
+      router.push(to)
+    } else {
+      router.push('/admin/stores')
+    }
   }
 
   const formik = useFormik({
