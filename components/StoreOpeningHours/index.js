@@ -41,13 +41,13 @@ const StoreOpeningHours = ({ openingHours, isOpen }) => {
         {openingHours.map((openingHour) => {
           const periods = openingHour.periods.map((period) => {
             return (
-              <p>
+              <p key={`${period.start}${period.end}`}>
                 {period.start} - {period.end}
               </p>
             )
           })
           return (
-            <>
+            <React.Fragment key={openingHour.label}>
               <Grid item xs={2}></Grid>
               <Grid item xs={4}>
                 {openingHour.label}
@@ -55,7 +55,7 @@ const StoreOpeningHours = ({ openingHours, isOpen }) => {
               <Grid item xs={6}>
                 {periods.length === 0 ? "休息" : periods}
               </Grid>
-            </>
+            </React.Fragment>
           )
         })}
       </Grid>

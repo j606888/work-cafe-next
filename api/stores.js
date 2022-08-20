@@ -29,3 +29,7 @@ export async function getStore(placeId) {
 export async function hideUnqualifiedStores() {
   await instance.post(`/admin/stores/hide-all-unqualified`)
 }
+
+export async function syncStorePhotos(placeId) {
+  await instance.post(`/admin/stores/${placeId}/sync-photos`)
+}
