@@ -18,6 +18,7 @@ import {
   createBlacklist,
   deleteBlacklist,
 } from "api/blacklist"
+import { hideUnqualifiedStores } from "api/stores"
 
 const BlacklistPage = () => {
   const [blacklists, setBlacklists] = useState([])
@@ -47,6 +48,11 @@ const BlacklistPage = () => {
     fetchBlacklists()
   }
 
+  async function handleRefreshStore() {
+    await hideUnqualifiedStores()
+    console.log("Done")
+  }
+
   return (
     <AdminLayout>
       <Paper sx={{ p: 4 }}>
@@ -60,10 +66,12 @@ const BlacklistPage = () => {
               variant="filled"
               onChange={(e) => setKeyword(e.target.value)}
               value={keyword}
-              required
             />
             <Button variant="contained" type="submit">
               Create
+            </Button>
+            <Button sx={{ marginLeft: 'auto' }} onClick={handleRefreshStore}>
+              Refresh Hiding Store
             </Button>
           </Box>
         </form>
@@ -74,7 +82,9 @@ const BlacklistPage = () => {
               <Grid
                 item
                 key={blacklist.id}
-                xs={3}
+                xs={4}
+                md={3}
+                lg={2}
                 sx={{ display: "flex", alignItems: "center" }}
               >
                 <IconButton

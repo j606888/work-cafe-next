@@ -25,3 +25,7 @@ export async function getStore(placeId) {
 
   return res.data
 }
+
+export async function hideUnqualifiedStores() {
+  await instance.post(`/admin/stores/hide-all-unqualified`)
+}
