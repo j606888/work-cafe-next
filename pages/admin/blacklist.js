@@ -66,7 +66,6 @@ const BlacklistPage = () => {
               variant="filled"
               onChange={(e) => setKeyword(e.target.value)}
               value={keyword}
-              required
             />
             <Button variant="contained" type="submit">
               Create
@@ -83,7 +82,9 @@ const BlacklistPage = () => {
               <Grid
                 item
                 key={blacklist.id}
-                xs={3}
+                xs={4}
+                md={3}
+                lg={2}
                 sx={{ display: "flex", alignItems: "center" }}
               >
                 <IconButton

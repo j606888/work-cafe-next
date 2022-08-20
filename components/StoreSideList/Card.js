@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import RatingStars from 'components/RatingStars'
+import LinkIcon from "@mui/icons-material/Link"
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -34,7 +35,15 @@ const Container = styled.div`
       color: #2980b9;
     }
 
-    span:last-child {
+    .comment {
+      display: flex;
+      align-items: center;
+
+      a {
+        margin-left: 1rem;
+      }
+    }
+    .comment:last-child {
       color: #333;
       font-size: 12px;
     }
@@ -45,6 +54,7 @@ const Card = ({
   id,
   imageUrl,
   name,
+  url,
   rating,
   userRatingsTotal,
   placeId,
@@ -60,10 +70,7 @@ const Card = ({
   }
 
   return (
-    <Container
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <Container onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div className="imgBox">
         <img src={imageUrl} alt={name} />
       </div>
@@ -72,7 +79,12 @@ const Card = ({
           <h4>{name}</h4>
         </a>
         <RatingStars rating={rating} />
-        <span>{userRatingsTotal} 則評論</span>
+        <div className='comment'>
+          {userRatingsTotal} 則評論
+          <a href={url} target="_blank">
+            <LinkIcon />
+          </a>
+        </div>
       </div>
     </Container>
   )
