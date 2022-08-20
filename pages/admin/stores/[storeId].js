@@ -1,22 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { useRouter } from 'next/router'
-import AdminLayout from 'components/AdminLayout'
-import StoreDetail from 'components/StoreDetail'
-import StoreOpeningHours from 'components/StoreOpeningHours'
-import { getStore } from 'api/stores'
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import { useRouter } from "next/router"
+import AdminLayout from "components/AdminLayout"
+import StoreDetail from "components/StoreDetail"
+import StoreOpeningHours from "components/StoreOpeningHours"
+import { getStore } from "api/stores"
+import { ImageListItem, ImageList } from "@mui/material"
 
-const Container = styled.div`
-`
+const Container = styled.div``
 
-function build_intervals(label, intervalHours) {
-  return {
-    label,
-    intervals: intervalHours.map((hours) => ({
-      start: hours[0],
-      end: hours[1],
-    })),
-  }
+const StandardImageList = ({ photos }) => {
+  if (!photos) return null
+  return (
+    <ImageList sx={{ width: "100%" }} cols={5} variant="woven">
+      {photos.map((item) => (
+        <ImageListItem key={item}>
+          <img src={item} srcSet={item} alt={"oops"} />
+        </ImageListItem>
+      ))}
+    </ImageList>
+  )
 }
 
 const Store = () => {
@@ -42,8 +45,9 @@ const Store = () => {
             <br />
             <StoreOpeningHours
               openingHours={store.openingHours}
-              isOpen={store.is_open_now}
+              isOpen={store.isOpenNow}
             />
+            <StandardImageList photos={store.photos} />
           </>
         )}
       </Container>
