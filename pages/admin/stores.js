@@ -70,8 +70,6 @@ const Stores = () => {
       <StickyHeadTable
         columns={columns}
         rows={rows}
-        params={params}
-        setParams={setParams}
         totalCount={totalCount}
       />
     </AdminLayout>

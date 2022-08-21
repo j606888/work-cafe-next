@@ -8,7 +8,7 @@ const Row = ({ row }) => {
       <TableCell>
         <Link href={`/admin/stores/${row.placeId}`}>{row.name}</Link>
       </TableCell>
-      <TableCell>{row.city}</TableCell>
+      <TableCell align="right">{row.city}</TableCell>
       <TableCell align="right">{row.rating}</TableCell>
       <TableCell align="right">{row.phone}</TableCell>
       <TableCell align="right">{row.userRatingsTotal}</TableCell>

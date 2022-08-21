@@ -22,19 +22,19 @@ export default function StickyHeadTable({ columns, rows, params, setParams, tota
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ height: 'calc(100vh - 18rem)' }}>
         <Table stickyHeader aria-label="sticky table">
-          <Header columns={columns} params={params} setParams={setParams} />
+          <Header columns={columns} />
           <Body rows={rows} />
         </Table>
       </TableContainer>
-      <TablePagination
+      {/* <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={totalCount}
-        rowsPerPage={params.per}
-        page={params.page-1}
+        // rowsPerPage={params.per}
+        // page={params.page-1}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      /> */}
     </Paper>
   )
 }
