@@ -31,7 +31,6 @@ const Header = ({ onChange }) => {
     }
   }
 
-  // TODO, Ask, if I use like this will cause Maximum update depth exceed, but how to make it without warning?
   useEffect(() => {
     if (onChange) onChange(order, orderBy)
   }, [order, orderBy])

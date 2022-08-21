@@ -24,8 +24,9 @@ const UserRow = ({ row }) => {
   return (
     <TableRow hover role="checkbox" tabIndex={-1}>
       <TableCell>
-        <Link href={`/admin/users/${row.id}`}>{row.name}</Link>
+        <Link href={`/admin/users/${row.id}`}>{row.id}</Link>
       </TableCell>
+      <TableCell align="left">{row.name}</TableCell>
       <TableCell align="right">{row.email}</TableCell>
       <TableCell align="right">{row.createdAt}</TableCell>
     </TableRow>
