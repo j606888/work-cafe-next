@@ -1,5 +1,6 @@
 import { TableCell, TableHead, TableRow, TableSortLabel } from "@mui/material"
 import { useEffect, useState } from "react"
+import { snakeCase } from 'lodash'
 
 function createCol(id, label, align, allowOrder) {
   return {
@@ -23,10 +24,11 @@ const Header = ({ onChange }) => {
   const [orderBy, setOrderBy] = useState("name")
 
   const handleSort = (id) => {
-    if (orderBy === id) {
+    const snakeId = snakeCase(id)
+    if (orderBy === snakeId) {
       setOrder((curOrder) => (curOrder === "asc" ? "desc" : "asc"))
     } else {
-      setOrderBy(id)
+      setOrderBy(snakeId)
       setOrder("asc")
     }
   }

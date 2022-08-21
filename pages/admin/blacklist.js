@@ -50,7 +50,6 @@ const BlacklistPage = () => {
 
   async function handleRefreshStore() {
     await hideUnqualifiedStores()
-    console.log("Done")
   }
 
   return (

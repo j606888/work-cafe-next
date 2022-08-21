@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper"
 import TableContainer from "@mui/material/TableContainer"
 import Header from "./Header"
 import Body from "./Body"
-import { TablePagination } from "@mui/material"
+import { TablePagination, Table as MuiTable } from "@mui/material"
 
 const Table = ({
   type,
@@ -14,6 +14,7 @@ const Table = ({
   page = 1,
   onPageChange,
   onPerChange,
+  onHeaderClick,
 }) => {
   function handlePageChange(_event, newPage) {
     if (onPageChange) onPageChange(newPage + 1)
@@ -26,9 +27,11 @@ const Table = ({
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", minHeigh: "100vh" }}>
       {/* <TableContainer sx={{ height: "calc(100vh - 18rem)" }}> */}
-      <TableContainer sx={{ height: "calc(100vh - 6rem)" }}>
-        <Header cols={cols} />
-        <Body rows={rows} type={type} />
+      <TableContainer sx={{ height: "calc(100vh - 12rem)" }}>
+        <MuiTable>
+          <Header cols={cols} onHeaderClick={onHeaderClick} />
+          <Body rows={rows} type={type} />
+        </MuiTable>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}

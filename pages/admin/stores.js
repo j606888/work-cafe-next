@@ -59,6 +59,8 @@ const Stores = () => {
     return <Skeleton />
   }
 
+  // TODO, use useReduce to refactor
+
   async function handleOnChange(order, orderBy) {
     setParams((curParams) => ({ ...curParams, order, orderBy }))
   }
