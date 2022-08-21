@@ -14,7 +14,6 @@ const columns = [
   createCol("name", "Name", "left", true),
   createCol("city", "City", "right", true),
   createCol("rating", "Rating", "right", true),
-  createCol("phone", "Phone", "right", false),
   createCol("userRatingsTotal", "UserRatingsTotal", "right", true),
   createCol("url", "googleUrl", "right", false),
 ]

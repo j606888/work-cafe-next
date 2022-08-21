@@ -10,7 +10,6 @@ const Row = ({ row }) => {
       </TableCell>
       <TableCell align="right">{row.city}</TableCell>
       <TableCell align="right">{row.rating}</TableCell>
-      <TableCell align="right">{row.phone}</TableCell>
       <TableCell align="right">{row.userRatingsTotal}</TableCell>
       <TableCell align="right">
         <a target="_blank" href={row.url} rel="noreferrer" >

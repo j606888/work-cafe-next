@@ -12,7 +12,7 @@ import {
   BugReport as BugReportIcon,
   RemoveModerator as RemoveModeratorIcon,
 } from "@mui/icons-material"
-import AppBar from "../AppBar"
+import AppBar from "./AppBar"
 import MiniDrawer from "../MiniDrawer"
 import { getUser, userIsAdmin, userIsLogin } from "utils/user"
 import { useRouter } from "next/router"
