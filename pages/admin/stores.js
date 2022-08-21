@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react"
 import AdminLayout from "components/AdminLayout"
-import StickyHeadTable from 'components/StickyHeadTable'
-import { getStores  } from "api/stores"
-import Select from 'components/Select'
-import cityMap from 'config/cityMap'
-import { Box } from '@mui/material'
-import RatingSelect from 'components/Select/RatingSelect'
+import StickyHeadTable from "components/StickyHeadTable"
+import { getStores } from "api/stores"
+import Select from "components/Select"
+import cityMap from "config/cityMap"
+import { Box } from "@mui/material"
+import RatingSelect from "components/Select/RatingSelect"
+import Skeleton from "components/Skeleton"
 
 const cityList = cityMap.map((city) => city.name)
 
@@ -15,7 +16,7 @@ function createCol(id, name, align) {
     label: name,
     align,
     minWidth: 170,
-    format: (align === 'right') ? (value) => value.toLocaleString("en-US") : null
+    format: align === "right" ? (value) => value.toLocaleString("en-US") : null,
   }
 }
 
@@ -35,25 +36,28 @@ const Stores = () => {
     per: 10,
     rating: null,
     cities: [],
-    order: 'desc',
-    orderBy: 'name',
+    order: "desc",
+    orderBy: "name",
   })
   const [totalCount, setTotalCount] = useState(0)
 
-  const fetchStores = async () => {
-    const data = await getStores(params)
-    setRows(data.stores)
-    setTotalCount(data.paging.totalCount)
-  }
-
   const handleChange = (e) => {
     const cities = e.map((l) => l.value)
-    setParams(curParams => ({ ...curParams, cities: cities }))
+    setParams((curParams) => ({ ...curParams, cities: cities }))
   }
 
   useEffect(() => {
+    async function fetchStores() {
+      const data = await getStores(params)
+      setRows(data.stores)
+      setTotalCount(data.paging.totalCount)
+    }
     fetchStores()
   }, [params])
+
+  if (rows.length === 0) {
+    return <Skeleton />
+  }
 
   return (
     <AdminLayout>
@@ -63,15 +67,13 @@ const Stores = () => {
       <Box mb={2}>
         <Select options={cityList} handleChange={handleChange} />
       </Box>
-      {rows && (
-        <StickyHeadTable
-          columns={columns}
-          rows={rows}
-          params={params}
-          setParams={setParams}
-          totalCount={totalCount}
-        />
-      )}
+      <StickyHeadTable
+        columns={columns}
+        rows={rows}
+        params={params}
+        setParams={setParams}
+        totalCount={totalCount}
+      />
     </AdminLayout>
   )
 }

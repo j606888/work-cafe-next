@@ -80,7 +80,7 @@ const AdminLayout = ({ children }) => {
     } else {
       setIsReady(true)
     }
-  }, [])
+  }, [router])
 
   const toggleDrawer = () => {
     setOpen((cur) => !cur)

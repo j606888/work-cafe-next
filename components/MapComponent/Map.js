@@ -28,7 +28,7 @@ const Map = ({ onClick, onIdle, children, map, setMap }) => {
     if (ref.current && !map) {
       setMap(new window.google.maps.Map(ref.current, DEFAULT_SETUP))
     }
-  }, [ref, map])
+  }, [ref, map, setMap])
 
   useEffect(() => {
     if (map) {

@@ -107,7 +107,7 @@ const StoreDetail = ({
         </div>
         <div className="icon-info">
           <MapIcon />
-          <a href={url} target="_blank">
+          <a href={url} target="_blank" rel="noreferrer" >
             Google Map
           </a>
         </div>

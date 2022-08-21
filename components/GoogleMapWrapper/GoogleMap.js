@@ -32,7 +32,7 @@ const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoo
 
       setMap(new window.google.maps.Map(ref.current, setup))
     }
-  }, [ref, map])
+  }, [ref, map, initCenter, initZoom, setMap])
 
   useEffect(() => {
     if (map) {

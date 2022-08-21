@@ -6,6 +6,7 @@ import StoreDetail from "components/StoreDetail"
 import StoreOpeningHours from "components/StoreOpeningHours"
 import { getStore, syncStorePhotos } from "api/stores"
 import { ImageListItem, ImageList, Button } from "@mui/material"
+import { useCallback } from "react"
 
 const Container = styled.div``
 
@@ -32,14 +33,15 @@ const Store = () => {
   const [store, setStore] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  async function callAPI() {
+
+  const callAPI = useCallback(async() => {
     const res = await getStore(storeId)
     setStore(res)
-  }
+  }, [storeId])
 
   useEffect(() => {
     if (storeId) callAPI()
-  }, [storeId])
+  }, [storeId, callAPI])
 
   async function handleSyncPhoto() {
     setIsLoading(true)
