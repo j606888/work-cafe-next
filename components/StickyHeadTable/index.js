@@ -5,7 +5,7 @@ import TablePagination from "@mui/material/TablePagination"
 import Body from "./Body"
 import Header from "./Header"
 
-export default function StickyHeadTable({ columns, rows, params, setParams, totalCount }) {
+export default function StickyHeadTable({ columns, rows, params, setParams, totalCount, onChange }) {
   const handleChangePage = (event, newPage) => {
     setParams((curParams) => ({ ...curParams, page: newPage+1 }))
   }
@@ -22,7 +22,7 @@ export default function StickyHeadTable({ columns, rows, params, setParams, tota
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ height: 'calc(100vh - 18rem)' }}>
         <Table stickyHeader aria-label="sticky table">
-          <Header columns={columns} />
+          <Header onChange={onChange} />
           <Body rows={rows} />
         </Table>
       </TableContainer>

@@ -59,6 +59,12 @@ const Stores = () => {
     return <Skeleton />
   }
 
+  async function handleOnChange(order, orderBy) {
+    console.log("Current order: ", order)
+    console.log("Current OrderBy: ", orderBy)
+    setParams((curParams) => ({ ...curParams, order, orderBy }))
+  }
+
   return (
     <AdminLayout>
       <Box mb={1}>
@@ -71,6 +77,7 @@ const Stores = () => {
         columns={columns}
         rows={rows}
         totalCount={totalCount}
+        onChange={handleOnChange}
       />
     </AdminLayout>
   )
