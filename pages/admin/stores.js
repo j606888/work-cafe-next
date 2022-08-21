@@ -60,15 +60,25 @@ const Stores = () => {
   }
 
   async function handleOnChange(order, orderBy) {
-    console.log("Current order: ", order)
-    console.log("Current OrderBy: ", orderBy)
     setParams((curParams) => ({ ...curParams, order, orderBy }))
+  }
+
+  async function handleOnPageChange(newPage) {
+    setParams((curParams) => ({ ...curParams, page: newPage }))
+  }
+
+  async function handleOnPerChange(newPer) {
+    setParams((curParams) => ({ ...curParams, per: newPer, page: 1 }))
+  }
+
+  async function handleOnRatingChange(newRating) {
+    setParams((curParams) => ({ ...curParams, rating: newRating }))
   }
 
   return (
     <AdminLayout>
       <Box mb={1}>
-        <RatingSelect params={params} setParams={setParams} />
+        <RatingSelect rating={params.rating} onChange={handleOnRatingChange} />
       </Box>
       <Box mb={2}>
         <Select options={cityList} handleChange={handleChange} />
@@ -78,6 +88,9 @@ const Stores = () => {
         rows={rows}
         totalCount={totalCount}
         onChange={handleOnChange}
+        onPageChange={handleOnPageChange}
+        onPerChange={handleOnPerChange}
+        {...params}
       />
     </AdminLayout>
   )
