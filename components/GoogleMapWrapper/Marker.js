@@ -25,7 +25,7 @@ export default function Marker({ map, options, id, store, onClick, onMouseover, 
     return () => {
       if (marker) marker.setMap(null)
     }
-  }, [map, marker])
+  }, [map, marker, store.name])
 
   useEffect(() => {
     if (marker && map) {

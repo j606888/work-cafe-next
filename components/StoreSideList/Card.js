@@ -75,13 +75,13 @@ const Card = ({
         <img src={imageUrl} alt={name} />
       </div>
       <div className="content">
-        <a href={`/admin/stores/${placeId}`} target="_blank">
+        <a href={`/admin/stores/${placeId}`} target="_blank" rel="noreferrer">
           <h4>{name}</h4>
         </a>
         <RatingStars rating={rating} />
         <div className='comment'>
           {userRatingsTotal} 則評論
-          <a href={url} target="_blank">
+          <a href={url} target="_blank" rel="noreferrer">
             <LinkIcon />
           </a>
         </div>

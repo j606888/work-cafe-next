@@ -1,27 +1,10 @@
 import { TableCell, TableHead, TableRow, TableSortLabel } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { snakeCase } from 'lodash'
 
-function createCol(id, label, align, allowOrder) {
-  return {
-    id,
-    label,
-    align,
-    allowOrder,
-  }
-}
-
-const columns = [
-  createCol("name", "Name", "left", true),
-  createCol("city", "City", "right", true),
-  createCol("rating", "Rating", "right", true),
-  createCol("userRatingsTotal", "UserRatingsTotal", "right", true),
-  createCol("url", "googleUrl", "right", false),
-]
-
-const Header = ({ onChange }) => {
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("name")
+const Header = ({ onHeaderClick, cols }) => {
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("id")
 
   const handleSort = (id) => {
     const snakeId = snakeCase(id)
@@ -31,23 +14,21 @@ const Header = ({ onChange }) => {
       setOrderBy(snakeId)
       setOrder("asc")
     }
-  }
 
-  useEffect(() => {
-    if (onChange) onChange(order, orderBy)
-  }, [order, orderBy])
+    if (onHeaderClick) onHeaderClick(order, orderBy)
+  }
 
   return (
     <TableHead>
       <TableRow>
-        {columns.map((column) => (
+        {cols.map((column) => (
           <TableCell
             key={column.id}
             align={column.align}
             style={{ minWidth: 170 }}
             sortDirection={order}
           >
-            {column.allowOrder ? (
+            {column.canOrder ? (
               <TableSortLabel
                 active={column.id === orderBy}
                 direction={orderBy === column.id ? order : "asc"}

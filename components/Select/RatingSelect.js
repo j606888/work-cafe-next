@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import StarIcon from "@mui/icons-material/Star"
-import StarHalfIcon from "@mui/icons-material/StarHalf"
-import StarOutlineIcon from "@mui/icons-material/StarOutline"
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
-import useOutsideClick from 'hooks/useOutsideClick'
-import DoneIcon from "@mui/icons-material/Done"
+import { useState } from "react"
+import styled from "styled-components"
+import useOutsideClick from "hooks/useOutsideClick"
+import {
+  Done as DoneIcon,
+  ArrowDropDown as ArrowDropDownIcon,
+  StarOutline as StarOutlineIcon,
+  StarHalf as StarHalfIcon,
+  Star as StarIcon,
+} from "@mui/icons-material"
 
 const Container = styled.div`
   position: relative;
@@ -96,7 +98,7 @@ const StarList = ({ rating, onClick }) => {
   )
 }
 
-const RatingSelect = ({ params, setParams }) => {
+const RatingSelect = ({ onChange, rating }) => {
   const [show, setShow] = useState(false)
   const selectorRef = useOutsideClick(() => setShow(false))
 
@@ -111,20 +113,20 @@ const RatingSelect = ({ params, setParams }) => {
   const afterChoose = (
     <>
       <DoneIcon sx={{ fontSize: 18, marginLeft: 1, color: "#1565C0" }} />
-      <span style={{ color: "#1565C0", fontWeight: 'bold' }}>{params.rating}+</span>
-      <StarIcon sx={{ fontSize: 22, color: "#E7915A" }} />
+      <span style={{ color: "#1565C0", fontWeight: "bold" }}>{rating}+</span>
+      <StarIcon sx={{ fontSize: 18, color: "#E7915A" }} />
       <ArrowDropDownIcon sx={{ color: "#1565C0" }} />
     </>
   )
 
-  const setRate = (rating) => {
-    setParams(curParams => ({ ...curParams, rating }))
+  const setRate = (newRating) => {
+    if (onChange) onChange(newRating)
   }
 
   return (
-    <Container show={show} rate={params.rating}>
+    <Container show={show} rate={rating}>
       <div className="selector" onClick={() => setShow(true)} ref={selectorRef}>
-        {params.rating ? afterChoose : beforeChoose }
+        {rating ? afterChoose : beforeChoose}
       </div>
       <div className="options">
         <span onClick={() => setRate(null)}>不限評分</span>
@@ -138,7 +140,5 @@ const RatingSelect = ({ params, setParams }) => {
     </Container>
   )
 }
-
-
 
 export default RatingSelect

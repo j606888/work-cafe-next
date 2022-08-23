@@ -39,7 +39,7 @@ const MapPage = () => {
 
       if (match) setCenter(match.groups)
     }
-  }, [router.isReady])
+  }, [router])
 
   function handleOnIdle(m) {
     if (!m.getCenter()) return

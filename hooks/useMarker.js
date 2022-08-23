@@ -12,10 +12,7 @@ export default function useMarker({ map, options, onClick }) {
   }, [map, marker])
 
   useEffect(() => {
-    console.log("Here")
     if (marker) {
-      console.log("Here2")
-      console.log(map)
       options.map = map 
       marker.setOptions(options)
     }
