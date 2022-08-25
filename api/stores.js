@@ -34,8 +34,10 @@ export async function syncStorePhotos(placeId) {
   await instance.post(`/admin/stores/${placeId}/sync-photos`)
 }
 
-export async function getHint({keyword}) {
-  // const params = { keyword }
-  const res = await instance.get(`/stores/hint?keyword=${keyword}`)
-  return res.data
+const getHint = ({keyword}) => {
+  return instance.get(`/stores/hint?keyword=${keyword}`)
+}
+
+export default {
+  getHint,
 }

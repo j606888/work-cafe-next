@@ -1,13 +1,14 @@
-import * as React from "react"
+import React, { useEffect } from "react"
 import TextField from "@mui/material/TextField"
-import Autocomplete from "@mui/material/Autocomplete"
+import MuiAutocomplete from "@mui/material/Autocomplete"
 import StoreIcon from "@mui/icons-material/Store"
 import LocationOnIcon from "@mui/icons-material/LocationOn"
 import CircleIcon from "@mui/icons-material/Circle"
 import { Box, Typography } from "@mui/material"
 import parse from "autosuggest-highlight/parse"
 import match from "autosuggest-highlight/match"
-import { getHint } from "api/stores"
+import storeApi from "api/stores"
+import useApi from "hooks/useApi"
 
 const LocationOption = ({ label, count, inputValue }) => {
   const matches = match(label, inputValue)
@@ -94,7 +95,7 @@ const StoreOption = ({ label, address, inputValue }) => {
   )
 }
 
-export default function ComboBox({
+export default function Autocomplete({
   options = [],
   onInputChange,
   onChange,
@@ -105,8 +106,18 @@ export default function ComboBox({
     ...option,
     label: option.name,
   }))
-
   const [op, setOp] = React.useState([])
+  const getHintApi = useApi(storeApi.getHint)
+
+  useEffect(() => {
+    console.log("Got it")
+    console.log(getHintApi.data)
+    const hints = getHintApi.data?.results?.map(hint => ({
+      ...hint,
+      label: hint.name
+    }))
+    setOp(hints || [])
+  }, [getHintApi.data])
 
   function handleChange(_event, newValue) {
     setValue(newValue)
@@ -119,19 +130,22 @@ export default function ComboBox({
     if (newInputValue === "") {
       setOp([])
     } else {
-      const res = await getHint({ keyword: newInputValue })
-      const hints = res.results.map((option) => ({
-        ...option,
-        label: option.name,
-      }))
-      setOp(hints)
+      console.log("Search")
+      getHintApi.request({ keyword: newInputValue })
     }
     if (onInputChange) onInputChange(newInputValue)
   }
 
+  useEffect(() => {
+    console.log("HERES OP")
+    console.log(op)
+  }, [
+    op
+  ])
+
   return (
     <>
-      <Autocomplete
+      <MuiAutocomplete
         disableClearable
         freeSolo
         id="combo-box-demo"

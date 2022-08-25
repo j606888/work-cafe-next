@@ -2,7 +2,8 @@ const path = require("path")
 
 module.exports = {
   stories: [
-    "../components/**/*.stories.js"
+    "../components/**/*.stories.js",
+    "../features/**/*.stories.js"
   ],
   addons: [
     "@storybook/addon-links",
@@ -19,6 +20,7 @@ module.exports = {
       context: path.resolve(__dirname, "../context"),
       hooks: path.resolve(__dirname, "../hooks"),
       api: path.resolve(__dirname, "../api"),
+      features: path.resolve(__dirname, "../features"),
     }
     return config
   },
