@@ -1,12 +1,12 @@
-import Demo from "."
+import Searchbar from "."
 
 export default {
-  component: Demo,
+  component: Searchbar,
   argTypes: {
     onChange: { action: 'Change' },
     onInputChange: { action: 'InputChange' },
   }
 }
 
-export const Default = (args) => <Demo {...args} />
+export const Default = (args) => <Searchbar {...args} />
 Default.args = {}
