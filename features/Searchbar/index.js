@@ -1,4 +1,5 @@
 import Autocomplete from "./Autocomplete"
+import Menu from "./Menu"
 import storeApi from "api/stores"
 import useApi from "hooks/useApi"
 import { useState } from "react"
@@ -26,6 +27,7 @@ const Searchbar = () => {
 
   return <>
     <Autocomplete options={results} onInputChange={handleInputChange} />
+    <Menu />
   </>
 }
 export default Searchbar
