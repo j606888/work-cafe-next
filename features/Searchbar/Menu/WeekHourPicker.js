@@ -61,22 +61,21 @@ const CustomRadio = ({
   )
 }
 
-const RadioGroup = ({ children, onClick, name }) => {
+const RadioGroup = ({ children, onClick, name, width=70 }) => {
   const radios = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
       return React.cloneElement(child, { onClick, name })
     }
   })
-  return radios
+  return <Box sx={{ display: 'flex', flexWrap: 'wrap', width: width }}>{radios}</Box>
 }
 
-const WeekHourPicker = ({ active = true }) => {
-  const [weekday, setWeekday] = useState(0)
-  const [hour, setHour] = useState(null)
-
+const WeekHourPicker = ({ active = true, onWeekdayChange, onHourChange }) => {
   const handleWeekdayChange = (event) => {
-    console.log("Weekday Change")
-    console.log(event.target.value)
+    if(onWeekdayChange) onWeekdayChange(event.target.value)
+  }
+  const handleHourChange = (event) => {
+    if(onHourChange) onHourChange(event.target.value)
   }
 
   return (
@@ -94,59 +93,33 @@ const WeekHourPicker = ({ active = true }) => {
           </RadioGroup>
         </Box>
         <Divider orientation="vertical" flexItem sx={{ marginX: 1 }} />
-        <Box>
-          <Box>
-            <CustomRadio name="hour" value={null} text="不限時間" width="158px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-0" text="深夜" width="76px" />
-            <CustomRadio name="hour" id="h-12" text="中午" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-1" text="凌晨 1:00" width="76px" />
-            <CustomRadio name="hour" id="h-13" text="下午 1:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-2" text="凌晨 2:00" width="76px" />
-            <CustomRadio name="hour" id="h-14" text="下午 2:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-3" text="凌晨 3:00" width="76px" />
-            <CustomRadio name="hour" id="h-15" text="下午 3:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-5" text="凌晨 4:00" width="76px" />
-            <CustomRadio name="hour" id="h-16" text="下午 4:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-5" text="清晨 5:00" width="76px" />
-            <CustomRadio name="hour" id="h-17" text="下午 5:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-6" text="清晨 6:00" width="76px" />
-            <CustomRadio name="hour" id="h-18" text="下午 6:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-7" text="清晨 7:00" width="76px" />
-            <CustomRadio name="hour" id="h-19" text="晚上 7:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-8" text="早上 8:00" width="76px" />
-            <CustomRadio name="hour" id="h-20" text="晚上 8:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-9" text="早上 9:00" width="76px" />
-            <CustomRadio name="hour" id="h-21" text="晚上 9:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-10" text="早上 10:00" width="76px" />
-            <CustomRadio name="hour" id="h-22" text="晚上 10:00" width="76px" />
-          </Box>
-          <Box sx={{ display: "flex" }}>
-            <CustomRadio name="hour" id="h-11" text="早上 11:00" width="76px" />
-            <CustomRadio name="hour" id="h-23" text="晚上 11:00" width="76px" />
-          </Box>
-        </Box>
+        <RadioGroup onClick={handleHourChange} name="hour" width={180}>
+            <CustomRadio value={null} text="不限時間" width="158px" />
+            <CustomRadio value={0} text="深夜" width="76px" />
+            <CustomRadio value={12} text="中午" width="76px" />
+            <CustomRadio value={1} text="凌晨 1:00" width="76px" />
+            <CustomRadio value={13} text="下午 1:00" width="76px" />
+            <CustomRadio value={2} text="凌晨 2:00" width="76px" />
+            <CustomRadio value={14} text="下午 2:00" width="76px" />
+            <CustomRadio value={3} text="凌晨 3:00" width="76px" />
+            <CustomRadio value={15} text="下午 3:00" width="76px" />
+            <CustomRadio value={4} text="凌晨 4:00" width="76px" />
+            <CustomRadio value={16} text="下午 4:00" width="76px" />
+            <CustomRadio value={5} text="清晨 5:00" width="76px" />
+            <CustomRadio value={17} text="下午 5:00" width="76px" />
+            <CustomRadio value={6} text="清晨 6:00" width="76px" />
+            <CustomRadio value={18} text="下午 6:00" width="76px" />
+            <CustomRadio value={7} text="清晨 7:00" width="76px" />
+            <CustomRadio value={19} text="晚上 7:00" width="76px" />
+            <CustomRadio value={8} text="早上 8:00" width="76px" />
+            <CustomRadio value={20} text="晚上 8:00" width="76px" />
+            <CustomRadio value={9} text="早上 9:00" width="76px" />
+            <CustomRadio value={21} text="晚上 9:00" width="76px" />
+            <CustomRadio value={10} text="早上 10:00" width="76px" />
+            <CustomRadio value={22} text="晚上 10:00" width="76px" />
+            <CustomRadio value={11} text="早上 11:00" width="76px" />
+            <CustomRadio value={23} text="晚上 11:00" width="76px" />
+        </RadioGroup>
       </Box>
       <Divider />
     </Container>
