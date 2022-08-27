@@ -51,13 +51,9 @@ const Searchbar = () => {
   return (
     <Container>
       <Autocomplete options={results} onInputChange={handleInputChange} />
-      <Divider
-        orientation="vertical"
-        variant="middle"
-        flexItem
-        sx={{ mx: 1, borderColor: '#333' }}
-      />
-      <Menu onOpenTimeChange={changeOpenTimeChange} />
+      <div className="filter">
+        <Menu onOpenTimeChange={changeOpenTimeChange} />
+      </div>
       <Button text="搜尋" />
     </Container>
   )

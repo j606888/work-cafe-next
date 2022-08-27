@@ -1,11 +1,4 @@
-* {
+body {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
-  font-family: 'Noto Sans', sans-serif;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
