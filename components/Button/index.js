@@ -11,7 +11,7 @@ const themes = {
 const sizes = {
   small: css`
     font-size: 12px;
-    padding: 8px 15px;
+    padding: 6px 12px;
     border-radius: 5px;
   `
 }
