@@ -6,6 +6,16 @@ import RadioGroup from "@mui/material/RadioGroup"
 import FormControl from "@mui/material/FormControl"
 import WeekHourPicker from "./WeekHourPicker"
 import RadioLabel from "./RadioLabel"
+import Circle from "@mui/icons-material/Circle"
+import styled from "styled-components"
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  color: #666;
+  font-size: 16px;
+  width: 320px;
+`
 
 export default function Menu() {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -39,11 +49,11 @@ export default function Menu() {
 
   return (
     <>
-      <Button id="basic-button" onClick={handleClick} variant="contained">
+      <Container onClick={handleClick}>
+        <Circle sx={{color: '#ccc', mr:1, ml: .5 }} />
         營業時間
-      </Button>
+      </Container>
       <MuiMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
-      {/* <Box sx={{ border: "1px solid black", display: "inline-block" }}> */}
         <FormControl sx={{ width: "100%", my: 1 }}>
           <RadioGroup value={openType} onChange={handleRadioChange}>
             <RadioLabel label="不限時間" value="none" />
