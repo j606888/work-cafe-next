@@ -14,7 +14,7 @@ const Container = styled.div`
   align-items: center;
   color: #666;
   font-size: 16px;
-  width: 320px;
+  width: 220px;
 `
 
 const OpenTypes = {

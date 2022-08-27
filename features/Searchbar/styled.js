@@ -8,6 +8,8 @@ export const Container = styled.div`
   padding: 4px 4px;
   border-radius: 8px;
   position: relative;
+  background: #ffffff;
+  min-width: 560px;
 
   &:after {
     content: "";
