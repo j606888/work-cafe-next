@@ -1,5 +1,5 @@
 import axios from "axios"
-// import camelcaseKeys from "camelcase-keys"
+import camelcaseKeys from "camelcase-keys"
 import snakecaseKeys from "snakecase-keys"
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST
@@ -34,27 +34,28 @@ instance.interceptors.request.use((config) => {
   return config
 })
 
-// instance.interceptors.response.use(
-//   (response) => {
-//     if (response.data) {
-//       response.data = camelcaseKeys(response.data, { deep: true })
-//     }
+instance.interceptors.response.use(
+  (response) => {
+    if (response.data) {
+      response.data = camelcaseKeys(response.data, { deep: true })
+    }
 
-//     return response
-//   },
-//   async function (error) {
-//     const originalRequest = error.config
-//     if (error.response.status === 403 && !originalRequest._retry) {
-//       originalRequest._retry = true
+    return response
+  },
+  async function (error) {
+    const originalRequest = error.config
+    if (error.response.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true
 
-//       await refreshAccessToken()
-//       return instance(originalRequest)
-//     }
+      await refreshAccessToken()
+      return instance(originalRequest)
+    }
 
-//     return Promise.reject(error)
-//   }
-// )
+    return Promise.reject(error)
+  }
+)
 
-export default {
+const api = {
   instance,
 }
+export default api
