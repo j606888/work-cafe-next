@@ -1,4 +1,4 @@
-import GoogleMap from "features/GoogleMap";
+import GoogleMap from "features/UserStoreMap";
 import Header from "features/Header";
 
 export default function MapPage() {

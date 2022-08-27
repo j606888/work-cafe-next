@@ -6,6 +6,7 @@ const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY
 
 const GoogleMap = () => {
   const [map, setMap] = useState(null)
+  const [stores, setStores] = useState([])
 
   return (
     <Wrapper apiKey={API_KEY}>
