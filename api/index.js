@@ -55,6 +55,7 @@ instance.interceptors.response.use(
   }
 )
 
-export default {
+const api = {
   instance,
 }
+export default api
