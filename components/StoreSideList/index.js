@@ -3,7 +3,7 @@ import styled from "styled-components"
 import Card from "./Card"
 
 const Container = styled.div`
-  height: 85vh;
+  height: 90vh;
   overflow-y: auto;
   background-color: #eee;
   display: flex;
