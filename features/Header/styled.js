@@ -13,6 +13,7 @@ export const Container = styled.div`
 
   h3, a {
     color: #757575;
+    cursor: pointer;
   }
 
   a {

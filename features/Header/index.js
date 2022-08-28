@@ -1,15 +1,18 @@
-import React from 'react'
-import { Container } from './styled'
-import Searchbar from 'features/Searchbar'
+import React from "react"
+import { Container } from "./styled"
+import Searchbar from "features/Searchbar"
+import Link from "next/link"
 
 const Header = ({ withSearchBar = false }) => {
   return (
     <Container>
-      <h3>Work Cafe | Taiwan</h3>
+      <Link href="/">
+        <h3>Work Cafe | Taiwan</h3>
+      </Link>
       {withSearchBar && <Searchbar />}
       <div>
-        <a href="#">註冊</a>
-        <a href="#">登入</a>
+        <Link href="/signup">註冊</Link>
+        <Link href="/login">登入</Link>
       </div>
     </Container>
   )
