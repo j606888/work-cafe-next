@@ -48,6 +48,7 @@ export const Content = styled.div`
 
   .opening {
     display: block;
+    color: ${({openNow}) => openNow ? 'green' : 'red' };
   }
 
   .address {
