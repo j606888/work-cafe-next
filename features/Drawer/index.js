@@ -1,5 +1,4 @@
 import * as React from "react"
-import Box from "@mui/material/Box"
 import MuiDrawer from "@mui/material/Drawer"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
@@ -23,7 +22,7 @@ const Btn = styled.div`
   cursor: pointer;
 `
 
-export default function Drawer({ stores=[] }) {
+export default function Drawer({ stores = [] }) {
   const [state, setState] = React.useState(false)
   const width = 460
 
@@ -38,9 +37,13 @@ export default function Drawer({ stores=[] }) {
     setState((cur) => !cur)
   }
 
+  React.useEffect(() => {
+    setState(true)
+  }, [stores])
+
   return (
-    <div>
-      <React.Fragment>
+    <React.Fragment>
+      {stores.length > 0 && (
         <Btn open={state} left={width} onClick={toggleDrawer()}>
           {state ? (
             <ArrowBackIcon sx={{ fontSize: 28 }} />
@@ -48,15 +51,15 @@ export default function Drawer({ stores=[] }) {
             <ArrowForwardIcon sx={{ fontSize: 28 }} />
           )}
         </Btn>
-        <MuiDrawer
-          anchor={"left"}
-          open={state}
-          onClose={toggleDrawer}
-          variant="persistent"
-        >
-          <CardList stores={stores} />
-        </MuiDrawer>
-      </React.Fragment>
-    </div>
+      )}
+      <MuiDrawer
+        anchor={"left"}
+        open={state}
+        onClose={toggleDrawer}
+        variant="persistent"
+      >
+        <CardList stores={stores} />
+      </MuiDrawer>
+    </React.Fragment>
   )
 }

@@ -30,7 +30,6 @@ export default function Autocomplete({
 
   return (
     <MuiAutocomplete
-      disableClearable
       freeSolo
       id="combo-box-demo"
       options={options}

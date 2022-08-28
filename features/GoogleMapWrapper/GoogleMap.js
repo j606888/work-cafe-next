@@ -42,7 +42,17 @@ const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoo
       )
 
       if (onClick) map.addListener("click", onClick)
-      if (onIdle) map.addListener("idle", () => onIdle(map))
+      if (onIdle) map.addListener("idle", () => {
+        const { lat, lng } = map.getCenter().toJSON()
+        const zoom = map.getZoom()
+        const shortRes = {
+          lat: +lat.toFixed(6),
+          lng: +lng.toFixed(6),
+          zoom,
+        }
+      
+        onIdle(shortRes)
+      })
     }
   }, [map, onClick, onIdle])
 

@@ -27,9 +27,12 @@ const Outer = styled.button`
   ${({size}) => sizes[size]}
 `
 
-const Button = ({ text, theme = 'main', size = 'small', link, onClickEvent = null }) => {
+const Button = ({ text, theme = 'main', size = 'small', link, onClick = null }) => {
+  function handleOnClick() {
+    if (onClick) onClick()
+  }
   const btn = (
-    <Outer theme={theme} size={size} onClick={onClickEvent}>
+    <Outer theme={theme} size={size} onClick={handleOnClick}>
       {text}
     </Outer>
   )

@@ -4,7 +4,7 @@ import Header from "features/Header";
 export default function MapPage() {
   return (
     <>
-      <Header withSearchBar />
+      <Header />
       <GoogleMap />
     </>
   )

@@ -5,12 +5,27 @@ import Drawer from "features/Drawer"
 import useApi from "hooks/useApi"
 import storeApi from "api/stores"
 import FilterContext from "contexts/FilterContext"
+import Router from "next/router"
+import { useRef } from "react"
+import Searchbar from "features/Searchbar"
+import styled from "styled-components"
 
-const GoogleMap = () => {
+const FloatSearchBar = styled.div`
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+`
+
+const UserStoreMap = () => {
   const [map, setMap] = useState(null)
+  const mapCenterRef = useRef({
+    lat: 23.0042325,
+    lng: 120.2216038,
+  })
   const [stores, setStores] = useState([])
   const getStoresApi = useApi(storeApi.getPublicStoresByLocation)
-
   const { keyword, openTime } = useContext(FilterContext)
 
   useEffect(() => {
@@ -19,12 +34,27 @@ const GoogleMap = () => {
   }, [getStoresApi.data])
 
   useEffect(() => {
-    getStoresApi.request({
-      lat: 23.0042325,
-      lng: 120.2216038,
-      ...openTime,
-    })
+    callAPI()
   }, [openTime])
+
+  function callAPI() {
+    getStoresApi.request({
+      ...mapCenterRef.current,
+      ...openTime,
+      keyword,
+    })
+  }
+
+  function handleOnClick() {
+    callAPI()
+  }
+
+  const handleOnIdle = ({ lat, lng, zoom }) => {
+    Router.push({
+      pathname: `/map/@${lat},${lng},${zoom}z`,
+    })
+    mapCenterRef.current = { lat, lng }
+  }
 
   const markers = stores.map((store) => {
     const options = {
@@ -49,12 +79,15 @@ const GoogleMap = () => {
 
   return (
     <>
+      <FloatSearchBar>
+        <Searchbar onClick={handleOnClick}/>
+      </FloatSearchBar>
       <Drawer stores={stores}/>
-      <GoogleMapWrapper map={map} setMap={setMap} marginTop="56px">
+      <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}marginTop="56px">
         {markers}
       </GoogleMapWrapper>
     </>
   )
 }
 
-export default GoogleMap
+export default UserStoreMap
