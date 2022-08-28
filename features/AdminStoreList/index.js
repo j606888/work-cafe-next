@@ -61,6 +61,11 @@ const reducer = (state, action) => {
         order: action.payload.order,
         orderBy: action.payload.orderBy,
       }
+    case "CITY_CHANGE":
+      return {
+        ...state,
+        cities: action.payload.cities,
+      }
     default:
       throw new Error("Action not exist")
   }
@@ -73,7 +78,7 @@ const AdminStoreList = () => {
 
   const handleChange = (e) => {
     const cities = e.map((l) => l.value)
-    setParams((curParams) => ({ ...curParams, cities: cities }))
+    dispatch({ type: "CITY_CHANGE", payload: { cities } })
   }
 
   useEffect(() => {
