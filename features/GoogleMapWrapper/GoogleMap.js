@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 
 const Container = styled.div`
-  height: calc(100vh - 64px - 3rem);
+  height: ${props => `calc(100vh - ${props.marginTop})`};
   width: 100%;
 `
+
 const DEFAULT_SETUP = {
   center: {
     lat: 23.546162,
@@ -21,7 +22,7 @@ const DEFAULT_SETUP = {
   ],
 }
 
-const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoom }) => {
+const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoom, marginTop }) => {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -47,7 +48,7 @@ const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoo
 
   return (
     <>
-      <Container ref={ref} />
+      <Container ref={ref} marginTop={marginTop} />
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, { map })
