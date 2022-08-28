@@ -2,17 +2,15 @@ import Autocomplete from "./Autocomplete"
 import Menu from "./Menu"
 import storeApi from "api/stores"
 import useApi from "hooks/useApi"
-import { useState } from "react"
-import { useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { Container } from "./styled"
-import { Divider } from "@mui/material"
 import Button from "components/Button"
+import FilterContext from "contexts/FilterContext"
 
-const Searchbar = () => {
+const Searchbar = ({ onClick }) => {
   const getHintApi = useApi(storeApi.getHint)
   const [results, setResults] = useState([])
-  const [openTime, setOpenTime] = useState({})
-  const [keyword, setKeyword] = useState("")
+  const { keyword, setKeyword, openTime, setOpenTime} = useContext(FilterContext)
 
   useEffect(() => {
     const hints = getHintApi.data?.results?.map((hint) => ({
@@ -40,6 +38,10 @@ const Searchbar = () => {
     }
   }
 
+  function handleOnClick() {
+    if(onClick) onClick()
+  }
+
   useEffect(() => {
     if (keyword === "") {
       setResults([])
@@ -51,14 +53,10 @@ const Searchbar = () => {
   return (
     <Container>
       <Autocomplete options={results} onInputChange={handleInputChange} />
-      <Divider
-        orientation="vertical"
-        variant="middle"
-        flexItem
-        sx={{ mx: 1, borderColor: '#333' }}
-      />
-      <Menu onOpenTimeChange={changeOpenTimeChange} />
-      <Button text="搜尋" />
+      <div className="filter">
+        <Menu onOpenTimeChange={changeOpenTimeChange} />
+      </div>
+      <Button text="搜尋" onClick={handleOnClick} />
     </Container>
   )
 }

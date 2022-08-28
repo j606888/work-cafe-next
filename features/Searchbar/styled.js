@@ -4,8 +4,23 @@ export const Container = styled.div`
   border: 1px solid #666;
   display: flex;
   align-items: center;
-  padding: 4px 0;
-  padding-left: 4px;
+  justify-content: space-between;
+  padding: 4px 4px;
   border-radius: 8px;
-  width: 730px;
+  position: relative;
+  background: #ffffff;
+  min-width: 560px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    border-left: 1px solid #666;
+    height: 70%;
+  }
+
+  .filter {
+    position: absolute;
+    left: 51%;
+  }
 `

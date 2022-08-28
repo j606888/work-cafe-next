@@ -8,13 +8,14 @@ import WeekHourPicker from "./WeekHourPicker"
 import RadioLabel from "./RadioLabel"
 import Circle from "@mui/icons-material/Circle"
 import styled from "styled-components"
+import { Box } from "@mui/system"
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   color: #666;
   font-size: 16px;
-  width: 320px;
+  width: 220px;
 `
 
 const OpenTypes = {
@@ -77,6 +78,12 @@ export default function Menu({ onOpenTimeChange }) {
     setAnchorEl(null)
   }
 
+  const handleReset = () => {
+    setOpenType("none")
+    setWeek("0")
+    setHour("99")
+  }
+
   const handleRadioChange = (event) => {
     setOpenType(event.target.value)
   }
@@ -116,6 +123,11 @@ export default function Menu({ onOpenTimeChange }) {
           curWeek={week}
           curHour={hour}
         />
+        <Divider />
+        <Box sx={{mt: 1, textAlign: 'center'}}>
+          <Button sx={{color: '#666'}} onClick={handleReset}>清除</Button>
+          <Button onClick={handleClose}>套用</Button>
+        </Box>
       </MuiMenu>
     </>
   )
