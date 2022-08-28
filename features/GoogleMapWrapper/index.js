@@ -8,6 +8,7 @@ const GoogleMapWrapper = ({
   map,
   setMap,
   onIdle,
+  onClick,
   initCenter,
   initZoom,
   marginTop="20px",
@@ -18,6 +19,7 @@ const GoogleMapWrapper = ({
         map={map}
         setMap={setMap}
         onIdle={onIdle}
+        onClick={onClick}
         initCenter={initCenter}
         initZoom={initZoom}
         marginTop={marginTop}

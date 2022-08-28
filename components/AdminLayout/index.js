@@ -104,7 +104,7 @@ const AdminLayout = ({ children }) => {
         handleLogout={handleLogout}
       />
       <MiniDrawer open={open} lists={lists} />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <DrawerHeader />
         {children}
       </Box>
