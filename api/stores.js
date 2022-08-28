@@ -1,5 +1,5 @@
 import { instance } from "./index"
-import { snakeCase } from 'lodash'
+import { snakeCase } from "lodash"
 
 export async function getStores({ page, per, cities, rating, order, orderBy }) {
   const params = { page, per, order, orderBy }
@@ -35,29 +35,40 @@ export async function syncStorePhotos(placeId) {
   await instance.post(`/admin/stores/${placeId}/sync-photos`)
 }
 
-const getHint = ({keyword, openType, openWeek, openHour }) => {
+const getHint = ({ keyword, openType, openWeek, openHour }) => {
   const params = {
     keyword,
     open_type: openType && snakeCase(openType),
     open_week: openWeek,
-    open_hour: openHour
+    open_hour: openHour,
   }
   return instance.get(`/stores/hint`, { params })
 }
 
-const getPublicStoresByLocation = ({keyword, lat, lng, limit=20 }) => {
+const getPublicStoresByLocation = ({
+  keyword,
+  lat,
+  lng,
+  limit = 20,
+  openType,
+  openWeek,
+  openHour,
+}) => {
   const params = {
     keyword,
     lat,
     lng,
     limit,
+    open_type: openType && snakeCase(openType),
+    open_week: openWeek,
+    open_hour: openHour,
   }
-  return instance.get('/stores/location', { params })
+  return instance.get("/stores/location", { params })
 }
 
 const Apis = {
   getHint,
-  getPublicStoresByLocation
+  getPublicStoresByLocation,
 }
 
 export default Apis

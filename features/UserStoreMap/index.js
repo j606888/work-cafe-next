@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import Marker from "features/GoogleMapWrapper/Marker"
 import Drawer from "features/Drawer"
 import useApi from "hooks/useApi"
 import storeApi from "api/stores"
+import FilterContext from "contexts/FilterContext"
 
 const GoogleMap = () => {
   const [map, setMap] = useState(null)
   const [stores, setStores] = useState([])
   const getStoresApi = useApi(storeApi.getPublicStoresByLocation)
 
+  const { keyword, openTime } = useContext(FilterContext)
+
   useEffect(() => {
     const result = getStoresApi.data
-    console.log(result)
     setStores(result || [])
   }, [getStoresApi.data])
 
@@ -20,8 +22,9 @@ const GoogleMap = () => {
     getStoresApi.request({
       lat: 23.0042325,
       lng: 120.2216038,
+      ...openTime,
     })
-  }, [])
+  }, [openTime])
 
   const markers = stores.map((store) => {
     const options = {

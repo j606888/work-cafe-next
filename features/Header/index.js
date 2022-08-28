@@ -6,7 +6,7 @@ const Header = ({ withSearchBar = false }) => {
   return (
     <Container>
       <h3>Work Cafe | Taiwan</h3>
-      <Searchbar />
+      {withSearchBar && <Searchbar />}
       <div>
         <a href="#">註冊</a>
         <a href="#">登入</a>
