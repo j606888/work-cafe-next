@@ -100,7 +100,7 @@ const Login = () => {
     if (to) {
       router.push(to)
     } else {
-      router.push('/admin/stores')
+      router.push('/')
     }
   }
 
