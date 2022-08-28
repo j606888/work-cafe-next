@@ -1,5 +1,5 @@
 import AdminUserList from "features/AdminUserList"
-import AdminLayout from "components/AdminLayout"
+import AdminLayout from "features/AdminLayout"
 
 const UserPage = () => {
   return (

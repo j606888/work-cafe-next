@@ -1,4 +1,4 @@
-import AdminLayout from "components/AdminLayout"
+import AdminLayout from "features/AdminLayout"
 import AdminStoreList from "features/AdminStoreList"
 
 const Stores = () => {

@@ -1,4 +1,4 @@
-import AdminLayout from "components/AdminLayout";
+import AdminLayout from "features/AdminLayout";
 import AdminBlacklist from "features/AdminBlacklist";
 
 export default function BlacklistPage() {

@@ -13,7 +13,7 @@ import {
   RemoveModerator as RemoveModeratorIcon,
 } from "@mui/icons-material"
 import AppBar from "./AppBar"
-import MiniDrawer from "../MiniDrawer"
+import MiniDrawer from "../../components/MiniDrawer"
 import { getUser, userIsAdmin, userIsLogin } from "utils/user"
 import { useRouter } from "next/router"
 import Skeleton from "components/Skeleton"
