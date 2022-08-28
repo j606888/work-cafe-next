@@ -3,6 +3,9 @@ import styled from "styled-components"
 export const Container = styled.div`
   display: flex;
   gap: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 1rem;
 `
 
 export const ImageBox = styled.div`
@@ -36,6 +39,7 @@ export const Content = styled.div`
   h3 {
     margin: 0;
     font-size: 18px;
+    max-width: 85%;
   }
 
   span {

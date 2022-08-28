@@ -45,6 +45,19 @@ const getHint = ({keyword, openType, openWeek, openHour }) => {
   return instance.get(`/stores/hint`, { params })
 }
 
-export default {
-  getHint,
+const getPublicStoresByLocation = ({keyword, lat, lng, limit=20 }) => {
+  const params = {
+    keyword,
+    lat,
+    lng,
+    limit,
+  }
+  return instance.get('/stores/location', { params })
 }
+
+const Apis = {
+  getHint,
+  getPublicStoresByLocation
+}
+
+export default Apis

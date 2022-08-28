@@ -8,6 +8,8 @@ export const Container = styled.div`
   height: 56px;
   padding: 0 1rem;
   font-family: 'Noto Sans', sans-serif;
+  z-index: 1201;
+  position: relative;
 
   h3, a {
     color: #757575;

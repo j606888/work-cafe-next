@@ -1,20 +1,27 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import Marker from "features/GoogleMapWrapper/Marker"
 import Drawer from "features/Drawer"
+import useApi from "hooks/useApi"
+import storeApi from "api/stores"
 
-const stores = [
-  {
-    id: 694,
-    name: "自己的房間",
-    placeId: "ChIJR_SmbmF2bjQRVBcj95_mwJo",
-    lat: 22.9974617,
-    lng: 120.2012626,
-  },
-]
 const GoogleMap = () => {
   const [map, setMap] = useState(null)
-  // const [stores, setStores] = useState([])
+  const [stores, setStores] = useState([])
+  const getStoresApi = useApi(storeApi.getPublicStoresByLocation)
+
+  useEffect(() => {
+    const result = getStoresApi.data
+    console.log(result)
+    setStores(result || [])
+  }, [getStoresApi.data])
+
+  useEffect(() => {
+    getStoresApi.request({
+      lat: 23.0042325,
+      lng: 120.2216038,
+    })
+  }, [])
 
   const markers = stores.map((store) => {
     const options = {
@@ -39,7 +46,7 @@ const GoogleMap = () => {
 
   return (
     <>
-      <Drawer />
+      <Drawer stores={stores}/>
       <GoogleMapWrapper map={map} setMap={setMap} marginTop="56px">
         {markers}
       </GoogleMapWrapper>

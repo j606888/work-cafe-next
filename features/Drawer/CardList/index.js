@@ -5,8 +5,8 @@ import Card from "../Card"
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
   padding: 1rem;
+  margin-top: 56px;
 `
 
 const CardList = ({ stores = [] }) => {

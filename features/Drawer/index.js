@@ -18,13 +18,13 @@ const Btn = styled.div`
   z-index: 99999;
   position: absolute;
   left: ${({ open, left }) => (open ? left + 24 : 24)}px;
-  top: 24px;
+  top: calc(24px + 56px);
   transition: all 0.2s linear;
   cursor: pointer;
 `
 
 export default function Drawer({ stores=[] }) {
-  const [state, setState] = React.useState(true)
+  const [state, setState] = React.useState(false)
   const width = 460
 
   const toggleDrawer = () => (event) => {
