@@ -7,7 +7,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import UserMenu from "./UserMenu"
 
-const Header = ({ withSearchBar = false }) => {
+const Header = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -25,10 +25,9 @@ const Header = ({ withSearchBar = false }) => {
       <Link href="/">
         <h3>Work Cafe | Taiwan</h3>
       </Link>
-      {withSearchBar && <Searchbar />}
       <div>
         {user ? (
-          <UserMenu user={user} onLogout={handleLogout} />
+          <UserMenu user={user} onLogout={handleLogout} type="user" />
         ) : (
           <>
             <Link href="/signup">註冊</Link>

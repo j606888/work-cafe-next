@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material"
 
-const UserMenu = ({ user, onLogout }) => {
+const UserMenu = ({ user, onLogout, type = "user" }) => {
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
   function handleOpenUserMenu(event) {
@@ -65,14 +65,27 @@ const UserMenu = ({ user, onLogout }) => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <Link href="/admin/stores">
-          <MenuItem sx={{ minWidth: "160px" }}>
-            <ListItemIcon>
-              <AccessibilityIcon />
-            </ListItemIcon>
-            <Typography color="text.secondary">Admin</Typography>
-          </MenuItem>
-        </Link>
+        {type === "user" && (
+          <Link href="/admin/stores">
+            <MenuItem sx={{ minWidth: "160px" }}>
+              <ListItemIcon>
+                <AccessibilityIcon />
+              </ListItemIcon>
+              <Typography color="text.secondary">Admin</Typography>
+            </MenuItem>
+          </Link>
+        )}
+        {type === "admin" && (
+          <Link href="/">
+            <MenuItem sx={{ minWidth: "160px" }}>
+              <ListItemIcon>
+                <AccessibilityIcon />
+              </ListItemIcon>
+              <Typography color="text.secondary">User</Typography>
+            </MenuItem>
+          </Link>
+        )}
+
         <Link href="/settings">
           <MenuItem>
             <ListItemIcon>
