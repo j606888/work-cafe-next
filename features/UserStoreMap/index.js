@@ -56,6 +56,15 @@ const UserStoreMap = () => {
     mapCenterRef.current = { lat, lng }
   }
 
+  const handleMarkerOver = (id) => {
+    // console.log(`id ${id} was hovered`)
+  }
+
+  const handleMarkerOut = (id) => {
+    // console.log(`id ${id} was out`)
+  }
+
+
   const markers = stores.map((store) => {
     const options = {
       position: {
@@ -71,8 +80,8 @@ const UserStoreMap = () => {
         id={store.id}
         store={store}
         // onClick={handleMarkerClick}
-        // onMouseover={handleMarkerOver}
-        // onMouseout={handleMarkerOut}
+        onMouseover={handleMarkerOver}
+        onMouseout={handleMarkerOut}
       />
     )
   })

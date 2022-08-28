@@ -92,8 +92,8 @@ const AdminStoreCrawler = () => {
 
   const handleSearch = async () => {
     const crawlRecord = {
-      ...tempRef,
-      radius: option.searchRadius,
+      ...tempRef.current,
+      radius: controls.searchRadius,
     }
     await createCrawlRecord(crawlRecord)
     dispatch({ type: "TOGGLE_MODAL" })
