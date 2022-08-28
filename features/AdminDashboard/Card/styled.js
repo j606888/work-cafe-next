@@ -1,8 +1,6 @@
-import React from 'react'
 import styled from 'styled-components'
-import { Avatar } from '@mui/material'
 
-const Container = styled.div`
+export const Container = styled.div`
   display: flex;
   flex: 1;
   justify-content: space-between;
@@ -29,20 +27,3 @@ const Container = styled.div`
     }
   }
 `
-
-const Card = ({ title, number, icon, bgcolor }) => {
-  const Icon = icon
-  return (
-    <Container>
-      <div className="detail">
-        <span>{title}</span>
-        <h3>{number}</h3>
-      </div>
-      <Avatar sx={{ bgcolor: bgcolor, width: 48, height: 48 }}>
-        <Icon />
-      </Avatar>
-    </Container>
-  )
-}
-
-export default Card

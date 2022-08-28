@@ -9,6 +9,8 @@ import {
 import Card from './Card'
 
 const Container = styled.div`
+  padding: 1.5rem;
+
   .cards {
     display: flex;
     gap: 2rem;

@@ -5,7 +5,7 @@ import { Container, Content, ImageBox } from './styled'
 const Card = ({
   imageUrl,
   name,
-  isOpening,
+  openNow,
   userRatingsTotal,
   address,
   tags = ["很安靜", "有插座", "無限時"],
@@ -19,14 +19,15 @@ const Card = ({
       No Photo
     </ImageBox>
   )
+
   return (
     <Container>
       {image}
-      <Content>
+      <Content openNow={openNow}>
         <h3>{name}</h3>
         <div>
-          <span className="opening">{isOpening ? "營業中" : "休息中"}</span>
-          <span className="recommend">{userRatingsTotal}人推薦 適合工作</span>
+          <span className="opening">{openNow ? "營業中" : "休息中"}</span>
+          <span>{userRatingsTotal}人推薦 適合工作</span>
         </div>
         <span className="address">{address}</span>
         <div className="tag-list">

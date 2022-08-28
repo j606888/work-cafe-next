@@ -41,7 +41,11 @@ const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoo
         google.maps.event.clearListeners(map, eventName)
       )
 
-      if (onClick) map.addListener("click", onClick)
+      if (onClick) map.addListener("click", (mapsMouseEvent) => {
+        const { lat, lng } = mapsMouseEvent.latLng.toJSON()
+        onClick({ lat, lng })
+      })
+
       if (onIdle) map.addListener("idle", () => {
         const { lat, lng } = map.getCenter().toJSON()
         const zoom = map.getZoom()
