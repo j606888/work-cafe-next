@@ -17,10 +17,11 @@ module.exports = {
       components: path.resolve(__dirname, "../components"),
       hooks: path.resolve(__dirname, "../hooks"),
       config: path.resolve(__dirname, "../config"),
-      context: path.resolve(__dirname, "../context"),
+      contexts: path.resolve(__dirname, "../contexts"),
       hooks: path.resolve(__dirname, "../hooks"),
       api: path.resolve(__dirname, "../api"),
       features: path.resolve(__dirname, "../features"),
+      utils: path.resolve(__dirname, "../utils"),
     }
     return config
   },
