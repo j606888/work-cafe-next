@@ -20,11 +20,15 @@ const FloatSearchBar = styled.div`
   z-index: 10000;
 `
 
-function calcCenter(stores) {
-  const length = stores.length
-  const lat = stores.reduce((acc, object) => acc + object.lat, 0) / length
-  const lng = stores.reduce((acc, object) => acc + object.lng, 0) / length
-  return { lat, lng }
+// function calcCenter(stores) {
+//   const length = stores.length
+//   const lat = stores.reduce((acc, object) => acc + object.lat, 0) / length
+//   const lng = stores.reduce((acc, object) => acc + object.lng, 0) / length
+//   return { lat, lng }
+// }
+
+function isFar(t1, t2) {
+  return (Math.abs(t1.lat - t2.lat) > 0.2 || Math.abs(t1.lng - t2.lng) > 0.2)
 }
 
 const UserStoreMap = () => {
@@ -42,9 +46,15 @@ const UserStoreMap = () => {
 
     if (result) {
       setStores(result)
-      const center = calcCenter(result)
-      map.setCenter(center)
-      map.setZoom(15)
+
+      if (result.length === 1) {
+        const center = {
+          lat: result[0].lat,
+          lng: result[0].lng
+        }
+        map.setCenter(center)
+        map.setZoom(15)
+      }
     } else {
       setStores([])
     }
@@ -65,7 +75,7 @@ const UserStoreMap = () => {
   function handleOnClick() {
     const city = _.find(cityMap, (city) => city.name === keyword)
 
-    if (city && city.center) {
+    if (city && city.center && isFar(city.center, mapCenterRef.current)) {
       map.setCenter(city.center)
       mapCenterRef.current = city.center
     }
