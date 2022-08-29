@@ -52,7 +52,7 @@ const Searchbar = ({ onClick }) => {
 
   return (
     <Container>
-      <Autocomplete options={results} onInputChange={handleInputChange} />
+      <Autocomplete options={results} onInputChange={handleInputChange} keyword={keyword} />
       <div className="filter">
         <Menu onOpenTimeChange={changeOpenTimeChange} />
       </div>

@@ -19,6 +19,7 @@ export default function Autocomplete({
   options = [],
   onInputChange,
   onChange,
+  keyword,
 }) {
   function handleChange(_event, newValue) {
     if (onChange) onChange(newValue)
@@ -39,7 +40,7 @@ export default function Autocomplete({
       renderInput={(params) => (
         <Container ref={params.InputProps.ref}>
           <Circle sx={{color: '#ccc', mr:1, ml: .5 }} />
-          <Input args={params.inputProps} placeholder="搜尋" />
+          <Input args={params.inputProps} placeholder="搜尋" value={keyword} />
         </Container>
       )}
       renderOption={(props, option, { inputValue }) => (

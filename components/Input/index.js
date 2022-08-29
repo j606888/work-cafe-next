@@ -8,8 +8,8 @@ const Container = styled.input`
   color: #666;
 `
 
-const Input = ({ placeholder, args }) => {
-  return <Container {...args} placeholder={placeholder} />
+const Input = ({ placeholder, args, value }) => {
+  return <Container {...args} placeholder={placeholder} value={value} />
 }
 
 export default Input
