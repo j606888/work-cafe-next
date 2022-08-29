@@ -1,6 +1,10 @@
 const cityMap = [
   {
     name: "台北市",
+    center: {
+      lat: 25.0425728,
+      lng: 121.5330178, 
+    },
     area: [
       "中正區",
       "大同區",
@@ -18,6 +22,10 @@ const cityMap = [
   },
   {
     name: "新北市",
+    center: {
+      lat: 25.0108552,
+      lng: 121.4616819,
+    },
     area: [
       "板橋區",
       "新莊區",
@@ -52,6 +60,10 @@ const cityMap = [
   },
   {
     name: "桃園市",
+    center: {
+      lat: 24.9926495,
+      lng: 121.309003,
+    },
     area: [
       "桃園區",
       "中壢區",
@@ -70,6 +82,10 @@ const cityMap = [
   },
   {
     name: "台中市",
+    center: {
+      lat: 24.1387718,
+      lng: 120.6888135,
+    },
     area: [
       "中區",
       "東區",
@@ -104,6 +120,10 @@ const cityMap = [
   },
   {
     name: "台南市",
+    center: {
+      lat: 22.9969821,
+      lng: 120.21146,
+    },
     area: [
       "中西區",
       "東區",
@@ -146,6 +166,10 @@ const cityMap = [
   },
   {
     name: "高雄市",
+    center: {
+      lat: 22.6391439,
+      lng: 120.3023055,
+    },
     area: [
       "楠梓區",
       "左營區",

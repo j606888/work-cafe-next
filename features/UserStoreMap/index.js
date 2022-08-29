@@ -9,6 +9,8 @@ import Router from "next/router"
 import { useRef } from "react"
 import Searchbar from "features/Searchbar"
 import styled from "styled-components"
+import cityMap from "config/cityMap"
+import _ from "lodash"
 
 const FloatSearchBar = styled.div`
   position: absolute;
@@ -17,6 +19,13 @@ const FloatSearchBar = styled.div`
   transform: translateX(-50%);
   z-index: 10000;
 `
+
+function calcCenter(stores) {
+  const length = stores.length
+  const lat = stores.reduce((acc, object) => acc + object.lat, 0) / length
+  const lng = stores.reduce((acc, object) => acc + object.lng, 0) / length
+  return { lat, lng }
+}
 
 const UserStoreMap = () => {
   const [map, setMap] = useState(null)
@@ -30,7 +39,15 @@ const UserStoreMap = () => {
 
   useEffect(() => {
     const result = getStoresApi.data
-    setStores(result || [])
+
+    if (result) {
+      setStores(result)
+      const center = calcCenter(result)
+      map.setCenter(center)
+      map.setZoom(15)
+    } else {
+      setStores([])
+    }
   }, [getStoresApi.data])
 
   useEffect(() => {
@@ -46,6 +63,12 @@ const UserStoreMap = () => {
   }
 
   function handleOnClick() {
+    const city = _.find(cityMap, (city) => city.name === keyword)
+
+    if (city && city.center) {
+      map.setCenter(city.center)
+      mapCenterRef.current = city.center
+    }
     callAPI()
   }
 
@@ -63,7 +86,6 @@ const UserStoreMap = () => {
   const handleMarkerOut = (id) => {
     // console.log(`id ${id} was out`)
   }
-
 
   const markers = stores.map((store) => {
     const options = {
@@ -89,10 +111,15 @@ const UserStoreMap = () => {
   return (
     <>
       <FloatSearchBar>
-        <Searchbar onClick={handleOnClick}/>
+        <Searchbar onClick={handleOnClick} />
       </FloatSearchBar>
-      <Drawer stores={stores}/>
-      <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}marginTop="56px">
+      <Drawer stores={stores} />
+      <GoogleMapWrapper
+        map={map}
+        setMap={setMap}
+        onIdle={handleOnIdle}
+        marginTop="56px"
+      >
         {markers}
       </GoogleMapWrapper>
     </>
