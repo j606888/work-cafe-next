@@ -13,15 +13,30 @@ import {
   Reviews,
 } from "./styled"
 import PlaceIcon from "@mui/icons-material/Place"
-import AccessTimeIcon from "@mui/icons-material/AccessTime"
 import PublicIcon from "@mui/icons-material/Public"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
 import SortIcon from "@mui/icons-material/Sort"
 import ReviewCard from "./ReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
+import OpeningTime from "./OpeningTime"
 
-const StoreDetail = () => {
+const StoreDetail = ({
+  id,
+  name,
+  rating,
+  userRatingsTotal,
+  address,
+  website,
+  phone,
+  photos = [],
+  reviews = [],
+  openingHours = [],
+  onSave = () => {},
+  onReview = () => {},
+  onHide = () => {},
+  onShare = () => {},
+}) => {
   function handleClose() {}
 
   return (
@@ -29,39 +44,38 @@ const StoreDetail = () => {
       <CloseButton onClick={handleClose}>
         <CloseIcon />
       </CloseButton>
-      <ImageSlide />
+      <ImageSlide photos={photos} />
       <MainInfo>
-        <h3>迷路小章魚</h3>
+        <h3>{name}</h3>
         <div className="sub-info">
-          <RatingStars rating={4.0} />
-          <span className="reviews">2,417 則評論</span>
+          <RatingStars rating={rating} />
+          <span className="reviews">{userRatingsTotal} 則評論</span>
         </div>
       </MainInfo>
       <Divider />
       <ButtonGroup>
-        <ActionButton type="bookmark" text="儲存" primary />
-        <ActionButton type="comment" text="評論" />
+        <ActionButton type="bookmark" text="儲存" primary onClick={() => onSave(id) }/>
+        <ActionButton type="comment" text="評論" onClick={() => onReview(id) }/>
         <ActionButton text="不知道" />
-        <ActionButton type="hide" text="隱藏" />
-        <ActionButton type="share" text="分享" />
+        <ActionButton type="hide" text="隱藏" onClick={() => onHide(id) }/>
+        <ActionButton type="share" text="分享" onClick={() => onShare(id) }/>
       </ButtonGroup>
       <Divider />
       <SecondaryInfo>
         <div>
           <PlaceIcon />
-          <span>946屏東縣恆春鎮南灣路60號</span>
+          <span>{address}</span>
         </div>
         <div>
-          <AccessTimeIcon />
-          <span>已打烊 ⋅ 開始營業時間：週二 12:00 </span>
+          <OpeningTime openingHours={openingHours} />
         </div>
         <div>
           <PublicIcon />
-          <span>facebook.com</span>
+          <span>{website}</span>
         </div>
         <div>
           <LocalPhoneIcon />
-          <span>08 888 2822</span>
+          <span>{phone}</span>
         </div>
       </SecondaryInfo>
       <Divider />
@@ -73,9 +87,9 @@ const StoreDetail = () => {
             <span>排序</span>
           </div>
         </div>
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
+        {reviews.map((review) => (
+          <ReviewCard key={review.userName} {...review} />
+        ))}
       </Reviews>
     </Container>
   )

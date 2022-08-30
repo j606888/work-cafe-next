@@ -5,6 +5,7 @@ import styled from "styled-components"
 
 const Container = styled.div`
   padding: 1rem 1.5rem 0;
+
   .user-info {
     display: flex;
     align-items: center;
@@ -34,25 +35,23 @@ const Container = styled.div`
   }
 `
 
-const ReviewCard = () => {
+const ReviewCard = ({ userName, userAvatar, rating, reviewAt, content }) => {
   return (
     <>
       <Container>
         <div className="user-info">
           <Avatar
-            alt="Cindy Baker"
+            alt={userName}
             sx={{ width: 28, height: 28, mr: 1.5 }}
-            src="https://lh3.googleusercontent.com/a/AItbvmm9Dm9OrgOfvkqRfgBo9LJXJfJnnfxGialgFlru=s128-c0x00000000-cc-rp-mo-ba5"
+            src={userAvatar}
           />
-          <span>brian wang</span>
+          <span>{userName}</span>
         </div>
         <div className="rating">
-          <RatingStars rating={3.7} showRate={false} />
-          <span>3 年前</span>
+          <RatingStars rating={rating} showRate={false} />
+          <span>{reviewAt}</span>
         </div>
-        <p>
-          {`${"巷弄間的復古懷舊風格，\n午後時光，偕同朋友一起喝咖啡。\n兒子喝到不同口味的奶茶，\n讓他想到去香港時，\n喝到的奶茶一樣味道（普洱奶茶）。"}`}
-        </p>
+        <p>{content}</p>
       </Container>
       <Divider />
     </>
