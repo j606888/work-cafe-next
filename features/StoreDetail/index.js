@@ -18,6 +18,8 @@ import PublicIcon from "@mui/icons-material/Public"
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
 import SortIcon from "@mui/icons-material/Sort"
 import ReviewCard from "./ReviewCard"
+import "react-slideshow-image/dist/styles.css"
+import ImageSlide from "./ImageSlide"
 
 const StoreDetail = () => {
   function handleClose() {}
@@ -27,12 +29,7 @@ const StoreDetail = () => {
       <CloseButton onClick={handleClose}>
         <CloseIcon />
       </CloseButton>
-      <div className="image-box">
-        <img
-          src="https://work-cafe-staging.s3.ap-southeast-1.amazonaws.com/stores/ChIJ7cWppEJ3bjQRyP8C2caQnGQ.jpeg"
-          alt="image"
-        />
-      </div>
+      <ImageSlide />
       <MainInfo>
         <h3>迷路小章魚</h3>
         <div className="sub-info">
