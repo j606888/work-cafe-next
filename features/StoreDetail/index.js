@@ -39,11 +39,11 @@ const StoreDetail = () => {
       </MainInfo>
       <Divider />
       <ButtonGroup>
-        <ActionButton type="road" primary />
-        <ActionButton type="road" />
-        <ActionButton type="road" />
-        <ActionButton type="road" />
-        <ActionButton type="road" />
+        <ActionButton type="bookmark" text="儲存" primary />
+        <ActionButton type="comment" text="評論" />
+        <ActionButton text="不知道" />
+        <ActionButton type="hide" text="隱藏" />
+        <ActionButton type="share" text="分享" />
       </ButtonGroup>
       <Divider />
       <SecondaryInfo>
@@ -53,7 +53,7 @@ const StoreDetail = () => {
         </div>
         <div>
           <AccessTimeIcon />
-          <span>已打烊。開始營業時間：週二 12:00 </span>
+          <span>已打烊 ⋅ 開始營業時間：週二 12:00 </span>
         </div>
         <div>
           <PublicIcon />

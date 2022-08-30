@@ -33,7 +33,7 @@ function chooseStar(limit, rating) {
 const RatingStars = ({ rating, showRate = true }) => {
   return (
     <Container>
-      {showRate && <span>{rating}</span>}
+      {showRate && <span>{rating.toFixed(1)}</span>}
       {chooseStar(1, rating)}
       {chooseStar(2, rating)}
       {chooseStar(3, rating)}

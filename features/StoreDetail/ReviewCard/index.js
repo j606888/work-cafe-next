@@ -47,7 +47,7 @@ const ReviewCard = () => {
           <span>brian wang</span>
         </div>
         <div className="rating">
-          <RatingStars rating={4.0} showRate={false} />
+          <RatingStars rating={3.7} showRate={false} />
           <span>3 年前</span>
         </div>
         <p>
