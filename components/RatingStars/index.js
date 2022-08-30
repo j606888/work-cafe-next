@@ -1,12 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import StarHalfIcon from "@mui/icons-material/StarHalf"
 import StarOutlineIcon from "@mui/icons-material/StarOutline"
 
-
 const Container = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
 
   span {
@@ -16,7 +15,7 @@ const Container = styled.div`
 `
 
 const style = {
-  color: "#FCDE3F",
+  color: "#FABC05",
   fontSize: 18,
 }
 
@@ -31,10 +30,10 @@ function chooseStar(limit, rating) {
   }
 }
 
-const RatingStars = ({rating}) => {
+const RatingStars = ({ rating, showRate = true }) => {
   return (
     <Container>
-      <span>{rating}</span>
+      {showRate && <span>{rating}</span>}
       {chooseStar(1, rating)}
       {chooseStar(2, rating)}
       {chooseStar(3, rating)}
