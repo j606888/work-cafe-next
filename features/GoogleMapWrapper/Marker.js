@@ -32,7 +32,7 @@ export default function Marker({ map, options, id, store, onClick, onMouseover, 
       options.map = map
       marker.setOptions(options)
 
-      if (onClick) marker.addListener("click", () => onClick(store.placeId))
+      if (onClick) marker.addListener("click", () => onClick(id))
       if (onMouseover) marker.addListener("mouseover", () => {
         onMouseover(id)
         windowInfo.open({

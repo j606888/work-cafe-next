@@ -28,6 +28,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-select": "^5.4.0",
+    "react-slideshow-image": "^4.0.4",
     "snakecase-keys": "^5.4.2",
     "styled-components": "^5.3.5",
     "yup": "^0.32.11"

@@ -22,7 +22,7 @@ const Btn = styled.div`
   cursor: pointer;
 `
 
-export default function Drawer({ stores = [] }) {
+export default function Drawer({ stores = [], onClick = () => {} }) {
   const [state, setState] = React.useState(false)
   const width = 460
 
@@ -35,6 +35,10 @@ export default function Drawer({ stores = [] }) {
     }
 
     setState((cur) => !cur)
+  }
+
+  function handleOnClick(placeId) {
+    onClick(placeId)
   }
 
   React.useEffect(() => {
@@ -58,7 +62,7 @@ export default function Drawer({ stores = [] }) {
         onClose={toggleDrawer}
         variant="persistent"
       >
-        <CardList stores={stores} />
+        <CardList stores={stores} onClick={handleOnClick} />
       </MuiDrawer>
     </React.Fragment>
   )

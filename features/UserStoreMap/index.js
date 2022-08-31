@@ -11,6 +11,7 @@ import Searchbar from "features/Searchbar"
 import styled from "styled-components"
 import cityMap from "config/cityMap"
 import _ from "lodash"
+import StoreDetail from "features/StoreDetail"
 
 const FloatSearchBar = styled.div`
   position: absolute;
@@ -27,8 +28,15 @@ const FloatSearchBar = styled.div`
 //   return { lat, lng }
 // }
 
+const StoreDetailContainer = styled.div`
+  position: absolute;
+  left: 30rem;
+  top: 8rem;
+  z-index: 100;
+`
+
 function isFar(t1, t2) {
-  return (Math.abs(t1.lat - t2.lat) > 0.2 || Math.abs(t1.lng - t2.lng) > 0.2)
+  return Math.abs(t1.lat - t2.lat) > 0.2 || Math.abs(t1.lng - t2.lng) > 0.2
 }
 
 const UserStoreMap = () => {
@@ -39,6 +47,7 @@ const UserStoreMap = () => {
   })
   const [stores, setStores] = useState([])
   const getStoresApi = useApi(storeApi.getPublicStoresByLocation)
+  const getOneStoreApi = useApi(storeApi.getPublicStore)
   const { keyword, openTime } = useContext(FilterContext)
 
   useEffect(() => {
@@ -50,7 +59,7 @@ const UserStoreMap = () => {
       if (result.length === 1) {
         const center = {
           lat: result[0].lat,
-          lng: result[0].lng
+          lng: result[0].lng,
         }
         map.setCenter(center)
         map.setZoom(15)
@@ -97,6 +106,14 @@ const UserStoreMap = () => {
     // console.log(`id ${id} was out`)
   }
 
+  const handleCardClick = async (placeId) => {
+    getOneStoreApi.request({ placeId })
+  }
+
+  const handleMarkerClick = (placeId) => {
+    getOneStoreApi.request({ placeId })
+  }
+
   const markers = stores.map((store) => {
     const options = {
       position: {
@@ -108,10 +125,10 @@ const UserStoreMap = () => {
     return (
       <Marker
         options={options}
-        key={store.id}
-        id={store.id}
+        key={store.placeId}
+        id={store.placeId}
         store={store}
-        // onClick={handleMarkerClick}
+        onClick={handleMarkerClick}
         onMouseover={handleMarkerOver}
         onMouseout={handleMarkerOut}
       />
@@ -123,7 +140,17 @@ const UserStoreMap = () => {
       <FloatSearchBar>
         <Searchbar onClick={handleOnClick} />
       </FloatSearchBar>
-      <Drawer stores={stores} />
+      <Drawer stores={stores} onClick={handleCardClick} />
+
+      {getOneStoreApi.data && (
+        <StoreDetailContainer>
+          <StoreDetail
+            {...getOneStoreApi.data}
+            onClose={() => getOneStoreApi.clean()}
+          />
+        </StoreDetailContainer>
+      )}
+
       <GoogleMapWrapper
         map={map}
         setMap={setMap}

@@ -35,6 +35,10 @@ export async function syncStorePhotos(placeId) {
   await instance.post(`/admin/stores/${placeId}/sync-photos`)
 }
 
+const getPublicStore = ({ placeId }) => {
+  return instance.get(`/stores/${placeId}`)
+}
+
 const getHint = ({ keyword, openType, openWeek, openHour }) => {
   const params = {
     keyword,
@@ -69,6 +73,7 @@ const getPublicStoresByLocation = ({
 const Apis = {
   getHint,
   getPublicStoresByLocation,
+  getPublicStore,
 }
 
 export default Apis

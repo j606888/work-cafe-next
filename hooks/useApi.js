@@ -18,11 +18,16 @@ const useApi = (apiFunc) => {
     }
   }
 
+  const clean = () => {
+    setData(null)
+  }
+
   return {
     data,
     error,
     loading,
     request,
+    clean,
   }
 }
 
