@@ -3,13 +3,19 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
 import { Container, Content, ImageBox } from './styled'
 
 const Card = ({
+  placeId,
   imageUrl,
   name,
   openNow,
   userRatingsTotal,
   address,
   tags = ["很安靜", "有插座", "無限時"],
+  onClick = () => {},
 }) => {
+  function handleOnClick() {
+    onClick(placeId)
+  }
+
   const image = imageUrl ? (
     <ImageBox>
       <img src={imageUrl} alt="img" />
@@ -21,7 +27,7 @@ const Card = ({
   )
 
   return (
-    <Container>
+    <Container onClick={handleOnClick}>
       {image}
       <Content openNow={openNow}>
         <h3>{name}</h3>

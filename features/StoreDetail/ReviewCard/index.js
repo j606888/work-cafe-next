@@ -35,23 +35,23 @@ const Container = styled.div`
   }
 `
 
-const ReviewCard = ({ userName, userAvatar, rating, reviewAt, content }) => {
+const ReviewCard = ({ authorName, authorUrl, rating, relativeTimeDescription, text }) => {
   return (
     <>
       <Container>
         <div className="user-info">
           <Avatar
-            alt={userName}
+            alt={authorName}
             sx={{ width: 28, height: 28, mr: 1.5 }}
-            src={userAvatar}
+            src={authorUrl}
           />
-          <span>{userName}</span>
+          <span>{authorName}</span>
         </div>
         <div className="rating">
           <RatingStars rating={rating} showRate={false} />
-          <span>{reviewAt}</span>
+          <span>{relativeTimeDescription}</span>
         </div>
-        <p>{content}</p>
+        <p>{text}</p>
       </Container>
       <Divider />
     </>

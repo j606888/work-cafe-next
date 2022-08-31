@@ -11,6 +11,7 @@ import Searchbar from "features/Searchbar"
 import styled from "styled-components"
 import cityMap from "config/cityMap"
 import _ from "lodash"
+import StoreDetail from "features/StoreDetail"
 
 const FloatSearchBar = styled.div`
   position: absolute;
@@ -27,6 +28,13 @@ const FloatSearchBar = styled.div`
 //   return { lat, lng }
 // }
 
+const StoreDetailContainer = styled.div`
+  position: absolute;
+  left: 30rem;
+  top: 8rem;
+  z-index: 100;
+`
+
 function isFar(t1, t2) {
   return (Math.abs(t1.lat - t2.lat) > 0.2 || Math.abs(t1.lng - t2.lng) > 0.2)
 }
@@ -39,6 +47,7 @@ const UserStoreMap = () => {
   })
   const [stores, setStores] = useState([])
   const getStoresApi = useApi(storeApi.getPublicStoresByLocation)
+  const getOneStoreApi = useApi(storeApi.getPublicStore)
   const { keyword, openTime } = useContext(FilterContext)
 
   useEffect(() => {
@@ -97,6 +106,10 @@ const UserStoreMap = () => {
     // console.log(`id ${id} was out`)
   }
 
+  const handleCardClick = async (placeId) => {
+    getOneStoreApi.request({ placeId })
+  }
+
   const markers = stores.map((store) => {
     const options = {
       position: {
@@ -123,7 +136,10 @@ const UserStoreMap = () => {
       <FloatSearchBar>
         <Searchbar onClick={handleOnClick} />
       </FloatSearchBar>
-      <Drawer stores={stores} />
+      <Drawer stores={stores} onClick={handleCardClick} />
+      
+      {getOneStoreApi.data && <StoreDetailContainer><StoreDetail {...getOneStoreApi.data} /></StoreDetailContainer>}
+      
       <GoogleMapWrapper
         map={map}
         setMap={setMap}

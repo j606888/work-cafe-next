@@ -88,7 +88,7 @@ const StoreDetail = ({
           </div>
         </div>
         {reviews.map((review) => (
-          <ReviewCard key={review.userName} {...review} />
+          <ReviewCard key={review.authorName} {...review} />
         ))}
       </Reviews>
     </Container>
