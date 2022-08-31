@@ -36,7 +36,7 @@ const StoreDetailContainer = styled.div`
 `
 
 function isFar(t1, t2) {
-  return (Math.abs(t1.lat - t2.lat) > 0.2 || Math.abs(t1.lng - t2.lng) > 0.2)
+  return Math.abs(t1.lat - t2.lat) > 0.2 || Math.abs(t1.lng - t2.lng) > 0.2
 }
 
 const UserStoreMap = () => {
@@ -59,7 +59,7 @@ const UserStoreMap = () => {
       if (result.length === 1) {
         const center = {
           lat: result[0].lat,
-          lng: result[0].lng
+          lng: result[0].lng,
         }
         map.setCenter(center)
         map.setZoom(15)
@@ -110,6 +110,10 @@ const UserStoreMap = () => {
     getOneStoreApi.request({ placeId })
   }
 
+  const handleMarkerClick = (placeId) => {
+    getOneStoreApi.request({ placeId })
+  }
+
   const markers = stores.map((store) => {
     const options = {
       position: {
@@ -121,10 +125,10 @@ const UserStoreMap = () => {
     return (
       <Marker
         options={options}
-        key={store.id}
-        id={store.id}
+        key={store.placeId}
+        id={store.placeId}
         store={store}
-        // onClick={handleMarkerClick}
+        onClick={handleMarkerClick}
         onMouseover={handleMarkerOver}
         onMouseout={handleMarkerOut}
       />
@@ -137,9 +141,16 @@ const UserStoreMap = () => {
         <Searchbar onClick={handleOnClick} />
       </FloatSearchBar>
       <Drawer stores={stores} onClick={handleCardClick} />
-      
-      {getOneStoreApi.data && <StoreDetailContainer><StoreDetail {...getOneStoreApi.data} /></StoreDetailContainer>}
-      
+
+      {getOneStoreApi.data && (
+        <StoreDetailContainer>
+          <StoreDetail
+            {...getOneStoreApi.data}
+            onClose={() => getOneStoreApi.clean()}
+          />
+        </StoreDetailContainer>
+      )}
+
       <GoogleMapWrapper
         map={map}
         setMap={setMap}

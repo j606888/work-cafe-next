@@ -22,6 +22,7 @@ export const Container = styled.div`
 `
 
 export const CloseButton = styled.div`
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -36,12 +36,11 @@ const StoreDetail = ({
   onReview = () => {},
   onHide = () => {},
   onShare = () => {},
+  onClose = () => {},
 }) => {
-  function handleClose() {}
-
   return (
     <Container>
-      <CloseButton onClick={handleClose}>
+      <CloseButton onClick={onClose}>
         <CloseIcon />
       </CloseButton>
       <ImageSlide photos={photos} />
