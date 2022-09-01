@@ -21,13 +21,6 @@ const FloatSearchBar = styled.div`
   z-index: 10000;
 `
 
-// function calcCenter(stores) {
-//   const length = stores.length
-//   const lat = stores.reduce((acc, object) => acc + object.lat, 0) / length
-//   const lng = stores.reduce((acc, object) => acc + object.lng, 0) / length
-//   return { lat, lng }
-// }
-
 const StoreDetailContainer = styled.div`
   position: absolute;
   left: 30rem;
@@ -116,6 +109,10 @@ const UserStoreMap = () => {
     setPlaceId(placeId)
   }
 
+  const handleHideStore = (placeId) => {
+    storeApi.hideStore({ placeId })
+  }
+
   const markers = stores.map((store) => {
     const options = {
       position: {
@@ -146,7 +143,9 @@ const UserStoreMap = () => {
 
       {data && (
         <StoreDetailContainer>
-          <StoreDetail {...data} onClose={() => setPlaceId(null)} />
+          <StoreDetail {...data} onClose={() => setPlaceId(null)} 
+            onHide={handleHideStore}
+          />
         </StoreDetailContainer>
       )}
 

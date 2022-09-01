@@ -23,6 +23,7 @@ import OpeningTime from "./OpeningTime"
 
 const StoreDetail = ({
   id,
+  placeId,
   name,
   rating,
   userRatingsTotal,
@@ -56,7 +57,7 @@ const StoreDetail = ({
         <ActionButton type="bookmark" text="儲存" primary onClick={() => onSave(id) }/>
         <ActionButton type="comment" text="評論" onClick={() => onReview(id) }/>
         <ActionButton text="不知道" />
-        <ActionButton type="hide" text="隱藏" onClick={() => onHide(id) }/>
+        <ActionButton type="hide" text="隱藏" onClick={() => onHide(placeId) }/>
         <ActionButton type="share" text="分享" onClick={() => onShare(id) }/>
       </ButtonGroup>
       <Divider />

@@ -27,6 +27,10 @@ export async function getStore(placeId) {
   return res.data
 }
 
+const hideStore = ({placeId}) => {
+  instance.post(`/stores/${placeId}/hide`)
+}
+
 export async function hideUnqualifiedStores() {
   await instance.post(`/admin/stores/hide-all-unqualified`)
 }
@@ -98,7 +102,8 @@ const Apis = {
   getPublicStoresByLocation,
   getPublicStore,
   fetcher,
-  storesFetcher
+  storesFetcher,
+  hideStore,
 }
 
 export default Apis
