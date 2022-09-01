@@ -12,6 +12,7 @@ import cityMap from "config/cityMap"
 import _ from "lodash"
 import StoreDetail from "features/StoreDetail"
 import useSWR from "swr"
+import Snackbar from "components/Snackbar"
 
 const FloatSearchBar = styled.div`
   position: absolute;
@@ -33,6 +34,7 @@ function isFar(t1, t2) {
 }
 
 const UserStoreMap = () => {
+  const [showSnackbar, setShowSnackbar] = useState(false)
   const [map, setMap] = useState(null)
   const mapCenterRef = useRef({
     lat: 23.0042325,
@@ -109,8 +111,10 @@ const UserStoreMap = () => {
     setPlaceId(placeId)
   }
 
-  const handleHideStore = (placeId) => {
-    storeApi.hideStore({ placeId })
+  const handleHideStore = async (placeId) => {
+    await storeApi.hideStore({ placeId })
+    setShowSnackbar(true)
+    setPlaceId(null)
   }
 
   const markers = stores.map((store) => {
@@ -136,6 +140,9 @@ const UserStoreMap = () => {
 
   return (
     <>
+      {showSnackbar && <Snackbar onClose={() => setShowSnackbar(false)} 
+        message="成功隱藏店家"
+      />}
       <FloatSearchBar>
         <Searchbar onClick={handleOnClick} />
       </FloatSearchBar>
@@ -143,7 +150,9 @@ const UserStoreMap = () => {
 
       {data && (
         <StoreDetailContainer>
-          <StoreDetail {...data} onClose={() => setPlaceId(null)} 
+          <StoreDetail
+            {...data}
+            onClose={() => setPlaceId(null)}
             onHide={handleHideStore}
           />
         </StoreDetailContainer>
