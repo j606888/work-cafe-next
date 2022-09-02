@@ -1,58 +1,37 @@
 import Autocomplete from "./Autocomplete"
 import Menu from "./Menu"
 import storeApi from "api/stores"
-import useApi from "hooks/useApi"
-import { useState, useEffect, useContext } from "react"
 import { Container } from "./styled"
 import Button from "components/Button"
-import FilterContext from "contexts/FilterContext"
+import { useSelector, useDispatch } from 'react-redux'
+import { updateOpenFilter, updateKeyword } from 'redux/slices/SearchSlice'
+import useSWR from "swr"
 
 const Searchbar = ({ onClick }) => {
-  const getHintApi = useApi(storeApi.getHint)
-  const [results, setResults] = useState([])
-  const { keyword, setKeyword, openTime, setOpenTime} = useContext(FilterContext)
-
-  useEffect(() => {
-    const hints = getHintApi.data?.results?.map((hint) => ({
-      ...hint,
-      label: hint.name,
-    }))
-    setResults(hints || [])
-  }, [getHintApi.data])
+  const dispatch = useDispatch()
+  const filter = useSelector(state => state.search)
+  const { data: hints } = useSWR(filter.keyword ? ["/stores/hint", filter] : null, storeApi.fetcher2)
 
   function handleInputChange(newInputValue) {
-    setKeyword(newInputValue)
+    dispatch(updateKeyword(newInputValue))
   }
 
   function changeOpenTimeChange(openType, openWeek, openHour) {
-    if (openType === 'none') {
-      setOpenTime({})
-    } else if (openType === 'openNow') {
-      setOpenTime({ openType })
-    } else if (openType === 'openAt') {
-      if (openHour === '99') {
-        setOpenTime({ openType, openWeek: +openWeek })
-      } else {
-        setOpenTime({ openType, openWeek: +openWeek, openHour: +openHour })
-      }
-    }
+    dispatch(updateOpenFilter({ openType, openWeek: +openWeek, openHour: +openHour}))
   }
 
   function handleOnClick() {
     if(onClick) onClick()
   }
 
-  useEffect(() => {
-    if (keyword === "") {
-      setResults([])
-    } else {
-      getHintApi.request({ ...openTime, keyword })
-    }
-  }, [openTime, keyword])
+  const coolHints = (hints?.results || []).map(hint => ({
+    ...hint,
+    label: hint.name
+  }))
 
   return (
     <Container>
-      <Autocomplete options={results} onInputChange={handleInputChange} keyword={keyword} />
+      <Autocomplete options={coolHints} onInputChange={handleInputChange} keyword={filter.keyword}  />
       <div className="filter">
         <Menu onOpenTimeChange={changeOpenTimeChange} />
       </div>

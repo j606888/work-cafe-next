@@ -44,6 +44,7 @@ export async function syncStorePhotos(placeId) {
 }
 
 const fetcher = url => instance.get(url).then(res => res.data)
+const fetcher2 = (url, params) => instance.get(url, { params }).then(res => res.data)
 
 const storesFetcher = (url, {
   keyword,
@@ -60,8 +61,8 @@ const storesFetcher = (url, {
     lng,
     limit,
     open_type: openType && snakeCase(openType),
-    open_week: openWeek,
-    open_hour: openHour,
+    openWeek,
+    openHour,
   }
   return instance.get(url, { params }).then(res => res.data)
 }
@@ -109,6 +110,7 @@ const Apis = {
   storesFetcher,
   hideStore,
   unhideStore,
+  fetcher2,
 }
 
 export default Apis

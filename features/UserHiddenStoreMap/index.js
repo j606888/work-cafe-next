@@ -1,6 +1,6 @@
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import Markers from "features/GoogleMapWrapper/Markers"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import useSWR, { useSWRConfig } from "swr"
 import storeApi from "api/stores"
 import Drawer from "features/Drawer"
@@ -40,6 +40,16 @@ const UserHiddenStoreMap = () => {
     mutate(`/stores/hidden`)
   }
 
+  useEffect(() => {
+    if (store) {
+      const center = {
+        lat: store.lat,
+        lng: store.lng,
+      }
+      map.setZoom(15)
+      map.panTo(center)
+    }
+  }, [store])
   return (
     <>
       {stores && <Drawer stores={stores} onClick={handleStoreClick} />}

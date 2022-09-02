@@ -8,7 +8,7 @@ const Hero = () => {
   const router = useRouter()
 
   function handleOnClick() {
-    router.push('/map')    
+    router.push('/map')
   }
 
   return (

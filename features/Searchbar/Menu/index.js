@@ -19,9 +19,9 @@ const Container = styled.div`
 `
 
 const OpenTypes = {
-  'none': '不限時間',
-  'openNow': '營業中',
-  'openAt': '營業時間'  
+  'NONE': '不限時間',
+  'OPEN_NOW': '營業中',
+  'OPEN_AT': '營業時間'  
 }
 
 const weeks = {
@@ -64,7 +64,7 @@ const hours = {
 
 export default function Menu({ onOpenTimeChange }) {
   const [anchorEl, setAnchorEl] = useState(null)
-  const [openType, setOpenType] = useState("none")
+  const [openType, setOpenType] = useState("NONE")
   const [week, setWeek] = useState("0")
   const [hour, setHour] = useState("99")
 
@@ -79,7 +79,7 @@ export default function Menu({ onOpenTimeChange }) {
   }
 
   const handleReset = () => {
-    setOpenType("none")
+    setOpenType("NONE")
     setWeek("0")
     setHour("99")
   }
@@ -89,17 +89,17 @@ export default function Menu({ onOpenTimeChange }) {
   }
 
   const handleWeekdayChange = (value) => {
-    setOpenType("openAt")
+    setOpenType("OPEN_AT")
     setWeek(value)
   }
 
   const handleHourChange = (value) => {
-    setOpenType("openAt")
+    setOpenType("OPEN_AT")
     setHour(value)
   }
 
   const weekHour = `${weeks[week]} ${hours[hour]}`
-  const displayText = ['none', 'openNow'].includes(openType) ? OpenTypes[openType] : weekHour
+  const displayText = ['NONE', 'OPEN_NOW'].includes(openType) ? OpenTypes[openType] : weekHour
 
   return (
     <>
@@ -110,14 +110,14 @@ export default function Menu({ onOpenTimeChange }) {
       <MuiMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <FormControl sx={{ width: "100%", my: 1 }}>
           <RadioGroup value={openType} onChange={handleRadioChange}>
-            <RadioLabel label={OpenTypes['none']} value="none" />
-            <RadioLabel label={OpenTypes['openNow']} value="openNow" />
+            <RadioLabel label={OpenTypes['NONE']} value="NONE" />
+            <RadioLabel label={OpenTypes['OPEN_NOW']} value="OPEN_NOW" />
             <Divider sx={{ my: 1 }} />
-            <RadioLabel label={OpenTypes['openAt']} value="openAt" />
+            <RadioLabel label={OpenTypes['OPEN_AT']} value="OPEN_AT" />
           </RadioGroup>
         </FormControl>
         <WeekHourPicker
-          active={openType === "openAt"}
+          active={openType === "OPEN_AT"}
           onWeekdayChange={handleWeekdayChange}
           onHourChange={handleHourChange}
           curWeek={week}
