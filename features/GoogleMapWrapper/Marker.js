@@ -4,6 +4,11 @@ export default function Marker({ map, options, id, store, onClick, onMouseover, 
   const [marker, setMarker] = useState(null)
   const [windowInfo, setWindowInfo] = useState(null)
 
+  useEffect(() => {
+    console.log("THIS IS MAP")
+    console.log(map)
+  }, [map])
+
   if (marker) {
     if (options.animation) {
       marker.setOptions(options)
