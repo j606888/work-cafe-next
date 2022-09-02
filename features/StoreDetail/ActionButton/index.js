@@ -5,6 +5,7 @@ import HideSourceIcon from '@mui/icons-material/HideSource';
 import CommentIcon from '@mui/icons-material/Comment';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import ShareIcon from '@mui/icons-material/Share';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const Container = styled.div`
   text-align: center;
@@ -57,6 +58,10 @@ const ActionButton = ({type, text, primary=false, onClick}) => {
     }
     case 'share': {
       icon = <ShareIcon sx={sx} />
+      break
+    }
+    case 'show': {
+      icon = <VisibilityIcon sx={sx} />
       break
     }
     default: {

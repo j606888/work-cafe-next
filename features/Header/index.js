@@ -25,6 +25,11 @@ const Header = () => {
       <Link href="/">
         <h3>Work Cafe | Taiwan</h3>
       </Link>
+      <div className="nav-links">
+        <Link href="/map">Map</Link>
+        <Link href="/map/hidden">Hiddens</Link>
+        <Link href="/">Bookmarks</Link>
+      </div>
       <div>
         {user ? (
           <UserMenu user={user} onLogout={handleLogout} type="user" />

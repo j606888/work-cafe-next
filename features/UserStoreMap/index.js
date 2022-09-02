@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import Marker from "features/GoogleMapWrapper/Marker"
 import Drawer from "features/Drawer"
-import useApi from "hooks/useApi"
 import storeApi from "api/stores"
 import FilterContext from "contexts/FilterContext"
 import Router from "next/router"
@@ -12,6 +11,8 @@ import styled from "styled-components"
 import cityMap from "config/cityMap"
 import _ from "lodash"
 import StoreDetail from "features/StoreDetail"
+import useSWR from "swr"
+import Snackbar from "components/Snackbar"
 
 const FloatSearchBar = styled.div`
   position: absolute;
@@ -20,13 +21,6 @@ const FloatSearchBar = styled.div`
   transform: translateX(-50%);
   z-index: 10000;
 `
-
-// function calcCenter(stores) {
-//   const length = stores.length
-//   const lat = stores.reduce((acc, object) => acc + object.lat, 0) / length
-//   const lng = stores.reduce((acc, object) => acc + object.lng, 0) / length
-//   return { lat, lng }
-// }
 
 const StoreDetailContainer = styled.div`
   position: absolute;
@@ -40,26 +34,40 @@ function isFar(t1, t2) {
 }
 
 const UserStoreMap = () => {
+  const [showSnackbar, setShowSnackbar] = useState(false)
   const [map, setMap] = useState(null)
   const mapCenterRef = useRef({
     lat: 23.0042325,
     lng: 120.2216038,
   })
+  const [placeId, setPlaceId] = useState(null)
   const [stores, setStores] = useState([])
-  const getStoresApi = useApi(storeApi.getPublicStoresByLocation)
-  const getOneStoreApi = useApi(storeApi.getPublicStore)
   const { keyword, openTime } = useContext(FilterContext)
+  const { data: storesData } = useSWR(
+    [
+      "/stores/location",
+      {
+        ...mapCenterRef.current,
+        ...openTime,
+        keyword,
+      },
+    ],
+    storeApi.storesFetcher
+  )
+
+  const { data } = useSWR(
+    placeId ? `/stores/${placeId}` : null,
+    storeApi.fetcher
+  )
 
   useEffect(() => {
-    const result = getStoresApi.data
+    if (storesData) {
+      setStores(storesData)
 
-    if (result) {
-      setStores(result)
-
-      if (result.length === 1) {
+      if (storesData.length === 1) {
         const center = {
-          lat: result[0].lat,
-          lng: result[0].lng,
+          lat: storesData[0].lat,
+          lng: storesData[0].lng,
         }
         map.setCenter(center)
         map.setZoom(15)
@@ -67,19 +75,7 @@ const UserStoreMap = () => {
     } else {
       setStores([])
     }
-  }, [getStoresApi.data])
-
-  useEffect(() => {
-    callAPI()
-  }, [openTime])
-
-  function callAPI() {
-    getStoresApi.request({
-      ...mapCenterRef.current,
-      ...openTime,
-      keyword,
-    })
-  }
+  }, [storesData])
 
   function handleOnClick() {
     const city = _.find(cityMap, (city) => city.name === keyword)
@@ -88,7 +84,6 @@ const UserStoreMap = () => {
       map.setCenter(city.center)
       mapCenterRef.current = city.center
     }
-    callAPI()
   }
 
   const handleOnIdle = ({ lat, lng, zoom }) => {
@@ -107,11 +102,19 @@ const UserStoreMap = () => {
   }
 
   const handleCardClick = async (placeId) => {
-    getOneStoreApi.request({ placeId })
+    // getOneStoreApi.request({ placeId })
+    setPlaceId(placeId)
   }
 
   const handleMarkerClick = (placeId) => {
-    getOneStoreApi.request({ placeId })
+    // getOneStoreApi.request({ placeId })
+    setPlaceId(placeId)
+  }
+
+  const handleHideStore = async (placeId) => {
+    await storeApi.hideStore({ placeId })
+    setShowSnackbar(true)
+    setPlaceId(null)
   }
 
   const markers = stores.map((store) => {
@@ -137,16 +140,20 @@ const UserStoreMap = () => {
 
   return (
     <>
+      {showSnackbar && <Snackbar onClose={() => setShowSnackbar(false)} 
+        message="成功隱藏店家"
+      />}
       <FloatSearchBar>
         <Searchbar onClick={handleOnClick} />
       </FloatSearchBar>
       <Drawer stores={stores} onClick={handleCardClick} />
 
-      {getOneStoreApi.data && (
+      {data && (
         <StoreDetailContainer>
           <StoreDetail
-            {...getOneStoreApi.data}
-            onClose={() => getOneStoreApi.clean()}
+            {...data}
+            onClose={() => setPlaceId(null)}
+            onHide={handleHideStore}
           />
         </StoreDetailContainer>
       )}

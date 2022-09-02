@@ -20,4 +20,9 @@ export const Container = styled.div`
     text-decoration: none;
     margin: 0 0.6rem;
   }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
 `
