@@ -28,7 +28,11 @@ export async function getStore(placeId) {
 }
 
 const hideStore = ({placeId}) => {
-  instance.post(`/stores/${placeId}/hide`)
+  return instance.post(`/stores/${placeId}/hide`)
+}
+
+const unhideStore = ({placeId}) => {
+  return instance.post(`/stores/${placeId}/unhide`)
 }
 
 export async function hideUnqualifiedStores() {
@@ -104,6 +108,7 @@ const Apis = {
   fetcher,
   storesFetcher,
   hideStore,
+  unhideStore,
 }
 
 export default Apis
