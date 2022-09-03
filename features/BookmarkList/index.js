@@ -7,7 +7,7 @@ import Bookmark from "./Bookmark"
 import NewBookmarkForm from "./NewBookmarkForm"
 
 const BookmarkList = ({ bookmarks = [], onClick = () => {}, onSubmit = () => {} }) => {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
 
   const handleClick = (random_key) => {
     onClick(random_key)
