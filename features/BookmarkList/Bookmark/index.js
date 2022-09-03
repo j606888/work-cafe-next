@@ -55,7 +55,13 @@ const CATEGORIES = {
   ),
 }
 
-const Bookmark = ({ random_key, category, name, onClick = () => {} }) => {
+const Bookmark = ({
+  randomKey,
+  category,
+  name,
+  onClick = () => {},
+  onDelete = () => {},
+}) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const icon = CATEGORIES[category]
@@ -70,7 +76,11 @@ const Bookmark = ({ random_key, category, name, onClick = () => {} }) => {
   }
 
   const handleClick = () => {
-    onClick(random_key)
+    onClick(randomKey)
+  }
+
+  const handleDelete = () => {
+    onDelete(randomKey)
   }
 
   return (
@@ -95,7 +105,9 @@ const Bookmark = ({ random_key, category, name, onClick = () => {} }) => {
       <Menu open={open} onClose={handleClose} anchorEl={anchorEl}>
         <MenuItem>編輯清單</MenuItem>
         <MenuItem>分享清單</MenuItem>
-        <MenuItem>刪除</MenuItem>
+        {category === "custom" && (
+          <MenuItem onClick={handleDelete}>刪除</MenuItem>
+        )}
       </Menu>
     </>
   )

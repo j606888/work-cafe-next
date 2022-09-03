@@ -1,5 +1,5 @@
 import { fetcher } from "api"
-import { createBookmark } from "api/bookmark"
+import { createBookmark, deleteBookmark } from "api/bookmark"
 import BookmarkList from "features/BookmarkList"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import { useState } from "react"
@@ -16,7 +16,6 @@ const BookmarkContainer = styled.div`
 const UserBookmarkMap = () => {
   const [map, setMap] = useState(null)
   const { mutate } = useSWRConfig()
-
   const { data: bookmarks } = useSWR("/bookmarks", fetcher)
 
   const handleSubmit = async (name) => {
@@ -24,10 +23,15 @@ const UserBookmarkMap = () => {
     mutate("/bookmarks")
   }
 
+  const handleDelete = async (randomKey) => {
+    await deleteBookmark({ randomKey })
+    mutate("/bookmarks")
+  }
+
   return (
     <>
       <BookmarkContainer>
-        <BookmarkList bookmarks={bookmarks || []} onSubmit={handleSubmit}/>
+        <BookmarkList bookmarks={bookmarks || []} onSubmit={handleSubmit} onDelete={handleDelete}/>
       </BookmarkContainer>
       <GoogleMapWrapper map={map} setMap={setMap} marginTop="56px" />
     </>

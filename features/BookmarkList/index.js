@@ -6,15 +6,24 @@ import { Button } from "@mui/material"
 import Bookmark from "./Bookmark"
 import NewBookmarkForm from "./NewBookmarkForm"
 
-const BookmarkList = ({ bookmarks = [], onClick = () => {}, onSubmit = () => {} }) => {
+const BookmarkList = ({
+  bookmarks = [],
+  onClick = () => {},
+  onSubmit = () => {},
+  onDelete = () => {},
+}) => {
   const [open, setOpen] = React.useState(false)
 
-  const handleClick = (random_key) => {
-    onClick(random_key)
+  const handleClick = (randomKey) => {
+    onClick(randomKey)
   }
 
   const handleSubmit = (name) => {
     onSubmit(name)
+  }
+
+  const handleDelete = (randomKey) => {
+    onDelete(randomKey)
   }
 
   return (
@@ -36,14 +45,19 @@ const BookmarkList = ({ bookmarks = [], onClick = () => {}, onSubmit = () => {} 
         <div>
           {bookmarks.map((bookmark) => (
             <Bookmark
-              key={bookmark.random_key}
+              key={bookmark.randomKey}
               {...bookmark}
               onClick={handleClick}
+              onDelete={handleDelete}
             />
           ))}
         </div>
       </Container>
-      <NewBookmarkForm open={open} onClose={() => setOpen(false)} onSubmit={handleSubmit} />
+      <NewBookmarkForm
+        open={open}
+        onClose={() => setOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </>
   )
 }
