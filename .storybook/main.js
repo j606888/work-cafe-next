@@ -17,7 +17,7 @@ module.exports = {
       components: path.resolve(__dirname, "../components"),
       hooks: path.resolve(__dirname, "../hooks"),
       config: path.resolve(__dirname, "../config"),
-      redux: path.resolve(__dirname, "../redux"),
+      store: path.resolve(__dirname, "../store"),
       hooks: path.resolve(__dirname, "../hooks"),
       api: path.resolve(__dirname, "../api"),
       features: path.resolve(__dirname, "../features"),

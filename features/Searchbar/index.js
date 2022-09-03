@@ -4,7 +4,7 @@ import storeApi from "api/stores"
 import { Container } from "./styled"
 import Button from "components/Button"
 import { useSelector, useDispatch } from 'react-redux'
-import { updateOpenFilter, updateKeyword } from 'redux/slices/SearchSlice'
+import { updateOpenFilter, updateKeyword } from 'store/slices/search'
 import useSWR from "swr"
 
 const Searchbar = ({ onClick }) => {
