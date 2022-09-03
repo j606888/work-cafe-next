@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import Marker from "features/GoogleMapWrapper/Marker"
 import Drawer from "features/Drawer"
 import storeApi from "api/stores"
-import FilterContext from "contexts/FilterContext"
 import Router from "next/router"
 import { useRef } from "react"
 import Searchbar from "features/Searchbar"
@@ -13,6 +12,8 @@ import _ from "lodash"
 import StoreDetail from "features/StoreDetail"
 import useSWR from "swr"
 import Snackbar from "components/Snackbar"
+import { useSelector } from "react-redux"
+import { fetcher } from 'api'
 
 const FloatSearchBar = styled.div`
   position: absolute;
@@ -34,6 +35,7 @@ function isFar(t1, t2) {
 }
 
 const UserStoreMap = () => {
+  const filter = useSelector(state => state.search)
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [map, setMap] = useState(null)
   const mapCenterRef = useRef({
@@ -42,22 +44,21 @@ const UserStoreMap = () => {
   })
   const [placeId, setPlaceId] = useState(null)
   const [stores, setStores] = useState([])
-  const { keyword, openTime } = useContext(FilterContext)
   const { data: storesData } = useSWR(
     [
       "/stores/location",
       {
         ...mapCenterRef.current,
-        ...openTime,
-        keyword,
+        ...filter,
+        limit: 10,
       },
     ],
-    storeApi.storesFetcher
+    fetcher,
   )
 
   const { data } = useSWR(
     placeId ? `/stores/${placeId}` : null,
-    storeApi.fetcher
+    fetcher
   )
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const UserStoreMap = () => {
   }, [storesData])
 
   function handleOnClick() {
-    const city = _.find(cityMap, (city) => city.name === keyword)
+    const city = _.find(cityMap, (city) => city.name === filter.keyword)
 
     if (city && city.center && isFar(city.center, mapCenterRef.current)) {
       map.setCenter(city.center)
@@ -94,20 +95,16 @@ const UserStoreMap = () => {
   }
 
   const handleMarkerOver = (id) => {
-    // console.log(`id ${id} was hovered`)
   }
 
   const handleMarkerOut = (id) => {
-    // console.log(`id ${id} was out`)
   }
 
   const handleCardClick = async (placeId) => {
-    // getOneStoreApi.request({ placeId })
     setPlaceId(placeId)
   }
 
   const handleMarkerClick = (placeId) => {
-    // getOneStoreApi.request({ placeId })
     setPlaceId(placeId)
   }
 
