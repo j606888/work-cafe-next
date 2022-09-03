@@ -27,6 +27,7 @@ const StoreDetail = ({
   name,
   rating,
   userRatingsTotal,
+  isOpenNow,
   address,
   website,
   phone,
@@ -87,7 +88,7 @@ const StoreDetail = ({
           <span>{address}</span>
         </div>
         <div>
-          <OpeningTime openingHours={openingHours} />
+          <OpeningTime openingHours={openingHours} isOpenNow={isOpenNow} />
         </div>
         <div>
           <PublicIcon />

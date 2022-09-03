@@ -50,6 +50,7 @@ const UserStoreMap = () => {
       {
         ...mapCenterRef.current,
         ...filter,
+        limit: 10,
       },
     ],
     fetcher,

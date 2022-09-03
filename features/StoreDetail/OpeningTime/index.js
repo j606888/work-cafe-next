@@ -41,14 +41,14 @@ const Container = styled.div`
   }
 `
 
-const OpeningTime = ({ openingHours = [], isOpen = false }) => {
+const OpeningTime = ({ openingHours = [], isOpenNow = false }) => {
   const [openTab, setOpenTab] = React.useState(false)
 
   return (
-    <Container isOpen={isOpen}>
+    <Container isOpen={isOpenNow}>
       <div className="icon-list" onClick={() => setOpenTab((cur) => !cur)}>
         <AccessTimeIcon />
-        <span className="open-status">{isOpen ? "營業中" : "已打烊"}</span>
+        <span className="open-status">{isOpenNow ? "營業中" : "已打烊"}</span>
         {/* <span>&nbsp;⋅ 開始營業時間：週二 12:00 </span> */}
         {openTab ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
       </div>
