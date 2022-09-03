@@ -95,7 +95,7 @@ const Bookmark = ({ random_key, category, name, onClick = () => {} }) => {
       <Menu open={open} onClose={handleClose} anchorEl={anchorEl}>
         <MenuItem>編輯清單</MenuItem>
         <MenuItem>分享清單</MenuItem>
-        <MenuItem>還沒想到</MenuItem>
+        <MenuItem>刪除</MenuItem>
       </Menu>
     </>
   )

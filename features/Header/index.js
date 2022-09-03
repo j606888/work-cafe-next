@@ -28,7 +28,7 @@ const Header = () => {
       <div className="nav-links">
         <Link href="/map">Map</Link>
         <Link href="/map/hidden">Hiddens</Link>
-        <Link href="/">Bookmarks</Link>
+        <Link href="/map/bookmarks">Bookmarks</Link>
       </div>
       <div>
         {user ? (
