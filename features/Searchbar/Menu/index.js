@@ -62,11 +62,11 @@ const hours = {
   '23': '晚上 11:00',
 }
 
-export default function Menu({ onOpenTimeChange }) {
+export default function Menu({ onOpenTimeChange, initValue={} }) {
   const [anchorEl, setAnchorEl] = useState(null)
-  const [openType, setOpenType] = useState("NONE")
-  const [week, setWeek] = useState("0")
-  const [hour, setHour] = useState("99")
+  const [openType, setOpenType] = useState(initValue.openType || "NONE")
+  const [week, setWeek] = useState(initValue.openWeek || "0")
+  const [hour, setHour] = useState(initValue.openHour || "99")
 
   const open = Boolean(anchorEl)
   const handleClick = (event) => {

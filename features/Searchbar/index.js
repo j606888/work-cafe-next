@@ -33,7 +33,7 @@ const Searchbar = ({ onClick }) => {
     <Container>
       <Autocomplete options={coolHints} onInputChange={handleInputChange} keyword={filter.keyword}  />
       <div className="filter">
-        <Menu onOpenTimeChange={changeOpenTimeChange} />
+        <Menu onOpenTimeChange={changeOpenTimeChange} initValue={filter} />
       </div>
       <Button text="搜尋" onClick={handleOnClick} />
     </Container>
