@@ -18,8 +18,7 @@ const UserBookmarkMap = () => {
   const { mutate } = useSWRConfig()
   const { data: bookmarks } = useSWR("/bookmarks", fetcher)
 
-  const handleSubmit = async (name) => {
-    await createBookmark({ name })
+  const handleSubmit = async () => {
     mutate("/bookmarks")
   }
 

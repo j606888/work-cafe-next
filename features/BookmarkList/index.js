@@ -18,8 +18,8 @@ const BookmarkList = ({
     onClick(randomKey)
   }
 
-  const handleSubmit = (name) => {
-    onSubmit(name)
+  const handleSubmit = () => {
+    onSubmit()
   }
 
   const handleDelete = (randomKey) => {

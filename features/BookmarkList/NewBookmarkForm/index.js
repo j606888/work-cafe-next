@@ -7,6 +7,7 @@ import DialogContent from "@mui/material/DialogContent"
 import DialogTitle from "@mui/material/DialogTitle"
 import CloseIcon from "@mui/icons-material/Close"
 import { Box } from "@mui/system"
+import { createBookmark } from "api/bookmark"
 
 const NewBookmarkForm = ({ open, onClose = () => {}, onSubmit = () => {} }) => {
   const [name, setName] = React.useState("")
@@ -20,8 +21,9 @@ const NewBookmarkForm = ({ open, onClose = () => {}, onSubmit = () => {} }) => {
     setName(event.target.value)
   }
 
-  const handleSubmit = () => {
-    onSubmit(name)
+  const handleSubmit = async () => {
+    await createBookmark({ name })
+    onSubmit()
     onClose()
   }
 
