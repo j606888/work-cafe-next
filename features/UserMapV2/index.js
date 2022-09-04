@@ -16,6 +16,7 @@ import { useSelector } from "react-redux"
 import { fetcher } from "api"
 import SearchHere from "components/Button/SearchHere"
 import SearchbarV2 from "features/SearchbarV2"
+import StoreListV2 from "features/StoreListV2"
 
 const SearchHereContainer = styled.div`
   position: absolute;
@@ -89,6 +90,7 @@ const UserMapV2 = () => {
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
         {markers}
       </GoogleMapWrapper>
+      {/* <StoreListV2 stores={stores || []} /> */}
     </>
   )
 }

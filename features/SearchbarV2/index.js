@@ -22,7 +22,7 @@ const Container = styled.div`
 `
 
 const Input = styled.input`
-  width: 210px;
+  width: 240px;
   border: none;
   outline: none;
   font-size: 16px;
