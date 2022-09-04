@@ -15,7 +15,7 @@ const Container = styled.div`
   cursor: pointer;
 
   span {
-    color: #1B72E8;
+    color: ${({color}) => color};
     font-size: 12px;
     margin-top: 8px;
   }
@@ -28,17 +28,17 @@ const Circle = styled.div`
   justify-content: center;
   flex-direction: column;
   border-radius: 50%;
-  background-color: ${({primary}) => primary ? '#1B72E8' : '#fff'};
-  border: 1px solid #1B72E8;
+  background-color: ${({primary, color}) => primary ? color : '#fff'};
+  border: 1px solid ${({ color} ) => color};
 `
 
-const ActionButton = ({type, text, primary=false, onClick}) => {
+const ActionButton = ({type, text, primary=false, onClick, color="#1B72E8"}) => {
   function handleOnClick(e) {
     if (onClick) onClick(e)
   }
 
   const sx = {
-    color: primary ? '#fff' : '#1B72E8',
+    color: primary ? '#fff' : color,
     fontSize: 18
   }
 
@@ -71,8 +71,8 @@ const ActionButton = ({type, text, primary=false, onClick}) => {
   }
 
   return (
-    <Container onClick={handleOnClick}>
-      <Circle primary={primary}>
+    <Container onClick={handleOnClick} color={color}>
+      <Circle primary={primary} color={color}>
         {icon}
       </Circle>
       <span>{text}</span>

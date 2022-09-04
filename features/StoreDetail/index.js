@@ -47,11 +47,13 @@ const StoreDetail = ({
 }) => {
   const { mutate } = useSWRConfig()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
-  const { data: bookmarks } = useSWR(`/bookmarks?place_id=${placeId}`, fetcher)
+  const { data: bookmarks } = useSWR(`/stores/${placeId}/bookmarks`, fetcher)
 
   const handleBookmarkSubmit = () => {
-    mutate(`/bookmarks?place_id=${placeId}`)
+    mutate(`/stores/${placeId}/bookmarks`)
   }
+
+  const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
   return (
     <>
@@ -70,15 +72,17 @@ const StoreDetail = ({
         <Divider />
         <ButtonGroup>
           <ActionButton
-            type="bookmark"
-            text="儲存"
-            primary
-            onClick={(e) => setBookmarkAnchor(e.currentTarget)}
-          />
-          <ActionButton
             type="comment"
             text="評論"
+            primary
             onClick={() => onReview(id)}
+          />
+          <ActionButton
+            type="bookmark"
+            text={isSaved ? "已儲存" : "儲存"}
+            color={isSaved ? "#FB507D" : "#1B72E8"}
+            primary={isSaved}
+            onClick={(e) => setBookmarkAnchor(e.currentTarget)}
           />
           <ActionButton text="不知道" />
           {isHide ? (
