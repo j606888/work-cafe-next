@@ -21,6 +21,10 @@ const NewBookmarkForm = ({ open, onClose = () => {}, onSubmit = () => {} }) => {
     setName(event.target.value)
   }
 
+  const handleKeyPress = (event) => {
+    if (event.keyCode === 13) handleSubmit()
+  }
+
   const handleSubmit = async () => {
     await createBookmark({ name })
     onSubmit()
@@ -54,6 +58,7 @@ const NewBookmarkForm = ({ open, onClose = () => {}, onSubmit = () => {} }) => {
             sx={{ width: 400 }}
             inputProps={{ maxLength: 40 }}
             onChange={handleChange}
+            onKeyDown={handleKeyPress}
           />
         </DialogContent>
         <DialogActions>

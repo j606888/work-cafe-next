@@ -16,14 +16,11 @@ const Snackbar = ({ message = "Give me something", onClose = () => {} }) => {
   return (
     <MuiSnackbar
       open={open}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       onClose={handleClose}
       autoHideDuration={4000}
-    >
-      <Alert onClose={handleClose} security="success" sx={{ width: "100%" }}>
-        {message}
-      </Alert>
-    </MuiSnackbar>
+      message={message}
+    />
   )
 }
 

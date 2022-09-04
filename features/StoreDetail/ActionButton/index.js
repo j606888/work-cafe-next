@@ -33,8 +33,8 @@ const Circle = styled.div`
 `
 
 const ActionButton = ({type, text, primary=false, onClick}) => {
-  function handleOnClick() {
-    if (onClick) onClick()
+  function handleOnClick(e) {
+    if (onClick) onClick(e)
   }
 
   const sx = {
