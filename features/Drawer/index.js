@@ -22,7 +22,7 @@ const Btn = styled.div`
   cursor: pointer;
 `
 
-export default function Drawer({ stores = [], onClick = () => {} }) {
+export default function Drawer({ stores = [], onClick = () => {}, children }) {
   const [state, setState] = React.useState(false)
   const width = 460
 
@@ -62,6 +62,7 @@ export default function Drawer({ stores = [], onClick = () => {} }) {
         onClose={toggleDrawer}
         variant="persistent"
       >
+        {children}
         <CardList stores={stores} onClick={handleOnClick} />
       </MuiDrawer>
     </React.Fragment>

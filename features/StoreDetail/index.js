@@ -20,6 +20,9 @@ import ReviewCard from "./ReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
 import OpeningTime from "./OpeningTime"
+import Bookmarks from "./Bookmarks"
+import useSWR, { useSWRConfig } from "swr"
+import { fetcher } from "api"
 
 const StoreDetail = ({
   id,
@@ -42,77 +45,102 @@ const StoreDetail = ({
   onShare = () => {},
   onClose = () => {},
 }) => {
-  return (
-    <Container>
-      <CloseButton onClick={onClose}>
-        <CloseIcon />
-      </CloseButton>
-      <ImageSlide photos={photos} />
-      <MainInfo>
-        <h3>{name}</h3>
-        <div className="sub-info">
-          <RatingStars rating={rating} />
-          <span className="reviews">{userRatingsTotal} 則評論</span>
-        </div>
-      </MainInfo>
-      <Divider />
-      <ButtonGroup>
-        <ActionButton
-          type="bookmark"
-          text="儲存"
-          primary
-          onClick={() => onSave(id)}
-        />
-        <ActionButton type="comment" text="評論" onClick={() => onReview(id)} />
-        <ActionButton text="不知道" />
-        {isHide ? (
-          <ActionButton
-            type="show"
-            text="恢復"
-            onClick={() => onUnhide(placeId)}
-          />
-        ) : (
-          <ActionButton
-            type="hide"
-            text="隱藏"
-            onClick={() => onHide(placeId)}
-          />
-        )}
+  const { mutate } = useSWRConfig()
+  const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
+  const { data: bookmarks } = useSWR(`/stores/${placeId}/bookmarks`, fetcher)
 
-        <ActionButton type="share" text="分享" onClick={() => onShare(id)} />
-      </ButtonGroup>
-      <Divider />
-      <SecondaryInfo>
-        <div>
-          <PlaceIcon />
-          <span>{address}</span>
-        </div>
-        <div>
-          <OpeningTime openingHours={openingHours} isOpenNow={isOpenNow} />
-        </div>
-        <div>
-          <PublicIcon />
-          <span>{website}</span>
-        </div>
-        <div>
-          <LocalPhoneIcon />
-          <span>{phone}</span>
-        </div>
-      </SecondaryInfo>
-      <Divider />
-      <Reviews>
-        <div className="review-header">
-          <h4>評論</h4>
-          <div className="sort">
-            <SortIcon />
-            <span>排序</span>
+  const handleBookmarkSubmit = () => {
+    mutate(`/stores/${placeId}/bookmarks`)
+  }
+
+  const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
+
+  return (
+    <>
+      <Container>
+        <CloseButton onClick={onClose}>
+          <CloseIcon />
+        </CloseButton>
+        <ImageSlide photos={photos} />
+        <MainInfo>
+          <h3>{name}</h3>
+          <div className="sub-info">
+            <RatingStars rating={rating} />
+            <span className="reviews">{userRatingsTotal} 則評論</span>
           </div>
-        </div>
-        {reviews.map((review) => (
-          <ReviewCard key={review.authorName} {...review} />
-        ))}
-      </Reviews>
-    </Container>
+        </MainInfo>
+        <Divider />
+        <ButtonGroup>
+          <ActionButton
+            type="comment"
+            text="評論"
+            primary
+            onClick={() => onReview(id)}
+          />
+          <ActionButton
+            type="bookmark"
+            text={isSaved ? "已儲存" : "儲存"}
+            color={isSaved ? "#FB507D" : "#1B72E8"}
+            primary={isSaved}
+            onClick={(e) => setBookmarkAnchor(e.currentTarget)}
+          />
+          <ActionButton text="不知道" />
+          {isHide ? (
+            <ActionButton
+              type="show"
+              text="恢復"
+              onClick={() => onUnhide(placeId)}
+            />
+          ) : (
+            <ActionButton
+              type="hide"
+              text="隱藏"
+              onClick={() => onHide(placeId)}
+            />
+          )}
+
+          <ActionButton type="share" text="分享" onClick={() => onShare(id)} />
+        </ButtonGroup>
+        <Divider />
+        <SecondaryInfo>
+          <div>
+            <PlaceIcon />
+            <span>{address}</span>
+          </div>
+          <div>
+            <OpeningTime openingHours={openingHours} isOpenNow={isOpenNow} />
+          </div>
+          <div>
+            <PublicIcon />
+            <span>{website}</span>
+          </div>
+          <div>
+            <LocalPhoneIcon />
+            <span>{phone}</span>
+          </div>
+        </SecondaryInfo>
+        <Divider />
+        <Reviews>
+          <div className="review-header">
+            <h4>評論</h4>
+            <div className="sort">
+              <SortIcon />
+              <span>排序</span>
+            </div>
+          </div>
+          {reviews.map((review) => (
+            <ReviewCard key={review.authorName} {...review} />
+          ))}
+        </Reviews>
+      </Container>
+      <Bookmarks
+        placeId={placeId}
+        anchorEl={bookmarkAnchor}
+        onClose={() => setBookmarkAnchor(null)}
+        bookmarks={bookmarks}
+        onSubmit={handleBookmarkSubmit}
+      />
+    </>
   )
 }
 
