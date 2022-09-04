@@ -59,6 +59,7 @@ const Bookmark = ({
   randomKey,
   category,
   name,
+  storeCount,
   onClick = () => {},
   onDelete = () => {},
 }) => {
@@ -88,7 +89,7 @@ const Bookmark = ({
       <Container onClick={handleClick}>
         {icon}
         <div className="description">
-          <span>{name}</span>
+          <span>{name} ({storeCount})</span>
           <div className="is-private">
             <LockIcon sx={{ fontSize: 12 }} />
             <span>私人</span>
