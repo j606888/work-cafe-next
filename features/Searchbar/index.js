@@ -1,16 +1,16 @@
 import Autocomplete from "./Autocomplete"
 import Menu from "./Menu"
-import storeApi from "api/stores"
 import { Container } from "./styled"
 import Button from "components/Button"
 import { useSelector, useDispatch } from 'react-redux'
 import { updateOpenFilter, updateKeyword } from 'store/slices/search'
 import useSWR from "swr"
+import { fetcher } from "api"
 
 const Searchbar = ({ onClick }) => {
   const dispatch = useDispatch()
   const filter = useSelector(state => state.search)
-  const { data: hints } = useSWR(filter.keyword ? ["/stores/hint", filter] : null, storeApi.fetcher2)
+  const { data: hints } = useSWR(filter.keyword ? ["/stores/hint", filter] : null, fetcher)
 
   function handleInputChange(newInputValue) {
     dispatch(updateKeyword(newInputValue))
@@ -28,6 +28,8 @@ const Searchbar = ({ onClick }) => {
     ...hint,
     label: hint.name
   }))
+
+  console.log(filter.keyword)
 
   return (
     <Container>
