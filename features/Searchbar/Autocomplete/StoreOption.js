@@ -21,7 +21,7 @@ const StoreOption = ({ label, address, inputValue }) => {
           display: "flex",
           alignItems: "center",
           overflowX: "hidden",
-          width: "90%",
+          width: "95%",
           whiteSpace: "nowrap",
         }}
       >

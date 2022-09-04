@@ -2,9 +2,14 @@ import React from "react"
 import styled from "styled-components"
 import MenuIcon from "@mui/icons-material/Menu"
 import SearchIcon from "@mui/icons-material/Search"
-import CloseIcon from "@mui/icons-material/Close"
 import WhereToVoteIcon from "@mui/icons-material/WhereToVote"
 import { Divider, Tooltip } from "@mui/material"
+import MuiAutocomplete from "@mui/material/Autocomplete"
+import { Box } from "@mui/system"
+import StoreOption from "features/Searchbar/Autocomplete/StoreOption"
+import LocationOption from "features/Searchbar/Autocomplete/LocationOption"
+import useSWR from "swr"
+import { fetcher } from "api"
 
 const Container = styled.div`
   background-color: #fff;
@@ -15,6 +20,7 @@ const Container = styled.div`
   border-radius: 12px;
   gap: 0.8rem;
 `
+
 const Input = styled.input`
   width: 210px;
   border: none;
@@ -22,13 +28,13 @@ const Input = styled.input`
   font-size: 16px;
 `
 
-const SearchbarV2 = () => {
+const InputBox = ({ args }) => {
   return (
-    <Container>
+    <Container ref={args.InputProps.ref}>
       <Tooltip title="選單">
         <MenuIcon sx={{ color: "#333333", cursor: "pointer" }} />
       </Tooltip>
-      <Input placeholder="搜尋 Google 地圖" />
+      <Input {...args.inputProps} placeholder="搜尋 Google 地圖" />
       <Tooltip title="搜尋">
         <SearchIcon sx={{ color: "#CCCCCC", cursor: "pointer" }} />
       </Tooltip>
@@ -37,6 +43,49 @@ const SearchbarV2 = () => {
         <WhereToVoteIcon sx={{ color: "#8AB4F8", cursor: "pointer" }} />
       </Tooltip>
     </Container>
+  )
+}
+
+const OptionBox = ({ props, option, inputValue }) => {
+  return (
+    <Box  {...props}>
+      {option.type === "store" ? (
+        <StoreOption {...option} inputValue={inputValue} />
+      ) : (
+        <LocationOption {...option} inputValue={inputValue} />
+      )}
+    </Box>
+  )
+}
+
+const SearchbarV2 = () => {
+  const [params, setParams] = React.useState({
+    keyword: "",
+  })
+  const { data } = useSWR(
+    params.keyword.length > 0 ? ["/stores/hint", params] : null,
+    fetcher
+  )
+  const hints = data?.results?.map((hint) => ({
+    ...hint,
+    label: hint.name,
+  }))
+
+  async function handleInputChange(_event, newInputValue) {
+    setParams({ keyword: newInputValue })
+  }
+
+  return (
+    <MuiAutocomplete
+      freeSolo
+      id="cool"
+      options={hints || []}
+      renderInput={(args) => <InputBox args={args} />}
+      renderOption={(props, option, { inputValue }) => (
+        <OptionBox props={props} option={option} inputValue={inputValue} />
+      )}
+      onInputChange={handleInputChange}
+    />
   )
 }
 

@@ -22,7 +22,7 @@ const LocationOption = ({ label, count, inputValue }) => {
           display: "flex",
           alignItems: "center",
           overflowX: "hidden",
-          width: 200,
+          
           whiteSpace: "nowrap",
         }}
       >

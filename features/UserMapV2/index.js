@@ -15,12 +15,20 @@ import Snackbar from "components/Snackbar"
 import { useSelector } from "react-redux"
 import { fetcher } from "api"
 import SearchHere from "components/Button/SearchHere"
+import SearchbarV2 from "features/SearchbarV2"
 
 const SearchHereContainer = styled.div`
   position: absolute;
   top: 3rem;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 2;
+`
+
+const SearchbarV2Container = styled.div`
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
   z-index: 2;
 `
 
@@ -72,6 +80,9 @@ const UserMapV2 = () => {
 
   return (
     <>
+      <SearchbarV2Container>
+        <SearchbarV2 />
+      </SearchbarV2Container>
       <SearchHereContainer>
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
