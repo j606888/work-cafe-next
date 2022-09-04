@@ -49,6 +49,7 @@ const UserHiddenStoreMap = () => {
       }
       map.setZoom(15)
       map.panTo(center)
+      map.panBy(-400,0)
     }
   }, [store])
   return (
