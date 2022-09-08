@@ -1,5 +1,4 @@
 import React from "react"
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
 import { Container, Content, ImageBox } from './styled'
 
 const Card = ({
@@ -41,7 +40,6 @@ const Card = ({
             <span key={tag}>{tag}</span>
           ))}
         </div>
-        <FavoriteBorderIcon sx={{ position: "absolute", right: 0, top: 0 }} />
       </Content>
     </Container>
   )

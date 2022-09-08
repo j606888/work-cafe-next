@@ -94,18 +94,20 @@ const UserMapV2 = () => {
       <SearchbarV2Container>
         <SearchbarV2 onSearch={handleKeywordSearch} />
       </SearchbarV2Container>
-      {stores && (
+      {/* {stores && (
         <StoreDetailContainer>
           <StoreDetail {...stores[0]} />
         </StoreDetailContainer>
-      )}
+      )} */}
       <SearchHereContainer>
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
         {markers}
       </GoogleMapWrapper>
-      {/* <StoreListV2 stores={stores || []} /> */}
+      {/* <StoreDetailContainer>
+        <StoreListV2 stores={stores || []} />
+      </StoreDetailContainer> */}
     </>
   )
 }

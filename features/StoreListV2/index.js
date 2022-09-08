@@ -31,6 +31,14 @@ const Scrollbar = styled.div`
   height: 100vh;
   padding-top: 5rem;
 
+  ::-webkit-scrollbar-thumb {
+    background: red; 
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+  }
 
 `
 
