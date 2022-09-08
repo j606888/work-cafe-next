@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
-  border-radius: 12px;
-  width: 400px;
-  height: 90vh;
+  width: 420px;
+  height: 100vh;
   overflow: hidden;
   position: relative;
   overflow-y: scroll;

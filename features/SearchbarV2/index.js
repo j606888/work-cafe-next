@@ -28,14 +28,18 @@ const Input = styled.input`
   font-size: 16px;
 `
 
-const InputBox = ({ args }) => {
+const InputBox = ({ args, onSearch = () => {} }) => {
+  const handleSearch = () => {
+    onSearch()
+  }
+
   return (
     <Container ref={args.InputProps.ref}>
       <Tooltip title="選單">
         <MenuIcon sx={{ color: "#333333", cursor: "pointer" }} />
       </Tooltip>
       <Input {...args.inputProps} placeholder="搜尋 Google 地圖" />
-      <Tooltip title="搜尋">
+      <Tooltip title="搜尋" onClick={handleSearch}>
         <SearchIcon sx={{ color: "#CCCCCC", cursor: "pointer" }} />
       </Tooltip>
       <Divider orientation="vertical" flexItem />
@@ -58,7 +62,7 @@ const OptionBox = ({ props, option, inputValue }) => {
   )
 }
 
-const SearchbarV2 = () => {
+const SearchbarV2 = ({ onSearch = () => {}}) => {
   const [params, setParams] = React.useState({
     keyword: "",
   })
@@ -75,12 +79,18 @@ const SearchbarV2 = () => {
     setParams({ keyword: newInputValue })
   }
 
+  const handleSearch = () => {
+    if (params.keyword.length === 0) return
+
+    onSearch(params.keyword)
+  }
+
   return (
     <MuiAutocomplete
       freeSolo
       id="cool"
       options={hints || []}
-      renderInput={(args) => <InputBox args={args} />}
+      renderInput={(args) => <InputBox args={args} onSearch={handleSearch} />}
       renderOption={(props, option, { inputValue }) => (
         <OptionBox props={props} option={option} inputValue={inputValue} />
       )}

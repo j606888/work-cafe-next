@@ -30,6 +30,13 @@ const SearchbarV2Container = styled.div`
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
+  z-index: 3;
+`
+
+const StoreDetailContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 2;
 `
 
@@ -55,6 +62,9 @@ const UserMapV2 = () => {
   }
   const handleSearch = () => {
     setLocationParams(mapCenterRef.current)
+  }
+  const handleKeywordSearch = (keyword) => {
+    setLocationParams({ ...mapCenterRef.current, keyword })
   }
 
   const markers = stores?.map((store) => {
@@ -82,8 +92,13 @@ const UserMapV2 = () => {
   return (
     <>
       <SearchbarV2Container>
-        <SearchbarV2 />
+        <SearchbarV2 onSearch={handleKeywordSearch} />
       </SearchbarV2Container>
+      {stores && (
+        <StoreDetailContainer>
+          <StoreDetail {...stores[0]} />
+        </StoreDetailContainer>
+      )}
       <SearchHereContainer>
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
