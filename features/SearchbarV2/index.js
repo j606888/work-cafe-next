@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import MenuIcon from "@mui/icons-material/Menu"
 import SearchIcon from "@mui/icons-material/Search"
@@ -10,6 +10,7 @@ import StoreOption from "features/Searchbar/Autocomplete/StoreOption"
 import LocationOption from "features/Searchbar/Autocomplete/LocationOption"
 import useSWR from "swr"
 import { fetcher } from "api"
+import ClearIcon from "@mui/icons-material/Clear"
 
 const Container = styled.div`
   background-color: #fff;
@@ -28,9 +29,18 @@ const Input = styled.input`
   font-size: 16px;
 `
 
-const InputBox = ({ args, onSearch = () => {} }) => {
+const InputBox = ({
+  args,
+  hasResult = false,
+  onSearch = () => {},
+  onClear = () => {},
+}) => {
   const handleSearch = () => {
     onSearch()
+  }
+
+  const handleClear = () => {
+    onClear()
   }
 
   return (
@@ -43,16 +53,22 @@ const InputBox = ({ args, onSearch = () => {} }) => {
         <SearchIcon sx={{ color: "#CCCCCC", cursor: "pointer" }} />
       </Tooltip>
       <Divider orientation="vertical" flexItem />
-      <Tooltip title="這裡">
-        <WhereToVoteIcon sx={{ color: "#8AB4F8", cursor: "pointer" }} />
-      </Tooltip>
+      {hasResult ? (
+        <Tooltip title="清除搜尋" onClick={handleClear}>
+          <ClearIcon sx={{ color: "#8AB4F8", cursor: "pointer" }} />
+        </Tooltip>
+      ) : (
+        <Tooltip title="這裡">
+          <WhereToVoteIcon sx={{ color: "#8AB4F8", cursor: "pointer" }} />
+        </Tooltip>
+      )}
     </Container>
   )
 }
 
 const OptionBox = ({ props, option, inputValue }) => {
   return (
-    <Box  {...props}>
+    <Box {...props} >
       {option.type === "store" ? (
         <StoreOption {...option} inputValue={inputValue} />
       ) : (
@@ -62,7 +78,12 @@ const OptionBox = ({ props, option, inputValue }) => {
   )
 }
 
-const SearchbarV2 = ({ onSearch = () => {}}) => {
+const SearchbarV2 = ({
+  onSearch = () => {},
+  hasResult = false,
+  onClear = () => {},
+}) => {
+  const [resetBool, setResetBool] = React.useState(true)
   const [params, setParams] = React.useState({
     keyword: "",
   })
@@ -75,8 +96,14 @@ const SearchbarV2 = ({ onSearch = () => {}}) => {
     label: hint.name,
   }))
 
-  async function handleInputChange(_event, newInputValue) {
+  async function handleInputChange(event, newInputValue) {
     setParams({ keyword: newInputValue })
+
+    const eventName = event._reactName
+    console.log(eventName)
+    if (eventName === 'onClick') {
+      onSearch(params.keyword)
+    }
   }
 
   const handleSearch = () => {
@@ -85,14 +112,33 @@ const SearchbarV2 = ({ onSearch = () => {}}) => {
     onSearch(params.keyword)
   }
 
+  const handleClear = () => {
+    setParams({ keyword: "" })
+    onClear()
+    // Use key to reset AutoComplete
+    setResetBool(false)
+  }
+
+  useEffect(() => {
+    if (!resetBool) setResetBool(true)
+  }, [resetBool])
+
   return (
     <MuiAutocomplete
       freeSolo
       id="cool"
       options={hints || []}
-      renderInput={(args) => <InputBox args={args} onSearch={handleSearch} />}
+      key={resetBool}
+      renderInput={(args) => (
+        <InputBox
+          args={args}
+          hasResult={hasResult}
+          onSearch={handleSearch}
+          onClear={handleClear}
+        />
+      )}
       renderOption={(props, option, { inputValue }) => (
-        <OptionBox props={props} option={option} inputValue={inputValue} />
+        <OptionBox props={props} option={option} inputValue={inputValue}  />
       )}
       onInputChange={handleInputChange}
     />

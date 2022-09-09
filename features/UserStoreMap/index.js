@@ -20,7 +20,7 @@ const SearchHereContainer = styled.div`
   top: 3rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 2;
+  z-index: 5;
 `
 
 const SearchbarV2Container = styled.div`
@@ -54,6 +54,7 @@ const UserMapV2 = () => {
     lat: 23.0042325,
     lng: 120.2216038,
   })
+  const openTimeRef = useRef({})
   const { data: stores } = useSWR(
     ["/stores/location", { ...locationParams, limit: 10 }],
     fetcher
@@ -65,18 +66,35 @@ const UserMapV2 = () => {
     mapCenterRef.current = { lat, lng }
   }
   const handleSearch = () => {
-    setLocationParams(mapCenterRef.current)
+    setLocationParams((cur) => ({
+      ...cur,
+      ...mapCenterRef.current,
+      ...openTimeRef.current,
+    }))
   }
   const handleKeywordSearch = (keyword) => {
-    setLocationParams({ ...mapCenterRef.current, keyword })
+    setLocationParams({
+      ...mapCenterRef.current,
+      ...openTimeRef.current,
+      keyword,
+    })
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
     let realOpenHour = openHour === "99" ? null : openHour
-    setLocationParams((cur) => ({
-      ...cur,
+    openTimeRef.current = {
       openType,
       openWeek,
       openHour: realOpenHour,
+    }
+    setLocationParams((cur) => ({
+      ...cur,
+      ...openTimeRef.current,
+    }))
+  }
+  const handleClear = () => {
+    setLocationParams((cur) => ({
+      ...cur,
+      keyword: "",
     }))
   }
   // function handleOnClick() {
@@ -109,7 +127,11 @@ const UserMapV2 = () => {
   return (
     <>
       <SearchbarV2Container>
-        <SearchbarV2 onSearch={handleKeywordSearch} />
+        <SearchbarV2
+          onSearch={handleKeywordSearch}
+          hasResult={markers?.length !== 0}
+          onClear={handleClear}
+        />
       </SearchbarV2Container>
       <MenuContainer>
         <OpenTimeV2 onChange={handleOpenTimeChange} />

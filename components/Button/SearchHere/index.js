@@ -13,6 +13,10 @@ const Container = styled.div`
   gap: 0.6rem;
   cursor: pointer;
 
+  &:hover {
+    background-color: #f2f2f2;
+  }
+
   span {
     font-size: 12px;
     font-weight: 500;
