@@ -1,10 +1,10 @@
+import AccountMenu from "features/AccountMenu";
 import GoogleMap from "features/UserStoreMap";
-import Header from "features/Header";
 
 export default function MapPage() {
   return (
     <>
-      <Header />
+      <AccountMenu />
       <GoogleMap />
     </>
   )
