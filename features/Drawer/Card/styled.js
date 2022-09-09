@@ -3,14 +3,18 @@ import styled from "styled-components"
 export const Container = styled.div`
   display: flex;
   gap: 1.2rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
   border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f8f8f8;
+  }
 `
 
 export const ImageBox = styled.div`
-  width: 168px;
-  height: 168px;
+  width: 154px;
+  height: 154px;
   border-radius: 8px;
   overflow: hidden;
 
@@ -34,7 +38,7 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   color: #444;
-  width: 240px;
+  width: 225px;
 
   h3 {
     margin: 0;

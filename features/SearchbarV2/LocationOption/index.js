@@ -30,6 +30,7 @@ const LocationOption = ({ label, count, inputValue }) => {
         <Typography variant="body2">
           {parts.map((part, index) => (
             <span
+              // eslint-disable-next-line react/no-unknown-property
               key={index}
               style={{ fontWeight: part.highlight ? 700 : 400 }}
             >

@@ -11,7 +11,7 @@ const GoogleMapWrapper = ({
   onClick,
   initCenter,
   initZoom,
-  marginTop="20px",
+  marginTop="0px",
 }) => {
   return (
     <Wrapper apiKey={API_KEY}>

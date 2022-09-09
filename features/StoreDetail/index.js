@@ -61,7 +61,7 @@ const StoreDetail = ({
         <CloseButton onClick={onClose}>
           <CloseIcon />
         </CloseButton>
-        <ImageSlide photos={photos} />
+        <ImageSlide photos={photos.filter(Boolean) } />
         <MainInfo>
           <h3>{name}</h3>
           <div className="sub-info">

@@ -1,10 +1,9 @@
-import LocationOnIcon from "@mui/icons-material/LocationOn"
-import CircleIcon from "@mui/icons-material/Circle"
-import { Box, Typography } from "@mui/material"
+import StoreIcon from "@mui/icons-material/Store"
+import { Box } from "@mui/material"
 import parse from "autosuggest-highlight/parse"
 import match from "autosuggest-highlight/match"
 
-const LocationOption = ({ label, count, inputValue }) => {
+const StoreOption = ({ label, address, inputValue }) => {
   const matches = match(label, inputValue)
   const parts = parse(label, matches)
 
@@ -22,30 +21,27 @@ const LocationOption = ({ label, count, inputValue }) => {
           display: "flex",
           alignItems: "center",
           overflowX: "hidden",
-          
+          width: "95%",
           whiteSpace: "nowrap",
         }}
       >
-        <LocationOnIcon sx={{ color: "#999", fontSize: 16, mr: 1 }} />
-        <Typography variant="body2">
+        <StoreIcon sx={{ color: "#999", fontSize: 16, mr: 1 }} />
+        <span style={{ fontSize: "12px" }}>
           {parts.map((part, index) => (
             <span
+              // eslint-disable-next-line react/no-unknown-property
               key={index}
               style={{ fontWeight: part.highlight ? 700 : 400 }}
             >
               {part.text}
             </span>
           ))}
-        </Typography>
-      </Box>
-      <Box
-        sx={{ width: 64, display: "flex", alignItems: "center", color: "#ccc" }}
-      >
-        <CircleIcon sx={{ fontSize: 18, mr: 1 }} />
-        <Typography variant="body2">{count}</Typography>
+        </span>
+        <span style={{ marginLeft: "12px", fontSize: "6px", color: "#666" }}>
+          {address}
+        </span>
       </Box>
     </Box>
   )
 }
-
-export default LocationOption
+export default StoreOption
