@@ -83,6 +83,7 @@ const UserMapV2 = () => {
       ...mapCenterRef.current,
       ...openTimeRef.current,
     }))
+    setPlaceId(null)
   }
   const handleKeywordSearch = (keyword) => {
     setLocationParams({
@@ -90,6 +91,7 @@ const UserMapV2 = () => {
       ...openTimeRef.current,
       keyword,
     })
+    setPlaceId(null)
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
     let realOpenHour = openHour === "99" ? null : openHour
@@ -108,6 +110,7 @@ const UserMapV2 = () => {
       ...cur,
       keyword: "",
     }))
+    setPlaceId(null)
   }
   const handleStoreClick = (placeId) => {
     setPlaceId(placeId)
@@ -154,6 +157,7 @@ const UserMapV2 = () => {
           options={options}
           key={store.placeId}
           id={store.placeId}
+          onClick={handleStoreClick}
           store={store}
         />
       )
