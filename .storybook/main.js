@@ -22,6 +22,7 @@ module.exports = {
       api: path.resolve(__dirname, "../api"),
       features: path.resolve(__dirname, "../features"),
       utils: path.resolve(__dirname, "../utils"),
+      constant: path.resolve(__dirname, "../constant"),
     }
     return config
   },

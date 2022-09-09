@@ -17,6 +17,8 @@ import { fetcher } from "api"
 import SearchHere from "components/Button/SearchHere"
 import SearchbarV2 from "features/SearchbarV2"
 import StoreListV2 from "features/StoreListV2"
+import Menu from "features/Searchbar/Menu"
+import OpenTimeV2 from "features/OpenTimeV2"
 
 const SearchHereContainer = styled.div`
   position: absolute;
@@ -37,6 +39,13 @@ const StoreDetailContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 2;
+`
+
+const MenuContainer = styled.div`
+  position: absolute;
+  top: 1rem;
+  left: 27rem;
   z-index: 2;
 `
 
@@ -85,15 +94,14 @@ const UserMapV2 = () => {
     )
   })
 
-  useEffect(() => {
-    console.log(stores)
-  }, [stores])
-
   return (
     <>
       <SearchbarV2Container>
         <SearchbarV2 onSearch={handleKeywordSearch} />
       </SearchbarV2Container>
+      <MenuContainer>
+        <OpenTimeV2 />
+      </MenuContainer>
       {/* {stores && (
         <StoreDetailContainer>
           <StoreDetail {...stores[0]} />

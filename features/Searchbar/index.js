@@ -29,8 +29,6 @@ const Searchbar = ({ onClick }) => {
     label: hint.name
   }))
 
-  console.log(filter.keyword)
-
   return (
     <Container>
       <Autocomplete options={coolHints} onInputChange={handleInputChange} keyword={filter.keyword}  />
