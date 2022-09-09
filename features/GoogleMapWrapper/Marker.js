@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react"
 
-export default function Marker({ map, options, id, store, onClick, onMouseover, onMouseout }) {
+export default function Marker({
+  map,
+  options,
+  id,
+  store,
+  onClick,
+  onMouseover,
+  onMouseout,
+}) {
   const [marker, setMarker] = useState(null)
   const [windowInfo, setWindowInfo] = useState(null)
 
@@ -33,19 +41,20 @@ export default function Marker({ map, options, id, store, onClick, onMouseover, 
       marker.setOptions(options)
 
       if (onClick) marker.addListener("click", () => onClick(id))
-      if (onMouseover) marker.addListener("mouseover", () => {
-        onMouseover(id)
+      marker.addListener("mouseover", () => {
+        if (onMouseover) onMouseover(id)
+
         windowInfo.open({
           anchor: marker,
           map,
         })
       })
-      if (onMouseout) marker.addListener("mouseout", () => {
-        onMouseout(id)
+      marker.addListener("mouseout", () => {
+        if (onMouseout) onMouseout(id)
         windowInfo.close()
       })
     }
-  }, [marker, map])
+  }, [marker, map, options])
 
   return null
 }

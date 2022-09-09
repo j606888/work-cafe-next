@@ -37,8 +37,8 @@ function reducer(state, action) {
       }
     case "CHANGE_HOUR":
       return {
-        ...state,
         openType: OPEN_TYPES.OPEN_AT,
+        openWeek: state.openWeek || 0,
         openHour: action.payload,
       }
     case "RESET":

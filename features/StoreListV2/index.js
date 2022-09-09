@@ -49,7 +49,7 @@ export default function StoreListV2({ stores = [], onClick = () => {} }) {
       <Scrollbar>
 
       {stores.map((store) => (
-        <Card key={store.placeId} {...store}/>
+        <Card key={store.placeId} {...store} onClick={onClick}/>
         ))}
         </Scrollbar>
     </Container>

@@ -36,7 +36,6 @@ const StoreDetail = ({
   phone,
   isHide,
   photos = [],
-  imageUrl,
   reviews = [],
   openingHours = [],
   onSave = () => {},
@@ -62,7 +61,7 @@ const StoreDetail = ({
         <CloseButton onClick={onClose}>
           <CloseIcon />
         </CloseButton>
-        <ImageSlide photos={[imageUrl, ...photos].filter(Boolean) } />
+        <ImageSlide photos={photos.filter(Boolean) } />
         <MainInfo>
           <h3>{name}</h3>
           <div className="sub-info">

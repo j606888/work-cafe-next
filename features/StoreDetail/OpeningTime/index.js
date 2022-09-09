@@ -50,7 +50,7 @@ const OpeningTime = ({ openingHours = [], isOpenNow = false }) => {
         <AccessTimeIcon />
         <span className="open-status">{isOpenNow ? "營業中" : "已打烊"}</span>
         {/* <span>&nbsp;⋅ 開始營業時間：週二 12:00 </span> */}
-        {openTab ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
+        {openTab ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </div>
       {openTab && (
         <>

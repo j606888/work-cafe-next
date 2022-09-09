@@ -17,8 +17,8 @@ import OpenTimeV2 from "features/OpenTimeV2"
 
 const SearchHereContainer = styled.div`
   position: absolute;
-  top: 3rem;
-  left: 50%;
+  top: 4rem;
+  left: calc(50% + 12rem);
   transform: translateX(-50%);
   z-index: 5;
 `
@@ -33,6 +33,13 @@ const SearchbarV2Container = styled.div`
 const StoreDetailContainer = styled.div`
   position: absolute;
   top: 0;
+  left: 27rem;
+  z-index: 2;
+`
+
+const StoreListContainer = styled.div`
+  position: absolute;
+  top: 0;
   left: 0;
   z-index: 2;
 `
@@ -43,6 +50,8 @@ const MenuContainer = styled.div`
   left: 27rem;
   z-index: 2;
 `
+
+const ICON_URL = "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png"
 
 const UserMapV2 = () => {
   const [map, setMap] = React.useState(null)
@@ -55,10 +64,13 @@ const UserMapV2 = () => {
     lng: 120.2216038,
   })
   const openTimeRef = useRef({})
+  const [placeId, setPlaceId] = useState(null)
+  const [markers, setMarkers] = useState([])
   const { data: stores } = useSWR(
     ["/stores/location", { ...locationParams, limit: 10 }],
     fetcher
   )
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
   const handleOnIdle = ({ lat, lng, zoom }) => {
     Router.push({
       pathname: `/map/@${lat},${lng},${zoom}z`,
@@ -97,6 +109,27 @@ const UserMapV2 = () => {
       keyword: "",
     }))
   }
+  const handleStoreClick = (placeId) => {
+    setPlaceId(placeId)
+  }
+  const handleCloseDetail = () => {
+    setPlaceId(null)
+  }
+
+  useEffect(() => {
+    if (store) {
+      const center = {
+        lat: store.lat,
+        lng: store.lng,
+      }
+      map.setZoom(15)
+      map.panTo(center)
+      map.panBy(-400, 0)
+
+      mapCenterRef.current = center
+    }
+  }, [store])
+
   // function handleOnClick() {
   //   const city = _.find(cityMap, (city) => city.name === filter.keyword)
 
@@ -106,23 +139,28 @@ const UserMapV2 = () => {
   //   }
   // }
 
-  const markers = stores?.map((store) => {
-    const options = {
-      position: {
-        lat: store.lat,
-        lng: store.lng,
-      },
-    }
+  useEffect(() => {
+    const temp = stores?.map((store) => {
+      const options = {
+        position: {
+          lat: store.lat,
+          lng: store.lng,
+        },
+        icon: store.placeId === placeId ? ICON_URL : null,
+      }
 
-    return (
-      <Marker
-        options={options}
-        key={store.placeId}
-        id={store.placeId}
-        store={store}
-      />
-    )
-  })
+      return (
+        <Marker
+          options={options}
+          key={store.placeId}
+          id={store.placeId}
+          store={store}
+        />
+      )
+    })
+
+    setMarkers(temp)
+  }, [stores, placeId])
 
   return (
     <>
@@ -136,20 +174,20 @@ const UserMapV2 = () => {
       <MenuContainer>
         <OpenTimeV2 onChange={handleOpenTimeChange} />
       </MenuContainer>
-      {/* {stores && (
+      {store && (
         <StoreDetailContainer>
-          <StoreDetail {...stores[0]} />
+          <StoreDetail {...store} onClose={handleCloseDetail} />
         </StoreDetailContainer>
-      )} */}
+      )}
       <SearchHereContainer>
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
         {markers}
       </GoogleMapWrapper>
-      {/* <StoreDetailContainer>
-        <StoreListV2 stores={stores || []} />
-      </StoreDetailContainer> */}
+      <StoreListContainer>
+        <StoreListV2 stores={stores || []} onClick={handleStoreClick} />
+      </StoreListContainer>
     </>
   )
 }
