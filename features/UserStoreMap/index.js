@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import Marker from "features/GoogleMapWrapper/Marker"
-import Drawer from "features/Drawer"
-import storeApi from "api/stores"
 import Router from "next/router"
 import { useRef } from "react"
-import Searchbar from "features/Searchbar"
 import styled from "styled-components"
-import cityMap from "config/cityMap"
 import _ from "lodash"
 import StoreDetail from "features/StoreDetail"
 import useSWR, { useSWRConfig } from "swr"
@@ -17,7 +13,6 @@ import { fetcher } from "api"
 import SearchHere from "components/Button/SearchHere"
 import SearchbarV2 from "features/SearchbarV2"
 import StoreListV2 from "features/StoreListV2"
-import Menu from "features/Searchbar/Menu"
 import OpenTimeV2 from "features/OpenTimeV2"
 
 const SearchHereContainer = styled.div`
@@ -75,6 +70,15 @@ const UserMapV2 = () => {
   const handleKeywordSearch = (keyword) => {
     setLocationParams({ ...mapCenterRef.current, keyword })
   }
+  const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
+    let realOpenHour = openHour === "99" ? null : openHour
+    setLocationParams((cur) => ({
+      ...cur,
+      openType,
+      openWeek,
+      openHour: realOpenHour,
+    }))
+  }
   // function handleOnClick() {
   //   const city = _.find(cityMap, (city) => city.name === filter.keyword)
 
@@ -108,7 +112,7 @@ const UserMapV2 = () => {
         <SearchbarV2 onSearch={handleKeywordSearch} />
       </SearchbarV2Container>
       <MenuContainer>
-        <OpenTimeV2 />
+        <OpenTimeV2 onChange={handleOpenTimeChange} />
       </MenuContainer>
       {/* {stores && (
         <StoreDetailContainer>

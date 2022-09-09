@@ -55,11 +55,13 @@ instance.interceptors.response.use(
   }
 )
 
-export const fetcher = (url, params) => instance.get(url, { params }).then(res => res.data)
+export const fetcher = (url, params) => {
+  return instance.get(url, { params }).then((res) => res.data)
+}
 
 const api = {
   instance,
-  fetcher
+  fetcher,
 }
 
 export default api
