@@ -12,7 +12,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content;
-    height: 350px;
+    height: 260px;
   }
 `
 

@@ -50,6 +50,11 @@ export const Content = styled.div`
     font-size: 12px;
   }
 
+  .title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
   .opening {
     display: block;
     color: ${({openNow}) => openNow ? 'green' : 'red' };

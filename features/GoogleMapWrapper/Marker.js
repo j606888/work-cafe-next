@@ -1,23 +1,34 @@
 import { useEffect, useState } from "react"
 
+const markerIcon = (focus = false) => {
+  return {
+    url: focus ? "/blue-pin.png" : "/red-pin.png",
+    scaledSize: new google.maps.Size(22, 32),
+  }
+}
+
 export default function Marker({
   map,
-  options,
-  id,
   store,
-  onClick,
-  onMouseover,
-  onMouseout,
+  bounce = false,
+  focus = false,
+  onClick = () => {},
+  onMouseover = () => {},
+  onMouseout = () => {},
 }) {
   const [marker, setMarker] = useState(null)
   const [windowInfo, setWindowInfo] = useState(null)
+  const options = {
+    position: {
+      lat: store.lat,
+      lng: store.lng,
+    },
+    icon: markerIcon(focus),
+  }
 
   if (marker) {
-    if (options.animation) {
-      marker.setOptions(options)
-    } else {
-      marker.setAnimation(null)
-    }
+    const animation = bounce ? google.maps.Animation.BOUNCE : null
+    marker.setAnimation(animation)
   }
 
   useEffect(() => {
@@ -40,21 +51,20 @@ export default function Marker({
       options.map = map
       marker.setOptions(options)
 
-      if (onClick) marker.addListener("click", () => onClick(id))
+      marker.addListener("click", () => onClick(store.placeId))
       marker.addListener("mouseover", () => {
-        if (onMouseover) onMouseover(id)
-
         windowInfo.open({
           anchor: marker,
           map,
         })
+        onMouseover(store.placeId)
       })
       marker.addListener("mouseout", () => {
-        if (onMouseout) onMouseout(id)
         windowInfo.close()
+        onMouseout(store.placeId)
       })
     }
-  }, [marker, map, options])
+  }, [marker, map])
 
   return null
 }
