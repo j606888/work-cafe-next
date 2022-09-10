@@ -32,9 +32,14 @@ const SearchbarV2Container = styled.div`
 
 const StoreDetailContainer = styled.div`
   position: absolute;
-  top: 0;
-  left: 27rem;
+  top: 4rem;
+  left: 28rem;
   z-index: 2;
+  height: 94vh;
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-y: scroll;
+  box-shadow: 0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
 `
 
 const StoreListContainer = styled.div`
@@ -47,11 +52,12 @@ const StoreListContainer = styled.div`
 const MenuContainer = styled.div`
   position: absolute;
   top: 1rem;
-  left: 27rem;
+  left: 28rem;
   z-index: 2;
 `
 
-const ICON_URL = "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png"
+const ICON_URL =
+  "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png"
 
 const UserMapV2 = () => {
   const [map, setMap] = React.useState(null)
@@ -178,11 +184,6 @@ const UserMapV2 = () => {
       <MenuContainer>
         <OpenTimeV2 onChange={handleOpenTimeChange} />
       </MenuContainer>
-      {store && (
-        <StoreDetailContainer>
-          <StoreDetail {...store} onClose={handleCloseDetail} />
-        </StoreDetailContainer>
-      )}
       <SearchHereContainer>
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
@@ -192,6 +193,11 @@ const UserMapV2 = () => {
       <StoreListContainer>
         <StoreListV2 stores={stores || []} onClick={handleStoreClick} />
       </StoreListContainer>
+      {store && (
+        <StoreDetailContainer>
+          <StoreDetail {...store} onClose={handleCloseDetail} />
+        </StoreDetailContainer>
+      )}
     </>
   )
 }

@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 import CloseIcon from "@mui/icons-material/Close"
 import RatingStars from "components/RatingStars"
 import { Divider } from "@mui/material"
@@ -9,20 +8,17 @@ import {
   CloseButton,
   MainInfo,
   ButtonGroup,
-  SecondaryInfo,
   Reviews,
 } from "./styled"
-import PlaceIcon from "@mui/icons-material/Place"
-import PublicIcon from "@mui/icons-material/Public"
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone"
+
 import SortIcon from "@mui/icons-material/Sort"
 import ReviewCard from "./ReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
-import OpeningTime from "./OpeningTime"
 import Bookmarks from "./Bookmarks"
 import useSWR, { useSWRConfig } from "swr"
 import { fetcher } from "api"
+import SecondaryInfo from "./SecondaryInfo"
 
 const StoreDetail = ({
   id,
@@ -61,7 +57,7 @@ const StoreDetail = ({
         <CloseButton onClick={onClose}>
           <CloseIcon />
         </CloseButton>
-        <ImageSlide photos={photos.filter(Boolean) } />
+        <ImageSlide photos={photos} />
         <MainInfo>
           <h3>{name}</h3>
           <div className="sub-info">
@@ -102,23 +98,13 @@ const StoreDetail = ({
           <ActionButton type="share" text="分享" onClick={() => onShare(id)} />
         </ButtonGroup>
         <Divider />
-        <SecondaryInfo>
-          <div>
-            <PlaceIcon />
-            <span>{address}</span>
-          </div>
-          <div>
-            <OpeningTime openingHours={openingHours} isOpenNow={isOpenNow} />
-          </div>
-          <div>
-            <PublicIcon />
-            <span>{website}</span>
-          </div>
-          <div>
-            <LocalPhoneIcon />
-            <span>{phone}</span>
-          </div>
-        </SecondaryInfo>
+        <SecondaryInfo
+          address={address}
+          website={website}
+          phone={phone}
+          isOpenNow={isOpenNow}
+          openingHours={openingHours}
+        />
         <Divider />
         <Reviews>
           <div className="review-header">

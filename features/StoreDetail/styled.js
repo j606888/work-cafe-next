@@ -3,10 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   background-color: #fff;
   width: 420px;
-  height: 100vh;
-  overflow: hidden;
   position: relative;
-  overflow-y: scroll;
 
   .image-box {
     width: 100%;
@@ -53,31 +50,6 @@ export const MainInfo = styled.div`
     margin-left: .5rem;
     color: #1B72E8;
     font-size: 14px;
-  }
-`
-
-export const SecondaryInfo = styled.div`
-  padding: 1rem 1.5rem;
-
-  div {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-  }
-
-  div:last-child {
-    margin-bottom: 0;
-  }
-
-  svg {
-    color: #1B72E8;
-    font-size: 24px;
-    margin-right: 1.5rem;
-  }
-
-  span {
-    font-size: 14px;
-    color: #333;
   }
 `
 
