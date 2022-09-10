@@ -9,6 +9,7 @@ const SearchbarV2 = ({
   hasResult = false,
   onSearch = () => {},
   onClear = () => {},
+  onOpenDrawer = () => {},
 }) => {
   const [keyword, setKeyword] = React.useState("")
   const [resetBool, setResetBool] = React.useState(true)
@@ -54,6 +55,7 @@ const SearchbarV2 = ({
           hasResult={hasResult}
           onSearch={handleSearch}
           onClear={handleClear}
+          onOpenDrawer={onOpenDrawer}
         />
       )}
       renderOption={(props, option, { inputValue }) => (

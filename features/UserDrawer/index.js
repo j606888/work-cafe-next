@@ -1,54 +1,46 @@
 import * as React from "react"
 import Drawer from "@mui/material/Drawer"
-import Button from "@mui/material/Button"
 import Divider from "@mui/material/Divider"
 import CloseIcon from "@mui/icons-material/Close"
-import BookmarkIcon from "@mui/icons-material/Bookmark"
-import RateReviewIcon from "@mui/icons-material/RateReview"
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Container, Header, Tabs } from "./styled"
 
-export default function UserDrawer() {
-  const [open, setOpen] = React.useState(true)
-
-  const list = () => (
-    <Container onClick={() => setState(false)}>
-      <Header>
-        <span>Work Cafe</span>
-        <CloseIcon sx={{ color: "#757575" }} />
-      </Header>
-      <Divider />
-      <Tabs>
-        <div>
-          <BookmarkIcon />
-          <span>你的地點</span>
-        </div>
-        <div>
-          <RateReviewIcon />
-          <span>你的評論</span>
-        </div>
-        <div>
-          <VisibilityOffIcon />
-          <span>你的隱藏</span>
-        </div>
-      </Tabs>
-      <Divider />
-      <Tabs>
-        <div>
-          <span>回報問題</span>
-        </div>
-        <div>
-          <span>鼓勵我們</span>
-        </div>
-      </Tabs>
-    </Container>
-  )
-
+export default function UserDrawer({ open, onClose = () => {} }) {
   return (
     <>
-      <Button onClick={() => setOpen(true)}>LEFT</Button>
-      <Drawer anchor={"left"} open={open} onClose={() => setOpen(false)}>
-        {list()}
+      <Drawer anchor={"left"} open={open} onClose={onClose}>
+        <Container>
+          <Header>
+            <span>Work Cafe</span>
+            <CloseIcon sx={{ color: "#757575" }} onClick={onClose} />
+          </Header>
+          <Divider />
+          <Tabs>
+            <div>
+              <BookmarkBorderIcon />
+              <span>你的地點</span>
+            </div>
+            <div>
+              <RateReviewOutlinedIcon />
+              <span>你的評論</span>
+            </div>
+            <div>
+              <VisibilityOffOutlinedIcon />
+              <span>你的隱藏</span>
+            </div>
+          </Tabs>
+          <Divider />
+          <Tabs>
+            <div>
+              <span>回報問題</span>
+            </div>
+            <div>
+              <span>鼓勵我們</span>
+            </div>
+          </Tabs>
+        </Container>
       </Drawer>
     </>
   )

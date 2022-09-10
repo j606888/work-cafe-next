@@ -31,6 +31,14 @@ export const Tabs = styled.div`
     gap: 1rem;
     cursor: pointer;
 
+    span {
+      font-size: 13px;
+    }
+
+    svg {
+      font-size: 22px;
+    }
+
     &:hover {
       color: #2980B9;
     }

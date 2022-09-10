@@ -18,6 +18,7 @@ import {
   StoreListContainer,
   MenuContainer,
 } from "./styled"
+import UserDrawer from "features/UserDrawer"
 
 const initialState = {
   lat: 23.0042325,
@@ -48,6 +49,7 @@ const UserMapV2 = () => {
   const { mutate } = useSWRConfig()
   const [locationParams, dispatch] = React.useReducer(reducer, initialState)
   const [map, setMap] = React.useState(null)
+  const [openDrawer, setOpenDrawer] = React.useState(false)
   const mapCenterRef = useRef({
     lat: 23.0042325,
     lng: 120.2216038,
@@ -139,11 +141,13 @@ const UserMapV2 = () => {
 
   return (
     <>
+      <UserDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
       <SearchbarV2Container>
         <SearchbarV2
           onSearch={handleKeywordSearch}
           hasResult={stores?.length !== 0}
           onClear={handleClear}
+          onOpenDrawer={() => setOpenDrawer(true)}
         />
       </SearchbarV2Container>
       <MenuContainer>
