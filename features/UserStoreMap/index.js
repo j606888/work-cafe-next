@@ -26,6 +26,7 @@ const initialState = {
   openType: "NONE",
   openWeek: null,
   openHour: null,
+  go: false,
 }
 
 const reducer = (state, action) => {
@@ -34,11 +35,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         ...action.payload,
+        go: true,
       }
     case "CLEAR_KEYWORD":
       return {
         ...state,
         keyword: "",
+        go: false,
       }
     default:
       throw new Error()
@@ -58,8 +61,8 @@ const UserMapV2 = () => {
   const openTimeRef = useRef({})
   const [placeId, setPlaceId] = useState(null)
   const [bouncingId, setBouncingId] = useState(null)
-  const { data: stores } = useSWR(
-    ["/stores/location", { ...locationParams, limit: 10 }],
+  const { data: stores } = useSWR(locationParams.go ?
+    ["/stores/location", { ...locationParams, limit: 10 }] : null,
     fetcher
   )
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)

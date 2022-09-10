@@ -55,6 +55,10 @@ export default function StoreListV2({
     onMouseLeave(placeId)
   }
 
+  if (stores.length === 0) {
+    return null
+  }
+
   return (
     <Container>
       <div className="white-box"></div>
