@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import useSWR, { useSWRConfig } from "swr"
 import { useDispatch } from "react-redux"
-import { updateStores } from "store/slices/store"
+import { updateStores, changeMode } from "store/slices/store"
 
 const BookmarkContainer = styled.div`
   position: absolute;
@@ -40,6 +40,11 @@ const BookmarkListV2 = () => {
     setRandomKey(randomKey)
   }
 
+  const handleClose = () => {
+    dispatch(updateStores([]))
+    dispatch(changeMode("MAP"))
+  }
+
   useEffect(() => {
     dispatch(updateStores(bookmark?.stores || []))
   }, [bookmark, dispatch])
@@ -53,6 +58,7 @@ const BookmarkListV2 = () => {
             onSubmit={handleSubmit}
             onDelete={handleDelete}
             onClick={handleClick}
+            onClose={handleClose}
           />
         </BookmarkContainer>
       )}

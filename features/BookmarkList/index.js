@@ -11,6 +11,7 @@ const BookmarkList = ({
   onClick = () => {},
   onSubmit = () => {},
   onDelete = () => {},
+  onClose = () => {},
 }) => {
   const [open, setOpen] = React.useState(false)
 
@@ -31,7 +32,7 @@ const BookmarkList = ({
       <Container>
         <Head className="head">
           <h3>已儲存</h3>
-          <CloseIcon />
+          <CloseIcon sx={{ cursor: 'pointer' }} onClick={onClose} />
         </Head>
         <Title>
           <span>你的清單</span>

@@ -6,8 +6,17 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Container, Header, Tabs } from "./styled"
+import { useDispatch } from 'react-redux'
+import { updateStores, changeMode } from 'store/slices/store'
 
 export default function UserDrawer({ open, onClose = () => {} }) {
+  const dispatch = useDispatch()
+  const handleOpenBookmark = () => {
+    onClose()
+    dispatch(updateStores([]))
+    dispatch(changeMode("BOOKMARK"))
+  }
+
   return (
     <>
       <Drawer anchor={"left"} open={open} onClose={onClose}>
@@ -18,7 +27,7 @@ export default function UserDrawer({ open, onClose = () => {} }) {
           </Header>
           <Divider />
           <Tabs>
-            <div>
+            <div onClick={handleOpenBookmark}>
               <BookmarkBorderIcon />
               <span>你的地點</span>
             </div>

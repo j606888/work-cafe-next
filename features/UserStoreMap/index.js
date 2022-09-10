@@ -20,7 +20,8 @@ import {
 } from "./styled"
 import UserDrawer from "features/UserDrawer"
 import BookmarkListV2 from "features/BookmarkListV2"
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateStores } from 'store/slices/store'
 
 const initialState = {
   lat: 23.0042325,
@@ -51,8 +52,9 @@ const reducer = (state, action) => {
 }
 
 const UserMapV2 = () => {
+  const dispatch = useDispatch()
   const { mutate } = useSWRConfig()
-  const [locationParams, dispatch] = React.useReducer(reducer, initialState)
+  const [locationParams, LocationDispatch] = React.useReducer(reducer, initialState)
   const [map, setMap] = React.useState(null)
   const [openDrawer, setOpenDrawer] = React.useState(false)
   const mapCenterRef = useRef({
@@ -63,15 +65,14 @@ const UserMapV2 = () => {
   const openTimeRef = useRef({})
   const [placeId, setPlaceId] = useState(null)
   const [bouncingId, setBouncingId] = useState(null)
-  const { data: stores } = useSWR(
+  const { data: locationStores } = useSWR(
     locationParams.go
       ? ["/stores/location", { ...locationParams, limit: 10 }]
       : null,
     fetcher
   )
-  const [mode, setMode] = useState("BOOKMARK")
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
-  const stores2 = useSelector(state => state.store.stores)
+  const {stores, mode } = useSelector(state => state.store)
   const handleOnIdle = ({ lat, lng, zoom }) => {
     Router.push({
       pathname: `/map/@${lat},${lng},${zoom}z`,
@@ -80,7 +81,7 @@ const UserMapV2 = () => {
     mapZoom.current = zoom
   }
   const handleSearch = () => {
-    dispatch({
+    LocationDispatch({
       type: "SEARCH_HERE",
       payload: {
         ...mapCenterRef.current,
@@ -89,7 +90,7 @@ const UserMapV2 = () => {
     setPlaceId(null)
   }
   const handleKeywordSearch = (keyword) => {
-    dispatch({
+    LocationDispatch({
       type: "SEARCH_HERE",
       payload: {
         ...mapCenterRef.current,
@@ -105,7 +106,7 @@ const UserMapV2 = () => {
       openWeek,
       openHour: realOpenHour,
     }
-    dispatch({
+    LocationDispatch({
       type: "SEARCH_HERE",
       payload: {
         ...openTimeRef.current,
@@ -113,7 +114,7 @@ const UserMapV2 = () => {
     })
   }
   const handleClear = () => {
-    dispatch({ type: "CLEAR_KEYWORD" })
+    LocationDispatch({ type: "CLEAR_KEYWORD" })
     setPlaceId(null)
   }
   const handleStoreClick = (placeId) => {
@@ -122,6 +123,14 @@ const UserMapV2 = () => {
   const handleRefreshStore = (placeId) => {
     mutate(`/stores/${placeId}`)
   }
+  const handleCloseDrawer = () => {
+    setOpenDrawer(false)
+    setPlaceId(null)
+  }
+
+  useEffect(() => {
+    dispatch(updateStores(locationStores))
+  }, [locationStores, dispatch])
 
   useEffect(() => {
     if (store) {
@@ -152,7 +161,7 @@ const UserMapV2 = () => {
     <>
       {mode === "MAP" && (
         <>
-          <UserDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
+          <UserDrawer open={openDrawer} onClose={handleCloseDrawer} />
           <SearchbarV2Container>
             <SearchbarV2
               onSearch={handleKeywordSearch}
@@ -189,7 +198,7 @@ const UserMapV2 = () => {
       )}
       {mode === "BOOKMARK" && <BookmarkListV2 />}
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
-        {stores2?.map((store) => (
+        {stores?.map((store) => (
           <Marker
             key={store.placeId}
             store={store}
