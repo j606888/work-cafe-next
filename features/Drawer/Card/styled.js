@@ -6,6 +6,9 @@ export const Container = styled.div`
   padding: 1rem;
   border-bottom: 1px solid #e5e5e5;
   cursor: pointer;
+  box-sizing: border-box;
+  width: 428px;
+
 
   &:hover {
     background-color: #f8f8f8;

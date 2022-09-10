@@ -19,6 +19,7 @@ import {
   MenuContainer,
 } from "./styled"
 import UserDrawer from "features/UserDrawer"
+import BookmarkListV2 from "features/BookmarkListV2"
 
 const initialState = {
   lat: 23.0042325,
@@ -61,10 +62,13 @@ const UserMapV2 = () => {
   const openTimeRef = useRef({})
   const [placeId, setPlaceId] = useState(null)
   const [bouncingId, setBouncingId] = useState(null)
-  const { data: stores } = useSWR(locationParams.go ?
-    ["/stores/location", { ...locationParams, limit: 10 }] : null,
+  const { data: stores } = useSWR(
+    locationParams.go
+      ? ["/stores/location", { ...locationParams, limit: 10 }]
+      : null,
     fetcher
   )
+  const [mode, setMode] = useState("BOOKMARK")
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
   const handleOnIdle = ({ lat, lng, zoom }) => {
     Router.push({
@@ -144,21 +148,44 @@ const UserMapV2 = () => {
 
   return (
     <>
-      <UserDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
-      <SearchbarV2Container>
-        <SearchbarV2
-          onSearch={handleKeywordSearch}
-          hasResult={stores?.length !== 0}
-          onClear={handleClear}
-          onOpenDrawer={() => setOpenDrawer(true)}
-        />
-      </SearchbarV2Container>
-      <MenuContainer>
-        <OpenTimeV2 onChange={handleOpenTimeChange} />
-      </MenuContainer>
-      <SearchHereContainer>
-        <SearchHere onClick={handleSearch} />
-      </SearchHereContainer>
+      {mode === "MAP" && (
+        <>
+          <UserDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
+          <SearchbarV2Container>
+            <SearchbarV2
+              onSearch={handleKeywordSearch}
+              hasResult={stores?.length !== 0}
+              onClear={handleClear}
+              onOpenDrawer={() => setOpenDrawer(true)}
+            />
+          </SearchbarV2Container>
+          <MenuContainer>
+            <OpenTimeV2 onChange={handleOpenTimeChange} />
+          </MenuContainer>
+          <SearchHereContainer>
+            <SearchHere onClick={handleSearch} />
+          </SearchHereContainer>
+          <StoreListContainer>
+            <StoreListV2
+              stores={stores || []}
+              onClick={handleStoreClick}
+              onMouseEnter={(placeId) => setBouncingId(placeId)}
+              onMouseLeave={() => setBouncingId(null)}
+            />
+          </StoreListContainer>
+          {store && (
+            <StoreDetailContainer>
+              <StoreDetail
+                {...store}
+                onClose={() => setPlaceId(null)}
+                onHide={handleRefreshStore}
+                onUnhide={handleRefreshStore}
+              />
+            </StoreDetailContainer>
+          )}
+        </>
+      )}
+      {mode === "BOOKMARK" && <BookmarkListV2 />}
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
         {stores?.map((store) => (
           <Marker
@@ -170,24 +197,6 @@ const UserMapV2 = () => {
           />
         ))}
       </GoogleMapWrapper>
-      <StoreListContainer>
-        <StoreListV2
-          stores={stores || []}
-          onClick={handleStoreClick}
-          onMouseEnter={(placeId) => setBouncingId(placeId)}
-          onMouseLeave={() => setBouncingId(null)}
-        />
-      </StoreListContainer>
-      {store && (
-        <StoreDetailContainer>
-          <StoreDetail
-            {...store}
-            onClose={() => setPlaceId(null)}
-            onHide={handleRefreshStore}
-            onUnhide={handleRefreshStore}
-          />
-        </StoreDetailContainer>
-      )}
     </>
   )
 }
