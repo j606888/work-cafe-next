@@ -71,7 +71,7 @@ const UserMapV2 = () => {
   })
   const openTimeRef = useRef({})
   const [placeId, setPlaceId] = useState(null)
-  const [markers, setMarkers] = useState([])
+  const [bouncingId, setBouncingId] = useState(null)
   const { data: stores } = useSWR(
     ["/stores/location", { ...locationParams, limit: 10 }],
     fetcher
@@ -124,6 +124,12 @@ const UserMapV2 = () => {
   const handleCloseDetail = () => {
     setPlaceId(null)
   }
+  const handleMouseEnter = (placeId) => {
+    setBouncingId(placeId)
+  }
+  const handleMouseLeave = (placeId) => {
+    setBouncingId(null)
+  }
 
   useEffect(() => {
     if (store) {
@@ -148,29 +154,40 @@ const UserMapV2 = () => {
   //   }
   // }
 
-  useEffect(() => {
-    const temp = stores?.map((store) => {
-      const options = {
-        position: {
-          lat: store.lat,
-          lng: store.lng,
-        },
-        icon: store.placeId === placeId ? ICON_URL : null,
+  const markers = stores?.map((store) => {
+    const options = {
+      position: {
+        lat: store.lat,
+        lng: store.lng,
+      },
+    }
+
+    if (store.placeId === placeId) {
+      options.icon = {
+        url: '/blue-pin.png',
+        scaledSize: new google.maps.Size(22,32)
       }
+    } else {
+      options.icon = {
+        url: '/red-pin.png',
+        scaledSize: new google.maps.Size(22,32)
+      }
+    }
 
-      return (
-        <Marker
-          options={options}
-          key={store.placeId}
-          id={store.placeId}
-          onClick={handleStoreClick}
-          store={store}
-        />
-      )
-    })
+    if (store.placeId === bouncingId) {
+      options.animation = google.maps.Animation.BOUNCE
+    }
 
-    setMarkers(temp)
-  }, [stores, placeId])
+    return (
+      <Marker
+        options={options}
+        key={store.placeId}
+        id={store.placeId}
+        onClick={handleStoreClick}
+        store={store}
+      />
+    )
+  })
 
   return (
     <>
@@ -191,7 +208,12 @@ const UserMapV2 = () => {
         {markers}
       </GoogleMapWrapper>
       <StoreListContainer>
-        <StoreListV2 stores={stores || []} onClick={handleStoreClick} />
+        <StoreListV2
+          stores={stores || []}
+          onClick={handleStoreClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
       </StoreListContainer>
       {store && (
         <StoreDetailContainer>

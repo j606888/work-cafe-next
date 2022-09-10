@@ -12,9 +12,19 @@ const Card = ({
   rating,
   tags = [],
   onClick = () => {},
+  onMouseEnter = () => {},
+  onMouseLeave = () => {},
 }) => {
   function handleOnClick() {
     onClick(placeId)
+  }
+
+  function handleMouseEnter() {
+    onMouseEnter(placeId)
+  }
+
+  function handleMouseLeave() {
+    onMouseLeave(placeId)
   }
 
   const image = imageUrl ? (
@@ -26,7 +36,11 @@ const Card = ({
   )
 
   return (
-    <Container onClick={handleOnClick}>
+    <Container
+      onClick={handleOnClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {image}
       <Content openNow={openNow}>
         <span className="title">{name}</span>
