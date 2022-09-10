@@ -52,6 +52,7 @@ const UserMapV2 = () => {
     lat: 23.0042325,
     lng: 120.2216038,
   })
+  const mapZoom = useRef(15)
   const openTimeRef = useRef({})
   const [placeId, setPlaceId] = useState(null)
   const [bouncingId, setBouncingId] = useState(null)
@@ -65,6 +66,7 @@ const UserMapV2 = () => {
       pathname: `/map/@${lat},${lng},${zoom}z`,
     })
     mapCenterRef.current = { lat, lng }
+    mapZoom.current = zoom
   }
   const handleSearch = () => {
     dispatch({
@@ -116,7 +118,9 @@ const UserMapV2 = () => {
         lat: store.lat,
         lng: store.lng,
       }
-      map.setZoom(15)
+      if (mapZoom.current < 15) {
+        map.setZoom(15)
+      }
       map.panTo(center)
       map.panBy(-400, 0)
 
