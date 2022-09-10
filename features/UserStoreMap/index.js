@@ -20,6 +20,7 @@ import {
 } from "./styled"
 import UserDrawer from "features/UserDrawer"
 import BookmarkListV2 from "features/BookmarkListV2"
+import { useSelector } from 'react-redux'
 
 const initialState = {
   lat: 23.0042325,
@@ -70,6 +71,7 @@ const UserMapV2 = () => {
   )
   const [mode, setMode] = useState("BOOKMARK")
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
+  const stores2 = useSelector(state => state.store.stores)
   const handleOnIdle = ({ lat, lng, zoom }) => {
     Router.push({
       pathname: `/map/@${lat},${lng},${zoom}z`,
@@ -187,7 +189,7 @@ const UserMapV2 = () => {
       )}
       {mode === "BOOKMARK" && <BookmarkListV2 />}
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
-        {stores?.map((store) => (
+        {stores2?.map((store) => (
           <Marker
             key={store.placeId}
             store={store}
