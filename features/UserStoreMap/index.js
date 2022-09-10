@@ -19,14 +19,35 @@ import {
   MenuContainer,
 } from "./styled"
 
+const initialState = {
+  lat: 23.0042325,
+  lng: 120.2216038,
+  openType: "NONE",
+  openWeek: null,
+  openHour: null,
+}
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SEARCH_HERE":
+      return {
+        ...state,
+        ...action.payload,
+      }
+    case "CLEAR_KEYWORD":
+      return {
+        ...state,
+        keyword: "",
+      }
+    default:
+      throw new Error()
+  }
+}
+
 const UserMapV2 = () => {
   const { mutate } = useSWRConfig()
-
+  const [locationParams, dispatch] = React.useReducer(reducer, initialState)
   const [map, setMap] = React.useState(null)
-  const [locationParams, setLocationParams] = React.useState({
-    lat: 23.0042325,
-    lng: 120.2216038,
-  })
   const mapCenterRef = useRef({
     lat: 23.0042325,
     lng: 120.2216038,
@@ -46,18 +67,21 @@ const UserMapV2 = () => {
     mapCenterRef.current = { lat, lng }
   }
   const handleSearch = () => {
-    setLocationParams((cur) => ({
-      ...cur,
-      ...mapCenterRef.current,
-      ...openTimeRef.current,
-    }))
+    dispatch({
+      type: "SEARCH_HERE",
+      payload: {
+        ...mapCenterRef.current,
+      },
+    })
     setPlaceId(null)
   }
   const handleKeywordSearch = (keyword) => {
-    setLocationParams({
-      ...mapCenterRef.current,
-      ...openTimeRef.current,
-      keyword,
+    dispatch({
+      type: "SEARCH_HERE",
+      payload: {
+        ...mapCenterRef.current,
+        keyword,
+      },
     })
     setPlaceId(null)
   }
@@ -68,29 +92,19 @@ const UserMapV2 = () => {
       openWeek,
       openHour: realOpenHour,
     }
-    setLocationParams((cur) => ({
-      ...cur,
-      ...openTimeRef.current,
-    }))
+    dispatch({
+      type: "SEARCH_HERE",
+      payload: {
+        ...openTimeRef.current,
+      },
+    })
   }
   const handleClear = () => {
-    setLocationParams((cur) => ({
-      ...cur,
-      keyword: "",
-    }))
+    dispatch({ type: "CLEAR_KEYWORD" })
     setPlaceId(null)
   }
   const handleStoreClick = (placeId) => {
     setPlaceId(placeId)
-  }
-  const handleCloseDetail = () => {
-    setPlaceId(null)
-  }
-  const handleMouseEnter = (placeId) => {
-    setBouncingId(placeId)
-  }
-  const handleMouseLeave = (placeId) => {
-    setBouncingId(null)
   }
   const handleRefreshStore = (placeId) => {
     mutate(`/stores/${placeId}`)
@@ -149,15 +163,15 @@ const UserMapV2 = () => {
         <StoreListV2
           stores={stores || []}
           onClick={handleStoreClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={(placeId) => setBouncingId(placeId)}
+          onMouseLeave={() => setBouncingId(null)}
         />
       </StoreListContainer>
       {store && (
         <StoreDetailContainer>
           <StoreDetail
             {...store}
-            onClose={handleCloseDetail}
+            onClose={() => setPlaceId(null)}
             onHide={handleRefreshStore}
             onUnhide={handleRefreshStore}
           />
