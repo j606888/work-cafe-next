@@ -1,65 +1,27 @@
 import React, { useEffect, useState } from "react"
-import GoogleMapWrapper from "features/GoogleMapWrapper"
-import Marker from "features/GoogleMapWrapper/Marker"
 import Router from "next/router"
 import { useRef } from "react"
-import styled from "styled-components"
 import _ from "lodash"
-import StoreDetail from "features/StoreDetail"
 import useSWR, { useSWRConfig } from "swr"
-import Snackbar from "components/Snackbar"
-import { useSelector } from "react-redux"
 import { fetcher } from "api"
-import SearchHere from "components/Button/SearchHere"
+import Marker from "features/GoogleMapWrapper/Marker"
+import GoogleMapWrapper from "features/GoogleMapWrapper"
+import StoreDetail from "features/StoreDetail"
 import SearchbarV2 from "features/SearchbarV2"
 import StoreListV2 from "features/StoreListV2"
 import OpenTimeV2 from "features/OpenTimeV2"
-
-const SearchHereContainer = styled.div`
-  position: absolute;
-  top: 4rem;
-  left: calc(50% + 12rem);
-  transform: translateX(-50%);
-  z-index: 5;
-`
-
-const SearchbarV2Container = styled.div`
-  position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  z-index: 3;
-`
-
-const StoreDetailContainer = styled.div`
-  position: absolute;
-  top: 4rem;
-  left: 28rem;
-  z-index: 2;
-  height: 94vh;
-  border-radius: 12px;
-  overflow: hidden;
-  overflow-y: scroll;
-  box-shadow: 0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
-`
-
-const StoreListContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-`
-
-const MenuContainer = styled.div`
-  position: absolute;
-  top: 1rem;
-  left: 28rem;
-  z-index: 2;
-`
-
-const ICON_URL =
-  "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png"
+import SearchHere from "components/Button/SearchHere"
+import {
+  SearchHereContainer,
+  SearchbarV2Container,
+  StoreDetailContainer,
+  StoreListContainer,
+  MenuContainer,
+} from "./styled"
 
 const UserMapV2 = () => {
+  const { mutate } = useSWRConfig()
+
   const [map, setMap] = React.useState(null)
   const [locationParams, setLocationParams] = React.useState({
     lat: 23.0042325,
@@ -130,6 +92,9 @@ const UserMapV2 = () => {
   const handleMouseLeave = (placeId) => {
     setBouncingId(null)
   }
+  const handleRefreshStore = (placeId) => {
+    mutate(`/stores/${placeId}`)
+  }
 
   useEffect(() => {
     if (store) {
@@ -154,47 +119,12 @@ const UserMapV2 = () => {
   //   }
   // }
 
-  const markers = stores?.map((store) => {
-    const options = {
-      position: {
-        lat: store.lat,
-        lng: store.lng,
-      },
-    }
-
-    if (store.placeId === placeId) {
-      options.icon = {
-        url: '/blue-pin.png',
-        scaledSize: new google.maps.Size(22,32)
-      }
-    } else {
-      options.icon = {
-        url: '/red-pin.png',
-        scaledSize: new google.maps.Size(22,32)
-      }
-    }
-
-    if (store.placeId === bouncingId) {
-      options.animation = google.maps.Animation.BOUNCE
-    }
-
-    return (
-      <Marker
-        options={options}
-        key={store.placeId}
-        id={store.placeId}
-        onClick={handleStoreClick}
-        store={store}
-      />
-    )
-  })
-
   return (
     <>
       <SearchbarV2Container>
         <SearchbarV2
           onSearch={handleKeywordSearch}
-          hasResult={markers?.length !== 0}
+          hasResult={stores?.length !== 0}
           onClear={handleClear}
         />
       </SearchbarV2Container>
@@ -205,7 +135,15 @@ const UserMapV2 = () => {
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
-        {markers}
+        {stores?.map((store) => (
+          <Marker
+            key={store.placeId}
+            store={store}
+            focus={store.placeId === placeId}
+            bounce={store.placeId === bouncingId}
+            onClick={handleStoreClick}
+          />
+        ))}
       </GoogleMapWrapper>
       <StoreListContainer>
         <StoreListV2
@@ -217,7 +155,12 @@ const UserMapV2 = () => {
       </StoreListContainer>
       {store && (
         <StoreDetailContainer>
-          <StoreDetail {...store} onClose={handleCloseDetail} />
+          <StoreDetail
+            {...store}
+            onClose={handleCloseDetail}
+            onHide={handleRefreshStore}
+            onUnhide={handleRefreshStore}
+          />
         </StoreDetailContainer>
       )}
     </>

@@ -30,13 +30,11 @@ const UserHiddenStoreMap = () => {
   }
 
   async function handleOnUnhide(placeId) {
-    await storeApi.unhideStore({ placeId })
     mutate(`/stores/${placeId}`)
     mutate(`/stores/hidden`)
   }
 
   async function handleOnHide(placeId) {
-    await storeApi.hideStore({ placeId })
     mutate(`/stores/${placeId}`)
     mutate(`/stores/hidden`)
   }

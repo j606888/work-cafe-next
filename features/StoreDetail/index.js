@@ -10,6 +10,7 @@ import {
   ButtonGroup,
   Reviews,
 } from "./styled"
+import storeApi from "api/stores"
 
 import SortIcon from "@mui/icons-material/Sort"
 import ReviewCard from "./ReviewCard"
@@ -34,7 +35,6 @@ const StoreDetail = ({
   photos = [],
   reviews = [],
   openingHours = [],
-  onSave = () => {},
   onReview = () => {},
   onHide = () => {},
   onUnhide = () => {},
@@ -47,6 +47,14 @@ const StoreDetail = ({
 
   const handleBookmarkSubmit = () => {
     mutate(`/stores/${placeId}/bookmarks`)
+  }
+  const handleHide = async () => {
+    await storeApi.hideStore({ placeId })
+    onHide(placeId)
+  }
+  const handleUnHide = async () => {
+    await storeApi.unhideStore({ placeId })
+    onUnhide(placeId)
   }
 
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
@@ -85,13 +93,13 @@ const StoreDetail = ({
             <ActionButton
               type="show"
               text="恢復"
-              onClick={() => onUnhide(placeId)}
+              onClick={handleUnHide}
             />
           ) : (
             <ActionButton
               type="hide"
               text="隱藏"
-              onClick={() => onHide(placeId)}
+              onClick={handleHide}
             />
           )}
 
