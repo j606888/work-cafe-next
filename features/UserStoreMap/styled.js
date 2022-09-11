@@ -32,6 +32,9 @@ export const StoreListContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 2;
+  height: 100vh;
+  overflow-y: scroll;
+  background-color: #fff;
 `
 
 export const MenuContainer = styled.div`

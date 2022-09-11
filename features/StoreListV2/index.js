@@ -1,59 +1,29 @@
 import * as React from "react"
-import MuiDrawer from "@mui/material/Drawer"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import styled from "styled-components"
-import CardList from "features/Drawer/CardList"
 import Card from "features/Drawer/Card"
+import useSWR from "swr"
+import { useDispatch } from "react-redux"
+import { updateStore, updateFocusPlaceId } from "store/slices/store"
+import { fetcher } from "api"
+import { Container, Scrollbar } from "./styled"
 
-const Container = styled.div`
-  background-color: #fff;
-  display: inline-flex;
-  flex-direction: column;
+export default function StoreListV2({ stores = [] }) {
+  const dispatch = useDispatch()
+  const [placeId, setPlaceId] = React.useState(null)
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
 
-  height: 100vh;
-  position: relative;
-
-  .white-box {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 428px;
-    background-color: #fff;
-    height: 4rem;
-    z-index: 1;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  const handleMouseEnter = (placeId) => {
+    dispatch(updateFocusPlaceId(placeId))
   }
-`
-
-const Scrollbar = styled.div`
-  overflow-y: scroll;
-  height: 100vh;
-  padding-top: 5rem;
-
-  ::-webkit-scrollbar-thumb {
-    background: red;
-    border-radius: 10px;
+  const handleMouseLeave = (_placeId) => {
+    dispatch(updateFocusPlaceId(null))
+  }
+  const handleClick = (placeId) => {
+    setPlaceId(placeId)
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #b30000;
-  }
-`
-
-export default function StoreListV2({
-  stores = [],
-  onClick = () => {},
-  onMouseEnter = () => {},
-  onMouseLeave = () => {},
-}) {
-  function handleMouseEnter(placeId) {
-    onMouseEnter(placeId)
-  }
-
-  function handleMouseLeave(placeId) {
-    onMouseLeave(placeId)
-  }
+  React.useEffect(() => {
+    dispatch(updateStore(store))
+  }, [store, dispatch])
 
   if (stores.length === 0) {
     return null
@@ -67,7 +37,7 @@ export default function StoreListV2({
           <Card
             key={store.placeId}
             {...store}
-            onClick={onClick}
+            onClick={handleClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           />

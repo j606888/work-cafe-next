@@ -11,7 +11,6 @@ import {
   Reviews,
 } from "./styled"
 import storeApi from "api/stores"
-
 import SortIcon from "@mui/icons-material/Sort"
 import ReviewCard from "./ReviewCard"
 import "react-slideshow-image/dist/styles.css"
@@ -20,6 +19,8 @@ import Bookmarks from "./Bookmarks"
 import useSWR, { useSWRConfig } from "swr"
 import { fetcher } from "api"
 import SecondaryInfo from "./SecondaryInfo"
+import { useDispatch } from "react-redux"
+import { updateStore } from 'store/slices/store'
 
 const StoreDetail = ({
   id,
@@ -39,11 +40,11 @@ const StoreDetail = ({
   onHide = () => {},
   onUnhide = () => {},
   onShare = () => {},
-  onClose = () => {},
 }) => {
   const { mutate } = useSWRConfig()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const { data: bookmarks } = useSWR(`/stores/${placeId}/bookmarks`, fetcher)
+  const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
     mutate(`/stores/${placeId}/bookmarks`)
@@ -56,13 +57,16 @@ const StoreDetail = ({
     await storeApi.unhideStore({ placeId })
     onUnhide(placeId)
   }
+  const handleClose = () => {
+    dispatch(updateStore(null))
+  }
 
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
   return (
     <>
       <Container>
-        <CloseButton onClick={onClose}>
+        <CloseButton onClick={handleClose}>
           <CloseIcon />
         </CloseButton>
         <ImageSlide photos={photos} />

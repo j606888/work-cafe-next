@@ -16,6 +16,11 @@ export default function UserDrawer({ open, onClose = () => {} }) {
     dispatch(updateStores([]))
     dispatch(changeMode("BOOKMARK"))
   }
+  const handleOpenHidden = () => {
+    onClose()
+    dispatch(updateStores([]))
+    dispatch(changeMode("HIDDEN"))
+  }
 
   return (
     <>
@@ -35,7 +40,7 @@ export default function UserDrawer({ open, onClose = () => {} }) {
               <RateReviewOutlinedIcon />
               <span>你的評論</span>
             </div>
-            <div>
+            <div onClick={handleOpenHidden}>
               <VisibilityOffOutlinedIcon />
               <span>你的隱藏</span>
             </div>

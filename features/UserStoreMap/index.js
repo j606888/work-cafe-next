@@ -20,8 +20,9 @@ import {
 } from "./styled"
 import UserDrawer from "features/UserDrawer"
 import BookmarkListV2 from "features/BookmarkListV2"
-import { useSelector, useDispatch } from 'react-redux'
-import { updateStores } from 'store/slices/store'
+import { useSelector, useDispatch } from "react-redux"
+import { updateStores } from "store/slices/store"
+import HiddenListV2 from "features/HiddenListV2"
 
 const initialState = {
   lat: 23.0042325,
@@ -54,7 +55,10 @@ const reducer = (state, action) => {
 const UserMapV2 = () => {
   const dispatch = useDispatch()
   const { mutate } = useSWRConfig()
-  const [locationParams, LocationDispatch] = React.useReducer(reducer, initialState)
+  const [locationParams, LocationDispatch] = React.useReducer(
+    reducer,
+    initialState
+  )
   const [map, setMap] = React.useState(null)
   const [openDrawer, setOpenDrawer] = React.useState(false)
   const mapCenterRef = useRef({
@@ -64,15 +68,13 @@ const UserMapV2 = () => {
   const mapZoom = useRef(15)
   const openTimeRef = useRef({})
   const [placeId, setPlaceId] = useState(null)
-  const [bouncingId, setBouncingId] = useState(null)
   const { data: locationStores } = useSWR(
     locationParams.go
       ? ["/stores/location", { ...locationParams, limit: 10 }]
       : null,
     fetcher
   )
-  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
-  const {stores, mode } = useSelector(state => state.store)
+  const { stores, mode, store, bouncePlaceId } = useSelector((state) => state.store)
   const handleOnIdle = ({ lat, lng, zoom }) => {
     Router.push({
       pathname: `/map/@${lat},${lng},${zoom}z`,
@@ -133,7 +135,7 @@ const UserMapV2 = () => {
   }, [locationStores, dispatch])
 
   useEffect(() => {
-    if (store) {
+    if (store && map) {
       const center = {
         lat: store.lat,
         lng: store.lng,
@@ -147,15 +149,6 @@ const UserMapV2 = () => {
       mapCenterRef.current = center
     }
   }, [store])
-
-  // function handleOnClick() {
-  //   const city = _.find(cityMap, (city) => city.name === filter.keyword)
-
-  //   if (city && city.center && isFar(city.center, mapCenterRef.current)) {
-  //     map.setCenter(city.center)
-  //     mapCenterRef.current = city.center
-  //   }
-  // }
 
   return (
     <>
@@ -179,34 +172,32 @@ const UserMapV2 = () => {
           <StoreListContainer>
             <StoreListV2
               stores={stores || []}
-              onClick={handleStoreClick}
-              onMouseEnter={(placeId) => setBouncingId(placeId)}
-              onMouseLeave={() => setBouncingId(null)}
             />
           </StoreListContainer>
-          {store && (
-            <StoreDetailContainer>
-              <StoreDetail
-                {...store}
-                onClose={() => setPlaceId(null)}
-                onHide={handleRefreshStore}
-                onUnhide={handleRefreshStore}
-              />
-            </StoreDetailContainer>
-          )}
         </>
       )}
       {mode === "BOOKMARK" && <BookmarkListV2 />}
+      {store && (
+        <StoreDetailContainer>
+          <StoreDetail
+            {...store}
+            onClose={() => setPlaceId(null)}
+            onHide={handleRefreshStore}
+            onUnhide={handleRefreshStore}
+          />
+        </StoreDetailContainer>
+      )}
       <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
         {stores?.map((store) => (
           <Marker
             key={store.placeId}
             store={store}
             focus={store.placeId === placeId}
-            bounce={store.placeId === bouncingId}
+            bounce={store.placeId === bouncePlaceId}
             onClick={handleStoreClick}
           />
         ))}
+        {mode === "HIDDEN" && <HiddenListV2 />}
       </GoogleMapWrapper>
     </>
   )
