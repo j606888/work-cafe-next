@@ -17,6 +17,7 @@ export const SearchbarV2Container = styled.div`
 
 export const StoreDetailContainer = styled.div`
   position: absolute;
+  background-color: #fff;
   top: 4rem;
   left: 28rem;
   z-index: 2;

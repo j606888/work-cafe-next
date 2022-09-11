@@ -21,8 +21,9 @@ import {
 import UserDrawer from "features/UserDrawer"
 import BookmarkListV2 from "features/BookmarkListV2"
 import { useSelector, useDispatch } from "react-redux"
-import { updateStores } from "store/slices/store"
+import { updateStores, updateStore } from "store/slices/store"
 import HiddenListV2 from "features/HiddenListV2"
+import Apis from "api/stores"
 
 const initialState = {
   lat: 23.0042325,
@@ -70,7 +71,7 @@ const UserMapV2 = () => {
   const [placeId, setPlaceId] = useState(null)
   const { data: locationStores } = useSWR(
     locationParams.go
-      ? ["/stores/location", { ...locationParams, limit: 10 }]
+      ? ["/stores/location", { ...locationParams, limit: 20 }]
       : null,
     fetcher
   )
@@ -149,6 +150,18 @@ const UserMapV2 = () => {
       mapCenterRef.current = center
     }
   }, [store])
+
+  useEffect(() => {
+    (async() => {
+      let s
+      if (placeId){
+        s = await Apis.getPublicStore({ placeId })
+        console.log(s)
+      }
+
+      dispatch(updateStore(s))
+    })()
+  }, [placeId, dispatch])
 
   return (
     <>
