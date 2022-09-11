@@ -24,6 +24,7 @@ import { updateStore } from 'store/slices/store'
 import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
 import ReviewForm from "features/ReviewForm"
+import ReviewsBlock from "./ReviewsBlock"
 
 const StoreDetail = ({
   id,
@@ -37,7 +38,7 @@ const StoreDetail = ({
   phone,
   isHide,
   photos = [],
-  reviews = [],
+  reviews: googleReviews = [],
   openingHours = [],
   onReview = () => {},
   onHide = () => {},
@@ -49,6 +50,7 @@ const StoreDetail = ({
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
   const { data: bookmarks } = useSWR(userIsLogin() ? `/stores/${placeId}/bookmarks` : null, fetcher)
+  const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
   const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
@@ -67,7 +69,9 @@ const StoreDetail = ({
   const handleClose = () => {
     dispatch(updateStore(null))
   }
-
+  const refreshReview = () => {
+    mutate(`/stores/${placeId}/reviews`)
+  }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
   return (
@@ -117,6 +121,8 @@ const StoreDetail = ({
           openingHours={openingHours}
         />
         <Divider />
+        <ReviewsBlock reviews={reviews?.reviews || []}/>
+        <Divider />
         <Reviews>
           <div className="review-header">
             <h4>評論</h4>
@@ -125,7 +131,7 @@ const StoreDetail = ({
               <span>排序</span>
             </div>
           </div>
-          {reviews.map((review) => (
+          {googleReviews.map((review) => (
             <ReviewCard key={review.authorName} {...review} />
           ))}
         </Reviews>
@@ -142,6 +148,7 @@ const StoreDetail = ({
         open={openReview}
         name={name}
         onClose={() => setOpenReview(false)}
+        onSave={refreshReview}
       />
     </>
   )

@@ -1,7 +1,7 @@
 import React from "react"
 import {
-  SentimentNeutralOutlined as BadFace,
-  SentimentDissatisfiedOutlined as NormalFace,
+  SentimentNeutralOutlined as NormalFace,
+  SentimentDissatisfiedOutlined as BadFace,
   SentimentSatisfiedOutlined as HappyFace,
 } from "@mui/icons-material"
 import { Radio } from "@mui/material"

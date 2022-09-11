@@ -49,7 +49,7 @@ const RADIO_GROUPS = [
   },
 ]
 
-const ReviewForm = ({ placeId, open, name, onClose = () => {} }) => {
+const ReviewForm = ({ placeId, open, name, onClose = () => {}, onSave = () => {} }) => {
   const [data, setData] = React.useState({})
   const [showSnackbar, setShowSnackbar] = React.useState(null)
 
@@ -65,12 +65,18 @@ const ReviewForm = ({ placeId, open, name, onClose = () => {} }) => {
       data,
     })
     setShowSnackbar("評論成功")
-    onClose(data)
+    handleClose()
+    onSave()
+  }
+  const handleClose = () => {
+    setData({})
+    onClose()
+    
   }
 
   return (
     <>
-      <Dialog open={open} onClose={onClose}>
+      <Dialog open={open} onClose={handleClose}>
         <Form>
           <h3>{name}</h3>
           <Scroll>
@@ -103,7 +109,7 @@ const ReviewForm = ({ placeId, open, name, onClose = () => {} }) => {
             ))}
           </Scroll>
           <Buttons>
-            <Button variant="outlined" onClick={onClose}>
+            <Button variant="outlined" onClick={handleClose}>
               取消
             </Button>
             <Button
