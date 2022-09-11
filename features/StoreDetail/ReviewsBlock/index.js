@@ -16,8 +16,9 @@ import {
   DetailContainer,
   Details,
 } from "./styled"
+import { ReviewWords } from "constant/i18n"
 
-const DetailPart = ({ name, scores = {} }) => {
+const DetailPart = ({ name, en, scores = {} }) => {
   const highestScore = Math.max(..._.values(scores))
   const keys = _.keys(scores)
 
@@ -31,7 +32,7 @@ const DetailPart = ({ name, scores = {} }) => {
     return (
       <ProgressLabel
         key={key}
-        label={key}
+        label={ReviewWords[en][key]}
         number={value}
         percentage={percentage}
       />
@@ -72,11 +73,11 @@ const ReviewsBlock = ({ reviewReport }) => {
       </MoreInfoButton>
       {showMore && (
         <Details>
-          <DetailPart name="音量" scores={reviewReport.roomVolume} />
+          <DetailPart name="音量" en='roomVolume' scores={reviewReport.roomVolume} />
           <Divider />
-          <DetailPart name="限時" scores={reviewReport.timeLimit} />
+          <DetailPart name="限時" en='timeLimit' scores={reviewReport.timeLimit} />
           <Divider />
-          <DetailPart name="插座" scores={reviewReport.socketSupply} />
+          <DetailPart name="插座" en='socketSupply' scores={reviewReport.socketSupply} />
         </Details>
       )}
     </Container>

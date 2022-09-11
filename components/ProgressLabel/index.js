@@ -1,15 +1,25 @@
 import { LinearProgress, Tooltip } from "@mui/material"
 import React from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 const Container = styled.div`
   display: flex;
   align-items: center;
+  gap: 1rem;
 
   .label {
-    width: 20%;
+    width: 30%;
     font-size: 12px;
-    color: #333;
+
+    ${({ win }) =>
+      win
+        ? css`
+            color: #222;
+            font-weight: 500;
+          `
+        : css`
+            color: #888;
+          `}
   }
 
   .number {
@@ -24,9 +34,11 @@ const Container = styled.div`
 `
 
 const ProgressLabel = ({ label, number, percentage }) => {
+  const win = percentage === 100
+
   return (
     <Tooltip title={number} placement="right">
-      <Container>
+      <Container win={win}>
         <span className="label">{label}</span>
         <div>
           <LinearProgress variant="determinate" value={percentage} />
