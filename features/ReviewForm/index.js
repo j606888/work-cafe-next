@@ -39,7 +39,7 @@ const RADIO_GROUPS = [
     ],
   },
   {
-    name: "socketSupport",
+    name: "socketSupply",
     label: "插座供應",
     options: [
       option("yes", "大部分有插座"),

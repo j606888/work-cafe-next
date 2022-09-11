@@ -1,5 +1,4 @@
 import React from "react"
-import styled from "styled-components"
 import {
   SentimentNeutralOutlined as NormalFace,
   SentimentDissatisfiedOutlined as BadFace,
@@ -8,50 +7,48 @@ import {
 import _ from "lodash"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
+import { Divider } from "@mui/material"
+import ProgressLabel from "components/ProgressLabel"
+import {
+  Container,
+  FaceBlock,
+  MoreInfoButton,
+  DetailContainer,
+  Details,
+} from "./styled"
 
-const Container = styled.div`
-  padding: 1rem 1.5rem;
-`
+const DetailPart = ({ name, scores = {} }) => {
+  const highestScore = Math.max(..._.values(scores))
+  const keys = _.keys(scores)
 
-const FaceBlock = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-
-    svg {
-      font-size: 48px;
+  const bars = keys.map((key) => {
+    const value = scores[key]
+    let percentage = 0
+    if (value !== 0) {
+      percentage = (value / highestScore) * 100
     }
 
-    span {
-      font-size: 24px;
-      font-weight: 500;
-    }
-  }
-`
+    return (
+      <ProgressLabel
+        key={key}
+        label={key}
+        number={value}
+        percentage={percentage}
+      />
+    )
+  })
 
-const MoreInfoButton = styled.div`
-  margin-top: 0.5rem;
-  color: #1b72e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  span {
-    font-size: 14px;
-  }
-`
+  return (
+    <DetailContainer>
+      <span>{name}</span>
+      <div>{bars}</div>
+    </DetailContainer>
+  )
+}
 
 const ReviewsBlock = ({ reviewReport }) => {
   const [showMore, setShowMore] = React.useState(false)
   const recommend = reviewReport.recommend
-  
 
   return (
     <Container>
@@ -69,10 +66,19 @@ const ReviewsBlock = ({ reviewReport }) => {
           <span>{recommend.yes}</span>
         </div>
       </FaceBlock>
-      <MoreInfoButton onClick={() => setShowMore(cur => !cur)}>
+      <MoreInfoButton onClick={() => setShowMore((cur) => !cur)}>
         <span>詳細資訊</span>
         {showMore ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </MoreInfoButton>
+      {showMore && (
+        <Details>
+          <DetailPart name="音量" scores={reviewReport.roomVolume} />
+          <Divider />
+          <DetailPart name="限時" scores={reviewReport.timeLimit} />
+          <Divider />
+          <DetailPart name="插座" scores={reviewReport.socketSupply} />
+        </Details>
+      )}
     </Container>
   )
 }
