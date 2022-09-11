@@ -1,5 +1,4 @@
 import { instance } from "./index"
-import { snakeCase } from "lodash"
 
 export async function getStores({ page, per, cities, rating, order, orderBy }) {
   const params = { page, per, order, orderBy }

@@ -25,6 +25,10 @@ instance.interceptors.request.use((config) => {
   if (config.params) {
     config.params = snakecaseKeys(config.params, { deep: true })
   }
+  
+  if (config.data) {
+    config.data = snakecaseKeys(config.data, { deep: true })
+  }
 
   const accessToken = localStorage.getItem("accessToken")
   if (accessToken) {
