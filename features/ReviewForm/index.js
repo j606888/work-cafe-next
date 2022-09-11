@@ -33,9 +33,9 @@ const RADIO_GROUPS = [
     name: "timeLimit",
     label: "限時規定",
     options: [
-      option("no", "無限時"),
+      option("yes", "無限時"),
       option("weekend", "週末限時"),
-      option("yes", "有限時"),
+      option("no", "有限時"),
     ],
   },
   {
@@ -43,13 +43,19 @@ const RADIO_GROUPS = [
     label: "插座供應",
     options: [
       option("yes", "大部分有插座"),
-      option("normal", "些許插座"),
+      option("rare", "些許插座"),
       option("no", "沒有插座"),
     ],
   },
 ]
 
-const ReviewForm = ({ placeId, open, name, onClose = () => {}, onSave = () => {} }) => {
+const ReviewForm = ({
+  placeId,
+  open,
+  name,
+  onClose = () => {},
+  onSave = () => {},
+}) => {
   const [data, setData] = React.useState({})
   const [showSnackbar, setShowSnackbar] = React.useState(null)
 
@@ -71,7 +77,6 @@ const ReviewForm = ({ placeId, open, name, onClose = () => {}, onSave = () => {}
   const handleClose = () => {
     setData({})
     onClose()
-    
   }
 
   return (

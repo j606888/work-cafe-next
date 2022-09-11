@@ -118,17 +118,19 @@ const UserMapV2 = () => {
   }
   const handleClear = () => {
     LocationDispatch({ type: "CLEAR_KEYWORD" })
-    setPlaceId(null)
+    dispatch(updateStore(null))
   }
   const handleStoreClick = (placeId) => {
     setPlaceId(placeId)
   }
-  const handleRefreshStore = (placeId) => {
-    mutate(`/stores/${placeId}`)
+  const handleRefreshStore = async (placeId) => {
+    // mutate(`/stores/${placeId}`)
+    const s = await Apis.getPublicStore({ placeId })
+    dispatch(updateStore(s))
   }
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
-    setPlaceId(null)
+    dispatch(updateStore(null))
   }
 
   useEffect(() => {
@@ -156,7 +158,6 @@ const UserMapV2 = () => {
       let s
       if (placeId){
         s = await Apis.getPublicStore({ placeId })
-        console.log(s)
       }
 
       dispatch(updateStore(s))
