@@ -21,6 +21,8 @@ import { fetcher } from "api"
 import SecondaryInfo from "./SecondaryInfo"
 import { useDispatch } from "react-redux"
 import { updateStore } from 'store/slices/store'
+import { userIsLogin } from "utils/user"
+import useAuthCheck from "hooks/useAuthCheck"
 
 const StoreDetail = ({
   id,
@@ -42,18 +44,21 @@ const StoreDetail = ({
   onShare = () => {},
 }) => {
   const { mutate } = useSWRConfig()
+  const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
-  const { data: bookmarks } = useSWR(`/stores/${placeId}/bookmarks`, fetcher)
+  const { data: bookmarks } = useSWR(userIsLogin() ? `/stores/${placeId}/bookmarks` : null, fetcher)
   const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
     mutate(`/stores/${placeId}/bookmarks`)
   }
   const handleHide = async () => {
+    authCheck()
     await storeApi.hideStore({ placeId })
     onHide(placeId)
   }
   const handleUnHide = async () => {
+    authCheck()
     await storeApi.unhideStore({ placeId })
     onUnhide(placeId)
   }
