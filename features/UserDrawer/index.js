@@ -8,15 +8,20 @@ import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined
 import { Container, Header, Tabs } from "./styled"
 import { useDispatch } from 'react-redux'
 import { updateStores, changeMode } from 'store/slices/store'
+import useAuthCheck from "hooks/useAuthCheck";
 
 export default function UserDrawer({ open, onClose = () => {} }) {
   const dispatch = useDispatch()
+  const authCheck = useAuthCheck()
+
   const handleOpenBookmark = () => {
+    authCheck()
     onClose()
     dispatch(updateStores([]))
     dispatch(changeMode("BOOKMARK"))
   }
   const handleOpenHidden = () => {
+    authCheck()
     onClose()
     dispatch(updateStores([]))
     dispatch(changeMode("HIDDEN"))

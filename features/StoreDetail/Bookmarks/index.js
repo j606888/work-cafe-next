@@ -9,6 +9,10 @@ import AddIcon from "@mui/icons-material/Add"
 import NewBookmarkForm from "features/BookmarkList/NewBookmarkForm"
 import { saveBookmarkStore, unSaveBookmarkStore } from "api/bookmark"
 import Snackbar from "components/Snackbar"
+import { userIsLogin } from "utils/user"
+import { useRouter } from "next/router"
+import useAuthCheck from "hooks/useAuthCheck"
+import { useEffect } from "react"
 
 const Title = styled.div`
   font-weight: 500;
@@ -66,13 +70,18 @@ const Bookmark = ({
 const Bookmarks = ({
   placeId,
   anchorEl,
-  onClose = () => {},
   bookmarks = [],
+  onClose = () => {},
   onSubmit = () => {},
 }) => {
   const [openNewForm, setOpenNewForm] = React.useState(false)
   const [snackbar, setSnackbar] = React.useState(false)
+  const authCheck = useAuthCheck()
   const open = Boolean(anchorEl)
+
+  useEffect(() => {
+    if (anchorEl) authCheck()
+  }, [anchorEl, authCheck])
 
   const handleSubmit = () => {
     onSubmit()
