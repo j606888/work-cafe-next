@@ -12,6 +12,7 @@ const InputBox = ({
   hasResult = false,
   onSearch = () => {},
   onClear = () => {},
+  onOpenDrawer = () => {},
 }) => {
   const handleSearch = () => {
     onSearch()
@@ -22,7 +23,7 @@ const InputBox = ({
 
   return (
     <Container ref={args.InputProps.ref}>
-      <Tooltip title="選單">
+      <Tooltip title="選單" onClick={onOpenDrawer}>
         <MenuIcon sx={{ color: "#333333", cursor: "pointer" }} />
       </Tooltip>
       <Input {...args.inputProps} placeholder="搜尋 Google 地圖" />

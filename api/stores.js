@@ -43,8 +43,9 @@ export async function syncStorePhotos(placeId) {
   await instance.post(`/admin/stores/${placeId}/sync-photos`)
 }
 
-const getPublicStore = ({ placeId }) => {
-  return instance.get(`/stores/${placeId}`)
+const getPublicStore = async ({ placeId }) => {
+  const res = await instance.get(`/stores/${placeId}`)
+  return res.data
 }
 
 const Apis = {

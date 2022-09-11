@@ -1,6 +1,5 @@
 import React from "react"
 import { Container } from "./styled"
-import Searchbar from "features/Searchbar"
 import Link from "next/link"
 import { getUser } from "utils/user"
 import { useEffect } from "react"
@@ -27,8 +26,6 @@ const Header = () => {
       </Link>
       <div className="nav-links">
         <Link href="/map">Map</Link>
-        <Link href="/map/hidden">Hiddens</Link>
-        <Link href="/map/bookmarks">Bookmarks</Link>
       </div>
       <div>
         {user ? (

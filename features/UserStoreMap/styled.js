@@ -17,6 +17,7 @@ export const SearchbarV2Container = styled.div`
 
 export const StoreDetailContainer = styled.div`
   position: absolute;
+  background-color: #fff;
   top: 4rem;
   left: 28rem;
   z-index: 2;
@@ -32,6 +33,9 @@ export const StoreListContainer = styled.div`
   top: 0;
   left: 0;
   z-index: 2;
+  height: 100vh;
+  overflow-y: scroll;
+  background-color: #fff;
 `
 
 export const MenuContainer = styled.div`

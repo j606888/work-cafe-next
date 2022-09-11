@@ -3,10 +3,8 @@ import styled from "styled-components"
 import Card from "../Card"
 
 const Container = styled.div`
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
-  padding: 1rem;
-  margin-top: 56px;
 `
 
 const CardList = ({ stores = [], onClick = () => {} }) => {
