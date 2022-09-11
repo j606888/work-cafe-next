@@ -5,11 +5,18 @@ import SettingsIcon from "@mui/icons-material/Settings"
 import ChildCareIcon from "@mui/icons-material/ChildCare"
 import { Container, Header, Body, Button } from "./styled"
 
-const LoginMenu = ({ avatar_url, email, name, role }) => {
+const LoginMenu = ({ avatar_url, email, name, role, onLogout = () => {} }) => {
+  const handleLogout = () => {
+    onLogout()
+  }
+
   return (
     <Container>
       <Header>
-        <Avatar src={avatar_url} sx={{ width: 64, height: 64, marginY: 2, border: '1px solid #eee' }} />
+        <Avatar
+          src={avatar_url}
+          sx={{ width: 64, height: 64, marginY: 2, border: "1px solid #eee" }}
+        />
         <span className="name">{name}</span>
         <span className="email">{email}</span>
       </Header>
@@ -27,7 +34,7 @@ const LoginMenu = ({ avatar_url, email, name, role }) => {
             設定
           </a>
         </Link>
-        <Button>登出</Button>
+        <Button onClick={handleLogout}>登出</Button>
       </Body>
     </Container>
   )

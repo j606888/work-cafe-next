@@ -56,7 +56,7 @@ const Login = () => {
     localStorage.setItem("accessToken", accessToken)
     localStorage.setItem("refreshToken", refreshToken)
 
-    to ? router.push(to) : router.push('/')
+    to ? router.push(to) : router.push('/map')
   }
 
   const formik = useFormik({

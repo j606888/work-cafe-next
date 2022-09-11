@@ -1,8 +1,9 @@
-import { Avatar, IconButton, Menu } from '@mui/material'
+import { Avatar, Button, IconButton, Menu } from '@mui/material'
 import React from 'react'
 import styled from 'styled-components'
 import LoginMenu from './LoginMenu'
 import { getUser } from "utils/user"
+import { useRouter } from 'next/router'
 
 const Container = styled.div`
   position: absolute;
@@ -12,6 +13,7 @@ const Container = styled.div`
 `
 
 const AccountMenu = () => {
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [user, setUser] = React.useState(null)
   const open = Boolean(anchorEl)
@@ -21,12 +23,23 @@ const AccountMenu = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  const handleLogout = () => {
+    localStorage.clear()
+    setUser(null)
+  }
+  const handleLogin = () => {
+    router.push('/login')
+  }
 
   React.useEffect(() => {
     setUser(getUser())
   }, [])
 
-  if (!user) return <p>Not Login</p>
+  if (!user) return (
+    <Container>
+      <Button variant='contained' onClick={handleLogin}>登入</Button>
+    </Container>
+  )
 
   return (
     <Container>
@@ -38,7 +51,7 @@ const AccountMenu = () => {
         open={open}
         onClose={handleClose}
       >
-        <LoginMenu {...user} />
+        <LoginMenu {...user} onLogout={handleLogout} />
       </Menu>
     </Container>
   )
