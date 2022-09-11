@@ -1,13 +1,5 @@
 import styled from "styled-components"
 
-export const Temp = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  box-sizing: border-box;
-`
-
 export const Form = styled.form`
   background-color: #fff;
   width: 360px;

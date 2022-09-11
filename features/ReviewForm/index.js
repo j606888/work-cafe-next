@@ -1,5 +1,6 @@
 import {
   Button,
+  Dialog,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -9,89 +10,119 @@ import {
 } from "@mui/material"
 import React from "react"
 import RecommendBlock from "./RecommendBlock"
-import { Temp, Form, Scroll, Buttons } from "./styled"
+import { Form, Scroll, Buttons } from "./styled"
+import ReviewApi from "api/review"
+import Snackbar from "components/Snackbar"
 
-const ReviewForm = ({ name, onChange = () => {} }) => {
+const option = (value, label) => ({
+  value,
+  label,
+})
+
+const RADIO_GROUPS = [
+  {
+    name: "roomVolume",
+    label: "音量",
+    options: [
+      option("quite", "幾乎無人說話"),
+      option("normal", "輕聲交談"),
+      option("loud", "正常交談"),
+    ],
+  },
+  {
+    name: "timeLimit",
+    label: "限時規定",
+    options: [
+      option("no", "無限時"),
+      option("weekend", "週末限時"),
+      option("yes", "有限時"),
+    ],
+  },
+  {
+    name: "socketSupport",
+    label: "插座供應",
+    options: [
+      option("yes", "大部分有插座"),
+      option("normal", "些許插座"),
+      option("no", "沒有插座"),
+    ],
+  },
+]
+
+const ReviewForm = ({ placeId, open, name, onClose = () => {} }) => {
+  const [data, setData] = React.useState({})
+  const [showSnackbar, setShowSnackbar] = React.useState(null)
+
   const handleRecommendChange = (recommend) => {
-    onChange({ recommend })
+    handleChange("recommend", recommend)
+  }
+  const handleChange = (key, value) => {
+    setData((cur) => ({ ...cur, [key]: value }))
+  }
+  const handleSubmit = async () => {
+    await ReviewApi.createReview({
+      placeId,
+      data,
+    })
+    setShowSnackbar("評論成功")
+    onClose(data)
   }
 
   return (
-    <Temp>
-      <Form>
-        <h3>{name}</h3>
-        <Scroll>
-          <RecommendBlock onChange={handleRecommendChange} />
-          <TextField
-            name="description"
-            multiline
-            fullWidth
-            rows={4}
-            placeholder="說明你在這間店的體驗"
-          />
-          <FormControl>
-            <FormLabel>音量</FormLabel>
-            <RadioGroup name="roomVolume">
-              <FormControlLabel
-                value="quite"
-                control={<Radio />}
-                label="幾乎無人說話"
-              />
-              <FormControlLabel
-                value="normal"
-                control={<Radio />}
-                label="輕聲交談"
-              />
-              <FormControlLabel
-                value="loud"
-                control={<Radio />}
-                label="正常交談"
-              />
-            </RadioGroup>
-          </FormControl>
-          <FormControl>
-            <FormLabel>限時規定</FormLabel>
-            <RadioGroup name="timeLimit">
-              <FormControlLabel value="no" control={<Radio />} label="無限時" />
-              <FormControlLabel
-                value="weekend"
-                control={<Radio />}
-                label="週末限時"
-              />
-              <FormControlLabel
-                value="yes"
-                control={<Radio />}
-                label="有限時"
-              />
-            </RadioGroup>
-          </FormControl>
-          <FormControl>
-            <FormLabel>插座供應</FormLabel>
-            <RadioGroup name="socketSupport">
-              <FormControlLabel
-                value="yes"
-                control={<Radio />}
-                label="大部分有插座"
-              />
-              <FormControlLabel
-                value="normal"
-                control={<Radio />}
-                label="些許插座"
-              />
-              <FormControlLabel
-                value="no"
-                control={<Radio />}
-                label="沒有插座"
-              />
-            </RadioGroup>
-          </FormControl>
-        </Scroll>
-        <Buttons>
-          <Button variant="outlined">取消</Button>
-          <Button variant="contained">送出</Button>
-        </Buttons>
-      </Form>
-    </Temp>
+    <>
+      <Dialog open={open} onClose={onClose}>
+        <Form>
+          <h3>{name}</h3>
+          <Scroll>
+            <RecommendBlock onChange={handleRecommendChange} />
+            <TextField
+              name="description"
+              multiline
+              fullWidth
+              rows={4}
+              placeholder="說明你在這間店的體驗"
+              onChange={(e) => handleChange("description", e.target.value)}
+            />
+            {RADIO_GROUPS.map(({ name, label, options }) => (
+              <FormControl key={name}>
+                <FormLabel>{label}</FormLabel>
+                <RadioGroup
+                  name={name}
+                  onChange={(event) => handleChange(name, event.target.value)}
+                >
+                  {options.map(({ value, label }) => (
+                    <FormControlLabel
+                      key={value}
+                      value={value}
+                      control={<Radio />}
+                      label={label}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            ))}
+          </Scroll>
+          <Buttons>
+            <Button variant="outlined" onClick={onClose}>
+              取消
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleSubmit}
+              disabled={!data.recommend}
+            >
+              送出
+            </Button>
+          </Buttons>
+        </Form>
+      </Dialog>
+      {showSnackbar && (
+        <Snackbar
+          onClose={() => setShowSnackbar(false)}
+          message={showSnackbar}
+        />
+      )}
+    </>
   )
 }
 

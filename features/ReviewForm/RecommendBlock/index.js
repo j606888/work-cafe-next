@@ -36,7 +36,7 @@ const FaceRadio = ({
 const OPTIONS = [
   {
     icon: <BadFace />,
-    value: "bad",
+    value: "no",
     label: "不推薦",
   },
   {
@@ -46,7 +46,7 @@ const OPTIONS = [
   },
   {
     icon: <HappyFace />,
-    value: "good",
+    value: "yes",
     label: "推薦",
   },
 ]

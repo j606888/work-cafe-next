@@ -23,6 +23,7 @@ import { useDispatch } from "react-redux"
 import { updateStore } from 'store/slices/store'
 import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
+import ReviewForm from "features/ReviewForm"
 
 const StoreDetail = ({
   id,
@@ -46,6 +47,7 @@ const StoreDetail = ({
   const { mutate } = useSWRConfig()
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
+  const [openReview, setOpenReview] = React.useState(false)
   const { data: bookmarks } = useSWR(userIsLogin() ? `/stores/${placeId}/bookmarks` : null, fetcher)
   const dispatch = useDispatch()
 
@@ -88,7 +90,7 @@ const StoreDetail = ({
             type="comment"
             text="評論"
             primary
-            onClick={() => onReview(id)}
+            onClick={() => setOpenReview(true)}
           />
           <ActionButton
             type="bookmark"
@@ -99,17 +101,9 @@ const StoreDetail = ({
           />
           {/* <ActionButton text="不知道" /> */}
           {isHide ? (
-            <ActionButton
-              type="show"
-              text="恢復"
-              onClick={handleUnHide}
-            />
+            <ActionButton type="show" text="恢復" onClick={handleUnHide} />
           ) : (
-            <ActionButton
-              type="hide"
-              text="隱藏"
-              onClick={handleHide}
-            />
+            <ActionButton type="hide" text="隱藏" onClick={handleHide} />
           )}
 
           <ActionButton type="share" text="分享" onClick={() => onShare(id)} />
@@ -142,6 +136,12 @@ const StoreDetail = ({
         onClose={() => setBookmarkAnchor(null)}
         bookmarks={bookmarks}
         onSubmit={handleBookmarkSubmit}
+      />
+      <ReviewForm
+        placeId={placeId}
+        open={openReview}
+        name={name}
+        onClose={() => setOpenReview(false)}
       />
     </>
   )
