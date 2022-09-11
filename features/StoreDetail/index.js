@@ -38,12 +38,9 @@ const StoreDetail = ({
   phone,
   isHide,
   photos = [],
-  reviewReport,
+  reviewReport = {},
   reviews: googleReviews = [],
   openingHours = [],
-  onReview = () => {},
-  onHide = () => {},
-  onUnhide = () => {},
   onShare = () => {},
   onRefresh = () => {},
 }) => {
@@ -61,21 +58,22 @@ const StoreDetail = ({
   const handleHide = async () => {
     authCheck()
     await storeApi.hideStore({ placeId })
-    // onHide(placeId)
     onRefresh(placeId)
   }
   const handleUnHide = async () => {
     authCheck()
     await storeApi.unhideStore({ placeId })
-    // onUnhide(placeId)
     onRefresh(placeId)
   }
   const handleClose = () => {
     dispatch(updateStore(null))
   }
   const refreshReview = () => {
-    // mutate(`/stores/${placeId}/reviews`)
     onRefresh(placeId)
+  }
+  const handleOpenReview = () => {
+    authCheck()
+    setOpenReview(true)
   }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
@@ -99,7 +97,7 @@ const StoreDetail = ({
             type="comment"
             text="評論"
             primary
-            onClick={() => setOpenReview(true)}
+            onClick={handleOpenReview}
           />
           <ActionButton
             type="bookmark"
