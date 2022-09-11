@@ -87,7 +87,7 @@ export const Reviews = styled.div`
 `
 
 export const ButtonGroup = styled.div`
-  padding: 1rem 2rem;
+  padding: 1rem 3.5rem;
   display: flex;
   justify-content: space-between;
 `

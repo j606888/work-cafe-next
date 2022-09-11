@@ -97,7 +97,7 @@ const StoreDetail = ({
             primary={isSaved}
             onClick={(e) => setBookmarkAnchor(e.currentTarget)}
           />
-          <ActionButton text="不知道" />
+          {/* <ActionButton text="不知道" /> */}
           {isHide ? (
             <ActionButton
               type="show"
