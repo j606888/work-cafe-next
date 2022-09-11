@@ -1,7 +1,7 @@
 import { fetcher } from "api"
 import Snackbar from "components/Snackbar"
 import BookmarkList from "features/BookmarkList"
-import BookmarkStore from "features/UserBookmarkMap/BookmarkStore"
+import Bookmark from "features/BookmarkListV2/Bookmark"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import useSWR, { useSWRConfig } from "swr"
@@ -64,9 +64,9 @@ const BookmarkListV2 = () => {
       )}
       {randomKey && (
         <BookmarkContainer>
-          <BookmarkStore
+          <Bookmark
             stores={bookmark?.stores}
-            onClick={() => setRandomKey(null)}
+            onBack={() => setRandomKey(null)}
           />
         </BookmarkContainer>
       )}
