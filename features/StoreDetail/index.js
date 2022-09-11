@@ -20,7 +20,7 @@ import useSWR, { useSWRConfig } from "swr"
 import { fetcher } from "api"
 import SecondaryInfo from "./SecondaryInfo"
 import { useDispatch } from "react-redux"
-import { updateStore } from 'store/slices/store'
+import { updateStore } from "store/slices/store"
 import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
 import ReviewForm from "features/ReviewForm"
@@ -36,6 +36,7 @@ const StoreDetail = ({
   address,
   website,
   phone,
+  url,
   isHide,
   photos = [],
   reviewReport = {},
@@ -48,7 +49,10 @@ const StoreDetail = ({
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
-  const { data: bookmarks } = useSWR(userIsLogin() ? `/stores/${placeId}/bookmarks` : null, fetcher)
+  const { data: bookmarks } = useSWR(
+    userIsLogin() ? `/stores/${placeId}/bookmarks` : null,
+    fetcher
+  )
   // const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
   const dispatch = useDispatch()
 
@@ -74,6 +78,9 @@ const StoreDetail = ({
   const handleOpenReview = () => {
     authCheck()
     setOpenReview(true)
+  }
+  const handleOpenGoogle = () => {
+    window.open(url)
   }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
@@ -106,14 +113,24 @@ const StoreDetail = ({
             primary={isSaved}
             onClick={(e) => setBookmarkAnchor(e.currentTarget)}
           />
-          {/* <ActionButton text="不知道" /> */}
-          {isHide ? (
-            <ActionButton type="show" text="恢復" onClick={handleUnHide} />
-          ) : (
-            <ActionButton type="hide" text="隱藏" onClick={handleHide} />
-          )}
 
+          {isHide ? (
+            <ActionButton
+              type="hide"
+              text="隱藏中"
+              color="#90A4AE"
+              primary
+              onClick={handleUnHide}
+            />
+          ) : (
+            <ActionButton type="show" text="顯示中" onClick={handleHide} />
+          )}
           <ActionButton type="share" text="分享" onClick={() => onShare(id)} />
+          <ActionButton
+            type="navigate"
+            text="導航"
+            onClick={handleOpenGoogle}
+          />
         </ButtonGroup>
         <Divider />
         <SecondaryInfo
@@ -124,7 +141,7 @@ const StoreDetail = ({
           openingHours={openingHours}
         />
         <Divider />
-        <ReviewsBlock reviewReport={reviewReport}/>
+        <ReviewsBlock reviewReport={reviewReport} />
         <Divider />
         <Reviews>
           <div className="review-header">
