@@ -195,8 +195,7 @@ const UserMapV2 = () => {
           <StoreDetail
             {...store}
             onClose={() => setPlaceId(null)}
-            onHide={handleRefreshStore}
-            onUnhide={handleRefreshStore}
+            onRefresh={handleRefreshStore}
           />
         </StoreDetailContainer>
       )}

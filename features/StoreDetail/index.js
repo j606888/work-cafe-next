@@ -38,19 +38,21 @@ const StoreDetail = ({
   phone,
   isHide,
   photos = [],
+  reviewReport,
   reviews: googleReviews = [],
   openingHours = [],
   onReview = () => {},
   onHide = () => {},
   onUnhide = () => {},
   onShare = () => {},
+  onRefresh = () => {},
 }) => {
   const { mutate } = useSWRConfig()
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
   const { data: bookmarks } = useSWR(userIsLogin() ? `/stores/${placeId}/bookmarks` : null, fetcher)
-  const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
+  // const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
   const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
@@ -59,18 +61,21 @@ const StoreDetail = ({
   const handleHide = async () => {
     authCheck()
     await storeApi.hideStore({ placeId })
-    onHide(placeId)
+    // onHide(placeId)
+    onRefresh(placeId)
   }
   const handleUnHide = async () => {
     authCheck()
     await storeApi.unhideStore({ placeId })
-    onUnhide(placeId)
+    // onUnhide(placeId)
+    onRefresh(placeId)
   }
   const handleClose = () => {
     dispatch(updateStore(null))
   }
   const refreshReview = () => {
-    mutate(`/stores/${placeId}/reviews`)
+    // mutate(`/stores/${placeId}/reviews`)
+    onRefresh(placeId)
   }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
@@ -121,7 +126,7 @@ const StoreDetail = ({
           openingHours={openingHours}
         />
         <Divider />
-        <ReviewsBlock reviews={reviews?.reviews || []}/>
+        <ReviewsBlock reviewReport={reviewReport}/>
         <Divider />
         <Reviews>
           <div className="review-header">

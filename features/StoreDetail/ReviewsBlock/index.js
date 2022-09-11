@@ -1,11 +1,13 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
 import {
   SentimentNeutralOutlined as NormalFace,
   SentimentDissatisfiedOutlined as BadFace,
   SentimentSatisfiedOutlined as HappyFace,
 } from "@mui/icons-material"
-import _ from 'lodash'
+import _ from "lodash"
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 
 const Container = styled.div`
   padding: 1rem 1.5rem;
@@ -33,31 +35,44 @@ const FaceBlock = styled.div`
   }
 `
 
-const countFace = (reviews, recommend) => {
-  return _.filter(reviews, (review) => review.recommend === recommend).length
-}
+const MoreInfoButton = styled.div`
+  margin-top: 0.5rem;
+  color: #1b72e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
-const ReviewsBlock = ({ reviews = []}) => {
-  const badCount = countFace(reviews, 'no')
-  const normalCount = countFace(reviews, 'normal')
-  const goodCount = countFace(reviews, 'yes')
+  span {
+    font-size: 14px;
+  }
+`
+
+const ReviewsBlock = ({ reviewReport }) => {
+  const [showMore, setShowMore] = React.useState(false)
+  const recommend = reviewReport.recommend
+  
 
   return (
     <Container>
       <FaceBlock>
         <div>
-          <BadFace sx={{ color: '#E53935'}}/>
-          <span>{badCount}</span>
+          <BadFace sx={{ color: "#E53935" }} />
+          <span>{recommend.no}</span>
         </div>
         <div>
-          <NormalFace sx={{ color: '#FFC107'}} />
-          <span>{normalCount}</span>
+          <NormalFace sx={{ color: "#FFC107" }} />
+          <span>{recommend.normal}</span>
         </div>
         <div>
-          <HappyFace sx={{ color: '#00897B'}}/>
-          <span>{goodCount}</span>
+          <HappyFace sx={{ color: "#00897B" }} />
+          <span>{recommend.yes}</span>
         </div>
       </FaceBlock>
+      <MoreInfoButton onClick={() => setShowMore(cur => !cur)}>
+        <span>詳細資訊</span>
+        {showMore ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+      </MoreInfoButton>
     </Container>
   )
 }
