@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { updateStores, updateStore } from "store/slices/store"
 import HiddenListV2 from "features/HiddenListV2"
 import Apis from "api/stores"
+import ReviewList from "features/ReviewList"
 
 const initialState = {
   lat: 23.0042325,
@@ -211,6 +212,7 @@ const UserMapV2 = () => {
           />
         ))}
         {mode === "HIDDEN" && <HiddenListV2 />}
+        {mode === "REVIEW" && <ReviewList />}
       </GoogleMapWrapper>
     </>
   )

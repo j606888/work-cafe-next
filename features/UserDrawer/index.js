@@ -14,17 +14,11 @@ export default function UserDrawer({ open, onClose = () => {} }) {
   const dispatch = useDispatch()
   const authCheck = useAuthCheck()
 
-  const handleOpenBookmark = () => {
+  const handleChangeMode = (mode) => {
     authCheck()
     onClose()
     dispatch(updateStores([]))
-    dispatch(changeMode("BOOKMARK"))
-  }
-  const handleOpenHidden = () => {
-    authCheck()
-    onClose()
-    dispatch(updateStores([]))
-    dispatch(changeMode("HIDDEN"))
+    dispatch(changeMode(mode))
   }
 
   return (
@@ -37,15 +31,15 @@ export default function UserDrawer({ open, onClose = () => {} }) {
           </Header>
           <Divider />
           <Tabs>
-            <div onClick={handleOpenBookmark}>
+            <div onClick={() => handleChangeMode("BOOKMARK")}>
               <BookmarkBorderIcon />
               <span>你的地點</span>
             </div>
-            <div>
+            <div onClick={() => handleChangeMode("REVIEW")}>
               <RateReviewOutlinedIcon />
               <span>你的評論</span>
             </div>
-            <div onClick={handleOpenHidden}>
+            <div onClick={() => handleChangeMode("HIDDEN")}>
               <VisibilityOffOutlinedIcon />
               <span>你的隱藏</span>
             </div>
