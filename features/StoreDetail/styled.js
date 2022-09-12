@@ -53,7 +53,7 @@ export const MainInfo = styled.div`
   }
 `
 
-export const Reviews = styled.div`
+export const GoogleReviews = styled.div`
   .review-header {
     padding: 0 1.5rem;
     display: flex;

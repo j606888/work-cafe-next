@@ -8,11 +8,11 @@ import {
   CloseButton,
   MainInfo,
   ButtonGroup,
-  Reviews,
+  GoogleReviews,
 } from "./styled"
 import storeApi from "api/stores"
 import SortIcon from "@mui/icons-material/Sort"
-import ReviewCard from "./ReviewCard"
+import GoogleReviewCard from "./GoogleReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
 import Bookmarks from "./Bookmarks"
@@ -53,7 +53,7 @@ const StoreDetail = ({
     userIsLogin() ? `/stores/${placeId}/bookmarks` : null,
     fetcher
   )
-  // const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
+  const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
   const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
@@ -143,7 +143,7 @@ const StoreDetail = ({
         <Divider />
         <ReviewsBlock reviewReport={reviewReport} />
         <Divider />
-        <Reviews>
+        <GoogleReviews>
           <div className="review-header">
             <h4>評論</h4>
             <div className="sort">
@@ -152,9 +152,9 @@ const StoreDetail = ({
             </div>
           </div>
           {googleReviews.map((review) => (
-            <ReviewCard key={review.authorName} {...review} />
+            <GoogleReviewCard key={review.authorName} {...review} />
           ))}
-        </Reviews>
+        </GoogleReviews>
       </Container>
       <Bookmarks
         placeId={placeId}

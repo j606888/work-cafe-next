@@ -35,7 +35,7 @@ const Container = styled.div`
   }
 `
 
-const ReviewCard = ({ authorName, authorUrl, rating, relativeTimeDescription, text }) => {
+const GoogleReviewCard = ({ authorName, authorUrl, rating, relativeTimeDescription, text }) => {
   return (
     <>
       <Container>
@@ -58,4 +58,4 @@ const ReviewCard = ({ authorName, authorUrl, rating, relativeTimeDescription, te
   )
 }
 
-export default ReviewCard
+export default GoogleReviewCard
