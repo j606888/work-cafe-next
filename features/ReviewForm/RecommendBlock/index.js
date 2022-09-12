@@ -12,6 +12,7 @@ const FaceRadio = ({
   label,
   icon,
   value,
+  color,
   onChange = () => {},
 }) => {
   const handleChange = () => {
@@ -20,7 +21,7 @@ const FaceRadio = ({
   const isChecked = selectedValue === value
 
   return (
-    <RadioContainer onClick={handleChange} isChecked={isChecked}>
+    <RadioContainer onClick={handleChange} isChecked={isChecked} color={color}>
       <Radio
         checked={isChecked}
         name="recommend"
@@ -38,16 +39,19 @@ const OPTIONS = [
     icon: <BadFace />,
     value: "no",
     label: "不推薦",
+    color: "#E53935",
   },
   {
     icon: <NormalFace />,
     value: "normal",
     label: "一般",
+    color: "#FFC107",
   },
   {
     icon: <HappyFace />,
     value: "yes",
     label: "推薦",
+    color: "#00897B",
   },
 ]
 
@@ -61,13 +65,14 @@ const RecommendBlock = ({ onChange = () => {} }) => {
 
   return (
     <Container>
-      {OPTIONS.map(({ value, icon, label }) => (
+      {OPTIONS.map(({ value, icon, label, color }) => (
         <FaceRadio
           key={value}
           selectedValue={selectedValue}
           icon={icon}
           value={value}
           label={label}
+          color={color}
           onChange={handleChange}
         />
       ))}

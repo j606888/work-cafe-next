@@ -26,19 +26,6 @@ export const FaceBlock = styled.div`
   }
 `
 
-export const MoreInfoButton = styled.div`
-  margin-top: 0.5rem;
-  color: #1b72e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  span {
-    font-size: 14px;
-  }
-`
-
 export const DetailContainer = styled.div`
   display: flex;
   align-items: center;

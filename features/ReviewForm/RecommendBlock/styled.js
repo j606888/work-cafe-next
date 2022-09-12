@@ -19,11 +19,15 @@ export const RadioContainer = styled.div`
     font-size: 64px;
   }
 
-  ${({ isChecked }) =>
+  ${({ isChecked, color }) =>
     isChecked &&
     css`
       span {
-        color: #1e88e5;
+        color: ${color};
+      }
+
+      svg {
+        color: ${color};
       }
     `}
 `
