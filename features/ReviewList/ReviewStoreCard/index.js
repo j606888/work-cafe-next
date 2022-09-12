@@ -7,7 +7,13 @@ import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices"
 import { ReviewWords } from "constant/i18n"
 import useTimeAgo from "hooks/useTimeAgo"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
-import { Container, InfoBox, ScoreDateBox, TagsContainer, MoreContainer } from "./styled"
+import {
+  Container,
+  InfoBox,
+  ScoreDateBox,
+  TagsContainer,
+  MoreContainer,
+} from "./styled"
 
 const FACE_MAP = {
   yes: "happy",
@@ -38,12 +44,29 @@ const ReviewStoreCard = ({
   socketSupply,
   description,
   createdAt,
+  onClick = () => {},
+  onMouseEnter = () => {},
+  onMouseLeave = () => {},
 }) => {
   const timeAgo = useTimeAgo()
 
+  const handleClick = () => {
+    onClick(store.placeId)
+  }
+  const handleMouseEnter = () => {
+    onMouseEnter(store.placeId)
+  }
+  const handleMouseLeave = () => {
+    onMouseLeave(store.placeId)
+  }
+
   return (
     <>
-      <Container>
+      <Container
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <InfoBox>
           <Avatar
             alt={"storename"}

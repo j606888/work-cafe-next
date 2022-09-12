@@ -6,6 +6,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
 
   p {
     white-space: pre-line;

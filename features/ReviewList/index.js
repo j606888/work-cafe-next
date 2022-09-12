@@ -2,7 +2,7 @@ import { fetcher } from "api"
 import React from "react"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { changeMode, updateStores } from "store/slices/store"
+import { changeMode, updateFocusPlaceId, updateStores } from "store/slices/store"
 import useSWR from "swr"
 import { Container, Head, ListContainer } from "./styled"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
@@ -22,6 +22,16 @@ const ReviewList = () => {
     dispatch(updateStores([]))
     dispatch(changeMode("MAP"))
   }
+  const handleClick = (placeId) => {
+    // onClick(store.placeId)
+  }
+  const handleMouseEnter = (placeId) => {
+    dispatch(updateFocusPlaceId(placeId))
+  }
+  const handleMouseLeave = (_placeId) => {
+    dispatch(updateFocusPlaceId(null))
+  }
+
 
   return (
     <Container>
@@ -31,7 +41,11 @@ const ReviewList = () => {
       </Head>
       <ListContainer>
         {data?.reviews.map((review) => (
-          <ReviewStoreCard key={review.id} {...review} />
+          <ReviewStoreCard key={review.id} {...review} 
+            onClick={handleClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
         ))}
       </ListContainer>
     </Container>
