@@ -47,10 +47,10 @@ const getPublicStore = async ({ placeId }) => {
   return res.data
 }
 
-const Apis = {
+const StoreApi = {
   getPublicStore,
   hideStore,
   unhideStore,
 }
 
-export default Apis
+export default StoreApi

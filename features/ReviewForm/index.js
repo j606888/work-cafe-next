@@ -6,6 +6,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  Switch,
   TextField,
 } from "@mui/material"
 import React from "react"
@@ -13,6 +14,7 @@ import RecommendBlock from "./RecommendBlock"
 import { Form, Scroll, Buttons } from "./styled"
 import ReviewApi from "api/review"
 import Snackbar from "components/Snackbar"
+import StoreApi from "api/stores"
 
 const option = (value, label) => ({
   value,
@@ -53,10 +55,12 @@ const ReviewForm = ({
   placeId,
   open,
   name,
+  isHide = false,
   onClose = () => {},
   onSave = () => {},
 }) => {
   const [data, setData] = React.useState({})
+  const [alsoHide, setAlsoHide] = React.useState(true)
   const [showSnackbar, setShowSnackbar] = React.useState(null)
 
   const handleRecommendChange = (recommend) => {
@@ -71,6 +75,9 @@ const ReviewForm = ({
       data,
     })
     setShowSnackbar("評論成功")
+    if (showAlsoHide && alsoHide) {
+      await StoreApi.hideStore({ placeId })
+    }
     handleClose()
     onSave()
   }
@@ -78,6 +85,11 @@ const ReviewForm = ({
     setData({})
     onClose()
   }
+  const handleSwitchChange = () => {
+    setAlsoHide(cur => !cur)
+  }
+
+  const showAlsoHide = data.recommend === "no" && !isHide
 
   return (
     <>
@@ -86,6 +98,18 @@ const ReviewForm = ({
           <h3>{name}</h3>
           <Scroll>
             <RecommendBlock onChange={handleRecommendChange} />
+            {showAlsoHide && (
+              <FormControlLabel
+                control={
+                  <Switch
+                    defaultChecked
+                    checked={alsoHide}
+                    onChange={handleSwitchChange}
+                  />
+                }
+                label="同時隱藏"
+              />
+            )}
             <TextField
               name="description"
               multiline

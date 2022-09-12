@@ -169,6 +169,7 @@ const StoreDetail = ({
         name={name}
         onClose={() => setOpenReview(false)}
         onSave={refreshReview}
+        isHide={isHide}
       />
     </>
   )
