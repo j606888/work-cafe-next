@@ -12,7 +12,6 @@ import ReviewStoreCard from "./ReviewStoreCard"
 const ReviewList = () => {
   const { data } = useSWR("/reviews", fetcher)
   const dispatch = useDispatch()
-  const stores = data?.reviews.map((review) => review.store)
 
   useEffect(() => {
     const stores = data?.reviews.map((review) => review.store)
@@ -34,7 +33,6 @@ const ReviewList = () => {
         {data?.reviews.map((review) => (
           <ReviewStoreCard key={review.id} {...review} />
         ))}
-        {/* <StoreListV2 stores={stores || []} /> */}
       </ListContainer>
     </Container>
   )
