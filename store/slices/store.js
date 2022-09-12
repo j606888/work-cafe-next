@@ -5,8 +5,8 @@ export const storeSlice = createSlice({
   initialState: {
     mode: "MAP",
     stores: [],
-    store: null,
     bouncePlaceId: null,
+    placeId: null,
   },
   reducers: {
     changeMode: (state, action) => {
@@ -15,16 +15,16 @@ export const storeSlice = createSlice({
     updateStores: (state, action) => {
       state.stores = action.payload
     },
-    updateStore: (state, action) => {
-      state.store = action.payload
-    },
     updateFocusPlaceId: (state, action) => {
       state.bouncePlaceId = action.payload
     },
+    updatePlaceId: (state, action) => {
+      state.placeId = action.payload
+    }
   },
 })
 
-export const { changeMode, updateStores, updateStore, updateFocusPlaceId } =
+export const { changeMode, updateStores, updatePlaceId, updateFocusPlaceId } =
   storeSlice.actions
 
 export default storeSlice.reducer

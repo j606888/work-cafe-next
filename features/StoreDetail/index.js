@@ -20,7 +20,7 @@ import useSWR, { useSWRConfig } from "swr"
 import { fetcher } from "api"
 import SecondaryInfo from "./SecondaryInfo"
 import { useDispatch } from "react-redux"
-import { updateStore } from "store/slices/store"
+import { updatePlaceId } from "store/slices/store"
 import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
 import ReviewForm from "features/ReviewForm"
@@ -71,7 +71,7 @@ const StoreDetail = ({
     onRefresh(placeId)
   }
   const handleClose = () => {
-    dispatch(updateStore(null))
+    dispatch(updatePlaceId(null))
   }
   const refreshReview = () => {
     mutate(`/stores/${placeId}/reviews`)
