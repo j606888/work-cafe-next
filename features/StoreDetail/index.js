@@ -25,6 +25,7 @@ import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
 import ReviewForm from "features/ReviewForm"
 import ReviewsBlock from "./ReviewsBlock"
+import ReviewCard from "./ReviewCard"
 
 const StoreDetail = ({
   id,
@@ -73,6 +74,7 @@ const StoreDetail = ({
     dispatch(updateStore(null))
   }
   const refreshReview = () => {
+    mutate(`/stores/${placeId}/reviews`)
     onRefresh(placeId)
   }
   const handleOpenReview = () => {
@@ -146,6 +148,14 @@ const StoreDetail = ({
         <GoogleReviews>
           <div className="review-header">
             <h4>評論</h4>
+          </div>
+          {reviews?.reviews.map(review => (
+            <ReviewCard key={review.id} {...review} />
+          ))}
+        </GoogleReviews>
+        <GoogleReviews>
+          <div className="review-header">
+            <h4>Google 評論</h4>
             <div className="sort">
               <SortIcon />
               <span>排序</span>
