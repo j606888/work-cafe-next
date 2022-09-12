@@ -1,5 +1,4 @@
 import { instance } from "./index"
-import { snakeCase } from "lodash"
 
 export async function getStores({ page, per, cities, rating, order, orderBy }) {
   const params = { page, per, order, orderBy }
@@ -48,10 +47,10 @@ const getPublicStore = async ({ placeId }) => {
   return res.data
 }
 
-const Apis = {
+const StoreApi = {
   getPublicStore,
   hideStore,
   unhideStore,
 }
 
-export default Apis
+export default StoreApi

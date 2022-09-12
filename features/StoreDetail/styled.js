@@ -53,7 +53,7 @@ export const MainInfo = styled.div`
   }
 `
 
-export const Reviews = styled.div`
+export const GoogleReviews = styled.div`
   .review-header {
     padding: 0 1.5rem;
     display: flex;
@@ -87,7 +87,7 @@ export const Reviews = styled.div`
 `
 
 export const ButtonGroup = styled.div`
-  padding: 1rem 2rem;
+  padding: 1rem 3.5rem;
   display: flex;
   justify-content: space-between;
 `

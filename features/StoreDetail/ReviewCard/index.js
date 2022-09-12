@@ -1,57 +1,62 @@
-import { Avatar, Divider } from "@mui/material"
-import RatingStars from "components/RatingStars"
+import { Avatar, Chip, Divider } from "@mui/material"
 import React from "react"
-import styled from "styled-components"
+import FaceIcon from "components/FaceIcon"
+import VolumeUpIcon from "@mui/icons-material/VolumeUp"
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
+import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices"
+import { Container, FaceContainer, TagsContainer } from "./styled"
+import { ReviewWords } from 'constant/i18n'
 
-const Container = styled.div`
-  padding: 1rem 1.5rem 0;
+const FACE_MAP = {
+  yes: "happy",
+  normal: "normal",
+  no: "bad",
+}
 
-  .user-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
+const ICON_MAP = {
+  roomVolume: <VolumeUpIcon />,
+  timeLimit: <AccessAlarmIcon />,
+  socketSupply: <ElectricalServicesIcon />,
+}
 
-    span {
-      font-size: 14px;
-    }
-  }
+const IconChip = ({ type, value }) => {
+  if (!value) return null
+  const label = ReviewWords[type][value]
 
-  .rating {
-    display: flex;
-    align-items: center;
+  return (
+    <Chip icon={ICON_MAP[type]} label={label} variant="outlined" size="small" />
+  )
+}
 
-    span {
-      margin-left: 4px;
-      font-size: 14px;
-      color: #666;
-    }
-  }
-
-  p {
-    white-space: pre-line;
-    margin-top: 0.5rem;
-    font-size: 14px;
-    line-height: 150%;
-  }
-`
-
-const ReviewCard = ({ authorName, authorUrl, rating, relativeTimeDescription, text }) => {
+const ReviewCard = ({
+  userName,
+  userAvatarUrl,
+  recommend,
+  description,
+  roomVolume,
+  timeLimit,
+  socketSupply,
+}) => {
   return (
     <>
       <Container>
         <div className="user-info">
           <Avatar
-            alt={authorName}
+            alt={"authorName"}
             sx={{ width: 28, height: 28, mr: 1.5 }}
-            src={authorUrl}
+            src={userAvatarUrl}
           />
-          <span>{authorName}</span>
+          <span>{userName}</span>
+          <FaceContainer>
+            <FaceIcon size={48} type={FACE_MAP[recommend]} />
+          </FaceContainer>
         </div>
-        <div className="rating">
-          <RatingStars rating={rating} showRate={false} />
-          <span>{relativeTimeDescription}</span>
-        </div>
-        <p>{text}</p>
+        <TagsContainer>
+          <IconChip type="roomVolume" value={roomVolume} />
+          <IconChip type="timeLimit" value={timeLimit} />
+          <IconChip type="socketSupply" value={socketSupply} />
+        </TagsContainer>
+        <p>{description}</p>
       </Container>
       <Divider />
     </>

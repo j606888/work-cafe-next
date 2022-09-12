@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import HideSourceIcon from '@mui/icons-material/HideSource';
 import CommentIcon from '@mui/icons-material/Comment';
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import ShareIcon from '@mui/icons-material/Share';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import DirectionsIcon from '@mui/icons-material/Directions';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Container = styled.div`
   text-align: center;
@@ -49,7 +50,7 @@ const ActionButton = ({type, text, primary=false, onClick, color="#1B72E8"}) => 
       break
     }
     case 'hide': {
-      icon = <HideSourceIcon sx={sx} />
+      icon = <VisibilityOffIcon sx={sx} />
       break
     }
     case 'comment': {
@@ -62,6 +63,10 @@ const ActionButton = ({type, text, primary=false, onClick, color="#1B72E8"}) => 
     }
     case 'show': {
       icon = <VisibilityIcon sx={sx} />
+      break
+    }
+    case 'navigate': {
+      icon = <DirectionsIcon sx={sx} />
       break
     }
     default: {

@@ -8,11 +8,11 @@ import {
   CloseButton,
   MainInfo,
   ButtonGroup,
-  Reviews,
+  GoogleReviews,
 } from "./styled"
 import storeApi from "api/stores"
 import SortIcon from "@mui/icons-material/Sort"
-import ReviewCard from "./ReviewCard"
+import GoogleReviewCard from "./GoogleReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
 import Bookmarks from "./Bookmarks"
@@ -20,9 +20,12 @@ import useSWR, { useSWRConfig } from "swr"
 import { fetcher } from "api"
 import SecondaryInfo from "./SecondaryInfo"
 import { useDispatch } from "react-redux"
-import { updateStore } from 'store/slices/store'
+import { updatePlaceId } from "store/slices/store"
 import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
+import ReviewForm from "features/ReviewForm"
+import ReviewsBlock from "./ReviewsBlock"
+import ReviewCard from "./ReviewCard"
 
 const StoreDetail = ({
   id,
@@ -34,19 +37,24 @@ const StoreDetail = ({
   address,
   website,
   phone,
+  url,
   isHide,
   photos = [],
-  reviews = [],
+  reviewReport = {},
+  reviews: googleReviews = [],
   openingHours = [],
-  onReview = () => {},
-  onHide = () => {},
-  onUnhide = () => {},
   onShare = () => {},
+  onRefresh = () => {},
 }) => {
   const { mutate } = useSWRConfig()
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
-  const { data: bookmarks } = useSWR(userIsLogin() ? `/stores/${placeId}/bookmarks` : null, fetcher)
+  const [openReview, setOpenReview] = React.useState(false)
+  const { data: bookmarks } = useSWR(
+    userIsLogin() ? `/stores/${placeId}/bookmarks` : null,
+    fetcher
+  )
+  const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
   const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
@@ -55,17 +63,27 @@ const StoreDetail = ({
   const handleHide = async () => {
     authCheck()
     await storeApi.hideStore({ placeId })
-    onHide(placeId)
+    onRefresh(placeId)
   }
   const handleUnHide = async () => {
     authCheck()
     await storeApi.unhideStore({ placeId })
-    onUnhide(placeId)
+    onRefresh(placeId)
   }
   const handleClose = () => {
-    dispatch(updateStore(null))
+    dispatch(updatePlaceId(null))
   }
-
+  const refreshReview = () => {
+    mutate(`/stores/${placeId}/reviews`)
+    onRefresh(placeId)
+  }
+  const handleOpenReview = () => {
+    authCheck()
+    setOpenReview(true)
+  }
+  const handleOpenGoogle = () => {
+    window.open(url)
+  }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
   return (
@@ -88,7 +106,7 @@ const StoreDetail = ({
             type="comment"
             text="評論"
             primary
-            onClick={() => onReview(id)}
+            onClick={handleOpenReview}
           />
           <ActionButton
             type="bookmark"
@@ -97,22 +115,24 @@ const StoreDetail = ({
             primary={isSaved}
             onClick={(e) => setBookmarkAnchor(e.currentTarget)}
           />
-          <ActionButton text="不知道" />
+
           {isHide ? (
             <ActionButton
-              type="show"
-              text="恢復"
+              type="hide"
+              text="隱藏中"
+              color="#90A4AE"
+              primary
               onClick={handleUnHide}
             />
           ) : (
-            <ActionButton
-              type="hide"
-              text="隱藏"
-              onClick={handleHide}
-            />
+            <ActionButton type="show" text="顯示中" onClick={handleHide} />
           )}
-
           <ActionButton type="share" text="分享" onClick={() => onShare(id)} />
+          <ActionButton
+            type="navigate"
+            text="導航"
+            onClick={handleOpenGoogle}
+          />
         </ButtonGroup>
         <Divider />
         <SecondaryInfo
@@ -123,18 +143,28 @@ const StoreDetail = ({
           openingHours={openingHours}
         />
         <Divider />
-        <Reviews>
+        <ReviewsBlock reviewReport={reviewReport} />
+        <Divider />
+        <GoogleReviews>
           <div className="review-header">
             <h4>評論</h4>
+          </div>
+          {reviews?.reviews.map(review => (
+            <ReviewCard key={review.id} {...review} />
+          ))}
+        </GoogleReviews>
+        <GoogleReviews>
+          <div className="review-header">
+            <h4>Google 評論</h4>
             <div className="sort">
               <SortIcon />
               <span>排序</span>
             </div>
           </div>
-          {reviews.map((review) => (
-            <ReviewCard key={review.authorName} {...review} />
+          {googleReviews.map((review) => (
+            <GoogleReviewCard key={review.authorName} {...review} />
           ))}
-        </Reviews>
+        </GoogleReviews>
       </Container>
       <Bookmarks
         placeId={placeId}
@@ -142,6 +172,14 @@ const StoreDetail = ({
         onClose={() => setBookmarkAnchor(null)}
         bookmarks={bookmarks}
         onSubmit={handleBookmarkSubmit}
+      />
+      <ReviewForm
+        placeId={placeId}
+        open={openReview}
+        name={name}
+        onClose={() => setOpenReview(false)}
+        onSave={refreshReview}
+        isHide={isHide}
       />
     </>
   )

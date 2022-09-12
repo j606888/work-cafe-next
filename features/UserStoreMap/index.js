@@ -21,9 +21,10 @@ import {
 import UserDrawer from "features/UserDrawer"
 import BookmarkListV2 from "features/BookmarkListV2"
 import { useSelector, useDispatch } from "react-redux"
-import { updateStores, updateStore } from "store/slices/store"
+import { updateStores, updatePlaceId } from "store/slices/store"
 import HiddenListV2 from "features/HiddenListV2"
 import Apis from "api/stores"
+import ReviewList from "features/ReviewList"
 
 const initialState = {
   lat: 23.0042325,
@@ -55,7 +56,6 @@ const reducer = (state, action) => {
 
 const UserMapV2 = () => {
   const dispatch = useDispatch()
-  const { mutate } = useSWRConfig()
   const [locationParams, LocationDispatch] = React.useReducer(
     reducer,
     initialState
@@ -68,14 +68,14 @@ const UserMapV2 = () => {
   })
   const mapZoom = useRef(15)
   const openTimeRef = useRef({})
-  const [placeId, setPlaceId] = useState(null)
   const { data: locationStores } = useSWR(
     locationParams.go
       ? ["/stores/location", { ...locationParams, limit: 20 }]
       : null,
     fetcher
   )
-  const { stores, mode, store, bouncePlaceId } = useSelector((state) => state.store)
+  const { stores, mode, placeId, bouncePlaceId } = useSelector((state) => state.store)
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
   const handleOnIdle = ({ lat, lng, zoom }) => {
     Router.push({
       pathname: `/map/@${lat},${lng},${zoom}z`,
@@ -90,7 +90,7 @@ const UserMapV2 = () => {
         ...mapCenterRef.current,
       },
     })
-    setPlaceId(null)
+    clearPlaceId()
   }
   const handleKeywordSearch = (keyword) => {
     LocationDispatch({
@@ -100,7 +100,7 @@ const UserMapV2 = () => {
         keyword,
       },
     })
-    setPlaceId(null)
+    clearPlaceId()
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
     let realOpenHour = openHour === "99" ? null : openHour
@@ -118,17 +118,17 @@ const UserMapV2 = () => {
   }
   const handleClear = () => {
     LocationDispatch({ type: "CLEAR_KEYWORD" })
-    setPlaceId(null)
-  }
-  const handleStoreClick = (placeId) => {
-    setPlaceId(placeId)
+    clearPlaceId()
   }
   const handleRefreshStore = (placeId) => {
-    mutate(`/stores/${placeId}`)
+    dispatch(updatePlaceId(placeId))
   }
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
-    setPlaceId(null)
+    clearPlaceId()
+  }
+  const clearPlaceId = () => {
+    dispatch(updatePlaceId(null))
   }
 
   useEffect(() => {
@@ -151,17 +151,6 @@ const UserMapV2 = () => {
     }
   }, [store])
 
-  useEffect(() => {
-    (async() => {
-      let s
-      if (placeId){
-        s = await Apis.getPublicStore({ placeId })
-        console.log(s)
-      }
-
-      dispatch(updateStore(s))
-    })()
-  }, [placeId, dispatch])
 
   return (
     <>
@@ -194,9 +183,8 @@ const UserMapV2 = () => {
         <StoreDetailContainer>
           <StoreDetail
             {...store}
-            onClose={() => setPlaceId(null)}
-            onHide={handleRefreshStore}
-            onUnhide={handleRefreshStore}
+            onClose={clearPlaceId}
+            onRefresh={handleRefreshStore}
           />
         </StoreDetailContainer>
       )}
@@ -207,10 +195,11 @@ const UserMapV2 = () => {
             store={store}
             focus={store.placeId === placeId}
             bounce={store.placeId === bouncePlaceId}
-            onClick={handleStoreClick}
+            onClick={handleRefreshStore}
           />
         ))}
         {mode === "HIDDEN" && <HiddenListV2 />}
+        {mode === "REVIEW" && <ReviewList />}
       </GoogleMapWrapper>
     </>
   )
