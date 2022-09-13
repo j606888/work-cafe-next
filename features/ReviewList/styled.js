@@ -3,13 +3,13 @@ import styled from "styled-components"
 export const Container = styled.div`
   height: 100vh;
   background-color: #fff;
-  width: 428px;
+  width: 374px;
   position: absolute;
 `
 
 export const Head = styled.div`
   background-color: #1a73e8;
-  width: 428px;
+  width: 374px;
   height: 80px;
   box-sizing: border-box;
   color: #fff;
@@ -22,5 +22,5 @@ export const Head = styled.div`
 export const ListContainer = styled.div`
   height: calc(100vh - 80px);
   overflow-y: scroll;
-  width: 428px;
+  width: 374px;
 `

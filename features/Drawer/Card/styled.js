@@ -7,7 +7,7 @@ export const Container = styled.div`
   border-bottom: 1px solid #e5e5e5;
   cursor: pointer;
   box-sizing: border-box;
-  width: 376px;
+  width: 374px;
 
 
   &:hover {

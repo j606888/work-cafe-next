@@ -6,7 +6,7 @@ import StoreListV2 from "features/StoreListV2"
 const Container = styled.div`
   height: 100vh;
   background-color: #fff;
-  width: 428px;
+  width: 374px;
 `
 
 const Head = styled.div`
@@ -20,7 +20,7 @@ const Head = styled.div`
   left: 0;
   top: 0;
   z-index: 2;
-  width: 428px;
+  width: 374px;
   box-sizing: border-box;
 `
 
