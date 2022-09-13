@@ -134,6 +134,10 @@ const UserStoreMap = () => {
   useEffect(() => {
     dispatch(updateStores(locationStores))
   }, [locationStores, dispatch])
+  
+  useEffect(() => {
+    console.log(locationParams)
+  }, [locationParams])
 
   useEffect(() => {
     if (store && map) {

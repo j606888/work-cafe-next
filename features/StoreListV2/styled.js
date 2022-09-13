@@ -11,7 +11,7 @@ export const Container = styled.div`
     position: absolute;
     left: 0;
     top: 0;
-    width: 428px;
+    width: 376px;
     background-color: #fff;
     height: 4rem;
     z-index: 1;

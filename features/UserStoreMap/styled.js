@@ -19,9 +19,9 @@ export const StoreDetailContainer = styled.div`
   position: absolute;
   background-color: #fff;
   top: 4rem;
-  left: 28rem;
+  left: 24.5rem;
   z-index: 2;
-  height: 94vh;
+  height: calc(100vh - 5rem);
   border-radius: 12px;
   overflow: hidden;
   overflow-y: scroll;
@@ -41,6 +41,6 @@ export const StoreListContainer = styled.div`
 export const MenuContainer = styled.div`
   position: absolute;
   top: 1rem;
-  left: 28rem;
+  left: 24.5rem;
   z-index: 2;
 `

@@ -2,19 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
-  width: 420px;
+  width: 360px;
   position: relative;
-
-  .image-box {
-    width: 100%;
-    height: 240px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
 `
 
 export const CloseButton = styled.div`
@@ -87,7 +76,7 @@ export const GoogleReviews = styled.div`
 `
 
 export const ButtonGroup = styled.div`
-  padding: 1rem 3.5rem;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
 `

@@ -11,7 +11,7 @@ export const Container = styled.div`
 `
 
 export const Input = styled.input`
-  width: 240px;
+  width: 200px;
   border: none;
   outline: none;
   font-size: 16px;

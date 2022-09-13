@@ -26,7 +26,7 @@ const SearchbarV2 = ({
     setKeyword(newInputValue)
 
     const eventName = event._reactName
-    if (eventName === "onClick") onSearch(keyword)
+    if (eventName === "onClick") onSearch(newInputValue)
   }
   const handleSearch = () => {
     if (keyword.length === 0) return

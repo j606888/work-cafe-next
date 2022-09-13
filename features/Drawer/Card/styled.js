@@ -7,7 +7,7 @@ export const Container = styled.div`
   border-bottom: 1px solid #e5e5e5;
   cursor: pointer;
   box-sizing: border-box;
-  width: 428px;
+  width: 376px;
 
 
   &:hover {
@@ -16,8 +16,8 @@ export const Container = styled.div`
 `
 
 export const ImageBox = styled.div`
-  width: 154px;
-  height: 154px;
+  width: 136px;
+  height: 136px;
   border-radius: 8px;
   overflow: hidden;
 

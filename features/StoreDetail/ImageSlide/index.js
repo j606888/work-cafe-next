@@ -11,8 +11,7 @@ const Container = styled.div`
   .each-slide > div {
     display: flex;
     align-items: center;
-    justify-content;
-    height: 260px;
+    height: 220px;
   }
 `
 
