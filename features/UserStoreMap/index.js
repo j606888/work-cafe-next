@@ -54,7 +54,7 @@ const reducer = (state, action) => {
   }
 }
 
-const UserMapV2 = () => {
+const UserStoreMap = () => {
   const dispatch = useDispatch()
   const [locationParams, LocationDispatch] = React.useReducer(
     reducer,
@@ -205,4 +205,4 @@ const UserMapV2 = () => {
   )
 }
 
-export default UserMapV2
+export default UserStoreMap

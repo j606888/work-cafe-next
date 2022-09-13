@@ -2,7 +2,6 @@ import React from "react"
 import { styled } from "@mui/material/styles"
 import {
   Box,
-  CssBaseline,
 } from "@mui/material"
 import {
   Home as HomeIcon,
@@ -18,15 +17,6 @@ import { getUser, userIsAdmin, userIsLogin } from "utils/user"
 import { useRouter } from "next/router"
 import Skeleton from "components/Skeleton"
 
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-}))
-
 const lists = [
   {
     text: "Home",
@@ -40,7 +30,7 @@ const lists = [
   },
   {
     text: "GoogleMap",
-    url: "/admin/map",
+    url: "/map",
     icon: <MapIcon />,
   },
   {
@@ -97,15 +87,13 @@ const AdminLayout = ({ children }) => {
 
   return (
     <Box sx={{ display: "flex", bgcolor: "#f6f7fb", minHeight: "100vh" }}>
-      <CssBaseline />
       <AppBar
         toggleDrawer={toggleDrawer}
         user={user}
         handleLogout={handleLogout}
       />
       <MiniDrawer open={open} lists={lists} />
-      <Box component="main" sx={{ flexGrow: 1 }}>
-        <DrawerHeader />
+      <Box component="main" sx={{ flexGrow: 1, zIndex: 10, paddingTop: '64px' }}>
         {children}
       </Box>
     </Box>

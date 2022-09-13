@@ -11,6 +11,7 @@ import { getCurrentPosition } from "utils/navigator"
 
 const Container = styled.div`
   position: relative;
+  height: calc(100vh - 64px);
 `
 
 const INITIAL_STATE = {
@@ -157,7 +158,7 @@ const AdminStoreCrawler = () => {
         setMap={setMap}
         onClick={handleOnClick}
         onIdle={handleOnIdle}
-        marginTop="80px"
+        marginTop='64px' 
       >
         {controls.showArea && circles}
         {controls.showModal && tempRef.current && (
