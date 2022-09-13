@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import React, { useState } from "react"
 import styled from "styled-components"
 import RatingStars from "components/RatingStars"

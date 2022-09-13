@@ -19,7 +19,7 @@ const columns = [
   createCol("url", "googleUrl", "right", false),
 ]
 
-const Header = ({ onChange }) => {
+const Header = ({ onChange=() => {} }) => {
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("name")
 
@@ -34,8 +34,8 @@ const Header = ({ onChange }) => {
   }
 
   useEffect(() => {
-    if (onChange) onChange(order, orderBy)
-  }, [order, orderBy])
+    onChange(order, orderBy)
+  }, [order, orderBy, onChange])
 
   return (
     <TableHead>
