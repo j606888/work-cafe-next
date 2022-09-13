@@ -55,6 +55,7 @@ const reducer = (state, action) => {
 }
 
 const UserStoreMap = () => {
+  const { mutate } = useSWRConfig()
   const dispatch = useDispatch()
   const [locationParams, LocationDispatch] = React.useReducer(
     reducer,
@@ -122,6 +123,7 @@ const UserStoreMap = () => {
   }
   const handleRefreshStore = (placeId) => {
     dispatch(updatePlaceId(placeId))
+    mutate(`/stores/${placeId}`)
   }
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
