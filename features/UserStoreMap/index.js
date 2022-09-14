@@ -17,6 +17,7 @@ import {
   StoreDetailContainer,
   StoreListContainer,
   MenuContainer,
+  MyLocationContainer
 } from "./styled"
 import UserDrawer from "features/UserDrawer"
 import BookmarkListV2 from "features/BookmarkListV2"
@@ -26,6 +27,7 @@ import HiddenListV2 from "features/HiddenListV2"
 import Apis from "api/stores"
 import ReviewList from "features/ReviewList"
 import useInitMap from "hooks/useInitMap"
+import MyLocation from "features/MyLocation"
 
 const initialState = {
   lat: 23.0042325,
@@ -180,6 +182,13 @@ const UserStoreMap = () => {
     }
   }
 
+  const handleFindMe = ({ lat, lng }) => {
+    const center = { lat, lng }
+    map.setZoom(15)
+    map.panTo(center)
+    mapCenterRef.current = center
+  }
+
   if (!isReady) return <div>NotReady</div>
 
   return (
@@ -216,6 +225,9 @@ const UserStoreMap = () => {
           />
         </StoreDetailContainer>
       )}
+      <MyLocationContainer>
+        <MyLocation  onClick={handleFindMe}/>
+      </MyLocationContainer>
       <GoogleMapWrapper
         map={map}
         setMap={setMap}
