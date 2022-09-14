@@ -71,6 +71,16 @@ const OpenTimeV2 = ({ onChange = () => {} }) => {
     <>
       <OpenButton {...cacheState.current} onClick={handleOpen} />
       <MuiMenu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <Box sx={{ mb: 1, textAlign: "center" }}>
+          <Button
+            sx={{ color: "#666" }}
+            onClick={() => dispatch({ type: "RESET" })}
+          >
+            清除
+          </Button>
+          <Button onClick={handleChange}>套用</Button>
+        </Box>
+        <Divider />
         <FormControl sx={{ width: "100%", my: 1 }}>
           <RadioGroup
             value={state.openType}
@@ -95,16 +105,6 @@ const OpenTimeV2 = ({ onChange = () => {} }) => {
           curWeek={state.openWeek}
           curHour={state.openHour}
         />
-        <Divider />
-        <Box sx={{ mt: 1, textAlign: "center" }}>
-          <Button
-            sx={{ color: "#666" }}
-            onClick={() => dispatch({ type: "RESET" })}
-          >
-            清除
-          </Button>
-          <Button onClick={handleChange}>套用</Button>
-        </Box>
       </MuiMenu>
     </>
   )
