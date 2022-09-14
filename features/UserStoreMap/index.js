@@ -200,7 +200,7 @@ const UserStoreMap = () => {
             <SearchHere onClick={handleSearch} />
           </SearchHereContainer>
           <StoreListContainer>
-            <StoreListV2 stores={stores || []} />
+            <StoreListV2 stores={stores || []} focusPlaceId={placeId} />
           </StoreListContainer>
         </>
       )}

@@ -10,6 +10,7 @@ const Card = ({
   userRatingsTotal,
   address,
   rating,
+  focus,
   tags = [],
   onClick = () => {},
   onMouseEnter = () => {},
@@ -36,7 +37,7 @@ const Card = ({
   )
 
   return (
-    <Container
+    <Container focus={focus}
       onClick={handleOnClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
