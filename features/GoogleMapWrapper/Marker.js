@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 const markerIcon = (focus = false) => {
   return {
-    url: focus ? "/blue-pin.png" : "/red-pin.png",
+    url: focus ? "/pins/blue-pin.svg" : "/pins/red-pin.svg",
     scaledSize: new google.maps.Size(22, 32),
   }
 }
