@@ -25,6 +25,7 @@ import { updateStores, updatePlaceId } from "store/slices/store"
 import HiddenListV2 from "features/HiddenListV2"
 import Apis from "api/stores"
 import ReviewList from "features/ReviewList"
+import useInitMap from "hooks/useInitMap"
 
 const initialState = {
   lat: 23.0042325,
@@ -68,6 +69,7 @@ const calcSearchHereLeft = (stores, store) => {
 const UserStoreMap = () => {
   const { mutate } = useSWRConfig()
   const dispatch = useDispatch()
+  const { isReady, mapSettings } = useInitMap()
   const [locationParams, LocationDispatch] = React.useReducer(
     reducer,
     initialState
@@ -153,10 +155,6 @@ const UserStoreMap = () => {
   }, [locationStores, dispatch])
 
   useEffect(() => {
-    console.log(locationParams)
-  }, [locationParams])
-
-  useEffect(() => {
     if (store && map) {
       const center = {
         lat: store.lat,
@@ -179,6 +177,8 @@ const UserStoreMap = () => {
       setShowCardHead(true)
     }
   }
+
+  if (!isReady) return <div>NotReady</div>
 
   return (
     <>
@@ -214,7 +214,12 @@ const UserStoreMap = () => {
           />
         </StoreDetailContainer>
       )}
-      <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
+      <GoogleMapWrapper
+        map={map}
+        setMap={setMap}
+        onIdle={handleOnIdle}
+        mapSettings={mapSettings}
+      >
         {stores?.map((store) => (
           <Marker
             key={store.placeId}

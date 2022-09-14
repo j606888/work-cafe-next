@@ -9,9 +9,8 @@ const GoogleMapWrapper = ({
   setMap,
   onIdle,
   onClick,
-  initCenter,
-  initZoom,
   marginTop="0px",
+  mapSettings,
 }) => {
   return (
     <Wrapper apiKey={API_KEY}>
@@ -20,9 +19,8 @@ const GoogleMapWrapper = ({
         setMap={setMap}
         onIdle={onIdle}
         onClick={onClick}
-        initCenter={initCenter}
-        initZoom={initZoom}
         marginTop={marginTop}
+        mapSettings={mapSettings}
       >
         {children}
       </GoogleMap>
