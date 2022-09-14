@@ -54,6 +54,17 @@ const reducer = (state, action) => {
   }
 }
 
+const calcSearchHereLeft = (stores, store) => {
+  const leftMap = {
+    default: "50%",
+    stores: "calc(374px / 2 + 50%);",
+    store: "calc((374px + 360px) / 2 + 50%);",
+  }
+  if (!!store) return leftMap.store
+  if (stores && stores.length > 0) return leftMap.stores
+  return leftMap.default
+}
+
 const UserStoreMap = () => {
   const { mutate } = useSWRConfig()
   const dispatch = useDispatch()
@@ -76,7 +87,9 @@ const UserStoreMap = () => {
       : null,
     fetcher
   )
-  const { stores, mode, placeId, bouncePlaceId } = useSelector((state) => state.store)
+  const { stores, mode, placeId, bouncePlaceId } = useSelector(
+    (state) => state.store
+  )
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
   const handleOnIdle = ({ lat, lng, zoom }) => {
     Router.push({
@@ -137,7 +150,7 @@ const UserStoreMap = () => {
   useEffect(() => {
     dispatch(updateStores(locationStores))
   }, [locationStores, dispatch])
-  
+
   useEffect(() => {
     console.log(locationParams)
   }, [locationParams])
@@ -158,8 +171,7 @@ const UserStoreMap = () => {
     }
   }, [store])
 
-
-  const handleScroll = event => {
+  const handleScroll = (event) => {
     if (event.currentTarget.scrollTop === 0) {
       setShowCardHead(false)
     } else {
@@ -183,21 +195,17 @@ const UserStoreMap = () => {
           <MenuContainer>
             <OpenTimeV2 onChange={handleOpenTimeChange} />
           </MenuContainer>
-          <SearchHereContainer>
+          <SearchHereContainer left={calcSearchHereLeft(stores, store)}>
             <SearchHere onClick={handleSearch} />
           </SearchHereContainer>
           <StoreListContainer>
-            <StoreListV2
-              stores={stores || []}
-            />
+            <StoreListV2 stores={stores || []} />
           </StoreListContainer>
         </>
       )}
       {mode === "BOOKMARK" && <BookmarkListV2 />}
       {store && (
-        <StoreDetailContainer 
-          onScroll={handleScroll}
-        >
+        <StoreDetailContainer onScroll={handleScroll}>
           <StoreDetail
             {...store}
             onClose={clearPlaceId}

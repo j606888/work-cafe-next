@@ -3,9 +3,10 @@ import styled from "styled-components"
 export const SearchHereContainer = styled.div`
   position: absolute;
   top: 4rem;
-  left: calc(50% + 12rem);
   transform: translateX(-50%);
   z-index: 5;
+
+  ${({ left }) => `left: ${left}`}
 `
 
 export const SearchbarV2Container = styled.div`
