@@ -9,6 +9,7 @@ export const Container = styled.div`
   box-sizing: border-box;
   width: 374px;
 
+  ${({ focus }) => focus && `background-color: #f8f8f8;`}
 
   &:hover {
     background-color: #f8f8f8;

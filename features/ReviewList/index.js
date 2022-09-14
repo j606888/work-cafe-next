@@ -19,6 +19,7 @@ const ReviewList = () => {
 
   const handleClose = () => {
     dispatch(updateStores([]))
+    dispatch(updatePlaceId(null))
     dispatch(changeMode("MAP"))
   }
   const handleClick = (placeId) => {

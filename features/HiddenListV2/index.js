@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import useSWR from "swr"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { updateStores, changeMode } from "store/slices/store"
+import { updateStores, changeMode, updatePlaceId } from "store/slices/store"
 import { fetcher } from "api"
 import StoreListV2 from "features/StoreListV2"
 import { Container, Head } from "./styled"
@@ -17,6 +17,7 @@ const HiddenListV2 = () => {
 
   const handleClose = () => {
     dispatch(updateStores([]))
+    dispatch(updatePlaceId(null))
     dispatch(changeMode("MAP"))
   }
 

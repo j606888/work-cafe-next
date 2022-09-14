@@ -25,6 +25,7 @@ import { updateStores, updatePlaceId } from "store/slices/store"
 import HiddenListV2 from "features/HiddenListV2"
 import Apis from "api/stores"
 import ReviewList from "features/ReviewList"
+import useInitMap from "hooks/useInitMap"
 
 const initialState = {
   lat: 23.0042325,
@@ -54,9 +55,21 @@ const reducer = (state, action) => {
   }
 }
 
+const calcSearchHereLeft = (stores, store) => {
+  const leftMap = {
+    default: "50%",
+    stores: "calc(374px / 2 + 50%);",
+    store: "calc((374px + 360px) / 2 + 50%);",
+  }
+  if (!!store) return leftMap.store
+  if (stores && stores.length > 0) return leftMap.stores
+  return leftMap.default
+}
+
 const UserStoreMap = () => {
   const { mutate } = useSWRConfig()
   const dispatch = useDispatch()
+  const { isReady, mapSettings } = useInitMap()
   const [locationParams, LocationDispatch] = React.useReducer(
     reducer,
     initialState
@@ -67,20 +80,25 @@ const UserStoreMap = () => {
     lat: 23.0042325,
     lng: 120.2216038,
   })
+  const [showCardHead, setShowCardHead] = React.useState(false)
   const mapZoom = useRef(15)
   const openTimeRef = useRef({})
-  const { data: locationStores } = useSWR(
+  const { data: locationStores, mutate: mutateLocation } = useSWR(
     locationParams.go
       ? ["/stores/location", { ...locationParams, limit: 20 }]
       : null,
     fetcher
   )
-  const { stores, mode, placeId, bouncePlaceId } = useSelector((state) => state.store)
+  const { stores, mode, placeId, bouncePlaceId } = useSelector(
+    (state) => state.store
+  )
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
   const handleOnIdle = ({ lat, lng, zoom }) => {
+    const mapPath = `@${lat},${lng},${zoom}z`
     Router.push({
-      pathname: `/map/@${lat},${lng},${zoom}z`,
+      pathname: `/map/${mapPath}`,
     })
+    localStorage.setItem('lastLocation', mapPath)
     mapCenterRef.current = { lat, lng }
     mapZoom.current = zoom
   }
@@ -124,6 +142,7 @@ const UserStoreMap = () => {
   const handleRefreshStore = (placeId) => {
     dispatch(updatePlaceId(placeId))
     mutate(`/stores/${placeId}`)
+    mutateLocation()
   }
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
@@ -136,10 +155,6 @@ const UserStoreMap = () => {
   useEffect(() => {
     dispatch(updateStores(locationStores))
   }, [locationStores, dispatch])
-  
-  useEffect(() => {
-    console.log(locationParams)
-  }, [locationParams])
 
   useEffect(() => {
     if (store && map) {
@@ -157,6 +172,15 @@ const UserStoreMap = () => {
     }
   }, [store])
 
+  const handleScroll = (event) => {
+    if (event.currentTarget.scrollTop === 0) {
+      setShowCardHead(false)
+    } else {
+      setShowCardHead(true)
+    }
+  }
+
+  if (!isReady) return <div>NotReady</div>
 
   return (
     <>
@@ -174,27 +198,30 @@ const UserStoreMap = () => {
           <MenuContainer>
             <OpenTimeV2 onChange={handleOpenTimeChange} />
           </MenuContainer>
-          <SearchHereContainer>
+          <SearchHereContainer left={calcSearchHereLeft(stores, store)}>
             <SearchHere onClick={handleSearch} />
           </SearchHereContainer>
           <StoreListContainer>
-            <StoreListV2
-              stores={stores || []}
-            />
+            <StoreListV2 stores={stores || []} focusPlaceId={placeId} />
           </StoreListContainer>
         </>
       )}
-      {mode === "BOOKMARK" && <BookmarkListV2 />}
       {store && (
-        <StoreDetailContainer>
+        <StoreDetailContainer onScroll={handleScroll}>
           <StoreDetail
             {...store}
             onClose={clearPlaceId}
             onRefresh={handleRefreshStore}
+            showCardHead={showCardHead}
           />
         </StoreDetailContainer>
       )}
-      <GoogleMapWrapper map={map} setMap={setMap} onIdle={handleOnIdle}>
+      <GoogleMapWrapper
+        map={map}
+        setMap={setMap}
+        onIdle={handleOnIdle}
+        mapSettings={mapSettings}
+      >
         {stores?.map((store) => (
           <Marker
             key={store.placeId}
@@ -204,6 +231,7 @@ const UserStoreMap = () => {
             onClick={handleRefreshStore}
           />
         ))}
+        {mode === "BOOKMARK" && <BookmarkListV2 />}
         {mode === "HIDDEN" && <HiddenListV2 />}
         {mode === "REVIEW" && <ReviewList />}
       </GoogleMapWrapper>

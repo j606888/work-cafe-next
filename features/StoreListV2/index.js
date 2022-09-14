@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux"
 import { updatePlaceId, updateFocusPlaceId } from "store/slices/store"
 import { Container, Scrollbar } from "./styled"
 
-export default function StoreListV2({ stores = [] }) {
+export default function StoreListV2({ stores = [], focusPlaceId }) {
   const dispatch = useDispatch()
 
   const handleMouseEnter = (placeId) => {
@@ -32,6 +32,7 @@ export default function StoreListV2({ stores = [] }) {
             onClick={handleClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            focus={store.placeId === focusPlaceId}
           />
         ))}
       </Scrollbar>

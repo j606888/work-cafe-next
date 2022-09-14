@@ -14,6 +14,20 @@ const Container = styled.div`
     height: 220px;
   }
 `
+const SingleImageContainer = styled.div`
+  display: flex;
+
+  .imgBox {
+    width: 100%;
+    height: 220px;
+
+    & > img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+`
 
 const slideArgs = {
   autoplay: false,
@@ -22,6 +36,13 @@ const slideArgs = {
 }
 
 const ImageSlide = ({ photos=[] }) => {
+  if (photos.length === 1) {
+    return <SingleImageContainer>
+      <div className="imgBox">
+        <img src={photos[0]} alt='store' />
+      </div>
+    </SingleImageContainer>
+  }
   return (
     <Container>
       <Slide {...slideArgs}>

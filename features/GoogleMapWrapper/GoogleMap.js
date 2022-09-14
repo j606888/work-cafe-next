@@ -4,38 +4,26 @@ import styled from "styled-components"
 const Container = styled.div`
   position: absolute;
   z-index: -1;
-  height: ${props => `calc(100vh - ${props.marginTop})`};
+  height: ${(props) => `calc(100vh - ${props.marginTop})`};
   width: 100%;
 `
 
-const DEFAULT_SETUP = {
-  center: {
-    lat: 23.546162,
-    lng: 120.6402133,
-  },
-  zoom: 8,
-  fullscreenControl: false,
-  mapTypeControl: false,
-  styles: [
-    {
-      featureType: "poi.business",
-      stylers: [{ visibility: "off" }],
-    },
-  ],
-}
-
-const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoom, marginTop }) => {
+const GoogleMap = ({
+  onClick,
+  onIdle,
+  children,
+  map,
+  setMap,
+  marginTop,
+  mapSettings,
+}) => {
   const ref = useRef(null)
 
   useEffect(() => {
     if (ref.current && !map) {
-      const setup = DEFAULT_SETUP
-      if (initCenter) setup.center = { lat: +initCenter.lat, lng: +initCenter.lng }
-      if (initZoom) setup.zoom = +initZoom
-
-      setMap(new window.google.maps.Map(ref.current, setup))
+      setMap(new window.google.maps.Map(ref.current, mapSettings))
     }
-  }, [ref, map, initCenter, initZoom, setMap])
+  }, [ref, map, setMap, mapSettings])
 
   useEffect(() => {
     if (map) {
@@ -43,22 +31,24 @@ const GoogleMap = ({ onClick, onIdle, children, map, setMap, initCenter, initZoo
         google.maps.event.clearListeners(map, eventName)
       )
 
-      if (onClick) map.addListener("click", (mapsMouseEvent) => {
-        const { lat, lng } = mapsMouseEvent.latLng.toJSON()
-        onClick({ lat, lng })
-      })
+      if (onClick)
+        map.addListener("click", (mapsMouseEvent) => {
+          const { lat, lng } = mapsMouseEvent.latLng.toJSON()
+          onClick({ lat, lng })
+        })
 
-      if (onIdle) map.addListener("idle", () => {
-        const { lat, lng } = map.getCenter().toJSON()
-        const zoom = map.getZoom()
-        const shortRes = {
-          lat: +lat.toFixed(6),
-          lng: +lng.toFixed(6),
-          zoom,
-        }
-      
-        onIdle(shortRes)
-      })
+      if (onIdle)
+        map.addListener("idle", () => {
+          const { lat, lng } = map.getCenter().toJSON()
+          const zoom = map.getZoom()
+          const shortRes = {
+            lat: +lat.toFixed(6),
+            lng: +lng.toFixed(6),
+            zoom,
+          }
+
+          onIdle(shortRes)
+        })
     }
   }, [map, onClick, onIdle])
 

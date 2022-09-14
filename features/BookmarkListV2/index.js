@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import useSWR, { useSWRConfig } from "swr"
 import { useDispatch } from "react-redux"
-import { updateStores, changeMode } from "store/slices/store"
+import { updateStores, changeMode, updatePlaceId } from "store/slices/store"
 
 const BookmarkContainer = styled.div`
   position: absolute;
@@ -42,6 +42,7 @@ const BookmarkListV2 = () => {
 
   const handleClose = () => {
     dispatch(updateStores([]))
+    dispatch(updatePlaceId(null))
     dispatch(changeMode("MAP"))
   }
 

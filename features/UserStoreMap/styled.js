@@ -3,9 +3,10 @@ import styled from "styled-components"
 export const SearchHereContainer = styled.div`
   position: absolute;
   top: 4rem;
-  left: calc(50% + 12rem);
   transform: translateX(-50%);
   z-index: 5;
+
+  ${({ left }) => `left: ${left}`}
 `
 
 export const SearchbarV2Container = styled.div`
@@ -23,7 +24,7 @@ export const StoreDetailContainer = styled.div`
   z-index: 2;
   height: calc(100vh - 5rem);
   border-radius: 12px;
-  overflow: hidden;
+  /* overflow: hidden; */
   overflow-y: scroll;
   box-shadow: 0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
 `
