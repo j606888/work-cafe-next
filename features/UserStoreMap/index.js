@@ -17,6 +17,7 @@ import {
   StoreDetailContainer,
   StoreListContainer,
   MenuContainer,
+  MyLocationContainer,
 } from "./styled"
 import UserDrawer from "features/UserDrawer"
 import BookmarkListV2 from "features/BookmarkListV2"
@@ -26,6 +27,9 @@ import HiddenListV2 from "features/HiddenListV2"
 import Apis from "api/stores"
 import ReviewList from "features/ReviewList"
 import useInitMap from "hooks/useInitMap"
+import MyLocation from "features/MyLocation"
+import Circle from "features/AdminStoreCrawler/Circle"
+import MeMarker from "features/MyLocation/MeMarker"
 
 const initialState = {
   lat: 23.0042325,
@@ -83,6 +87,7 @@ const UserStoreMap = () => {
   const [showCardHead, setShowCardHead] = React.useState(false)
   const mapZoom = useRef(15)
   const openTimeRef = useRef({})
+  const meCenter = useRef(null)
   const { data: locationStores, mutate: mutateLocation } = useSWR(
     locationParams.go
       ? ["/stores/location", { ...locationParams, limit: 20 }]
@@ -98,7 +103,7 @@ const UserStoreMap = () => {
     Router.push({
       pathname: `/map/${mapPath}`,
     })
-    localStorage.setItem('lastLocation', mapPath)
+    localStorage.setItem("lastLocation", mapPath)
     mapCenterRef.current = { lat, lng }
     mapZoom.current = zoom
   }
@@ -180,7 +185,19 @@ const UserStoreMap = () => {
     }
   }
 
+  const handleFindMe = ({ lat, lng }) => {
+    const center = { lat, lng }
+    map.setZoom(15)
+    map.panTo(center)
+    mapCenterRef.current = center
+    meCenter.current = center
+  }
+
   if (!isReady) return <div>NotReady</div>
+
+  const me = meCenter.current && (
+    <MeMarker lat={meCenter.current.lat} lng={meCenter.current.lng} />
+  )
 
   return (
     <>
@@ -216,12 +233,16 @@ const UserStoreMap = () => {
           />
         </StoreDetailContainer>
       )}
+      <MyLocationContainer>
+        <MyLocation onClick={handleFindMe} />
+      </MyLocationContainer>
       <GoogleMapWrapper
         map={map}
         setMap={setMap}
         onIdle={handleOnIdle}
         mapSettings={mapSettings}
       >
+        {me}
         {stores?.map((store) => (
           <Marker
             key={store.placeId}

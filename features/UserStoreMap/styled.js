@@ -45,3 +45,10 @@ export const MenuContainer = styled.div`
   left: 24.5rem;
   z-index: 2;
 `
+
+export const MyLocationContainer = styled.div`
+  position: absolute;
+  right: 1rem;
+  bottom: 7rem;
+  z-index: 2;
+`
