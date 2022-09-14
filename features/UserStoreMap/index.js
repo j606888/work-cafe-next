@@ -81,7 +81,7 @@ const UserStoreMap = () => {
   const [showCardHead, setShowCardHead] = React.useState(false)
   const mapZoom = useRef(15)
   const openTimeRef = useRef({})
-  const { data: locationStores } = useSWR(
+  const { data: locationStores, mutate: mutateLocation } = useSWR(
     locationParams.go
       ? ["/stores/location", { ...locationParams, limit: 20 }]
       : null,
@@ -138,6 +138,7 @@ const UserStoreMap = () => {
   const handleRefreshStore = (placeId) => {
     dispatch(updatePlaceId(placeId))
     mutate(`/stores/${placeId}`)
+    mutateLocation()
   }
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
