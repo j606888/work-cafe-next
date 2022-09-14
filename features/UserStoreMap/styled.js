@@ -23,7 +23,7 @@ export const StoreDetailContainer = styled.div`
   z-index: 2;
   height: calc(100vh - 5rem);
   border-radius: 12px;
-  overflow: hidden;
+  /* overflow: hidden; */
   overflow-y: scroll;
   box-shadow: 0 1px 2px rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
 `

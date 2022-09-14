@@ -67,6 +67,7 @@ const UserStoreMap = () => {
     lat: 23.0042325,
     lng: 120.2216038,
   })
+  const [showCardHead, setShowCardHead] = React.useState(false)
   const mapZoom = useRef(15)
   const openTimeRef = useRef({})
   const { data: locationStores } = useSWR(
@@ -158,6 +159,14 @@ const UserStoreMap = () => {
   }, [store])
 
 
+  const handleScroll = event => {
+    if (event.currentTarget.scrollTop === 0) {
+      setShowCardHead(false)
+    } else {
+      setShowCardHead(true)
+    }
+  }
+
   return (
     <>
       {mode === "MAP" && (
@@ -186,11 +195,14 @@ const UserStoreMap = () => {
       )}
       {mode === "BOOKMARK" && <BookmarkListV2 />}
       {store && (
-        <StoreDetailContainer>
+        <StoreDetailContainer 
+          onScroll={handleScroll}
+        >
           <StoreDetail
             {...store}
             onClose={clearPlaceId}
             onRefresh={handleRefreshStore}
+            showCardHead={showCardHead}
           />
         </StoreDetailContainer>
       )}

@@ -9,6 +9,7 @@ import {
   MainInfo,
   ButtonGroup,
   GoogleReviews,
+  StickyHeader,
 } from "./styled"
 import storeApi from "api/stores"
 import SortIcon from "@mui/icons-material/Sort"
@@ -39,6 +40,8 @@ const StoreDetail = ({
   phone,
   url,
   isHide,
+  isReview,
+  showCardHead = false,
   photos = [],
   reviewReport = {},
   reviews: googleReviews = [],
@@ -89,9 +92,12 @@ const StoreDetail = ({
   return (
     <>
       <Container>
-        <CloseButton onClick={handleClose}>
-          <CloseIcon />
-        </CloseButton>
+        <StickyHeader showCardHead={showCardHead}>
+          <span>{name}</span>
+          <CloseButton onClick={handleClose}>
+            <CloseIcon />
+          </CloseButton>
+        </StickyHeader>
         <ImageSlide photos={photos} />
         <MainInfo>
           <h3>{name}</h3>
@@ -105,7 +111,7 @@ const StoreDetail = ({
           <ActionButton
             type="comment"
             text="評論"
-            primary
+            primary={isReview}
             onClick={handleOpenReview}
           />
           <ActionButton
@@ -149,7 +155,7 @@ const StoreDetail = ({
           <div className="review-header">
             <h4>評論</h4>
           </div>
-          {reviews?.reviews.map(review => (
+          {reviews?.reviews.map((review) => (
             <ReviewCard key={review.id} {...review} />
           ))}
         </GoogleReviews>

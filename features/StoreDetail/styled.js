@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
@@ -14,11 +14,15 @@ export const CloseButton = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background-color: #eee;
+  background-color: #fff;
   position: absolute;
   right: 12px;
   top: 12px;
   cursor: pointer;
+
+  &:hover {
+    background-color: #eee;
+  }
 `
 
 export const MainInfo = styled.div`
@@ -79,4 +83,40 @@ export const ButtonGroup = styled.div`
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
+`
+
+const showStyle = css`
+  background-color: #fff;
+  box-shadow: 0 2px 4px -2px rgba(0,0,0,0.4);
+
+  span {
+    display: block;
+  }
+`
+const hideStyle = css`
+  background: none;
+
+  span {
+    display: none;
+  }
+`
+
+export const StickyHeader = styled.div`
+  ${({showCardHead}) => showCardHead ? showStyle : hideStyle}
+  
+
+  position: fixed;
+  height: 64px;
+  width: 360px;
+  z-index: 100;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    font-weight: 500;
+  }
 `
