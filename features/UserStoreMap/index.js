@@ -204,7 +204,6 @@ const UserStoreMap = () => {
           </StoreListContainer>
         </>
       )}
-      {mode === "BOOKMARK" && <BookmarkListV2 />}
       {store && (
         <StoreDetailContainer onScroll={handleScroll}>
           <StoreDetail
@@ -225,6 +224,7 @@ const UserStoreMap = () => {
             onClick={handleRefreshStore}
           />
         ))}
+        {mode === "BOOKMARK" && <BookmarkListV2 />}
         {mode === "HIDDEN" && <HiddenListV2 />}
         {mode === "REVIEW" && <ReviewList />}
       </GoogleMapWrapper>
