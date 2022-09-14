@@ -94,9 +94,11 @@ const UserStoreMap = () => {
   )
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
   const handleOnIdle = ({ lat, lng, zoom }) => {
+    const mapPath = `@${lat},${lng},${zoom}z`
     Router.push({
-      pathname: `/map/@${lat},${lng},${zoom}z`,
+      pathname: `/map/${mapPath}`,
     })
+    localStorage.setItem('lastLocation', mapPath)
     mapCenterRef.current = { lat, lng }
     mapZoom.current = zoom
   }

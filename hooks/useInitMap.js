@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
+import { isEmpty } from 'lodash'
 
 const DEFAULT_SETUP = {
   center: {
@@ -25,7 +26,10 @@ const useInitMap = () => {
 
   useEffect(() => {
     if (router.isReady) {
-      const location = router.query.location
+      const urlLocation = router.query.location
+      const lastLocation = localStorage.getItem('lastLocation')
+      const location = _.isEmpty(urlLocation) ? [lastLocation] : urlLocation
+
       if (location) {
         const pureString = location[0]
         const re = /@(?<lat>\d+(\.\d+)?),(?<lng>\d+(\.\d+)?),(?<zoom>\d+)z/
