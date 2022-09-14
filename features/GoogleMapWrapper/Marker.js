@@ -64,7 +64,7 @@ export default function Marker({
         onMouseout(store.placeId)
       })
     }
-  }, [marker, map])
+  }, [marker, map, options.icon])
 
   return null
 }
