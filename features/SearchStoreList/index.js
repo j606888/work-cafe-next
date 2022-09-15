@@ -33,7 +33,7 @@ const INIT_OPTIONS = {
 const SearchStoreList = ({ store, onSearch = () => {}, onClearPlaceId = () => {} }) => {
   const [options, setOptions] = useState(INIT_OPTIONS)
   const [openDrawer, setOpenDrawer] = React.useState(false)
-  const { stores, placeId } = useSelector((state) => state.store)
+  const { stores } = useSelector((state) => state.store)
 
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
@@ -83,7 +83,7 @@ const SearchStoreList = ({ store, onSearch = () => {}, onClearPlaceId = () => {}
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
       <StoreListContainer>
-        <StoreListV2 stores={stores || []} focusPlaceId={placeId} />
+        <StoreListV2 stores={stores || []} />
       </StoreListContainer>
     </>
   )

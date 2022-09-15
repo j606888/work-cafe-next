@@ -1,11 +1,12 @@
 import * as React from "react"
 import Card from "features/Drawer/Card"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { updatePlaceId, updateFocusPlaceId } from "store/slices/store"
 import { Container, Scrollbar } from "./styled"
 
-export default function StoreListV2({ stores = [], focusPlaceId }) {
+export default function StoreListV2({ stores = [] }) {
   const dispatch = useDispatch()
+  const { placeId } = useSelector((state) => state.store)
 
   const handleMouseEnter = (placeId) => {
     dispatch(updateFocusPlaceId(placeId))
@@ -32,7 +33,7 @@ export default function StoreListV2({ stores = [], focusPlaceId }) {
             onClick={handleClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            focus={store.placeId === focusPlaceId}
+            focus={store.placeId === placeId}
           />
         ))}
       </Scrollbar>
