@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const Container = styled.div`
   position: absolute;
-  z-index: -1;
+  z-index: 1;
   height: ${(props) => `calc(100vh - ${props.marginTop})`};
   width: 100%;
 `

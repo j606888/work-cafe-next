@@ -8,6 +8,9 @@ import Router, { useRouter } from "next/router"
 import Circle from "./Circle"
 import { createCrawlRecord, getCrawlRecords } from "api/map-crawlers"
 import { getCurrentPosition } from "utils/navigator"
+import useInitMap from "hooks/useInitMap"
+import useSWR from "swr"
+import { fetcher } from "api"
 
 const Container = styled.div`
   position: relative;
@@ -17,7 +20,6 @@ const Container = styled.div`
 const INITIAL_STATE = {
   showArea: true,
   showModal: false,
-  allowRefresh: false,
   searchRadius: 100,
 }
 
@@ -33,11 +35,6 @@ const reducer = (state, action) => {
         ...state,
         showModal: !state.showModal,
       }
-    case "TOGGLE_REFRESH":
-      return {
-        ...state,
-        allowRefresh: action.payload.refresh,
-      }
     case "UPDATE_SEARCH_RADIUS":
       return {
         ...state,
@@ -49,9 +46,7 @@ const reducer = (state, action) => {
 }
 
 const AdminStoreCrawler = () => {
-  const [mapCrawlers, setMapCrawlers] = useState([])
-  const [map, setMap] = useState(null)
-  const [tempOptions, setTempOptions] = useState(null)
+  const { isReady, mapSettings, map, setMap } = useInitMap()
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
   const myLocation = useRef(null)
   const tempRef = useRef(null)
@@ -60,23 +55,7 @@ const AdminStoreCrawler = () => {
     lng: 120.6402133,
     zoom: 8,
   })
-  const router = useRouter()
-
-  // useEffect(() => {
-  //   async function trySetLocation() {
-  //     const already = await alreadyGranted()
-  //     if (!already) return
-
-  //     const { lat, lng } = await getCurrentPosition()
-  //     setMyLocation({
-  //       lat,
-  //       lng,
-  //       zoom: 14,
-  //     })
-  //   }
-
-  //   trySetLocation()
-  // }, [])
+  const { data: mapCrawlers } = useSWR(["/admin/map-crawlers", { ...centerRef.current }], fetcher)
 
   const handleFineMe = async () => {
     if (!myLocation.current) {
@@ -108,32 +87,13 @@ const AdminStoreCrawler = () => {
   const handleOnIdle = (center) => {
     centerRef.current = center
     Router.push({ query: center })
-    dispatch({ type: "TOGGLE_REFRESH", payload: { refresh: true } })
   }
 
-  const callAPI = async () => {
-    const data = await getCrawlRecords(centerRef.current)
-    setMapCrawlers(data)
-    dispatch({ type: "TOGGLE_REFRESH", payload: { refresh: false } })
-  }
-
-  useEffect(() => {
-    const query = router.query
-
-    if (query.lng && query.lat && query.zoom) {
-      const { lng, lat, zoom } = query
-      centerRef.current = {
-        lat: +lat,
-        lng: +lng,
-        zoom: +zoom,
-      }
-    }
-    callAPI()
-  }, [])
-
-  const circles = mapCrawlers.map((mapCrawler) => (
+  const circles = mapCrawlers?.map((mapCrawler) => (
     <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
-  ))
+  )) || []
+
+  if (!isReady) return <div>NotReady</div>
 
   return (
     <Container>
@@ -144,8 +104,6 @@ const AdminStoreCrawler = () => {
         setRadius={(radius) =>
           dispatch({ type: "UPDATE_SEARCH_RADIUS", payload: { radius } })
         }
-        handleReload={() => callAPI()}
-        showButton={controls.allowRefresh}
         handleFindMe={() => handleFineMe()}
       />
       <SearchDialog
@@ -158,6 +116,7 @@ const AdminStoreCrawler = () => {
         setMap={setMap}
         onClick={handleOnClick}
         onIdle={handleOnIdle}
+        mapSettings={mapSettings}
         marginTop='64px' 
       >
         {controls.showArea && circles}

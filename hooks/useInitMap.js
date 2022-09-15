@@ -22,6 +22,7 @@ const DEFAULT_SETUP = {
 const useInitMap = () => {
   const [mapSettings, setMapSettings] = useState(DEFAULT_SETUP)
   const [isReady, setIsReady] = useState(false)
+  const [map, setMap] = useState(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const useInitMap = () => {
     }
   }, [router, isReady])
 
-  return { mapSettings, isReady }
+  return { mapSettings, isReady, map, setMap }
 }
 
 export default useInitMap

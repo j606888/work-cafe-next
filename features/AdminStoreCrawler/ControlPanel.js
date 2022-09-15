@@ -5,10 +5,7 @@ const ControlPanel = ({
   setShow,
   radius,
   setRadius,
-  handleReload,
-  showButton,
   handleFindMe,
-  
 }) => {
   function showAreaOnchange() {
     if (setShow) setShow()
@@ -46,17 +43,6 @@ const ControlPanel = ({
           <span>Show Area</span>
           <br />
           <Switch checked={show} onChange={showAreaOnchange} />
-        </Box>
-        <Box>
-          <Button
-            variant="contained"
-            disabled={!showButton}
-            onClick={() => {
-              handleReload()
-            }}
-          >
-            Search Here
-          </Button>
         </Box>
         <Box>
           <Button
