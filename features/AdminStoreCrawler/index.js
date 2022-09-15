@@ -1,16 +1,14 @@
-import GoogleMapWrapper from "features/GoogleMapWrapper"
-import React, { useRef } from "react"
-import { useEffect, useState, useReducer } from "react"
+import React, { useRef, useState, useReducer } from "react"
+import useSWR from "swr"
+import { fetcher } from "api"
 import styled from "styled-components"
+import GoogleMapWrapper from "features/GoogleMapWrapper"
+import MyLocation from "features/MyLocation"
 import ControlPanel from "./ControlPanel"
 import SearchDialog from "./SearchDialog"
-import Router from "next/router"
 import Circle from "./Circle"
 import { createCrawlRecord } from "api/map-crawlers"
 import useInitMap from "hooks/useInitMap"
-import useSWR from "swr"
-import { fetcher } from "api"
-import MyLocation from "features/MyLocation"
 
 const Container = styled.div`
   position: relative;
@@ -56,14 +54,13 @@ const AdminStoreCrawler = () => {
   const { isReady, mapSettings, map, setMap } = useInitMap()
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
   const tempRef = useRef(null)
-  const centerRef = useRef({
+  const [mapCenter, setMapCenter] = useState({
     lat: 23.546162,
     lng: 120.6402133,
-    zoom: 8,
   })
-  const { data: mapCrawlers } = useSWR(["/admin/map-crawlers", { ...centerRef.current }], fetcher)
+  const { data: mapCrawlers } = useSWR(["/admin/map-crawlers", { ...mapCenter }], fetcher)
 
-   const handleFindMe = ({ lat, lng }) => {
+  const handleFindMe = ({ lat, lng }) => {
     const center = { lat, lng }
     map.setZoom(15)
     map.panTo(center)
@@ -84,8 +81,7 @@ const AdminStoreCrawler = () => {
   }
 
   const handleOnIdle = (center) => {
-    centerRef.current = center
-    Router.push({ query: center })
+    setMapCenter(center)
   }
 
   const circles = mapCrawlers?.map((mapCrawler) => (
@@ -109,6 +105,9 @@ const AdminStoreCrawler = () => {
         handleClose={() => dispatch({ type: "TOGGLE_MODAL" })}
         handleSearch={handleSearch}
       />
+      <MyLocationContainer>
+        <MyLocation onClick={handleFindMe}/>
+      </MyLocationContainer>
       <GoogleMapWrapper
         map={map}
         setMap={setMap}
@@ -124,9 +123,6 @@ const AdminStoreCrawler = () => {
           />
         )}
       </GoogleMapWrapper>
-      <MyLocationContainer>
-        <MyLocation onClick={handleFindMe}/>
-      </MyLocationContainer>
     </Container>
   )
 }
