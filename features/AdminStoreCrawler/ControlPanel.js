@@ -1,11 +1,10 @@
-import { Box, Button, Paper, Slider, Stack, Switch } from '@mui/material'
+import { Box, Paper, Slider, Stack, Switch } from '@mui/material'
 
 const ControlPanel = ({
   show,
   setShow,
   radius,
   setRadius,
-  handleFindMe,
 }) => {
   function showAreaOnchange() {
     if (setShow) setShow()
@@ -43,16 +42,6 @@ const ControlPanel = ({
           <span>Show Area</span>
           <br />
           <Switch checked={show} onChange={showAreaOnchange} />
-        </Box>
-        <Box>
-          <Button
-            variant="contained"
-            onClick={() => {
-              handleFindMe()
-            }}
-          >
-            Find me
-          </Button>
         </Box>
       </Stack>
     </Paper>

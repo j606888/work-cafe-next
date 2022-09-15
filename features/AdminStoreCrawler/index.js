@@ -4,17 +4,24 @@ import { useEffect, useState, useReducer } from "react"
 import styled from "styled-components"
 import ControlPanel from "./ControlPanel"
 import SearchDialog from "./SearchDialog"
-import Router, { useRouter } from "next/router"
+import Router from "next/router"
 import Circle from "./Circle"
-import { createCrawlRecord, getCrawlRecords } from "api/map-crawlers"
-import { getCurrentPosition } from "utils/navigator"
+import { createCrawlRecord } from "api/map-crawlers"
 import useInitMap from "hooks/useInitMap"
 import useSWR from "swr"
 import { fetcher } from "api"
+import MyLocation from "features/MyLocation"
 
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 64px);
+  z-index: -2;
+`
+
+const MyLocationContainer = styled.div`
+  position: absolute;
+  right: 0.5rem;
+  bottom: 7rem;
 `
 
 const INITIAL_STATE = {
@@ -48,7 +55,6 @@ const reducer = (state, action) => {
 const AdminStoreCrawler = () => {
   const { isReady, mapSettings, map, setMap } = useInitMap()
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
-  const myLocation = useRef(null)
   const tempRef = useRef(null)
   const centerRef = useRef({
     lat: 23.546162,
@@ -57,17 +63,10 @@ const AdminStoreCrawler = () => {
   })
   const { data: mapCrawlers } = useSWR(["/admin/map-crawlers", { ...centerRef.current }], fetcher)
 
-  const handleFineMe = async () => {
-    if (!myLocation.current) {
-      const { lat, lng } = await getCurrentPosition()
-      myLocation.current = {
-        lat,
-        lng,
-      }
-    }
-
-    map.setCenter(myLocation.current)
-    map.setZoom(14)
+   const handleFindMe = ({ lat, lng }) => {
+    const center = { lat, lng }
+    map.setZoom(15)
+    map.panTo(center)
   }
 
   const handleSearch = async () => {
@@ -104,7 +103,6 @@ const AdminStoreCrawler = () => {
         setRadius={(radius) =>
           dispatch({ type: "UPDATE_SEARCH_RADIUS", payload: { radius } })
         }
-        handleFindMe={() => handleFineMe()}
       />
       <SearchDialog
         open={controls.showModal}
@@ -126,6 +124,9 @@ const AdminStoreCrawler = () => {
           />
         )}
       </GoogleMapWrapper>
+      <MyLocationContainer>
+        <MyLocation onClick={handleFindMe}/>
+      </MyLocationContainer>
     </Container>
   )
 }
