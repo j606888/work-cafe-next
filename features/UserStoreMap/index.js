@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import Router from "next/router"
 import _ from "lodash"
-import useSWR, { useSWRConfig } from "swr"
+import useSWR from "swr"
 import { fetcher } from "api"
 import Marker from "features/GoogleMapWrapper/Marker"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
@@ -18,14 +18,15 @@ import MeMarker from "features/MyLocation/MeMarker"
 import SearchStoreList from "features/SearchStoreList"
 
 const UserStoreMap = () => {
-  const { mutate } = useSWRConfig()
   const dispatch = useDispatch()
   const { isReady, mapSettings, map, setMap } = useInitMap()
-
   const [showCardHead, setShowCardHead] = React.useState(false)
+  const { stores, mode, placeId, bouncePlaceId } = useSelector(
+    (state) => state.store
+  )
   const mapZoom = useRef(15)
   const meCenter = useRef(null)
-  const { options } = useSelector((state) => state.mapSearch)
+  const [options, setOptions] = React.useState({})
   const mapCenterRef = useRef({
     lat: 23.0042325,
     lng: 120.2216038,
@@ -34,12 +35,12 @@ const UserStoreMap = () => {
     options?.go ? ["/stores/location", { ...options, limit: 20 }] : null,
     fetcher
   )
-  const { stores, mode, placeId, bouncePlaceId } = useSelector(
-    (state) => state.store
-  )
+  const { data: store, mutate: mutateStore } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
 
-  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null, fetcher)
-
+  const handleSearch = (searchOptions) => {
+    setOptions({ ...searchOptions, ...mapCenterRef.current })
+    mutateLocation()
+  }
   const handleOnIdle = ({ lat, lng, zoom }) => {
     const mapPath = `@${lat},${lng},${zoom}z`
     Router.push({
@@ -49,19 +50,29 @@ const UserStoreMap = () => {
     mapCenterRef.current = { lat, lng }
     mapZoom.current = zoom
   }
-
   const handleRefreshStore = (placeId) => {
     dispatch(updatePlaceId(placeId))
-    mutate(`/stores/${placeId}`)
+    mutateStore()
     mutateLocation()
   }
   const clearPlaceId = () => {
     dispatch(updatePlaceId(null))
   }
+  const handleScroll = (event) => {
+    const showHead = event.currentTarget.scrollTop !== 0
+    setShowCardHead(showHead)
+  }
+  const handleFindMe = ({ lat, lng }) => {
+    const center = { lat, lng }
+    map.setZoom(15)
+    map.panTo(center)
+    mapCenterRef.current = center
+    meCenter.current = center
+  }
 
   useEffect(() => {
     dispatch(updateStores(locationStores))
-  }, [locationStores, dispatch])
+  }, [locationStores])
 
   useEffect(() => {
     if (store && map) {
@@ -78,22 +89,6 @@ const UserStoreMap = () => {
       mapCenterRef.current = center
     }
   }, [store])
-
-  const handleScroll = (event) => {
-    if (event.currentTarget.scrollTop === 0) {
-      setShowCardHead(false)
-    } else {
-      setShowCardHead(true)
-    }
-  }
-
-  const handleFindMe = ({ lat, lng }) => {
-    const center = { lat, lng }
-    map.setZoom(15)
-    map.panTo(center)
-    mapCenterRef.current = center
-    meCenter.current = center
-  }
 
   if (!isReady) return <div>NotReady</div>
 
@@ -133,7 +128,11 @@ const UserStoreMap = () => {
           />
         ))}
         {mode === "MAP" && (
-          <SearchStoreList store={store} current={mapCenterRef.current} />
+          <SearchStoreList
+            store={store}
+            onSearch={handleSearch}
+            onClearPlaceId={clearPlaceId}
+          />
         )}
         {mode === "BOOKMARK" && <BookmarkListV2 />}
         {mode === "HIDDEN" && <HiddenListV2 />}

@@ -9,10 +9,8 @@ import {
   SearchHereContainer,
   StoreListContainer,
 } from "features/UserStoreMap/styled"
-import React, { useRef } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { clearKeyword, updateOptions } from "store/slices/map-search"
-import { updatePlaceId } from "store/slices/store"
+import React, { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -25,62 +23,47 @@ const calcSearchHereLeft = (stores, store) => {
   return leftMap.default
 }
 
-const SearchStoreList = ({ store, current }) => {
-  const dispatch = useDispatch()
-  const openTimeRef = useRef({})
+const INIT_OPTIONS = {
+  keyword: "",
+  openType: "NONE",
+  openWeek: null,
+  openHour: null,
+  go: false,
+}
+const SearchStoreList = ({ store, onSearch = () => {}, onClearPlaceId = () => {} }) => {
+  const [options, setOptions] = useState(INIT_OPTIONS)
   const [openDrawer, setOpenDrawer] = React.useState(false)
   const { stores, placeId } = useSelector((state) => state.store)
-  const mapCenterRef = useRef({
-    lat: 23.0042325,
-    lng: 120.2216038,
-  })
 
   const handleCloseDrawer = () => {
     setOpenDrawer(false)
-    clearPlaceId()
-  }
-
-  const clearPlaceId = () => {
-    dispatch(updatePlaceId(null))
   }
 
   const handleKeywordSearch = (keyword) => {
-    dispatch(
-      updateOptions({
-        ...mapCenterRef.current,
-        keyword,
-      })
-    )
-    clearPlaceId()
+    setOptions((cur) => ({ ...cur, keyword, go: true }))
   }
 
   const handleClear = () => {
-    dispatch(clearKeyword())
-    clearPlaceId()
+    setOptions((cur) => ({ ...cur, keyword: "", go: false }))
   }
 
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
-    let realOpenHour = openHour === "99" ? null : openHour
-    openTimeRef.current = {
+    const currentOpenTime = {
       openType,
       openWeek,
-      openHour: realOpenHour,
+      openHour: openHour === "99" ? null : openHour,
     }
-    updateOptions({
-      ...mapCenterRef.current,
-    })
+    setOptions((cur) => ({ ...cur, ...currentOpenTime, go: true }))
   }
 
   const handleSearch = () => {
-    dispatch(
-      updateOptions({
-        ...mapCenterRef.current,
-        ...current,
-      })
-    )
-
-    clearPlaceId()
+    setOptions((cur) => ({ ...cur,  go: true }))
   }
+
+  useEffect(() => {
+    onSearch(options)
+    onClearPlaceId()
+  }, [options, openDrawer])
 
   return (
     <>
