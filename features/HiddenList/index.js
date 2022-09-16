@@ -4,10 +4,10 @@ import useSWR from "swr"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { updateStores, changeMode, updatePlaceId } from "store/slices/store"
 import { fetcher } from "api"
-import StoreListV2 from "features/StoreListV2"
+import StoreList from "features/StoreList"
 import { Container, Head } from "./styled"
 
-const HiddenListV2 = () => {
+const HiddenList = () => {
   const { data: stores } = useSWR("/stores/hidden", fetcher)
   const dispatch = useDispatch()
 
@@ -27,9 +27,9 @@ const HiddenListV2 = () => {
         <ArrowBackIcon sx={{ cursor: "pointer" }} onClick={handleClose} />
         <h3>隱藏店家</h3>
       </Head>
-      <StoreListV2 stores={stores || []} />
+      <StoreList stores={stores || []} />
     </Container>
   )
 }
 
-export default HiddenListV2
+export default HiddenList

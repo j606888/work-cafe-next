@@ -8,10 +8,7 @@ const MeMarker = ({ map, lat, lng }) => {
     },
     icon: {
       url: '/me.svg',
-      // url: '/pins/blue-pin.svg',
       scaledSize: new google.maps.Size(22,22)
-      // scaledSize: new google.maps.Size(22, 32),
-
     }
   }
 

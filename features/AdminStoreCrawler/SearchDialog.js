@@ -1,31 +1,35 @@
 import * as React from "react"
 import Button from "@mui/material/Button"
 import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogContentText from "@mui/material/DialogContentText"
-import DialogTitle from "@mui/material/DialogTitle"
+import styled from "styled-components"
+
+const Container = styled.div`
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+`
 
 export default function SearchDialog({ open, handleClose, handleSearch }) {
   return (
     <Dialog
       open={open}
       onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-      PaperProps={{ sx: { position: 'fixed', top: '15%', left: '50%', transform: 'translateX(-50%)'}}}
+      PaperProps={{
+        sx: {
+          position: "fixed",
+          top: "15%",
+          left: "50%",
+          transform: "translateX(-50%)",
+        },
+      }}
     >
-      <DialogTitle id="alert-dialog-title">Want to search here?</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          The Max results is <b>30</b>, make sure your radius is not too wide
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleSearch} autoFocus>
-          Search
+      <Container>
+        <span>搜尋這兒？</span>
+        <Button onClick={handleSearch} autoFocus variant="contained">
+          GO
         </Button>
-      </DialogActions>
+      </Container>
     </Dialog>
   )
 }

@@ -1,23 +1,30 @@
-import GoogleMapWrapper from "features/GoogleMapWrapper"
-import React, { useRef } from "react"
-import { useEffect, useState, useReducer } from "react"
+import React, { useRef, useState, useReducer } from "react"
+import useSWR from "swr"
+import { fetcher } from "api"
 import styled from "styled-components"
+import GoogleMapWrapper from "features/GoogleMapWrapper"
+import MyLocation from "features/MyLocation"
 import ControlPanel from "./ControlPanel"
 import SearchDialog from "./SearchDialog"
-import Router, { useRouter } from "next/router"
 import Circle from "./Circle"
-import { createCrawlRecord, getCrawlRecords } from "api/map-crawlers"
-import { getCurrentPosition } from "utils/navigator"
+import { createCrawlRecord } from "api/map-crawlers"
+import useInitMap from "hooks/useInitMap"
 
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 64px);
+  z-index: -2;
+`
+
+const MyLocationContainer = styled.div`
+  position: absolute;
+  right: 0.5rem;
+  bottom: 7rem;
 `
 
 const INITIAL_STATE = {
   showArea: true,
   showModal: false,
-  allowRefresh: false,
   searchRadius: 100,
 }
 
@@ -33,11 +40,6 @@ const reducer = (state, action) => {
         ...state,
         showModal: !state.showModal,
       }
-    case "TOGGLE_REFRESH":
-      return {
-        ...state,
-        allowRefresh: action.payload.refresh,
-      }
     case "UPDATE_SEARCH_RADIUS":
       return {
         ...state,
@@ -49,46 +51,19 @@ const reducer = (state, action) => {
 }
 
 const AdminStoreCrawler = () => {
-  const [mapCrawlers, setMapCrawlers] = useState([])
-  const [map, setMap] = useState(null)
-  const [tempOptions, setTempOptions] = useState(null)
+  const { isReady, mapSettings, map, setMap } = useInitMap()
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
-  const myLocation = useRef(null)
   const tempRef = useRef(null)
-  const centerRef = useRef({
+  const [mapCenter, setMapCenter] = useState({
     lat: 23.546162,
     lng: 120.6402133,
-    zoom: 8,
   })
-  const router = useRouter()
+  const { data: mapCrawlers } = useSWR(["/admin/map-crawlers", { ...mapCenter }], fetcher)
 
-  // useEffect(() => {
-  //   async function trySetLocation() {
-  //     const already = await alreadyGranted()
-  //     if (!already) return
-
-  //     const { lat, lng } = await getCurrentPosition()
-  //     setMyLocation({
-  //       lat,
-  //       lng,
-  //       zoom: 14,
-  //     })
-  //   }
-
-  //   trySetLocation()
-  // }, [])
-
-  const handleFineMe = async () => {
-    if (!myLocation.current) {
-      const { lat, lng } = await getCurrentPosition()
-      myLocation.current = {
-        lat,
-        lng,
-      }
-    }
-
-    map.setCenter(myLocation.current)
-    map.setZoom(14)
+  const handleFindMe = ({ lat, lng }) => {
+    const center = { lat, lng }
+    map.setZoom(15)
+    map.panTo(center)
   }
 
   const handleSearch = async () => {
@@ -106,34 +81,14 @@ const AdminStoreCrawler = () => {
   }
 
   const handleOnIdle = (center) => {
-    centerRef.current = center
-    Router.push({ query: center })
-    dispatch({ type: "TOGGLE_REFRESH", payload: { refresh: true } })
+    setMapCenter(center)
   }
 
-  const callAPI = async () => {
-    const data = await getCrawlRecords(centerRef.current)
-    setMapCrawlers(data)
-    dispatch({ type: "TOGGLE_REFRESH", payload: { refresh: false } })
-  }
-
-  useEffect(() => {
-    const query = router.query
-
-    if (query.lng && query.lat && query.zoom) {
-      const { lng, lat, zoom } = query
-      centerRef.current = {
-        lat: +lat,
-        lng: +lng,
-        zoom: +zoom,
-      }
-    }
-    callAPI()
-  }, [])
-
-  const circles = mapCrawlers.map((mapCrawler) => (
+  const circles = mapCrawlers?.map((mapCrawler) => (
     <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
-  ))
+  )) || []
+
+  if (!isReady) return <div>NotReady</div>
 
   return (
     <Container>
@@ -144,20 +99,21 @@ const AdminStoreCrawler = () => {
         setRadius={(radius) =>
           dispatch({ type: "UPDATE_SEARCH_RADIUS", payload: { radius } })
         }
-        handleReload={() => callAPI()}
-        showButton={controls.allowRefresh}
-        handleFindMe={() => handleFineMe()}
       />
       <SearchDialog
         open={controls.showModal}
         handleClose={() => dispatch({ type: "TOGGLE_MODAL" })}
         handleSearch={handleSearch}
       />
+      <MyLocationContainer>
+        <MyLocation onClick={handleFindMe}/>
+      </MyLocationContainer>
       <GoogleMapWrapper
         map={map}
         setMap={setMap}
         onClick={handleOnClick}
         onIdle={handleOnIdle}
+        mapSettings={mapSettings}
         marginTop='64px' 
       >
         {controls.showArea && circles}

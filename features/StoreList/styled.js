@@ -23,4 +23,21 @@ export const Scrollbar = styled.div`
   overflow-y: scroll;
   height: 100vh;
   padding-top: 5rem;
+
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #eeeeee;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #666;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aaaaaa;
+  }
 `

@@ -1,7 +1,7 @@
 import { fetcher } from "api"
 import Snackbar from "components/Snackbar"
 import BookmarkList from "features/BookmarkList"
-import Bookmark from "features/BookmarkListV2/Bookmark"
+import Bookmark from "features/BookmarkTab/Bookmark"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import useSWR, { useSWRConfig } from "swr"
@@ -15,7 +15,7 @@ const BookmarkContainer = styled.div`
   z-index: 10;
 `
 
-const BookmarkListV2 = () => {
+const BookmarkListTab = () => {
   const [showSnackbar, setShowSnackbar] = useState(null)
   const [randomKey, setRandomKey] = useState(null)
   const { mutate } = useSWRConfig()
@@ -81,4 +81,4 @@ const BookmarkListV2 = () => {
   )
 }
 
-export default BookmarkListV2
+export default BookmarkListTab
