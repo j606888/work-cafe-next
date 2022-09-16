@@ -86,7 +86,7 @@ const UserMap = () => {
       {mode === "BOOKMARK" && <BookmarkListV2 />}
       {mode === "HIDDEN" && <HiddenListV2 />}
       {mode === "REVIEW" && <ReviewList />}
-      {store && (
+      {stores && store && (
         <StoreDetailContainer onScroll={handleScroll}>
           <StoreDetail
             {...store}
