@@ -30,7 +30,7 @@ const lists = [
   },
   {
     text: "GoogleMap",
-    url: "/map",
+    url: "/",
     icon: <MapIcon />,
   },
   {

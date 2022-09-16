@@ -44,7 +44,7 @@ const UserStoreMap = () => {
   const handleOnIdle = ({ lat, lng, zoom }) => {
     const mapPath = `@${lat},${lng},${zoom}z`
     Router.push({
-      pathname: `/map/${mapPath}`,
+      pathname: `/${mapPath}`,
     })
     localStorage.setItem("lastLocation", mapPath)
     mapCenterRef.current = { lat, lng }
