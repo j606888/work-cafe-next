@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { updatePlaceId, updateFocusPlaceId } from "store/slices/store"
 import { Container, Scrollbar } from "./styled"
 
-export default function StoreListV2({ stores = [] }) {
+export default function StoreList({ stores = [] }) {
   const dispatch = useDispatch()
   const { placeId } = useSelector((state) => state.store)
 

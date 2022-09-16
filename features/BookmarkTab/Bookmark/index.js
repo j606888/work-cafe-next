@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import StoreListV2 from "features/StoreListV2"
+import StoreList from "features/StoreList"
 
 const Container = styled.div`
   height: 100vh;
@@ -32,7 +32,7 @@ const Bookmark = ({ stores = [], onBack = () => {} }) => {
         <ArrowBackIcon sx={{ cursor: "pointer" }} onClick={onBack} />
         <h3>已儲存</h3>
       </Head>
-      <StoreListV2 stores={stores || []} />
+      <StoreList stores={stores || []} />
     </Container>
   )
 }

@@ -48,7 +48,7 @@ function reducer(state, action) {
   }
 }
 
-const OpenTimeV2 = ({ onChange = () => {} }) => {
+const OpenTime = ({ onChange = () => {} }) => {
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE)
   const cacheState = React.useRef(INITIAL_STATE)
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -110,4 +110,4 @@ const OpenTimeV2 = ({ onChange = () => {} }) => {
   )
 }
 
-export default OpenTimeV2
+export default OpenTime

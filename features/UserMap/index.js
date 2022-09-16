@@ -7,10 +7,10 @@ import Marker from "features/GoogleMapWrapper/Marker"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import StoreDetail from "features/StoreDetail"
 import { StoreDetailContainer, MyLocationContainer } from "./styled"
-import BookmarkListV2 from "features/BookmarkListV2"
+import BookmarkTab from "features/BookmarkTab"
 import { useSelector, useDispatch } from "react-redux"
 import { updatePlaceId } from "store/slices/store"
-import HiddenListV2 from "features/HiddenListV2"
+import HiddenList from "features/HiddenList"
 import ReviewList from "features/ReviewList"
 import useInitMap from "hooks/useInitMap"
 import MyLocation from "features/MyLocation"
@@ -83,8 +83,8 @@ const UserMap = () => {
       {mode === "MAP" && (
         <SearchStoreList store={store} mapCenter={map?.center?.toJSON()} />
       )}
-      {mode === "BOOKMARK" && <BookmarkListV2 />}
-      {mode === "HIDDEN" && <HiddenListV2 />}
+      {mode === "BOOKMARK" && <BookmarkTab />}
+      {mode === "HIDDEN" && <HiddenList />}
       {mode === "REVIEW" && <ReviewList />}
       {stores && store && (
         <StoreDetailContainer onScroll={handleScroll}>

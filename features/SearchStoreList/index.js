@@ -1,8 +1,8 @@
 import { fetcher } from "api"
 import SearchHere from "components/Button/SearchHere"
-import OpenTimeV2 from "features/OpenTimeV2"
+import OpenTime from "features/OpenTime"
 import SearchbarV2 from "features/SearchbarV2"
-import StoreListV2 from "features/StoreListV2"
+import StoreList from "features/StoreList"
 import UserDrawer from "features/UserDrawer"
 import {
   MenuContainer,
@@ -89,13 +89,13 @@ const SearchStoreList = ({ store, mapCenter }) => {
         />
       </SearchbarV2Container>
       <MenuContainer>
-        <OpenTimeV2 onChange={handleOpenTimeChange} />
+        <OpenTime onChange={handleOpenTimeChange} />
       </MenuContainer>
       <SearchHereContainer left={calcSearchHereLeft(stores, store)}>
         <SearchHere onClick={handleSearch} />
       </SearchHereContainer>
       <StoreListContainer>
-        <StoreListV2 stores={stores || []} />
+        <StoreList stores={stores || []} />
       </StoreListContainer>
     </>
   )
