@@ -10,6 +10,7 @@ import {
   ButtonGroup,
   GoogleReviews,
   StickyHeader,
+  UploadPhotoContainer,
 } from "./styled"
 import storeApi from "api/stores"
 import SortIcon from "@mui/icons-material/Sort"
@@ -27,6 +28,7 @@ import useAuthCheck from "hooks/useAuthCheck"
 import ReviewForm from "features/ReviewForm"
 import ReviewsBlock from "./ReviewsBlock"
 import ReviewCard from "./ReviewCard"
+import StorePhotoUpload from "./StorePhotoUpload"
 
 const StoreDetail = ({
   id,
@@ -149,6 +151,9 @@ const StoreDetail = ({
           openingHours={openingHours}
         />
         <Divider />
+        <UploadPhotoContainer>
+          <StorePhotoUpload placeId={placeId} name={name} onSuccess={() => onRefresh(placeId)} />
+        </UploadPhotoContainer>
         <ReviewsBlock reviewReport={reviewReport} />
         <Divider />
         <GoogleReviews>

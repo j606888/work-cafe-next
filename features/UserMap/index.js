@@ -11,7 +11,7 @@ import BookmarkTab from "features/BookmarkTab"
 import { useSelector, useDispatch } from "react-redux"
 import { updatePlaceId } from "store/slices/store"
 import HiddenList from "features/HiddenList"
-import ReviewList from "features/ReviewList"
+import ContributeList from "features/ContributeList"
 import useInitMap from "hooks/useInitMap"
 import MyLocation from "features/MyLocation"
 import MeMarker from "features/MyLocation/MeMarker"
@@ -85,7 +85,7 @@ const UserMap = () => {
       )}
       {mode === "BOOKMARK" && <BookmarkTab />}
       {mode === "HIDDEN" && <HiddenList />}
-      {mode === "REVIEW" && <ReviewList />}
+      {mode === "REVIEW" && <ContributeList />}
       {stores && store && (
         <StoreDetailContainer onScroll={handleScroll}>
           <StoreDetail

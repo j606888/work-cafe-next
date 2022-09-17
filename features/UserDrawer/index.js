@@ -37,7 +37,7 @@ export default function UserDrawer({ open, onClose = () => {} }) {
             </div>
             <div onClick={() => handleChangeMode("REVIEW")}>
               <RateReviewOutlinedIcon />
-              <span>你的評論</span>
+              <span>你的貢獻</span>
             </div>
             <div onClick={() => handleChangeMode("HIDDEN")}>
               <VisibilityOffOutlinedIcon />
