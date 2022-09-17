@@ -1,14 +1,15 @@
 import { fetcher } from "api"
 import React from "react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { changeMode, updateFocusPlaceId, updatePlaceId, updateStores } from "store/slices/store"
 import useSWR from "swr"
-import { Container, Head, ListContainer } from "./styled"
+import { Container, Head, ListContainer, Tabs, Tab } from "./styled"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ReviewStoreCard from "./ReviewStoreCard"
 
 const ReviewList = () => {
+  const [tab, setTab] = useState("review")
   const { data } = useSWR("/reviews", fetcher)
   const dispatch = useDispatch()
 
@@ -37,8 +38,12 @@ const ReviewList = () => {
     <Container>
       <Head>
         <ArrowBackIcon sx={{ cursor: "pointer" }} onClick={handleClose} />
-        <h3>你的評論</h3>
+        <h3>你的貢獻</h3>
       </Head>
+      <Tabs>
+        <Tab active={tab === "review"} onClick={() => setTab("review")}>評論</Tab>
+        <Tab active={tab === "storePhoto"} onClick={() => setTab("storePhoto")}>照片</Tab>
+      </Tabs>
       <ListContainer>
         {data?.reviews.map((review) => (
           <ReviewStoreCard key={review.id} {...review} 
