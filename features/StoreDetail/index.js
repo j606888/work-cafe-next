@@ -152,7 +152,7 @@ const StoreDetail = ({
         />
         <Divider />
         <UploadPhotoContainer>
-          <StorePhotoUpload placeId={placeId} name={name} />
+          <StorePhotoUpload placeId={placeId} name={name} onSuccess={() => onRefresh(placeId)} />
         </UploadPhotoContainer>
         <ReviewsBlock reviewReport={reviewReport} />
         <Divider />

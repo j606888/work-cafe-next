@@ -5,7 +5,7 @@ import { Container } from "./styled"
 import UploadSuccess from "./UploadSuccess"
 import UploadForm from "./UploadForm"
 
-const StorePhotoUpload = ({ placeId, name }) => {
+const StorePhotoUpload = ({ placeId, name, onSuccess = () => {} }) => {
   const [open, setOpen] = useState(false)
   const [finish, setFinish] = useState(false)
 
@@ -15,6 +15,7 @@ const StorePhotoUpload = ({ placeId, name }) => {
 
   const handleSuccess = () => {
     setFinish(true)
+    onSuccess()
   }
 
   return (
