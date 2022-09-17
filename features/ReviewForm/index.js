@@ -15,6 +15,7 @@ import { Form, Scroll, Buttons } from "./styled"
 import ReviewApi from "api/review"
 import Snackbar from "components/Snackbar"
 import StoreApi from "api/stores"
+import Uploader from "./Uploader"
 
 const option = (value, label) => ({
   value,
@@ -96,6 +97,7 @@ const ReviewForm = ({
       <Dialog open={open} onClose={handleClose}>
         <Form>
           <h3>{name}</h3>
+          <Uploader placeId={placeId} />
           <Scroll>
             <RecommendBlock onChange={handleRecommendChange} />
             {showAlsoHide && (
