@@ -19,12 +19,6 @@ export const Head = styled.div`
   gap: 1rem;
 `
 
-export const ListContainer = styled.div`
-  height: calc(100vh - 80px);
-  overflow-y: scroll;
-  width: 374px;
-`
-
 export const Tabs = styled.div`
   display: flex;
 `
@@ -32,9 +26,11 @@ export const Tabs = styled.div`
 export const Tab = styled.div`
   flex: 1;
   text-align: center;
-  padding: 0.6rem;
+  height: 48px;
   border-bottom: 3px solid #ccc;
+  line-height: 48px;
   cursor: pointer;
+  box-sizing: border-box;
 
   ${({ active }) => (active ? activeTab : inactiveTab)}
 `
