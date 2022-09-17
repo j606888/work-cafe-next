@@ -48,7 +48,11 @@ const ImageSlide = ({ photos=[] }) => {
       <Slide {...slideArgs}>
         {photos.map((image, index) => (
           <div className="each-slide" key={index}>
-            <div style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover'}}></div>
+            <div style={{ 
+              backgroundImage: `url(${image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}></div>
           </div>
         ))}
       </Slide>

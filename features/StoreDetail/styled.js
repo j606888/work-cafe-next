@@ -25,6 +25,11 @@ export const CloseButton = styled.div`
   }
 `
 
+export const UploadPhotoContainer = styled.div`
+  text-align: center;
+  margin-top: 1rem;
+`
+
 export const MainInfo = styled.div`
   padding: 1rem 1.5rem;
 
