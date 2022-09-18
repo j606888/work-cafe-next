@@ -11,7 +11,7 @@ import {
   StoreListContainer,
 } from "features/UserMap/styled"
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { updatePlaceId, updateStores } from "store/slices/store"
 import useSWR from "swr"
 
@@ -41,7 +41,8 @@ const SearchStoreList = ({ store, mapCenter }) => {
     lat: 23.0042325,
     lng: 120.2216038,
   })
-  const { data: stores } = useSWR(
+  const { stores } = useSelector((state) => state.store)
+  const { data } = useSWR(
     options?.go ? ["/stores/location", { ...options, ...center, limit: 20 }] : null,
     fetcher
   )
@@ -53,6 +54,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, keyword, go: true }))
   }
   const handleClear = () => {
+    dispatch(updateStores([]))
     setOptions((cur) => ({ ...cur, keyword: "", go: false }))
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
@@ -73,8 +75,8 @@ const SearchStoreList = ({ store, mapCenter }) => {
   }, [options, openDrawer])
 
   useEffect(() => {
-    dispatch(updateStores(stores || []))
-  }, [stores, dispatch])
+    if (data) dispatch(updateStores(data))
+  }, [data, dispatch])
 
 
   return (

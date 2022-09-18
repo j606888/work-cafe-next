@@ -2,7 +2,7 @@ import { Avatar, Divider } from "@mui/material"
 import Link from "next/link"
 import React from "react"
 import SettingsIcon from "@mui/icons-material/Settings"
-import ChildCareIcon from "@mui/icons-material/ChildCare"
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { Container, Header, Body, Button } from "./styled"
 
 const LoginMenu = ({ avatar_url, email, name, role, onLogout = () => {} }) => {
@@ -22,12 +22,14 @@ const LoginMenu = ({ avatar_url, email, name, role, onLogout = () => {} }) => {
       </Header>
       <Divider />
       <Body>
-        <Link href="/admin/dashboard">
-          <a className="link">
-            <ChildCareIcon />
-            後台管理
-          </a>
-        </Link>
+        {role === 'admin' && (
+          <Link href="/admin/dashboard">
+            <a className="link">
+              <SupervisorAccountIcon />
+              後台管理
+            </a>
+          </Link>
+        )}
         <Link href="/admin/dashboard">
           <a className="link">
             <SettingsIcon />
