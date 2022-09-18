@@ -77,7 +77,6 @@ const RecommendBlock = ({ onChange = () => {}, initFace }) => {
         <FaceRadio
           key={value}
           selectedValue={selectedValue}
-          defaultCheck={initFace}
           icon={icon}
           value={value}
           label={label}

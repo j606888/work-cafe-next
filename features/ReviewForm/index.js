@@ -91,14 +91,15 @@ const ReviewForm = ({
   }
 
   const showAlsoHide = data.recommend === "no" && !isHide
+  const initFace = (typeof open === 'string') ? open : myReview?.recommend
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={!!open} onClose={handleClose}>
         <Form>
           <h3>{name}</h3>
           <Scroll>
-            <RecommendBlock onChange={handleRecommendChange} initFace={myReview?.recommend || open} />
+            <RecommendBlock onChange={handleRecommendChange} initFace={initFace} />
             {showAlsoHide && (
               <FormControlLabel
                 control={
