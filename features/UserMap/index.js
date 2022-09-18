@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react"
 import Router from "next/router"
 import _ from "lodash"
 import useSWR from "swr"
-import { fetcher } from "api"
 import Marker from "features/GoogleMapWrapper/Marker"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import StoreDetail from "features/StoreDetail"
@@ -19,9 +18,9 @@ import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 
 const calcCenter = (stores) => {
-  const lats = stores.map(store => store.lat)
-  const lngs = stores.map(store => store.lng)
-  
+  const lats = stores.map((store) => store.lat)
+  const lngs = stores.map((store) => store.lng)
+
   return {
     lat: _.mean(lats),
     lng: _.mean(lngs),
@@ -36,8 +35,7 @@ const UserMap = () => {
   )
   const myLocation = useRef(null)
   const { data: store, mutate: mutateStore } = useSWR(
-    placeId ? `/stores/${placeId}` : null,
-    fetcher
+    placeId ? `/stores/${placeId}` : null
   )
 
   const handleOnIdle = ({ lat, lng, zoom }) => {
@@ -88,7 +86,6 @@ const UserMap = () => {
       map.panTo(storesCenter)
       if (map.zoom < 15) {
         map.setZoom(15)
-
       }
     }
   }, [stores])

@@ -8,7 +8,6 @@ import {
   updatePlaceId,
   updateStores,
 } from "store/slices/store"
-import { fetcher } from "api"
 
 export const ListContainer = styled.div`
   height: calc(100vh - 80px - 48px);
@@ -17,7 +16,7 @@ export const ListContainer = styled.div`
 `
 
 const ReviewList = () => {
-  const { data } = useSWR("/reviews", fetcher)
+  const { data } = useSWR("/reviews")
   const dispatch = useDispatch()
 
   const handleClick = (placeId) => {

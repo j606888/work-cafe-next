@@ -1,4 +1,3 @@
-import { fetcher } from "api"
 import SearchHere from "components/Button/SearchHere"
 import OpenTime from "features/OpenTime"
 import SearchbarV2 from "features/SearchbarV2"
@@ -43,8 +42,9 @@ const SearchStoreList = ({ store, mapCenter }) => {
   })
   const { stores } = useSelector((state) => state.store)
   const { data } = useSWR(
-    options?.go ? ["/stores/location", { ...options, ...center, limit: 20 }] : null,
-    fetcher
+    options?.go
+      ? ["/stores/location", { ...options, ...center, limit: 20 }]
+      : null
   )
 
   const handleCloseDrawer = () => {
@@ -67,7 +67,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, ...currentOpenTime, go: true }))
   }
   const handleSearch = () => {
-    setOptions((cur) => ({ ...cur,  go: true }))
+    setOptions((cur) => ({ ...cur, go: true }))
     setCenter(mapCenter)
   }
 

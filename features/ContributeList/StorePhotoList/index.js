@@ -1,4 +1,3 @@
-import { fetcher } from "api"
 import React from "react"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -18,7 +17,7 @@ const Container = styled.div`
 `
 
 const StorePhotoList = () => {
-  const { data } = useSWR("/store-photos", fetcher)
+  const { data } = useSWR("/store-photos")
   const dispatch = useDispatch()
 
   const handleClick = (placeId) => {
