@@ -14,6 +14,7 @@ export const FaceBlock = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    cursor: pointer;
 
     svg {
       font-size: 48px;

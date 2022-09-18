@@ -6,6 +6,7 @@ import {
 } from "@mui/icons-material"
 import { Radio } from "@mui/material"
 import { Container, RadioContainer } from "./styled"
+import { useEffect } from "react"
 
 const FaceRadio = ({
   selectedValue,
@@ -55,7 +56,7 @@ const OPTIONS = [
   },
 ]
 
-const RecommendBlock = ({ onChange = () => {} }) => {
+const RecommendBlock = ({ onChange = () => {}, initFace }) => {
   const [selectedValue, setSelectedValue] = React.useState(null)
 
   const handleChange = (value) => {
@@ -63,12 +64,20 @@ const RecommendBlock = ({ onChange = () => {} }) => {
     onChange(value)
   }
 
+  useEffect(() => {
+    if (initFace !== true && initFace !== false) {
+      setSelectedValue(initFace)
+      onChange(initFace)
+    }
+  }, [initFace])
+
   return (
     <Container>
       {OPTIONS.map(({ value, icon, label, color }) => (
         <FaceRadio
           key={value}
           selectedValue={selectedValue}
+          defaultCheck={initFace}
           icon={icon}
           value={value}
           label={label}

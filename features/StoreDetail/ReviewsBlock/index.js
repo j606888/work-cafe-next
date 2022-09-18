@@ -7,12 +7,7 @@ import {
 import _ from "lodash"
 import { Divider } from "@mui/material"
 import ProgressLabel from "components/ProgressLabel"
-import {
-  Container,
-  FaceBlock,
-  DetailContainer,
-  Details,
-} from "./styled"
+import { Container, FaceBlock, DetailContainer, Details } from "./styled"
 import { ReviewWords } from "constant/i18n"
 
 const DetailPart = ({ name, en, scores = {} }) => {
@@ -44,21 +39,25 @@ const DetailPart = ({ name, en, scores = {} }) => {
   )
 }
 
-const ReviewsBlock = ({ reviewReport }) => {
+const ReviewsBlock = ({ reviewReport, onClick = () => {} }) => {
   const recommend = reviewReport.recommend
+
+  const handleClick = (score) => {
+    onClick(score)
+  }
 
   return (
     <Container>
       <FaceBlock>
-        <div>
+        <div onClick={() => handleClick("no")}>
           <BadFace sx={{ color: "#E53935" }} />
           <span>{recommend.no}</span>
         </div>
-        <div>
+        <div onClick={() => handleClick("normal")}>
           <NormalFace sx={{ color: "#FFC107" }} />
           <span>{recommend.normal}</span>
         </div>
-        <div>
+        <div onClick={() => handleClick("yes")}>
           <HappyFace sx={{ color: "#00897B" }} />
           <span>{recommend.yes}</span>
         </div>

@@ -86,6 +86,10 @@ const StoreDetail = ({
     authCheck()
     setOpenReview(true)
   }
+  const handleFaceClick = (recommend) => {
+    authCheck()
+    setOpenReview(recommend)
+  }
   const handleOpenGoogle = () => {
     window.open(url)
   }
@@ -154,7 +158,7 @@ const StoreDetail = ({
         <UploadPhotoContainer>
           <StorePhotoUpload placeId={placeId} name={name} onSuccess={() => onRefresh(placeId)} />
         </UploadPhotoContainer>
-        <ReviewsBlock reviewReport={reviewReport} />
+        <ReviewsBlock reviewReport={reviewReport} onClick={handleFaceClick} />
         <Divider />
         <GoogleReviews>
           <div className="review-header">

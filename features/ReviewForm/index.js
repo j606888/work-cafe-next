@@ -97,7 +97,7 @@ const ReviewForm = ({
         <Form>
           <h3>{name}</h3>
           <Scroll>
-            <RecommendBlock onChange={handleRecommendChange} />
+            <RecommendBlock onChange={handleRecommendChange} initFace={open} />
             {showAlsoHide && (
               <FormControlLabel
                 control={
