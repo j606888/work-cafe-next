@@ -41,7 +41,9 @@ const UserMap = () => {
   )
 
   const handleOnIdle = ({ lat, lng, zoom }) => {
-    const mapPath = `@${lat},${lng},${zoom}z`
+    const mapPath = [`@${lat},${lng},${zoom}z`, placeId]
+      .filter(Boolean)
+      .join("/")
     Router.push({
       pathname: `/${mapPath}`,
     })
@@ -134,6 +136,14 @@ const UserMap = () => {
             onClick={handleRefreshStore}
           />
         ))}
+        {stores?.length === 0 && store && (
+          <Marker
+            store={store}
+            focus={store.placeId === placeId}
+            bounce={store.placeId === bouncePlaceId}
+            onClick={handleRefreshStore}
+          />
+        )}
       </GoogleMapWrapper>
     </>
   )

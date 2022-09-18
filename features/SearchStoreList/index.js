@@ -55,6 +55,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
   }
   const handleClear = () => {
     dispatch(updateStores([]))
+    dispatch(updatePlaceId(null))
     setOptions((cur) => ({ ...cur, keyword: "", go: false }))
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
@@ -69,10 +70,6 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur,  go: true }))
     setCenter(mapCenter)
   }
-
-  useEffect(() => {
-    dispatch(updatePlaceId(null))
-  }, [options, openDrawer])
 
   useEffect(() => {
     if (data) {
