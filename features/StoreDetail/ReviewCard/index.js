@@ -1,6 +1,12 @@
-import { Avatar, Chip, Divider } from "@mui/material"
-import React from "react"
-import FaceIcon from "components/FaceIcon"
+import {
+  Avatar,
+  Chip,
+  Divider,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material"
+import React, { useState } from "react"
 import VolumeUpIcon from "@mui/icons-material/VolumeUp"
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
 import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices"
@@ -8,6 +14,7 @@ import { Container, FaceContainer, TagsContainer } from "./styled"
 import { ReviewWords } from "constant/i18n"
 import FaceIconGroup from "components/FaceIconGroup"
 import useTimeAgo from "hooks/useTimeAgo"
+import { MoreVert as MoreVertIcon } from "@mui/icons-material"
 
 const FACE_MAP = {
   yes: "happy",
@@ -40,8 +47,19 @@ const ReviewCard = ({
   socketSupply,
   createdAt,
   noDivider = false,
+  isOwner = false,
+  onDelete = () => {},
 }) => {
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
   const timeAgo = useTimeAgo()
+
+  const handleOpenMenu = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleCloseMenu = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <>
@@ -55,7 +73,7 @@ const ReviewCard = ({
           <span>{userName}111</span>
         </div>
         <FaceContainer>
-          <FaceIconGroup mood={FACE_MAP[recommend]}/>
+          <FaceIconGroup mood={FACE_MAP[recommend]} />
           <span>{timeAgo(createdAt)}</span>
         </FaceContainer>
         <TagsContainer>
@@ -64,6 +82,19 @@ const ReviewCard = ({
           <IconChip type="socketSupply" value={socketSupply} />
         </TagsContainer>
         <p>{description}</p>
+        {isOwner && (
+          <>
+            <IconButton
+              sx={{ position: "absolute", top: 0, right: 10 }}
+              onClick={handleOpenMenu}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu}>
+              <MenuItem onClick={onDelete}>刪除評論</MenuItem>
+            </Menu>
+          </>
+        )}
       </Container>
       {!noDivider && <Divider />}
     </>

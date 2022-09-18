@@ -33,6 +33,7 @@ import StorePhotoUpload from "./StorePhotoUpload"
 import { useEffect } from "react"
 import Chip from "components/Chip"
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined"
+import ReviewApi from "api/review"
 
 const StoreDetail = ({
   id,
@@ -104,6 +105,11 @@ const StoreDetail = ({
   }
   const handleOpenGoogle = () => {
     window.open(url)
+  }
+  const handleDeleteReview = async () => {
+    await ReviewApi.deleteMyReview({ placeId })
+    onRefresh(placeId)
+    myReviewMutate()
   }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
@@ -182,7 +188,7 @@ const StoreDetail = ({
               <div className="review-header">
                 <h4>你的評論</h4>
               </div>
-              <ReviewCard {...myReview} noDivider />
+              <ReviewCard {...myReview} noDivider isOwner onDelete={handleDeleteReview}/>
             </GoogleReviews>
             <ChipContainer>
               <Chip text="編輯你的評論" onClick={handleOpenReview}>
