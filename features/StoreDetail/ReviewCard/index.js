@@ -6,6 +6,8 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
 import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices"
 import { Container, FaceContainer, TagsContainer } from "./styled"
 import { ReviewWords } from "constant/i18n"
+import FaceIconGroup from "components/FaceIconGroup"
+import useTimeAgo from "hooks/useTimeAgo"
 
 const FACE_MAP = {
   yes: "happy",
@@ -36,8 +38,11 @@ const ReviewCard = ({
   roomVolume,
   timeLimit,
   socketSupply,
+  createdAt,
   noDivider = false,
 }) => {
+  const timeAgo = useTimeAgo()
+
   return (
     <>
       <Container>
@@ -47,11 +52,12 @@ const ReviewCard = ({
             sx={{ width: 28, height: 28, mr: 1.5 }}
             src={userAvatarUrl}
           />
-          <span>{userName}</span>
-          <FaceContainer>
-            <FaceIcon size={48} type={FACE_MAP[recommend]} />
-          </FaceContainer>
+          <span>{userName}111</span>
         </div>
+        <FaceContainer>
+          <FaceIconGroup mood={FACE_MAP[recommend]}/>
+          <span>{timeAgo(createdAt)}</span>
+        </FaceContainer>
         <TagsContainer>
           <IconChip type="roomVolume" value={roomVolume} />
           <IconChip type="timeLimit" value={timeLimit} />

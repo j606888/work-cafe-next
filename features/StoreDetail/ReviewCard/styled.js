@@ -10,7 +10,6 @@ export const Container = styled.div`
   .user-info {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
 
     span {
       font-size: 14px;
@@ -26,9 +25,15 @@ export const Container = styled.div`
 `
 
 export const FaceContainer = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 16px;
+  margin-bottom: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  span {
+    font-size: 12px;
+    color: #333;
+  }
 `
 
 export const TagsContainer = styled.div`

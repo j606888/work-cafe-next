@@ -1,5 +1,4 @@
 import { Avatar, Chip, Divider } from "@mui/material"
-import FaceIcon from "components/FaceIcon"
 import React from "react"
 import VolumeUpIcon from "@mui/icons-material/VolumeUp"
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
@@ -14,6 +13,7 @@ import {
   TagsContainer,
   MoreContainer,
 } from "./styled"
+import FaceIconGroup from "components/FaceIconGroup"
 
 const FACE_MAP = {
   yes: "happy",
@@ -79,7 +79,7 @@ const ReviewStoreCard = ({
           </div>
         </InfoBox>
         <ScoreDateBox>
-          <FaceIcon size={32} type={FACE_MAP[recommend]} />
+          <FaceIconGroup mood={FACE_MAP[recommend]} />
           <span>{timeAgo(createdAt)}</span>
         </ScoreDateBox>
         <TagsContainer>

@@ -11,7 +11,7 @@ export const FaceBlock = styled.div`
 
   & > div {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
