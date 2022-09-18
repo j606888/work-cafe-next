@@ -18,6 +18,15 @@ import MeMarker from "features/MyLocation/MeMarker"
 import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 
+const calcCenter = (stores) => {
+  const lats = stores.map(store => store.lat)
+  const lngs = stores.map(store => store.lng)
+  
+  return {
+    lat: _.mean(lats),
+    lng: _.mean(lngs),
+  }
+}
 const UserMap = () => {
   const dispatch = useDispatch()
   const { isReady, mapSettings, map, setMap } = useInitMap()
@@ -69,6 +78,18 @@ const UserMap = () => {
       map.panBy(-400, 0)
     }
   }, [store])
+
+  // Need to Optimize, if go to city center will be better
+  useEffect(() => {
+    if (stores && stores.length > 0 && map) {
+      const storesCenter = calcCenter(stores)
+      map.panTo(storesCenter)
+      if (map.zoom < 15) {
+        map.setZoom(15)
+
+      }
+    }
+  }, [stores])
 
   if (!isReady) return <Skeleton />
 

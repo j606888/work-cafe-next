@@ -75,7 +75,13 @@ const SearchStoreList = ({ store, mapCenter }) => {
   }, [options, openDrawer])
 
   useEffect(() => {
-    if (data) dispatch(updateStores(data))
+    if (data) {
+      dispatch(updateStores(data))
+      if (data.length === 1) {
+        const placeId = data[0].placeId
+        dispatch(updatePlaceId(placeId))
+      }
+    }
   }, [data, dispatch])
 
   return (
