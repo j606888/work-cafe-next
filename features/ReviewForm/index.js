@@ -56,6 +56,7 @@ const ReviewForm = ({
   open,
   name,
   isHide = false,
+  myReview,
   onClose = () => {},
   onSave = () => {},
 }) => {
@@ -90,14 +91,15 @@ const ReviewForm = ({
   }
 
   const showAlsoHide = data.recommend === "no" && !isHide
+  const initFace = (typeof open === 'string') ? open : myReview?.recommend
 
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={!!open} onClose={handleClose}>
         <Form>
           <h3>{name}</h3>
           <Scroll>
-            <RecommendBlock onChange={handleRecommendChange} />
+            <RecommendBlock onChange={handleRecommendChange} initFace={initFace} />
             {showAlsoHide && (
               <FormControlLabel
                 control={
@@ -115,6 +117,7 @@ const ReviewForm = ({
               multiline
               fullWidth
               rows={4}
+              defaultValue={myReview?.description}
               placeholder="說明你在這間店的體驗"
               onChange={(e) => handleChange("description", e.target.value)}
             />
@@ -122,6 +125,7 @@ const ReviewForm = ({
               <FormControl key={name}>
                 <FormLabel>{label}</FormLabel>
                 <RadioGroup
+                  defaultValue={myReview?.[name]}
                   name={name}
                   onChange={(event) => handleChange(name, event.target.value)}
                 >

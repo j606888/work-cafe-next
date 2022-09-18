@@ -11,6 +11,7 @@ import {
   GoogleReviews,
   StickyHeader,
   UploadPhotoContainer,
+  ChipContainer,
 } from "./styled"
 import storeApi from "api/stores"
 import SortIcon from "@mui/icons-material/Sort"
@@ -29,6 +30,10 @@ import ReviewForm from "features/ReviewForm"
 import ReviewsBlock from "./ReviewsBlock"
 import ReviewCard from "./ReviewCard"
 import StorePhotoUpload from "./StorePhotoUpload"
+import { useEffect } from "react"
+import Chip from "components/Chip"
+import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined"
+import ReviewApi from "api/review"
 
 const StoreDetail = ({
   id,
@@ -59,7 +64,14 @@ const StoreDetail = ({
     userIsLogin() ? `/stores/${placeId}/bookmarks` : null,
     fetcher
   )
-  const { data: reviews } = useSWR(`/stores/${placeId}/reviews`, fetcher)
+  const { data: reviews, mutate: reviewsMutate } = useSWR(
+    `/stores/${placeId}/reviews`,
+    fetcher
+  )
+  const { data: myReview, mutate: myReviewMutate } = useSWR(
+    `/stores/${placeId}/reviews/me`,
+    fetcher
+  )
   const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
@@ -79,15 +91,25 @@ const StoreDetail = ({
     dispatch(updatePlaceId(null))
   }
   const refreshReview = () => {
-    mutate(`/stores/${placeId}/reviews`)
+    reviewsMutate()
+    myReviewMutate()
     onRefresh(placeId)
   }
   const handleOpenReview = () => {
     authCheck()
     setOpenReview(true)
   }
+  const handleFaceClick = (recommend) => {
+    authCheck()
+    setOpenReview(recommend)
+  }
   const handleOpenGoogle = () => {
     window.open(url)
+  }
+  const handleDeleteReview = async () => {
+    await ReviewApi.deleteMyReview({ placeId })
+    onRefresh(placeId)
+    myReviewMutate()
   }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
 
@@ -152,10 +174,30 @@ const StoreDetail = ({
         />
         <Divider />
         <UploadPhotoContainer>
-          <StorePhotoUpload placeId={placeId} name={name} onSuccess={() => onRefresh(placeId)} />
+          <StorePhotoUpload
+            placeId={placeId}
+            name={name}
+            onSuccess={() => onRefresh(placeId)}
+          />
         </UploadPhotoContainer>
-        <ReviewsBlock reviewReport={reviewReport} />
+        <ReviewsBlock reviewReport={reviewReport} onClick={handleFaceClick} />
         <Divider />
+        {myReview && (
+          <>
+            <GoogleReviews>
+              <div className="review-header">
+                <h4>你的評論</h4>
+              </div>
+              <ReviewCard {...myReview} noDivider isOwner onDelete={handleDeleteReview}/>
+            </GoogleReviews>
+            <ChipContainer>
+              <Chip text="編輯你的評論" onClick={handleOpenReview}>
+                <RateReviewOutlinedIcon />
+              </Chip>
+            </ChipContainer>
+            <Divider />
+          </>
+        )}
         <GoogleReviews>
           <div className="review-header">
             <h4>評論</h4>
@@ -191,6 +233,7 @@ const StoreDetail = ({
         onClose={() => setOpenReview(false)}
         onSave={refreshReview}
         isHide={isHide}
+        myReview={myReview}
       />
     </>
   )

@@ -14,7 +14,7 @@ export const Container = styled.div`
 
   p {
     white-space: pre-line;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     font-size: 14px;
     line-height: 150%;
   }

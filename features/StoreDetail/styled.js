@@ -125,3 +125,8 @@ export const StickyHeader = styled.div`
     font-weight: 500;
   }
 `
+
+export const ChipContainer = styled.div`
+  text-align: center;
+  margin-bottom: 1rem;
+`
