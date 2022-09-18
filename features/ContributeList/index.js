@@ -17,6 +17,12 @@ const ContributeList = () => {
     dispatch(changeMode("MAP"))
   }
 
+  const handleChangeTab = (targetTab) => {
+    dispatch(updateStores([]))
+    dispatch(updatePlaceId(null))
+    setTab(targetTab)
+  }
+
   return (
     <Container>
       <Head>
@@ -24,8 +30,8 @@ const ContributeList = () => {
         <h3>你的貢獻</h3>
       </Head>
       <Tabs>
-        <Tab active={tab === "review"} onClick={() => setTab("review")}>評論</Tab>
-        <Tab active={tab === "storePhoto"} onClick={() => setTab("storePhoto")}>照片</Tab>
+        <Tab active={tab === "review"} onClick={() => handleChangeTab("review")}>評論</Tab>
+        <Tab active={tab === "storePhoto"} onClick={() => handleChangeTab("storePhoto")}>照片</Tab>
       </Tabs>
       {tab === "review" && (<ReviewList />)}
       {tab === "storePhoto" && (<StorePhotoList />)}
