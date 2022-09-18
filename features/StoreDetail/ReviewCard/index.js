@@ -5,7 +5,7 @@ import VolumeUpIcon from "@mui/icons-material/VolumeUp"
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
 import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices"
 import { Container, FaceContainer, TagsContainer } from "./styled"
-import { ReviewWords } from 'constant/i18n'
+import { ReviewWords } from "constant/i18n"
 
 const FACE_MAP = {
   yes: "happy",
@@ -36,6 +36,7 @@ const ReviewCard = ({
   roomVolume,
   timeLimit,
   socketSupply,
+  noDivider = false,
 }) => {
   return (
     <>
@@ -58,7 +59,7 @@ const ReviewCard = ({
         </TagsContainer>
         <p>{description}</p>
       </Container>
-      <Divider />
+      {!noDivider && <Divider />}
     </>
   )
 }

@@ -1,6 +1,7 @@
+import React from "react"
 import styled from "styled-components"
 
-export const Container = styled.div`
+const Container = styled.div`
   border: 1px solid #ccc;
   padding: 6px 12px;
   display: inline-flex;
@@ -19,3 +20,14 @@ export const Container = styled.div`
     font-size: 10px;
   }
 `
+
+const Chip = ({ children, text, onClick = () => {} }) => {
+  return (
+    <Container onClick={onClick}>
+      {children}
+      <span>{text}</span>
+    </Container>
+  )
+}
+
+export default Chip

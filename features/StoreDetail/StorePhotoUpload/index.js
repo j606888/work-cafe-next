@@ -1,9 +1,9 @@
 import { useState } from "react"
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera"
 import { Dialog } from "@mui/material"
-import { Container } from "./styled"
 import UploadSuccess from "./UploadSuccess"
 import UploadForm from "./UploadForm"
+import Chip from "components/Chip"
 
 const StorePhotoUpload = ({ placeId, name, onSuccess = () => {} }) => {
   const [open, setOpen] = useState(false)
@@ -31,10 +31,9 @@ const StorePhotoUpload = ({ placeId, name, onSuccess = () => {} }) => {
         )}
         {finish && <UploadSuccess onClose={handleClose} />}
       </Dialog>
-      <Container onClick={() => setOpen(true)}>
+      <Chip onClick={() => setOpen(true)} text="新增照片">
         <PhotoCameraIcon />
-        <span>新增照片</span>
-      </Container>
+      </Chip>
     </>
   )
 }
