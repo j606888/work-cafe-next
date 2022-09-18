@@ -78,7 +78,6 @@ const SearchStoreList = ({ store, mapCenter }) => {
     if (data) dispatch(updateStores(data))
   }, [data, dispatch])
 
-
   return (
     <>
       <UserDrawer open={openDrawer} onClose={handleCloseDrawer} />
@@ -94,7 +93,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
         <OpenTime onChange={handleOpenTimeChange} />
       </MenuContainer>
       <SearchHereContainer left={calcSearchHereLeft(stores, store)}>
-        <SearchHere onClick={handleSearch} />
+        <SearchHere onClick={handleSearch} loading={options.go && !data} />
       </SearchHereContainer>
       <StoreListContainer>
         <StoreList stores={stores || []} />
