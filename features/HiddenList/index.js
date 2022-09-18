@@ -3,12 +3,11 @@ import { useDispatch } from "react-redux"
 import useSWR from "swr"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import { updateStores, changeMode, updatePlaceId } from "store/slices/store"
-import { fetcher } from "api"
 import StoreList from "features/StoreList"
 import { Container, Head } from "./styled"
 
 const HiddenList = () => {
-  const { data: stores } = useSWR("/stores/hidden", fetcher)
+  const { data: stores } = useSWR("/stores/hidden")
   const dispatch = useDispatch()
 
   useEffect(() => {

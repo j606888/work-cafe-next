@@ -1,6 +1,5 @@
 import React, { useRef, useState, useReducer } from "react"
 import useSWR from "swr"
-import { fetcher } from "api"
 import styled from "styled-components"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import MyLocation from "features/MyLocation"
@@ -58,7 +57,10 @@ const AdminStoreCrawler = () => {
     lat: 23.546162,
     lng: 120.6402133,
   })
-  const { data: mapCrawlers } = useSWR(["/admin/map-crawlers", { ...mapCenter }], fetcher)
+  const { data: mapCrawlers } = useSWR([
+    "/admin/map-crawlers",
+    { ...mapCenter },
+  ])
 
   const handleFindMe = ({ lat, lng }) => {
     const center = { lat, lng }
@@ -84,9 +86,10 @@ const AdminStoreCrawler = () => {
     setMapCenter(center)
   }
 
-  const circles = mapCrawlers?.map((mapCrawler) => (
-    <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
-  )) || []
+  const circles =
+    mapCrawlers?.map((mapCrawler) => (
+      <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
+    )) || []
 
   if (!isReady) return <div>NotReady</div>
 
@@ -106,7 +109,7 @@ const AdminStoreCrawler = () => {
         handleSearch={handleSearch}
       />
       <MyLocationContainer>
-        <MyLocation onClick={handleFindMe}/>
+        <MyLocation onClick={handleFindMe} />
       </MyLocationContainer>
       <GoogleMapWrapper
         map={map}
@@ -114,7 +117,7 @@ const AdminStoreCrawler = () => {
         onClick={handleOnClick}
         onIdle={handleOnIdle}
         mapSettings={mapSettings}
-        marginTop='64px' 
+        marginTop="64px"
       >
         {controls.showArea && circles}
         {controls.showModal && tempRef.current && (

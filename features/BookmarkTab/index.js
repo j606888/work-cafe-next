@@ -1,4 +1,3 @@
-import { fetcher } from "api"
 import Snackbar from "components/Snackbar"
 import BookmarkList from "features/BookmarkList"
 import Bookmark from "features/BookmarkTab/Bookmark"
@@ -19,10 +18,9 @@ const BookmarkListTab = () => {
   const [showSnackbar, setShowSnackbar] = useState(null)
   const [randomKey, setRandomKey] = useState(null)
   const { mutate } = useSWRConfig()
-  const { data: bookmarks } = useSWR("/bookmarks", fetcher)
+  const { data: bookmarks } = useSWR("/bookmarks")
   const { data: bookmark } = useSWR(
-    randomKey ? `/bookmarks/${randomKey}` : null,
-    fetcher
+    randomKey ? `/bookmarks/${randomKey}` : null
   )
   const dispatch = useDispatch()
 

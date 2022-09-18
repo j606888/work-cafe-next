@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react"
 import Router from "next/router"
 import _ from "lodash"
 import useSWR from "swr"
-import { fetcher } from "api"
 import Marker from "features/GoogleMapWrapper/Marker"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import StoreDetail from "features/StoreDetail"
@@ -16,7 +15,17 @@ import useInitMap from "hooks/useInitMap"
 import MyLocation from "features/MyLocation"
 import MeMarker from "features/MyLocation/MeMarker"
 import SearchStoreList from "features/SearchStoreList"
+import Skeleton from "components/Skeleton"
 
+const calcCenter = (stores) => {
+  const lats = stores.map((store) => store.lat)
+  const lngs = stores.map((store) => store.lng)
+
+  return {
+    lat: _.mean(lats),
+    lng: _.mean(lngs),
+  }
+}
 const UserMap = () => {
   const dispatch = useDispatch()
   const { isReady, mapSettings, map, setMap } = useInitMap()
@@ -26,12 +35,13 @@ const UserMap = () => {
   )
   const myLocation = useRef(null)
   const { data: store, mutate: mutateStore } = useSWR(
-    placeId ? `/stores/${placeId}` : null,
-    fetcher
+    placeId ? `/stores/${placeId}` : null
   )
 
   const handleOnIdle = ({ lat, lng, zoom }) => {
-    const mapPath = `@${lat},${lng},${zoom}z`
+    const mapPath = [`@${lat},${lng},${zoom}z`, placeId]
+      .filter(Boolean)
+      .join("/")
     Router.push({
       pathname: `/${mapPath}`,
     })
@@ -69,7 +79,18 @@ const UserMap = () => {
     }
   }, [store])
 
-  if (!isReady) return <div>NotReady</div>
+  // Need to Optimize, if go to city center will be better
+  useEffect(() => {
+    if (stores && stores.length > 0 && map) {
+      const storesCenter = calcCenter(stores)
+      map.panTo(storesCenter)
+      if (map.zoom < 15) {
+        map.setZoom(15)
+      }
+    }
+  }, [stores])
+
+  if (!isReady) return <Skeleton />
 
   const me = myLocation.current && (
     <MeMarker lat={myLocation.current.lat} lng={myLocation.current.lng} />
@@ -112,6 +133,14 @@ const UserMap = () => {
             onClick={handleRefreshStore}
           />
         ))}
+        {stores?.length === 0 && store && (
+          <Marker
+            store={store}
+            focus={store.placeId === placeId}
+            bounce={store.placeId === bouncePlaceId}
+            onClick={handleRefreshStore}
+          />
+        )}
       </GoogleMapWrapper>
     </>
   )

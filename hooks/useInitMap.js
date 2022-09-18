@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { isEmpty } from 'lodash'
+import { useDispatch } from "react-redux"
+import { updatePlaceId } from "store/slices/store"
 
 const DEFAULT_SETUP = {
   center: {
@@ -23,10 +24,11 @@ const useInitMap = () => {
   const [mapSettings, setMapSettings] = useState(DEFAULT_SETUP)
   const [isReady, setIsReady] = useState(false)
   const [map, setMap] = useState(null)
+  const dispatch = useDispatch()
   const router = useRouter()
 
   useEffect(() => {
-    if (router.isReady) {
+    if (router.isReady & !isReady) {
       const urlLocation = router.query.location
       const lastLocation = localStorage.getItem('lastLocation')
       const location = _.isEmpty(urlLocation) ? [lastLocation] : urlLocation
@@ -35,6 +37,11 @@ const useInitMap = () => {
         const pureString = location[0]
         const re = /@(?<lat>\d+(\.\d+)?),(?<lng>\d+(\.\d+)?),(?<zoom>\d+)z/
         const match = re.exec(pureString)
+
+        const placeId = location[1]
+        if (placeId) {
+          dispatch(updatePlaceId(placeId))
+        }
   
         if (match) {
           const lat = +match.groups.lat

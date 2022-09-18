@@ -20,7 +20,6 @@ import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
 import Bookmarks from "./Bookmarks"
 import useSWR, { useSWRConfig } from "swr"
-import { fetcher } from "api"
 import SecondaryInfo from "./SecondaryInfo"
 import { useDispatch } from "react-redux"
 import { updatePlaceId } from "store/slices/store"
@@ -61,16 +60,13 @@ const StoreDetail = ({
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
   const { data: bookmarks } = useSWR(
-    userIsLogin() ? `/stores/${placeId}/bookmarks` : null,
-    fetcher
+    userIsLogin() ? `/stores/${placeId}/bookmarks` : null
   )
   const { data: reviews, mutate: reviewsMutate } = useSWR(
-    `/stores/${placeId}/reviews`,
-    fetcher
+    `/stores/${placeId}/reviews`
   )
   const { data: myReview, mutate: myReviewMutate } = useSWR(
-    `/stores/${placeId}/reviews/me`,
-    fetcher
+    `/stores/${placeId}/reviews/me`
   )
   const dispatch = useDispatch()
 
@@ -188,7 +184,12 @@ const StoreDetail = ({
               <div className="review-header">
                 <h4>你的評論</h4>
               </div>
-              <ReviewCard {...myReview} noDivider isOwner onDelete={handleDeleteReview}/>
+              <ReviewCard
+                {...myReview}
+                noDivider
+                isOwner
+                onDelete={handleDeleteReview}
+              />
             </GoogleReviews>
             <ChipContainer>
               <Chip text="編輯你的評論" onClick={handleOpenReview}>

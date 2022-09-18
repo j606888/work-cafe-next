@@ -1,7 +1,6 @@
 import React, { useEffect } from "react"
 import MuiAutocomplete from "@mui/material/Autocomplete"
 import useSWR from "swr"
-import { fetcher } from "api"
 import OptionBox from "./OptionBox"
 import InputBox from "./InputBox"
 
@@ -14,8 +13,7 @@ const SearchbarV2 = ({
   const [keyword, setKeyword] = React.useState("")
   const [resetBool, setResetBool] = React.useState(true)
   const { data } = useSWR(
-    keyword.length > 0 ? ["/stores/hint", { keyword }] : null,
-    fetcher
+    keyword.length > 0 ? ["/stores/hint", { keyword }] : null
   )
   const hints = data?.results?.map((hint) => ({
     ...hint,

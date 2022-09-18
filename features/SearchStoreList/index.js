@@ -1,4 +1,3 @@
-import { fetcher } from "api"
 import SearchHere from "components/Button/SearchHere"
 import OpenTime from "features/OpenTime"
 import SearchbarV2 from "features/SearchbarV2"
@@ -11,7 +10,7 @@ import {
   StoreListContainer,
 } from "features/UserMap/styled"
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { updatePlaceId, updateStores } from "store/slices/store"
 import useSWR from "swr"
 
@@ -41,9 +40,11 @@ const SearchStoreList = ({ store, mapCenter }) => {
     lat: 23.0042325,
     lng: 120.2216038,
   })
-  const { data: stores } = useSWR(
-    options?.go ? ["/stores/location", { ...options, ...center, limit: 20 }] : null,
-    fetcher
+  const { stores } = useSelector((state) => state.store)
+  const { data } = useSWR(
+    options?.go
+      ? ["/stores/location", { ...options, ...center, limit: 20 }]
+      : null
   )
 
   const handleCloseDrawer = () => {
@@ -53,6 +54,8 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, keyword, go: true }))
   }
   const handleClear = () => {
+    dispatch(updateStores([]))
+    dispatch(updatePlaceId(null))
     setOptions((cur) => ({ ...cur, keyword: "", go: false }))
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
@@ -64,18 +67,19 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, ...currentOpenTime, go: true }))
   }
   const handleSearch = () => {
-    setOptions((cur) => ({ ...cur,  go: true }))
+    setOptions((cur) => ({ ...cur, go: true }))
     setCenter(mapCenter)
   }
 
   useEffect(() => {
-    dispatch(updatePlaceId(null))
-  }, [options, openDrawer])
-
-  useEffect(() => {
-    dispatch(updateStores(stores || []))
-  }, [stores, dispatch])
-
+    if (data) {
+      dispatch(updateStores(data))
+      if (data.length === 1) {
+        const placeId = data[0].placeId
+        dispatch(updatePlaceId(placeId))
+      }
+    }
+  }, [data, dispatch])
 
   return (
     <>
@@ -92,7 +96,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
         <OpenTime onChange={handleOpenTimeChange} />
       </MenuContainer>
       <SearchHereContainer left={calcSearchHereLeft(stores, store)}>
-        <SearchHere onClick={handleSearch} />
+        <SearchHere onClick={handleSearch} loading={options.go && !data} />
       </SearchHereContainer>
       <StoreListContainer>
         <StoreList stores={stores || []} />

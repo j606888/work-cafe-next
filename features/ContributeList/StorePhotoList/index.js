@@ -1,4 +1,3 @@
-import { fetcher } from "api"
 import React from "react"
 import { useEffect } from "react"
 import { useDispatch } from "react-redux"
@@ -18,7 +17,7 @@ const Container = styled.div`
 `
 
 const StorePhotoList = () => {
-  const { data } = useSWR("/store-photos", fetcher)
+  const { data } = useSWR("/store-photos")
   const dispatch = useDispatch()
 
   const handleClick = (placeId) => {
@@ -32,13 +31,25 @@ const StorePhotoList = () => {
   }
 
   useEffect(() => {
-    const stores = data?.storePhotos.map((storePhoto) => storePhoto.store)
+    const stores = data?.storePhotoGroups.map((storePhoto) => storePhoto.store)
     dispatch(updateStores(stores || []))
   }, [dispatch, data])
 
   return (
     <Container>
-      {data?.storePhotos.map((storePhoto) => (
+      {data?.storePhotoGroups.map((storePhotoGroup) => {
+        return <StorePhotoCard
+          key={storePhotoGroup.id}
+          {...storePhotoGroup}
+          photos={storePhotoGroup.photos}
+          store={storePhotoGroup.store}
+          onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+      }
+      )}
+      {/* {data?.storePhotoGroups.map((storePhoto) => (
         <StorePhotoCard
           key={storePhoto.id}
           {...storePhoto}
@@ -46,7 +57,7 @@ const StorePhotoList = () => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         />
-      ))}
+      ))} */}
     </Container>
   )
 }

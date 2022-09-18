@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import SearchIcon from "@mui/icons-material/Search"
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Container = styled.div`
   display: inline-flex;
@@ -23,10 +24,14 @@ const Container = styled.div`
   }
 `
 
-const SearchHere = ({ onClick = () => {} }) => {
+const SearchHere = ({ loading = false, onClick = () => {} }) => {
   return (
     <Container onClick={() => onClick()}>
-      <SearchIcon sx={{ color: "#1EA7FD", fontSize: "18px" }} />
+      {loading ? (
+        <CircularProgress size={18}/>
+      ) : (
+        <SearchIcon sx={{ color: "#1EA7FD", fontSize: "18px" }} />
+      )}
       <span>搜尋這個區域</span>
     </Container>
   )

@@ -8,7 +8,6 @@ import {
 } from "@mui/icons-material"
 import Card from "./Card"
 import useSWR from "swr"
-import { fetcher } from "api"
 import { Skeleton } from "@mui/material"
 
 const Container = styled.div`
@@ -53,7 +52,7 @@ const SkeletonCard = () => (
 )
 
 const Dashboard = () => {
-  const { data } = useSWR(`/admin/report/dashboard`, fetcher)
+  const { data } = useSWR(`/admin/report/dashboard`)
   const loading = !Boolean(data)
 
   if (loading) {
