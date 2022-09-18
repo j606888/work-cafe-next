@@ -29,17 +29,9 @@ const useInitMap = () => {
 
   useEffect(() => {
     if (router.isReady & !isReady) {
-      console.log(router)
       const urlLocation = router.query.location
       const lastLocation = localStorage.getItem('lastLocation')
       const location = _.isEmpty(urlLocation) ? [lastLocation] : urlLocation
-      console.log({
-
-        urlLocation,
-        lastLocation,
-        location
-      }
-      )
 
       if (location) {
         const pureString = location[0]

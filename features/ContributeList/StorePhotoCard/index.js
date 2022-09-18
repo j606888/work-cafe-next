@@ -4,7 +4,13 @@ import React from "react"
 import styled from "styled-components"
 import { InfoBox } from "../ReviewStoreCard/styled"
 
-const Container = styled.div``
+const Container = styled.div`
+  .time-ago {
+    margin-left: 3rem;
+    font-size: 12px;
+    color: #333;
+  }
+`
 
 const ImageBox = styled.div`
   width: 300px;
@@ -20,8 +26,7 @@ const ImageBox = styled.div`
 
 const StorePhotoCard = ({
   store,
-  imageUrl,
-  randomKey,
+  photos = [],
   createdAt,
   onClick = () => {},
   onMouseEnter = () => {},
@@ -55,12 +60,15 @@ const StorePhotoCard = ({
           <span className="name">{store.name}</span>
           <span className="address">{store.address}</span>
         </div>
-        <span>{timeAgo(createdAt)}</span>
-
       </InfoBox>
-      <ImageBox>
-        <img src={imageUrl} alt={randomKey} />
-      </ImageBox>
+      <span className="time-ago">{timeAgo(createdAt)}</span>
+      <div>
+        {photos.map((photo) => (
+          <ImageBox key={photo.randomKey}>
+            <img src={photo.imageUrl} alt={photo.randomKey} />
+          </ImageBox>
+        ))}
+      </div>
     </Container>
   )
 }
