@@ -16,6 +16,7 @@ import useInitMap from "hooks/useInitMap"
 import MyLocation from "features/MyLocation"
 import MeMarker from "features/MyLocation/MeMarker"
 import SearchStoreList from "features/SearchStoreList"
+import Skeleton from "components/Skeleton"
 
 const UserMap = () => {
   const dispatch = useDispatch()
@@ -69,7 +70,7 @@ const UserMap = () => {
     }
   }, [store])
 
-  if (!isReady) return <div>NotReady</div>
+  if (!isReady) return <Skeleton />
 
   const me = myLocation.current && (
     <MeMarker lat={myLocation.current.lat} lng={myLocation.current.lng} />
