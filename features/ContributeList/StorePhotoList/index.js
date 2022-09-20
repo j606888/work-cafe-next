@@ -1,13 +1,8 @@
 import React from "react"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import useSWR from "swr"
 import StorePhotoCard from "../StorePhotoCard"
-import {
-  updateFocusPlaceId,
-  updatePlaceId,
-} from "store/slices/store"
 import useStoreStore from "hooks/useStoreStore"
 
 const Container = styled.div`
@@ -19,17 +14,18 @@ const Container = styled.div`
 const StorePhotoList = () => {
   const clearStores = useStoreStore(state => state.clearStores)
   const setStores = useStoreStore(state => state.setStores)
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const setBouncePlaceId = useStoreStore(state => state.setBouncePlaceId)
   const { data } = useSWR("/store-photos")
-  const dispatch = useDispatch()
 
   const handleClick = (placeId) => {
-    dispatch(updatePlaceId(placeId))
+    setPlaceId(placeId)
   }
   const handleMouseEnter = (placeId) => {
-    dispatch(updateFocusPlaceId(placeId))
+    setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
-    dispatch(updateFocusPlaceId(null))
+    setBouncePlaceId(null)
   }
 
   useEffect(() => {
@@ -39,7 +35,7 @@ const StorePhotoList = () => {
     } else {
       clearStores()
     }
-  }, [dispatch, data])
+  }, [data])
 
   return (
     <Container>

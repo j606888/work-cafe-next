@@ -7,8 +7,6 @@ import GoogleMapWrapper from "features/GoogleMapWrapper"
 import StoreDetail from "features/StoreDetail"
 import { StoreDetailContainer, MyLocationContainer } from "./styled"
 import BookmarkTab from "features/BookmarkTab"
-import { useSelector, useDispatch } from "react-redux"
-import { updatePlaceId } from "store/slices/store"
 import HiddenList from "features/HiddenList"
 import ContributeList from "features/ContributeList"
 import useInitMap from "hooks/useInitMap"
@@ -17,6 +15,7 @@ import MeMarker from "features/MyLocation/MeMarker"
 import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 import useMapStore from "hooks/useMapStore"
+import useStoreStore from "hooks/useStoreStore"
 
 const calcCenter = (stores) => {
   const lats = stores.map((store) => store.lat)
@@ -29,12 +28,13 @@ const calcCenter = (stores) => {
 }
 const UserMap = () => {
   const mode = useMapStore(state => state.mode)
-  const dispatch = useDispatch()
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const stores = useStoreStore(state => state.stores)
+  const placeId = useStoreStore(state => state.placeId)
+  const bouncePlaceId = useStoreStore(state => state.bouncePlaceId)
+  
   const { isReady, mapSettings, map, setMap } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
-  const { stores, placeId, bouncePlaceId } = useSelector(
-    (state) => state.store
-  )
   const myLocation = useRef(null)
   const { data: store, mutate: mutateStore } = useSWR(
     placeId ? `/stores/${placeId}` : null
@@ -50,11 +50,11 @@ const UserMap = () => {
     localStorage.setItem("lastLocation", mapPath)
   }
   const handleRefreshStore = (placeId) => {
-    dispatch(updatePlaceId(placeId))
+    setPlaceId(placeId)
     mutateStore()
   }
   const clearPlaceId = () => {
-    dispatch(updatePlaceId(null))
+    setPlaceId(null)
   }
   const handleScroll = (event) => {
     const showHead = event.currentTarget.scrollTop !== 0

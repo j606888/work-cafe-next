@@ -1,8 +1,6 @@
 import React, { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import useSWR from "swr"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import { updatePlaceId } from "store/slices/store"
 import StoreList from "features/StoreList"
 import { Container, Head } from "./styled"
 import useMapStore from "hooks/useMapStore"
@@ -12,8 +10,8 @@ const HiddenList = () => {
   const setMode = useMapStore(state => state.setMode)
   const clearStores = useStoreStore(state => state.clearStores)
   const setStores = useStoreStore(state => state.setStores)
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
   const { data: stores } = useSWR("/stores/hidden")
-  const dispatch = useDispatch()
 
   useEffect(() => {
     if (stores) {
@@ -21,11 +19,11 @@ const HiddenList = () => {
     } else {
       clearStores()
     }
-  }, [dispatch, stores])
+  }, [stores])
 
   const handleClose = () => {
     clearStores
-    dispatch(updatePlaceId(null))
+    setPlaceId(null)
     setMode("MAP")
   }
 

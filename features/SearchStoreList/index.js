@@ -10,11 +10,8 @@ import {
   StoreListContainer,
 } from "features/UserMap/styled"
 import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { updatePlaceId } from "store/slices/store"
 import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
-
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -36,16 +33,16 @@ const INIT_OPTIONS = {
 }
 
 const SearchStoreList = ({ store, mapCenter }) => {
+  const stores = useStoreStore(state => state.stores)
   const clearStores = useStoreStore(state => state.clearStores)
   const setStores = useStoreStore(state => state.setStores)
-  const dispatch = useDispatch()
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
   const [options, setOptions] = useState(INIT_OPTIONS)
   const [openDrawer, setOpenDrawer] = React.useState(false)
   const [center, setCenter] = useState({
     lat: 23.0042325,
     lng: 120.2216038,
   })
-  const { stores } = useSelector((state) => state.store)
   const { data } = useSWR(
     options?.go
       ? ["/stores/location", { ...options, ...center, limit: 20 }]
@@ -60,7 +57,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
   }
   const handleClear = () => {
     clearStores()
-    dispatch(updatePlaceId(null))
+    setPlaceId(null)
     setOptions((cur) => ({ ...cur, keyword: "", go: false }))
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
@@ -81,10 +78,10 @@ const SearchStoreList = ({ store, mapCenter }) => {
       setStores(data)
       if (data.length === 1) {
         const placeId = data[0].placeId
-        dispatch(updatePlaceId(placeId))
+        setPlaceId(placeId)
       }
     }
-  }, [data, dispatch])
+  }, [data])
 
   return (
     <>

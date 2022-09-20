@@ -1,28 +1,26 @@
 import React from "react"
 import { useState } from "react"
-import { updatePlaceId } from "store/slices/store"
 import { Container, Head, Tabs, Tab } from "./styled"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ReviewList from "./ReviewList"
 import StorePhotoList from "./StorePhotoList"
-import { useDispatch } from "react-redux"
 import useMapStore from "hooks/useMapStore"
 
 const ContributeList = () => {
   const setMode = useMapStore(state => state.setMode)
   const clearStores = useMapStore(state => state.clearStores)
+  const setPlaceId = useMapStore(state => state.setPlaceId)
   const [tab, setTab] = useState("review")
-  const dispatch = useDispatch()
 
   const handleClose = () => {
     clearStores()
-    dispatch(updatePlaceId(null))
+    setPlaceId(null)
     setMode("MAP")
   }
 
   const handleChangeTab = (targetTab) => {
     clearStores()
-    dispatch(updatePlaceId(null))
+    setPlaceId(null)
     setTab(targetTab)
   }
 

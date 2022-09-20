@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import useSWRInfinite from "swr/infinite"
 import ReviewStoreCard from "../ReviewStoreCard"
-import {
-  updateFocusPlaceId,
-  updatePlaceId,
-} from "store/slices/store"
 import { Button } from "@mui/material"
 import useStoreStore from "hooks/useStoreStore"
 
@@ -24,17 +19,18 @@ const getKey = (pageIndex, previousPageData) => {
 const ReviewList = () => {
   const clearStores = useStoreStore(state => state.clearStores)
   const setStores = useStoreStore(state => state.setStores)
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const setBouncePlaceId = useStoreStore(state => state.setBouncePlaceId)
   const { data, size, setSize } = useSWRInfinite(getKey)
-  const dispatch = useDispatch()
 
   const handleClick = (placeId) => {
-    dispatch(updatePlaceId(placeId))
+    setPlaceId(placeId)
   }
   const handleMouseEnter = (placeId) => {
-    dispatch(updateFocusPlaceId(placeId))
+    setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
-    dispatch(updateFocusPlaceId(null))
+    setBouncePlaceId(null)
   }
 
   let reviewsArr = []
