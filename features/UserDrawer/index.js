@@ -7,10 +7,12 @@ import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Container, Header, Tabs } from "./styled"
 import { useDispatch } from 'react-redux'
-import { updateStores, changeMode } from 'store/slices/store'
+import { updateStores, } from 'store/slices/store'
 import useAuthCheck from "hooks/useAuthCheck";
+import useMapStore from "hooks/useMapStore"
 
 export default function UserDrawer({ open, onClose = () => {} }) {
+  const setMode = useMapStore(state => state.setMode)
   const dispatch = useDispatch()
   const authCheck = useAuthCheck()
 
@@ -18,7 +20,7 @@ export default function UserDrawer({ open, onClose = () => {} }) {
     authCheck()
     onClose()
     dispatch(updateStores([]))
-    dispatch(changeMode(mode))
+    setMode(mode)
   }
 
   return (

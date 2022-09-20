@@ -5,7 +5,8 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import useSWR, { useSWRConfig } from "swr"
 import { useDispatch } from "react-redux"
-import { updateStores, changeMode, updatePlaceId } from "store/slices/store"
+import { updateStores, updatePlaceId } from "store/slices/store"
+import useMapStore from "hooks/useMapStore"
 
 const BookmarkContainer = styled.div`
   position: absolute;
@@ -15,6 +16,7 @@ const BookmarkContainer = styled.div`
 `
 
 const BookmarkListTab = () => {
+  const setMode = useMapStore(state => state.setMode)
   const [showSnackbar, setShowSnackbar] = useState(null)
   const [randomKey, setRandomKey] = useState(null)
   const { mutate } = useSWRConfig()
@@ -41,7 +43,7 @@ const BookmarkListTab = () => {
   const handleClose = () => {
     dispatch(updateStores([]))
     dispatch(updatePlaceId(null))
-    dispatch(changeMode("MAP"))
+    setMode("MAP")
   }
 
   useEffect(() => {

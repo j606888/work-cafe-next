@@ -16,6 +16,7 @@ import MyLocation from "features/MyLocation"
 import MeMarker from "features/MyLocation/MeMarker"
 import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
+import useMapStore from "hooks/useMapStore"
 
 const calcCenter = (stores) => {
   const lats = stores.map((store) => store.lat)
@@ -27,10 +28,11 @@ const calcCenter = (stores) => {
   }
 }
 const UserMap = () => {
+  const mode = useMapStore(state => state.mode)
   const dispatch = useDispatch()
   const { isReady, mapSettings, map, setMap } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
-  const { stores, mode, placeId, bouncePlaceId } = useSelector(
+  const { stores, placeId, bouncePlaceId } = useSelector(
     (state) => state.store
   )
   const myLocation = useRef(null)
