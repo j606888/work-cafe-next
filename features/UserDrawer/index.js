@@ -6,7 +6,6 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Container, Header, Tabs } from "./styled"
-import { useDispatch } from 'react-redux'
 import useAuthCheck from "hooks/useAuthCheck";
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
