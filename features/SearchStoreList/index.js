@@ -1,6 +1,6 @@
 import SearchHere from "components/Button/SearchHere"
 import OpenTime from "features/OpenTime"
-import SearchbarV2 from "features/SearchbarV2"
+import Searchbar from "features/Searchbar"
 import StoreList from "features/StoreList"
 import UserDrawer from "features/UserDrawer"
 import {
@@ -85,7 +85,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     <>
       <UserDrawer open={openDrawer} onClose={handleCloseDrawer} />
       <SearchbarV2Container>
-        <SearchbarV2
+        <Searchbar
           onSearch={handleKeywordSearch}
           hasResult={stores?.length !== 0}
           onClear={handleClear}

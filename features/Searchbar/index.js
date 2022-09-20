@@ -4,7 +4,7 @@ import useSWR from "swr"
 import OptionBox from "./OptionBox"
 import InputBox from "./InputBox"
 
-const SearchbarV2 = ({
+const Searchbar = ({
   hasResult = false,
   onSearch = () => {},
   onClear = () => {},
@@ -64,4 +64,4 @@ const SearchbarV2 = ({
   )
 }
 
-export default SearchbarV2
+export default Searchbar
