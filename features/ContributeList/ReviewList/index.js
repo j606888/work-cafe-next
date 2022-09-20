@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import ReviewStoreCard from "../ReviewStoreCard"
 import useStoreStore from "hooks/useStoreStore"
@@ -17,19 +17,7 @@ const getKey = (pageIndex, previousPageData) => {
 
 const ReviewList = () => {
   const setStores = useStoreStore((state) => state.setStores)
-  const setPlaceId = useStoreStore((state) => state.setPlaceId)
-  const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
   const { data, handleScroll } = useScrollFetch(getKey)
-
-  const handleClick = (placeId) => {
-    setPlaceId(placeId)
-  }
-  const handleMouseEnter = (placeId) => {
-    setBouncePlaceId(placeId)
-  }
-  const handleMouseLeave = (_placeId) => {
-    setBouncePlaceId(null)
-  }
 
   let reviewsArr = []
 
@@ -49,7 +37,7 @@ const ReviewList = () => {
     })
 
     setStores(stores || [])
-  }, [data])
+  }, [data, setStores])
 
   if (!reviewsArr) return "loading"
 
@@ -59,9 +47,6 @@ const ReviewList = () => {
         <ReviewStoreCard
           key={review.id}
           {...review}
-          onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         />
       ))}
     </ListContainer>

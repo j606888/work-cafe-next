@@ -14,6 +14,7 @@ import {
   MoreContainer,
 } from "./styled"
 import FaceIconGroup from "components/FaceIconGroup"
+import useStoreStore from "hooks/useStoreStore"
 
 const FACE_MAP = {
   yes: "happy",
@@ -44,20 +45,19 @@ const ReviewStoreCard = ({
   socketSupply,
   description,
   createdAt,
-  onClick = () => {},
-  onMouseEnter = () => {},
-  onMouseLeave = () => {},
 }) => {
   const timeAgo = useTimeAgo()
+  const setPlaceId = useStoreStore((state) => state.setPlaceId)
+  const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
 
   const handleClick = () => {
-    onClick(store.placeId)
+    setPlaceId(store.placeId)
   }
   const handleMouseEnter = () => {
-    onMouseEnter(store.placeId)
+    setBouncePlaceId(store.placeId)
   }
   const handleMouseLeave = () => {
-    onMouseLeave(store.placeId)
+    setBouncePlaceId(null)
   }
 
   return (
