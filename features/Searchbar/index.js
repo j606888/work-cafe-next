@@ -1,49 +1,67 @@
-import Autocomplete from "./Autocomplete"
-import Menu from "./Menu"
-import { Container } from "./styled"
-import Button from "components/Button"
-import { useSelector, useDispatch } from "react-redux"
-import { updateOpenFilter, updateKeyword } from "store/slices/search"
+import React, { useEffect } from "react"
+import MuiAutocomplete from "@mui/material/Autocomplete"
 import useSWR from "swr"
+import OptionBox from "./OptionBox"
+import InputBox from "./InputBox"
 
-const Searchbar = ({ onClick }) => {
-  const dispatch = useDispatch()
-  const filter = useSelector((state) => state.search)
-  const { data: hints } = useSWR(
-    filter.keyword ? ["/stores/hint", filter] : null
+const Searchbar = ({
+  hasResult = false,
+  onSearch = () => {},
+  onClear = () => {},
+  onOpenDrawer = () => {},
+}) => {
+  const [keyword, setKeyword] = React.useState("")
+  const [resetBool, setResetBool] = React.useState(true)
+  const { data } = useSWR(
+    keyword.length > 0 ? ["/stores/hint", { keyword }] : null
   )
-
-  function handleInputChange(newInputValue) {
-    dispatch(updateKeyword(newInputValue))
-  }
-
-  function changeOpenTimeChange(openType, openWeek, openHour) {
-    dispatch(
-      updateOpenFilter({ openType, openWeek: +openWeek, openHour: +openHour })
-    )
-  }
-
-  function handleOnClick() {
-    if (onClick) onClick()
-  }
-
-  const coolHints = (hints?.results || []).map((hint) => ({
+  const hints = data?.results?.map((hint) => ({
     ...hint,
     label: hint.name,
   }))
 
+  const handleInputChange = async (event, newInputValue) => {
+    setKeyword(newInputValue)
+
+    const eventName = event._reactName
+    if (eventName === "onClick") onSearch(newInputValue)
+  }
+  const handleSearch = () => {
+    if (keyword.length === 0) return
+    onSearch(keyword)
+  }
+  const handleClear = () => {
+    setKeyword("")
+    onClear()
+    // Use key to reset AutoComplete
+    setResetBool(false)
+  }
+
+  useEffect(() => {
+    if (!resetBool) setResetBool(true)
+  }, [resetBool])
+
   return (
-    <Container>
-      <Autocomplete
-        options={coolHints}
-        onInputChange={handleInputChange}
-        keyword={filter.keyword}
-      />
-      <div className="filter">
-        <Menu onOpenTimeChange={changeOpenTimeChange} initValue={filter} />
-      </div>
-      <Button text="搜尋" onClick={handleOnClick} />
-    </Container>
+    <MuiAutocomplete
+      freeSolo
+      id="cool"
+      options={hints || []}
+      key={resetBool}
+      renderInput={(args) => (
+        <InputBox
+          args={args}
+          hasResult={hasResult}
+          onSearch={handleSearch}
+          onClear={handleClear}
+          onOpenDrawer={onOpenDrawer}
+        />
+      )}
+      renderOption={(props, option, { inputValue }) => (
+        <OptionBox props={props} option={option} inputValue={inputValue} />
+      )}
+      onInputChange={handleInputChange}
+    />
   )
 }
+
 export default Searchbar

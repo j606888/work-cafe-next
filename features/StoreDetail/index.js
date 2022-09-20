@@ -21,18 +21,16 @@ import ImageSlide from "./ImageSlide"
 import Bookmarks from "./Bookmarks"
 import useSWR, { useSWRConfig } from "swr"
 import SecondaryInfo from "./SecondaryInfo"
-import { useDispatch } from "react-redux"
-import { updatePlaceId } from "store/slices/store"
 import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
 import ReviewForm from "features/ReviewForm"
 import ReviewsBlock from "./ReviewsBlock"
 import ReviewCard from "./ReviewCard"
 import StorePhotoUpload from "./StorePhotoUpload"
-import { useEffect } from "react"
 import Chip from "components/Chip"
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined"
 import ReviewApi from "api/review"
+import useStoreStore from "hooks/useStoreStore"
 
 const StoreDetail = ({
   id,
@@ -55,6 +53,7 @@ const StoreDetail = ({
   onShare = () => {},
   onRefresh = () => {},
 }) => {
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
   const { mutate } = useSWRConfig()
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
@@ -68,7 +67,6 @@ const StoreDetail = ({
   const { data: myReview, mutate: myReviewMutate } = useSWR(
     `/stores/${placeId}/reviews/me`
   )
-  const dispatch = useDispatch()
 
   const handleBookmarkSubmit = () => {
     mutate(`/stores/${placeId}/bookmarks`)
@@ -84,7 +82,7 @@ const StoreDetail = ({
     onRefresh(placeId)
   }
   const handleClose = () => {
-    dispatch(updatePlaceId(null))
+    setPlaceId(null)
   }
   const refreshReview = () => {
     reviewsMutate()

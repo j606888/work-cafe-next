@@ -1,7 +1,7 @@
 import React from "react"
 import MuiMenu from "@mui/material/Menu"
 import { Button, Divider, FormControl, RadioGroup } from "@mui/material"
-import RadioLabel from "features/Searchbar/Menu/RadioLabel"
+import RadioLabel from "features/OpenTime/Menu/RadioLabel"
 import { Box } from "@mui/system"
 import WeekHourPicker from "./WeekHourPicker"
 import OpenButton from "./OpenButton"

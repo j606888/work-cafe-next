@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
 import styled from "styled-components"
-import useSWR from "swr"
 import useSWRInfinite from "swr/infinite"
 import ReviewStoreCard from "../ReviewStoreCard"
-import {
-  updateFocusPlaceId,
-  updatePlaceId,
-  updateStores,
-} from "store/slices/store"
 import { Button } from "@mui/material"
+import useStoreStore from "hooks/useStoreStore"
 
 export const ListContainer = styled.div`
   height: calc(100vh - 80px - 48px);
@@ -23,17 +17,20 @@ const getKey = (pageIndex, previousPageData) => {
 }
 
 const ReviewList = () => {
+  const clearStores = useStoreStore(state => state.clearStores)
+  const setStores = useStoreStore(state => state.setStores)
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const setBouncePlaceId = useStoreStore(state => state.setBouncePlaceId)
   const { data, size, setSize } = useSWRInfinite(getKey)
-  const dispatch = useDispatch()
 
   const handleClick = (placeId) => {
-    dispatch(updatePlaceId(placeId))
+    setPlaceId(placeId)
   }
   const handleMouseEnter = (placeId) => {
-    dispatch(updateFocusPlaceId(placeId))
+    setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
-    dispatch(updateFocusPlaceId(null))
+    setBouncePlaceId(null)
   }
 
   let reviewsArr = []
@@ -52,7 +49,12 @@ const ReviewList = () => {
         stores.push(review.store)
       })
     })
-    dispatch(updateStores(stores || []))
+
+    if (stores.length > 0) {
+      setStores(stores)
+    } else {
+      clearStores()
+    }
   }, [dispatch, data])
 
   if (!reviewsArr) return "loading"

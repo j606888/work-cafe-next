@@ -1,12 +1,8 @@
-import Searchbar from "."
+import SearchbarV2 from "./index"
 
 export default {
-  component: Searchbar,
-  argTypes: {
-    onChange: { action: 'Change' },
-    onInputChange: { action: 'InputChange' },
-  }
+  component: SearchbarV2,
 }
 
-export const Default = (args) => <Searchbar {...args} />
+export const Default = (args) => <SearchbarV2 {...args} />
 Default.args = {}

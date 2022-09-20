@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { useDispatch } from "react-redux"
-import { updatePlaceId } from "store/slices/store"
+import useStoreStore from "./useStoreStore"
 
 const DEFAULT_SETUP = {
   center: {
@@ -21,10 +20,10 @@ const DEFAULT_SETUP = {
 }
 
 const useInitMap = () => {
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
   const [mapSettings, setMapSettings] = useState(DEFAULT_SETUP)
   const [isReady, setIsReady] = useState(false)
   const [map, setMap] = useState(null)
-  const dispatch = useDispatch()
   const router = useRouter()
 
   useEffect(() => {
@@ -40,14 +39,14 @@ const useInitMap = () => {
 
         const placeId = location[1]
         if (placeId) {
-          dispatch(updatePlaceId(placeId))
+          setPlaceId(placeId)
         }
-  
+
         if (match) {
           const lat = +match.groups.lat
           const lng = +match.groups.lng
           const zoom = +match.groups.zoom
-  
+
           setMapSettings((cur) => ({ ...cur, zoom, center: { lat, lng } }))
         }
       }

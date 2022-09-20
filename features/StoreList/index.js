@@ -1,21 +1,21 @@
 import * as React from "react"
 import Card from "features/Drawer/Card"
-import { useDispatch, useSelector } from "react-redux"
-import { updatePlaceId, updateFocusPlaceId } from "store/slices/store"
 import { Container, Scrollbar } from "./styled"
+import useStoreStore from "hooks/useStoreStore"
 
 export default function StoreList({ stores = [] }) {
-  const dispatch = useDispatch()
-  const { placeId } = useSelector((state) => state.store)
+  const setPlaceId = useStoreStore((state) => state.setPlaceId)
+  const placeId = useStoreStore((state) => state.placeId)
+  const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
 
   const handleMouseEnter = (placeId) => {
-    dispatch(updateFocusPlaceId(placeId))
+    setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
-    dispatch(updateFocusPlaceId(null))
+    setBouncePlaceId(null)
   }
   const handleClick = (placeId) => {
-    dispatch(updatePlaceId(placeId))
+    setPlaceId(placeId)
   }
 
   if (stores.length === 0) {

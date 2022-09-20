@@ -4,8 +4,8 @@ import Bookmark from "features/BookmarkTab/Bookmark"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import useSWR, { useSWRConfig } from "swr"
-import { useDispatch } from "react-redux"
-import { updateStores, changeMode, updatePlaceId } from "store/slices/store"
+import useMapStore from "hooks/useMapStore"
+import useStoreStore from "hooks/useStoreStore"
 
 const BookmarkContainer = styled.div`
   position: absolute;
@@ -15,6 +15,10 @@ const BookmarkContainer = styled.div`
 `
 
 const BookmarkListTab = () => {
+  const clearStores = useStoreStore(state => state.clearStores)
+  const setStores = useStoreStore(state => state.setStores)
+  const setMode = useMapStore(state => state.setMode)
+  const setBouncePlaceId = useMapStore(state => state.setBouncePlaceId)
   const [showSnackbar, setShowSnackbar] = useState(null)
   const [randomKey, setRandomKey] = useState(null)
   const { mutate } = useSWRConfig()
@@ -22,7 +26,6 @@ const BookmarkListTab = () => {
   const { data: bookmark } = useSWR(
     randomKey ? `/bookmarks/${randomKey}` : null
   )
-  const dispatch = useDispatch()
 
   const handleSubmit = async () => {
     mutate("/bookmarks")
@@ -39,13 +42,17 @@ const BookmarkListTab = () => {
   }
 
   const handleClose = () => {
-    dispatch(updateStores([]))
-    dispatch(updatePlaceId(null))
-    dispatch(changeMode("MAP"))
+    clearStores()
+    setBouncePlaceId(null)
+    setMode("MAP")
   }
 
   useEffect(() => {
-    dispatch(updateStores(bookmark?.stores || []))
+    if (bookmarks?.stores) {
+      setStores(bookmarks?.stores)
+    } else {
+      clearStores()
+    }
   }, [bookmark, dispatch])
 
   return (

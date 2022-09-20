@@ -1,14 +1,9 @@
 import React from "react"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import styled from "styled-components"
 import useSWR from "swr"
 import StorePhotoCard from "../StorePhotoCard"
-import {
-  updateFocusPlaceId,
-  updatePlaceId,
-  updateStores,
-} from "store/slices/store"
+import useStoreStore from "hooks/useStoreStore"
 
 const Container = styled.div`
   height: calc(100vh - 80px - 48px);
@@ -17,23 +12,30 @@ const Container = styled.div`
 `
 
 const StorePhotoList = () => {
+  const clearStores = useStoreStore(state => state.clearStores)
+  const setStores = useStoreStore(state => state.setStores)
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const setBouncePlaceId = useStoreStore(state => state.setBouncePlaceId)
   const { data } = useSWR("/store-photos")
-  const dispatch = useDispatch()
 
   const handleClick = (placeId) => {
-    dispatch(updatePlaceId(placeId))
+    setPlaceId(placeId)
   }
   const handleMouseEnter = (placeId) => {
-    dispatch(updateFocusPlaceId(placeId))
+    setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
-    dispatch(updateFocusPlaceId(null))
+    setBouncePlaceId(null)
   }
 
   useEffect(() => {
     const stores = data?.storePhotoGroups.map((storePhoto) => storePhoto.store)
-    dispatch(updateStores(stores || []))
-  }, [dispatch, data])
+    if (stores) {
+      setStores(stores)
+    } else {
+      clearStores()
+    }
+  }, [data])
 
   return (
     <Container>
