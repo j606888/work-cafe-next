@@ -40,7 +40,6 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   color: #444;
-  width: 225px;
 
   h3 {
     margin: 0;

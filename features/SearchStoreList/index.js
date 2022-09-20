@@ -9,7 +9,7 @@ import {
   SearchHereContainer,
   StoreListContainer,
 } from "features/UserMap/styled"
-import { WhiteBox } from './styled'
+import { WhiteBox } from "./styled"
 import React, { useEffect, useState } from "react"
 import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
@@ -34,10 +34,10 @@ const INIT_OPTIONS = {
 }
 
 const SearchStoreList = ({ store, mapCenter }) => {
-  const stores = useStoreStore(state => state.stores)
-  const clearStores = useStoreStore(state => state.clearStores)
-  const setStores = useStoreStore(state => state.setStores)
-  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const stores = useStoreStore((state) => state.stores)
+  const clearStores = useStoreStore((state) => state.clearStores)
+  const setStores = useStoreStore((state) => state.setStores)
+  const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const [options, setOptions] = useState(INIT_OPTIONS)
   const [openDrawer, setOpenDrawer] = React.useState(false)
   const [center, setCenter] = useState({
@@ -102,8 +102,12 @@ const SearchStoreList = ({ store, mapCenter }) => {
         <SearchHere onClick={handleSearch} loading={options.go && !data} />
       </SearchHereContainer>
       <StoreListContainer>
-        <WhiteBox />
-        <StoreList stores={stores || []} />
+        {stores.length > 0 && (
+          <>
+            <WhiteBox />
+            <StoreList stores={stores || []} />
+          </>
+        )}
       </StoreListContainer>
     </>
   )
