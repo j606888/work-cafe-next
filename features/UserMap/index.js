@@ -28,7 +28,7 @@ const calcCenter = (stores) => {
 }
 const UserMap = () => {
   const mode = useMapStore((state) => state.mode)
-  const { setPlaceId, stores, placeId, bouncePlaceId } = useStoreStore()
+  const { stores, placeId, setPlaceId, bouncePlaceId } = useStoreStore()
   const { isReady, mapSettings, map, setMap, myLocation } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
   const { data: store, mutate: mutateStore } = useSWR(

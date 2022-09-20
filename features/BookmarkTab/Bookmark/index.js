@@ -24,13 +24,12 @@ const Head = styled.div`
   box-sizing: border-box;
 `
 
-const Bookmark = ({ stores = [], onBack = () => {} }) => {
-
+const Bookmark = ({ bookmark, stores = [], onBack = () => {} }) => {
   return (
     <Container>
       <Head>
         <ArrowBackIcon sx={{ cursor: "pointer" }} onClick={onBack} />
-        <h3>已儲存</h3>
+        <h3>{bookmark.name}</h3>
       </Head>
       <StoreList stores={stores || []} />
     </Container>

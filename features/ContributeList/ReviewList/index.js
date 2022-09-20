@@ -55,7 +55,7 @@ const ReviewList = () => {
     } else {
       clearStores()
     }
-  }, [dispatch, data])
+  }, [data])
 
   if (!reviewsArr) return "loading"
 
