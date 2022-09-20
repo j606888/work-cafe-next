@@ -27,15 +27,10 @@ const calcCenter = (stores) => {
   }
 }
 const UserMap = () => {
-  const mode = useMapStore(state => state.mode)
-  const setPlaceId = useStoreStore(state => state.setPlaceId)
-  const stores = useStoreStore(state => state.stores)
-  const placeId = useStoreStore(state => state.placeId)
-  const bouncePlaceId = useStoreStore(state => state.bouncePlaceId)
-  
-  const { isReady, mapSettings, map, setMap } = useInitMap()
+  const mode = useMapStore((state) => state.mode)
+  const { setPlaceId, stores, placeId, bouncePlaceId } = useStoreStore()
+  const { isReady, mapSettings, map, setMap, myLocation } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
-  const myLocation = useRef(null)
   const { data: store, mutate: mutateStore } = useSWR(
     placeId ? `/stores/${placeId}` : null
   )
@@ -92,11 +87,11 @@ const UserMap = () => {
     }
   }, [stores])
 
-  if (!isReady) return <Skeleton />
-
   const me = myLocation.current && (
     <MeMarker lat={myLocation.current.lat} lng={myLocation.current.lng} />
   )
+
+  if (!isReady) return <Skeleton />
 
   return (
     <>
