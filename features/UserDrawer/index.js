@@ -7,19 +7,19 @@ import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Container, Header, Tabs } from "./styled"
 import { useDispatch } from 'react-redux'
-import { updateStores, } from 'store/slices/store'
 import useAuthCheck from "hooks/useAuthCheck";
 import useMapStore from "hooks/useMapStore"
+import useStoreStore from "hooks/useStoreStore"
 
 export default function UserDrawer({ open, onClose = () => {} }) {
+  const clearStores = useStoreStore(state => state.clearStores)
   const setMode = useMapStore(state => state.setMode)
-  const dispatch = useDispatch()
   const authCheck = useAuthCheck()
 
   const handleChangeMode = (mode) => {
     authCheck()
     onClose()
-    dispatch(updateStores([]))
+    clearStores()
     setMode(mode)
   }
 

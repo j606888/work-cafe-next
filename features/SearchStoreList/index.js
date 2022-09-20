@@ -11,8 +11,10 @@ import {
 } from "features/UserMap/styled"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { updatePlaceId, updateStores } from "store/slices/store"
+import { updatePlaceId } from "store/slices/store"
 import useSWR from "swr"
+import useStoreStore from "hooks/useStoreStore"
+
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -32,7 +34,10 @@ const INIT_OPTIONS = {
   openHour: null,
   go: false,
 }
+
 const SearchStoreList = ({ store, mapCenter }) => {
+  const clearStores = useStoreStore(state => state.clearStores)
+  const setStores = useStoreStore(state => state.setStores)
   const dispatch = useDispatch()
   const [options, setOptions] = useState(INIT_OPTIONS)
   const [openDrawer, setOpenDrawer] = React.useState(false)
@@ -54,7 +59,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, keyword, go: true }))
   }
   const handleClear = () => {
-    dispatch(updateStores([]))
+    clearStores()
     dispatch(updatePlaceId(null))
     setOptions((cur) => ({ ...cur, keyword: "", go: false }))
   }
@@ -73,7 +78,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
 
   useEffect(() => {
     if (data) {
-      dispatch(updateStores(data))
+      setStores(data)
       if (data.length === 1) {
         const placeId = data[0].placeId
         dispatch(updatePlaceId(placeId))

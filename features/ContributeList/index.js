@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import { updatePlaceId, updateStores } from "store/slices/store"
+import { updatePlaceId } from "store/slices/store"
 import { Container, Head, Tabs, Tab } from "./styled"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ReviewList from "./ReviewList"
@@ -10,17 +10,18 @@ import useMapStore from "hooks/useMapStore"
 
 const ContributeList = () => {
   const setMode = useMapStore(state => state.setMode)
+  const clearStores = useMapStore(state => state.clearStores)
   const [tab, setTab] = useState("review")
   const dispatch = useDispatch()
 
   const handleClose = () => {
-    dispatch(updateStores([]))
+    clearStores()
     dispatch(updatePlaceId(null))
     setMode("MAP")
   }
 
   const handleChangeTab = (targetTab) => {
-    dispatch(updateStores([]))
+    clearStores()
     dispatch(updatePlaceId(null))
     setTab(targetTab)
   }

@@ -3,14 +3,10 @@ import { createSlice } from "@reduxjs/toolkit"
 export const storeSlice = createSlice({
   name: "store",
   initialState: {
-    stores: [],
     bouncePlaceId: null,
     placeId: null,
   },
   reducers: {
-    updateStores: (state, action) => {
-      state.stores = action.payload
-    },
     updateFocusPlaceId: (state, action) => {
       state.bouncePlaceId = action.payload
     },
@@ -20,7 +16,7 @@ export const storeSlice = createSlice({
   },
 })
 
-export const { updateStores, updatePlaceId, updateFocusPlaceId } =
+export const { updatePlaceId, updateFocusPlaceId } =
   storeSlice.actions
 
 export default storeSlice.reducer

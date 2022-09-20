@@ -7,8 +7,8 @@ import StorePhotoCard from "../StorePhotoCard"
 import {
   updateFocusPlaceId,
   updatePlaceId,
-  updateStores,
 } from "store/slices/store"
+import useStoreStore from "hooks/useStoreStore"
 
 const Container = styled.div`
   height: calc(100vh - 80px - 48px);
@@ -17,6 +17,8 @@ const Container = styled.div`
 `
 
 const StorePhotoList = () => {
+  const clearStores = useStoreStore(state => state.clearStores)
+  const setStores = useStoreStore(state => state.setStores)
   const { data } = useSWR("/store-photos")
   const dispatch = useDispatch()
 
@@ -32,7 +34,11 @@ const StorePhotoList = () => {
 
   useEffect(() => {
     const stores = data?.storePhotoGroups.map((storePhoto) => storePhoto.store)
-    dispatch(updateStores(stores || []))
+    if (stores) {
+      setStores(stores)
+    } else {
+      clearStores()
+    }
   }, [dispatch, data])
 
   return (
