@@ -9,6 +9,7 @@ import {
   SearchHereContainer,
   StoreListContainer,
 } from "features/UserMap/styled"
+import { WhiteBox } from './styled'
 import React, { useEffect, useState } from "react"
 import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
@@ -101,6 +102,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
         <SearchHere onClick={handleSearch} loading={options.go && !data} />
       </SearchHereContainer>
       <StoreListContainer>
+        <WhiteBox />
         <StoreList stores={stores || []} />
       </StoreListContainer>
     </>

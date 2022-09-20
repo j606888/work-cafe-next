@@ -7,7 +7,6 @@ export const Container = styled.div`
   border-bottom: 1px solid #e5e5e5;
   cursor: pointer;
   box-sizing: border-box;
-  width: ${props => props.theme.sidebarWidth};
   ${({ focus }) => focus && `background-color: #f8f8f8;`}
 
   &:hover {

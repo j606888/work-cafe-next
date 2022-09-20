@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Scrollbar = styled.div`
   width: ${props => props.theme.sidebarWidth};
   overflow-y: scroll;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 68px);
   box-shadow: 1px 0 3px 1px rgba(0,0,0,0.2);
 
   ::-webkit-scrollbar {
