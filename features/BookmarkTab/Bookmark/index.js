@@ -6,7 +6,7 @@ import StoreList from "features/StoreList"
 const Container = styled.div`
   height: 100vh;
   background-color: #fff;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
 `
 
 const Head = styled.div`
@@ -20,7 +20,7 @@ const Head = styled.div`
   left: 0;
   top: 0;
   z-index: 2;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
   box-sizing: border-box;
 `
 

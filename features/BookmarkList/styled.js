@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
   background: #fff;
   height: 100vh;
 `

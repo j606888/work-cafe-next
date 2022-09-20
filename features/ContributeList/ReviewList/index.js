@@ -7,7 +7,7 @@ import useScrollFetch from "hooks/useScrollFetch"
 export const ListContainer = styled.div`
   height: calc(100vh - 80px - 48px);
   overflow-y: scroll;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
 `
 
 const getKey = (pageIndex, previousPageData) => {
