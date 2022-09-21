@@ -72,8 +72,8 @@ const SearchStoreList = ({ store, mapCenter }) => {
     }
     setOptions((cur) => ({ ...cur, ...currentOpenTime, go: true }))
   }
-  const handleWakeUpChange = (wakeUp) => {
-    setOptions((cur) => ({ ...cur, wakeUp, go: true}))
+  const handleFilterChange = (filter) => {
+    setOptions((cur) => ({ ...cur, ...filter, go: true}))
   }
   const handleSearch = () => {
     setOptions((cur) => ({ ...cur, go: true }))
@@ -103,7 +103,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
       </SearchbarV2Container>
       <MenuContainer>
         <OpenTime onChange={handleOpenTimeChange} />
-        <SearchFilter onChange={handleWakeUpChange}/>
+        <SearchFilter onChange={handleFilterChange}/>
       </MenuContainer>
       <SearchHereContainer left={calcSearchHereLeft(stores, store)}>
         <SearchHere onClick={handleSearch} loading={options.go && !data} />
