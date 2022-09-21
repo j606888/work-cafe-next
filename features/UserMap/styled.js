@@ -44,6 +44,10 @@ export const MenuContainer = styled.div`
   top: 1rem;
   left: 24.5rem;
   z-index: 2;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
 `
 
 export const MyLocationContainer = styled.div`
