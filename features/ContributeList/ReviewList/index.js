@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
-import useSWRInfinite from "swr/infinite"
 import ReviewStoreCard from "../ReviewStoreCard"
-import { Button } from "@mui/material"
 import useStoreStore from "hooks/useStoreStore"
+import useScrollFetch from "hooks/useScrollFetch"
 
 export const ListContainer = styled.div`
   height: calc(100vh - 80px - 48px);
   overflow-y: scroll;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
 `
 
 const getKey = (pageIndex, previousPageData) => {
@@ -17,25 +16,12 @@ const getKey = (pageIndex, previousPageData) => {
 }
 
 const ReviewList = () => {
-  const clearStores = useStoreStore(state => state.clearStores)
-  const setStores = useStoreStore(state => state.setStores)
-  const setPlaceId = useStoreStore(state => state.setPlaceId)
-  const setBouncePlaceId = useStoreStore(state => state.setBouncePlaceId)
-  const { data, size, setSize } = useSWRInfinite(getKey)
-
-  const handleClick = (placeId) => {
-    setPlaceId(placeId)
-  }
-  const handleMouseEnter = (placeId) => {
-    setBouncePlaceId(placeId)
-  }
-  const handleMouseLeave = (_placeId) => {
-    setBouncePlaceId(null)
-  }
+  const setStores = useStoreStore((state) => state.setStores)
+  const { data, handleScroll } = useScrollFetch(getKey)
 
   let reviewsArr = []
 
-  data?.forEach(({ paging, reviews }) => {
+  data?.forEach(({ reviews }) => {
     reviews.forEach((review) => {
       reviewsArr.push(review)
     })
@@ -50,27 +36,19 @@ const ReviewList = () => {
       })
     })
 
-    if (stores.length > 0) {
-      setStores(stores)
-    } else {
-      clearStores()
-    }
-  }, [dispatch, data])
+    setStores(stores || [])
+  }, [data, setStores])
 
   if (!reviewsArr) return "loading"
 
   return (
-    <ListContainer>
+    <ListContainer onScroll={handleScroll}>
       {reviewsArr?.map((review) => (
         <ReviewStoreCard
           key={review.id}
           {...review}
-          onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         />
       ))}
-      <Button onClick={() => setSize(size + 1)}>Load More</Button>
     </ListContainer>
   )
 }

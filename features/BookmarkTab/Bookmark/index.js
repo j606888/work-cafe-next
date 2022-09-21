@@ -6,7 +6,7 @@ import StoreList from "features/StoreList"
 const Container = styled.div`
   height: 100vh;
   background-color: #fff;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
 `
 
 const Head = styled.div`
@@ -20,17 +20,16 @@ const Head = styled.div`
   left: 0;
   top: 0;
   z-index: 2;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
   box-sizing: border-box;
 `
 
-const Bookmark = ({ stores = [], onBack = () => {} }) => {
-
+const Bookmark = ({ bookmark, stores = [], onBack = () => {} }) => {
   return (
     <Container>
       <Head>
         <ArrowBackIcon sx={{ cursor: "pointer" }} onClick={onBack} />
-        <h3>已儲存</h3>
+        <h3>{bookmark.name}</h3>
       </Head>
       <StoreList stores={stores || []} />
     </Container>

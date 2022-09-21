@@ -3,13 +3,13 @@ import styled, { css } from "styled-components"
 export const Container = styled.div`
   height: 100vh;
   background-color: #fff;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
   position: absolute;
 `
 
 export const Head = styled.div`
   background-color: #1a73e8;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
   height: 80px;
   box-sizing: border-box;
   color: #fff;

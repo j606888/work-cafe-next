@@ -8,7 +8,7 @@ import useStoreStore from "hooks/useStoreStore"
 const Container = styled.div`
   height: calc(100vh - 80px - 48px);
   overflow-y: scroll;
-  width: 374px;
+  width: ${props => props.theme.sidebarWidth};
 `
 
 const StorePhotoList = () => {

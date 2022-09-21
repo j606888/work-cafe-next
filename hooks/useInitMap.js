@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/router"
 import useStoreStore from "./useStoreStore"
 
@@ -20,16 +20,17 @@ const DEFAULT_SETUP = {
 }
 
 const useInitMap = () => {
-  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const [mapSettings, setMapSettings] = useState(DEFAULT_SETUP)
   const [isReady, setIsReady] = useState(false)
   const [map, setMap] = useState(null)
+  const myLocation = useRef(null)
   const router = useRouter()
 
   useEffect(() => {
     if (router.isReady & !isReady) {
       const urlLocation = router.query.location
-      const lastLocation = localStorage.getItem('lastLocation')
+      const lastLocation = localStorage.getItem("lastLocation")
       const location = _.isEmpty(urlLocation) ? [lastLocation] : urlLocation
 
       if (location) {
@@ -55,7 +56,7 @@ const useInitMap = () => {
     }
   }, [router, isReady])
 
-  return { mapSettings, isReady, map, setMap }
+  return { mapSettings, isReady, map, setMap, myLocation }
 }
 
 export default useInitMap

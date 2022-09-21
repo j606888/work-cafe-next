@@ -5,11 +5,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ReviewList from "./ReviewList"
 import StorePhotoList from "./StorePhotoList"
 import useMapStore from "hooks/useMapStore"
+import useStoreStore from "hooks/useStoreStore"
 
 const ContributeList = () => {
   const setMode = useMapStore(state => state.setMode)
-  const clearStores = useMapStore(state => state.clearStores)
-  const setPlaceId = useMapStore(state => state.setPlaceId)
+  const clearStores = useStoreStore(state => state.clearStores)
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
   const [tab, setTab] = useState("review")
 
   const handleClose = () => {

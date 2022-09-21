@@ -7,8 +7,6 @@ export const Container = styled.div`
   border-bottom: 1px solid #e5e5e5;
   cursor: pointer;
   box-sizing: border-box;
-  width: 374px;
-
   ${({ focus }) => focus && `background-color: #f8f8f8;`}
 
   &:hover {
@@ -42,7 +40,6 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   color: #444;
-  width: 225px;
 
   h3 {
     margin: 0;

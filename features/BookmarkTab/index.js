@@ -3,7 +3,7 @@ import BookmarkList from "features/BookmarkList"
 import Bookmark from "features/BookmarkTab/Bookmark"
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import useSWR, { useSWRConfig } from "swr"
+import useSWR from "swr"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
 
@@ -15,67 +15,57 @@ const BookmarkContainer = styled.div`
 `
 
 const BookmarkListTab = () => {
-  const clearStores = useStoreStore(state => state.clearStores)
-  const setStores = useStoreStore(state => state.setStores)
-  const setMode = useMapStore(state => state.setMode)
-  const setBouncePlaceId = useMapStore(state => state.setBouncePlaceId)
+  const clearStores = useStoreStore((state) => state.clearStores)
+  const setStores = useStoreStore((state) => state.setStores)
+  const setPlaceId = useStoreStore((state) => state.setPlaceId)
+  const setMode = useMapStore((state) => state.setMode)
   const [showSnackbar, setShowSnackbar] = useState(null)
   const [randomKey, setRandomKey] = useState(null)
-  const { mutate } = useSWRConfig()
-  const { data: bookmarks } = useSWR("/bookmarks")
+  const { data: bookmarks, mutateBookmarks } = useSWR("/bookmarks")
   const { data: bookmark } = useSWR(
     randomKey ? `/bookmarks/${randomKey}` : null
   )
 
-  const handleSubmit = async () => {
-    mutate("/bookmarks")
-  }
-
   const handleDelete = async (randomKey) => {
     await deleteBookmark({ randomKey })
     setShowSnackbar("刪除成功")
-    mutate("/bookmarks")
-  }
-
-  const handleClick = async (randomKey) => {
-    setRandomKey(randomKey)
+    mutateBookmarks()
   }
 
   const handleClose = () => {
     clearStores()
-    setBouncePlaceId(null)
+    setPlaceId(null)
     setMode("MAP")
   }
 
+  const handleBack = () => {
+    setRandomKey(null)
+    setPlaceId(null)
+  }
+
   useEffect(() => {
-    if (bookmarks?.stores) {
-      setStores(bookmarks?.stores)
-    } else {
-      clearStores()
-    }
-  }, [bookmark, dispatch])
+    setStores(bookmark?.stores || [])
+  }, [bookmark, setStores])
+
+  const data = bookmark ? (
+    <Bookmark
+      stores={bookmark.stores}
+      onBack={handleBack}
+      bookmark={bookmark}
+    />
+  ) : (
+    <BookmarkList
+      bookmarks={bookmarks || []}
+      onDelete={handleDelete}
+      onClose={handleClose}
+      onSubmit={() => mutateBookmarks()}
+      onClick={(randomKey) => setRandomKey(randomKey)}
+    />
+  )
 
   return (
     <>
-      {!randomKey && (
-        <BookmarkContainer>
-          <BookmarkList
-            bookmarks={bookmarks || []}
-            onSubmit={handleSubmit}
-            onDelete={handleDelete}
-            onClick={handleClick}
-            onClose={handleClose}
-          />
-        </BookmarkContainer>
-      )}
-      {randomKey && (
-        <BookmarkContainer>
-          <Bookmark
-            stores={bookmark?.stores}
-            onBack={() => setRandomKey(null)}
-          />
-        </BookmarkContainer>
-      )}
+      <BookmarkContainer>{data}</BookmarkContainer>
       {showSnackbar && (
         <Snackbar
           onClose={() => setShowSnackbar(false)}
