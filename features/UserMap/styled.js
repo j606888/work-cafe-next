@@ -7,8 +7,10 @@ export const MarkerStyle = styled.div`
     font-weight: bold;
     border-radius: 12px;
     padding: 4px 8px;
-    border: 1px solid #333;
+    border: 1px solid #999;
     box-sizing: border-box;
+    opacity: 0.6;
+    max-width: 120px;
     ${({ showLabel }) => !showLabel && `display: none !important;`}
   }
 `
