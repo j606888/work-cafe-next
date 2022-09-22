@@ -1,11 +1,15 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Router from "next/router"
 import _ from "lodash"
 import useSWR from "swr"
 import Marker from "features/GoogleMapWrapper/Marker"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import StoreDetail from "features/StoreDetail"
-import { StoreDetailContainer, MyLocationContainer } from "./styled"
+import {
+  StoreDetailContainer,
+  MyLocationContainer,
+  MarkerStyle,
+} from "./styled"
 import BookmarkTab from "features/BookmarkTab"
 import HiddenList from "features/HiddenList"
 import ContributeList from "features/ContributeList"
@@ -16,6 +20,7 @@ import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
+import { Button } from "@mui/material"
 
 const calcCenter = (stores) => {
   const lats = stores.map((store) => store.lat)
@@ -34,6 +39,7 @@ const UserMap = () => {
   const { data: store, mutate: mutateStore } = useSWR(
     placeId ? `/stores/${placeId}` : null
   )
+  const [showLabel, setShowLabel] = useState(true)
 
   const handleOnIdle = ({ lat, lng, zoom }) => {
     const mapPath = [`@${lat},${lng},${zoom}z`, placeId]
@@ -87,6 +93,10 @@ const UserMap = () => {
     }
   }, [stores])
 
+  const handleToggle = () => {
+    setShowLabel(cur => !cur)
+  }
+
   const me = myLocation.current && (
     <MeMarker lat={myLocation.current.lat} lng={myLocation.current.lng} />
   )
@@ -114,31 +124,34 @@ const UserMap = () => {
           />
         </StoreDetailContainer>
       )}
-      <GoogleMapWrapper
-        map={map}
-        setMap={setMap}
-        onIdle={handleOnIdle}
-        mapSettings={mapSettings}
-      >
-        {me}
-        {stores?.map((store) => (
-          <Marker
-            key={store.placeId}
-            store={store}
-            focus={store.placeId === placeId}
-            bounce={store.placeId === bouncePlaceId}
-            onClick={handleRefreshStore}
-          />
-        ))}
-        {stores?.length === 0 && store && (
-          <Marker
-            store={store}
-            focus={store.placeId === placeId}
-            bounce={store.placeId === bouncePlaceId}
-            onClick={handleRefreshStore}
-          />
-        )}
-      </GoogleMapWrapper>
+      <Button variant="contained" sx={{ position: 'absolute', left: '41rem', top: '1rem', zIndex: 200 }} onClick={handleToggle}>開關店家名稱</Button>
+      <MarkerStyle showLabel={showLabel}>
+        <GoogleMapWrapper
+          map={map}
+          setMap={setMap}
+          onIdle={handleOnIdle}
+          mapSettings={mapSettings}
+        >
+          {me}
+          {stores?.map((store) => (
+            <Marker
+              key={store.placeId}
+              store={store}
+              focus={store.placeId === placeId}
+              bounce={store.placeId === bouncePlaceId}
+              onClick={handleRefreshStore}
+            />
+          ))}
+          {stores?.length === 0 && store && (
+            <Marker
+              store={store}
+              focus={store.placeId === placeId}
+              bounce={store.placeId === bouncePlaceId}
+              onClick={handleRefreshStore}
+            />
+          )}
+        </GoogleMapWrapper>
+      </MarkerStyle>
     </>
   )
 }
