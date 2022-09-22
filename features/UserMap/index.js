@@ -21,6 +21,7 @@ import Skeleton from "components/Skeleton"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
 import { Button } from "@mui/material"
+import ShowLabelCheckbox from "./ShowLabelCheckbox"
 
 const calcCenter = (stores) => {
   const lats = stores.map((store) => store.lat)
@@ -93,8 +94,8 @@ const UserMap = () => {
     }
   }, [stores])
 
-  const handleToggle = () => {
-    setShowLabel(cur => !cur)
+  const handleToggle = (checked) => {
+    setShowLabel(checked)
   }
 
   const me = myLocation.current && (
@@ -124,7 +125,7 @@ const UserMap = () => {
           />
         </StoreDetailContainer>
       )}
-      <Button variant="contained" sx={{ position: 'absolute', left: '41rem', top: '1rem', zIndex: 200 }} onClick={handleToggle}>開關店家名稱</Button>
+      <ShowLabelCheckbox onChange={handleToggle}/>
       <MarkerStyle showLabel={showLabel}>
         <GoogleMapWrapper
           map={map}
