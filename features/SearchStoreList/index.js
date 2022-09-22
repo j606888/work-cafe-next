@@ -13,6 +13,7 @@ import { WhiteBox } from "./styled"
 import React, { useEffect, useState } from "react"
 import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
+import SearchFilter from "features/SearchFilter"
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -30,6 +31,7 @@ const INIT_OPTIONS = {
   openType: "NONE",
   openWeek: null,
   openHour: null,
+  wakeUp: false,
   go: false,
 }
 
@@ -38,6 +40,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
   const clearStores = useStoreStore((state) => state.clearStores)
   const setStores = useStoreStore((state) => state.setStores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
+
   const [options, setOptions] = useState(INIT_OPTIONS)
   const [openDrawer, setOpenDrawer] = React.useState(false)
   const [center, setCenter] = useState({
@@ -69,6 +72,9 @@ const SearchStoreList = ({ store, mapCenter }) => {
     }
     setOptions((cur) => ({ ...cur, ...currentOpenTime, go: true }))
   }
+  const handleFilterChange = (filter) => {
+    setOptions((cur) => ({ ...cur, ...filter, go: true}))
+  }
   const handleSearch = () => {
     setOptions((cur) => ({ ...cur, go: true }))
     setCenter(mapCenter)
@@ -97,6 +103,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
       </SearchbarV2Container>
       <MenuContainer>
         <OpenTime onChange={handleOpenTimeChange} />
+        <SearchFilter onChange={handleFilterChange}/>
       </MenuContainer>
       <SearchHereContainer left={calcSearchHereLeft(stores, store)}>
         <SearchHere onClick={handleSearch} loading={options.go && !data} />

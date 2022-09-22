@@ -1,11 +1,15 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Router from "next/router"
 import _ from "lodash"
 import useSWR from "swr"
 import Marker from "features/GoogleMapWrapper/Marker"
 import GoogleMapWrapper from "features/GoogleMapWrapper"
 import StoreDetail from "features/StoreDetail"
-import { StoreDetailContainer, MyLocationContainer } from "./styled"
+import {
+  StoreDetailContainer,
+  MyLocationContainer,
+  MarkerStyle,
+} from "./styled"
 import BookmarkTab from "features/BookmarkTab"
 import HiddenList from "features/HiddenList"
 import ContributeList from "features/ContributeList"
@@ -16,6 +20,8 @@ import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
+import { Button } from "@mui/material"
+import ShowLabelCheckbox from "./ShowLabelCheckbox"
 
 const calcCenter = (stores) => {
   const lats = stores.map((store) => store.lat)
@@ -34,6 +40,7 @@ const UserMap = () => {
   const { data: store, mutate: mutateStore } = useSWR(
     placeId ? `/stores/${placeId}` : null
   )
+  const [showLabel, setShowLabel] = useState(true)
 
   const handleOnIdle = ({ lat, lng, zoom }) => {
     const mapPath = [`@${lat},${lng},${zoom}z`, placeId]
@@ -77,15 +84,19 @@ const UserMap = () => {
   }, [store])
 
   // Need to Optimize, if go to city center will be better
-  useEffect(() => {
-    if (stores && stores.length > 0 && map) {
-      const storesCenter = calcCenter(stores)
-      map.panTo(storesCenter)
-      if (map.zoom < 15) {
-        map.setZoom(15)
-      }
-    }
-  }, [stores])
+  // useEffect(() => {
+  //   if (stores && stores.length > 0 && map) {
+  //     const storesCenter = calcCenter(stores)
+  //     map.panTo(storesCenter)
+  //     if (map.zoom < 15) {
+  //       map.setZoom(15)
+  //     }
+  //   }
+  // }, [stores])
+
+  const handleToggle = (checked) => {
+    setShowLabel(checked)
+  }
 
   const me = myLocation.current && (
     <MeMarker lat={myLocation.current.lat} lng={myLocation.current.lng} />
@@ -114,31 +125,34 @@ const UserMap = () => {
           />
         </StoreDetailContainer>
       )}
-      <GoogleMapWrapper
-        map={map}
-        setMap={setMap}
-        onIdle={handleOnIdle}
-        mapSettings={mapSettings}
-      >
-        {me}
-        {stores?.map((store) => (
-          <Marker
-            key={store.placeId}
-            store={store}
-            focus={store.placeId === placeId}
-            bounce={store.placeId === bouncePlaceId}
-            onClick={handleRefreshStore}
-          />
-        ))}
-        {stores?.length === 0 && store && (
-          <Marker
-            store={store}
-            focus={store.placeId === placeId}
-            bounce={store.placeId === bouncePlaceId}
-            onClick={handleRefreshStore}
-          />
-        )}
-      </GoogleMapWrapper>
+      <ShowLabelCheckbox onChange={handleToggle}/>
+      <MarkerStyle showLabel={showLabel}>
+        <GoogleMapWrapper
+          map={map}
+          setMap={setMap}
+          onIdle={handleOnIdle}
+          mapSettings={mapSettings}
+        >
+          {me}
+          {stores?.map((store) => (
+            <Marker
+              key={store.placeId}
+              store={store}
+              focus={store.placeId === placeId}
+              bounce={store.placeId === bouncePlaceId}
+              onClick={handleRefreshStore}
+            />
+          ))}
+          {stores?.length === 0 && store && (
+            <Marker
+              store={store}
+              focus={store.placeId === placeId}
+              bounce={store.placeId === bouncePlaceId}
+              onClick={handleRefreshStore}
+            />
+          )}
+        </GoogleMapWrapper>
+      </MarkerStyle>
     </>
   )
 }

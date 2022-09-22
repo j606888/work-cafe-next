@@ -1,5 +1,19 @@
 import styled from "styled-components"
 
+export const MarkerStyle = styled.div`
+  .labels {
+    background-color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 4px 8px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    opacity: 0.6;
+    max-width: 120px;
+    ${({ showLabel }) => !showLabel && `display: none !important;`}
+  }
+`
 export const SearchHereContainer = styled.div`
   position: absolute;
   top: 4rem;
@@ -44,6 +58,9 @@ export const MenuContainer = styled.div`
   top: 1rem;
   left: 24.5rem;
   z-index: 2;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 `
 
 export const MyLocationContainer = styled.div`

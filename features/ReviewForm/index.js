@@ -26,7 +26,7 @@ const RADIO_GROUPS = [
     name: "roomVolume",
     label: "音量",
     options: [
-      option("quite", "幾乎無人說話"),
+      option("quiet", "幾乎無人說話"),
       option("normal", "輕聲交談"),
       option("loud", "正常交談"),
     ],

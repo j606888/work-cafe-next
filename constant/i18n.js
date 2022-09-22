@@ -1,6 +1,6 @@
 export const ReviewWords = {
   roomVolume: {
-    quite: '幾乎無人說話',
+    quiet: '幾乎無人說話',
     normal: '輕聲交談',
     loud: '正常交談'
   },
