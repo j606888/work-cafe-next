@@ -84,15 +84,15 @@ const UserMap = () => {
   }, [store])
 
   // Need to Optimize, if go to city center will be better
-  useEffect(() => {
-    if (stores && stores.length > 0 && map) {
-      const storesCenter = calcCenter(stores)
-      map.panTo(storesCenter)
-      if (map.zoom < 15) {
-        map.setZoom(15)
-      }
-    }
-  }, [stores])
+  // useEffect(() => {
+  //   if (stores && stores.length > 0 && map) {
+  //     const storesCenter = calcCenter(stores)
+  //     map.panTo(storesCenter)
+  //     if (map.zoom < 15) {
+  //       map.setZoom(15)
+  //     }
+  //   }
+  // }, [stores])
 
   const handleToggle = (checked) => {
     setShowLabel(checked)
