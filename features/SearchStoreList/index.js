@@ -49,7 +49,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
   })
   const { data } = useSWR(
     options?.go
-      ? ["/stores/location", { ...options, ...center, limit: 20 }]
+      ? ["/stores/location", { ...options, ...center, limit: 30 }]
       : null
   )
 
@@ -76,6 +76,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, ...filter, go: true}))
   }
   const handleSearch = () => {
+    setPlaceId(null)
     setOptions((cur) => ({ ...cur, go: true }))
     setCenter(mapCenter)
   }
