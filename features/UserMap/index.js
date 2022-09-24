@@ -125,7 +125,7 @@ const UserMap = () => {
         </StoreDetailContainer>
       )}
       <ShowLabelCheckbox onChange={handleToggle}/>
-      <MarkerStyle showLabel={showLabel}>
+      <MarkerStyle>
         <GoogleMapWrapper
           map={map}
           setMap={setMap}
@@ -140,6 +140,7 @@ const UserMap = () => {
               focus={store.placeId === placeId}
               bounce={store.placeId === bouncePlaceId}
               onClick={handleRefreshStore}
+              showLabel={showLabel}
             />
           ))}
           {stores?.length === 0 && store && (

@@ -14,7 +14,6 @@ export const MarkerStyle = styled.div`
     left: 0.8rem;
     overflow: hidden;
     max-width: 240px;
-    ${({ showLabel }) => !showLabel && `display: none !important;`}
   }
 `
 export const SearchHereContainer = styled.div`
