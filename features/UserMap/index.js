@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Router from "next/router"
 import _ from "lodash"
 import useSWR from "swr"
@@ -20,7 +20,6 @@ import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
-import { Button } from "@mui/material"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
 
 const calcCenter = (stores) => {

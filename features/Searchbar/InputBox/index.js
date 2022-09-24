@@ -26,7 +26,7 @@ const InputBox = ({
       <Tooltip title="選單" onClick={onOpenDrawer}>
         <MenuIcon sx={{ color: "#333333", cursor: "pointer" }} />
       </Tooltip>
-      <Input {...args.inputProps} placeholder="搜尋 Google 地圖" />
+      <Input {...args.inputProps} placeholder="搜尋 縣市、區域或店名" />
       <Tooltip title="搜尋" onClick={handleSearch}>
         <SearchIcon sx={{ color: "#CCCCCC", cursor: "pointer" }} />
       </Tooltip>
