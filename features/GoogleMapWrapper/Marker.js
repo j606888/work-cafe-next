@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { MarkerWithLabel } from "@googlemaps/markerwithlabel"
 import { truncate } from 'lodash'
 
 const markerIcon = (focus = false) => {
@@ -26,6 +25,11 @@ export default function Marker({
       lng: store.lng,
     },
     icon: markerIcon(focus),
+    label: {
+      text: store.name,
+      fontSize: '12px',
+      className: 'labels'
+    }
   }
 
   if (marker) {
@@ -35,14 +39,7 @@ export default function Marker({
 
   useEffect(() => {
     if (map && !marker) {
-      setMarker(
-        new MarkerWithLabel({
-          labelContent: truncate(store.name),
-          labelAnchor: new google.maps.Point(15, -30),
-          labelStyle: { opacity: 1.0 },
-          labelClass: "labels",
-        })
-      )
+      setMarker(new window.google.maps.Marker())
       setWindowInfo(
         new google.maps.InfoWindow({
           content: store.name,

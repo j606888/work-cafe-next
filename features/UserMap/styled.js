@@ -9,8 +9,11 @@ export const MarkerStyle = styled.div`
     padding: 4px 8px;
     border: 1px solid #999;
     box-sizing: border-box;
-    opacity: 0.6;
-    max-width: 120px;
+    position: absolute;
+    bottom: 2.3rem;
+    left: 0.8rem;
+    overflow: hidden;
+    max-width: 240px;
     ${({ showLabel }) => !showLabel && `display: none !important;`}
   }
 `
