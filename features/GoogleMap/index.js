@@ -7,7 +7,6 @@ import {
 const containerStyle = {
   width: "100%",
   height: "100vh",
-  zIndex: -1,
 }
 
 const OPTIONS = {

@@ -27,11 +27,11 @@ const UserMap = () => {
   const { stores, placeId, setPlaceId, bouncePlaceId } = useStoreStore()
   const { isReady, myLocation, map, setMap } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
+  const [showLabel, setShowLabel] = useState(true)
+  const [mouseOverStoreId, setMouseOverStoreId] = useState(null)
   const { data: store, mutate: mutateStore } = useSWR(
     placeId ? `/stores/${placeId}` : null
   )
-  const [showLabel, setShowLabel] = useState(true)
-  const [mouseOverStoreId, setMouseOverStoreId] = useState(null)
 
   const handleIdle = () => {
     if (!map) return
@@ -86,19 +86,6 @@ const UserMap = () => {
     setShowLabel(checked)
   }
 
-  const me = myLocation.current && (
-    <Marker
-      position={{
-        lat: myLocation.current.lat,
-        lng: myLocation.current.lng,
-      }}
-      icon={{
-        url: "/me.svg",
-        scaledSize: new google.maps.Size(22, 22),
-      }}
-    />
-  )
-
   if (!isReady) return <Skeleton />
 
   return (
@@ -125,7 +112,18 @@ const UserMap = () => {
       <ShowLabelCheckbox onChange={handleToggle} />
       <MarkerStyle>
         <GoogleMap onIdle={handleIdle} onLoad={handleLoad}>
-          {me}
+          {myLocation.current && (
+            <Marker
+              position={{
+                lat: myLocation.current.lat,
+                lng: myLocation.current.lng,
+              }}
+              icon={{
+                url: "/me.svg",
+                scaledSize: new google.maps.Size(22, 22),
+              }}
+            />
+          )}
           {stores?.map((store) => (
             <StoreMarker
               key={store.placeId}

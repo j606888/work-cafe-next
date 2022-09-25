@@ -5,6 +5,7 @@ export const Container = styled.div`
   background-color: #fff;
   width: ${props => props.theme.sidebarWidth};
   position: absolute;
+  z-index: 2;
 `
 
 export const Head = styled.div`
