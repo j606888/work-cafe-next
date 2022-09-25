@@ -43,7 +43,6 @@ const GoogleReviewCard = ({ authorName, authorUrl, rating, relativeTimeDescripti
           <Avatar
             alt={authorName}
             sx={{ width: 28, height: 28, mr: 1.5 }}
-            src={authorUrl}
           />
           <span>{authorName}</span>
         </div>

@@ -24,7 +24,9 @@ const Searchbar = ({
     setKeyword(newInputValue)
 
     const eventName = event._reactName
-    if (eventName === "onClick") onSearch(newInputValue)
+    if (eventName === "onClick" || eventName === "onKeyDown") {
+      onSearch(newInputValue)
+    }
   }
   const handleSearch = () => {
     if (keyword.length === 0) return
@@ -40,6 +42,15 @@ const Searchbar = ({
   useEffect(() => {
     if (!resetBool) setResetBool(true)
   }, [resetBool])
+
+  const handleOnClick = () => {
+    onSearch(keyword)
+  }
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      onSearch(keyword)
+    }
+  }
 
   return (
     <MuiAutocomplete
@@ -57,9 +68,10 @@ const Searchbar = ({
         />
       )}
       renderOption={(props, option, { inputValue }) => (
-        <OptionBox props={props} option={option} inputValue={inputValue} />
+        <OptionBox props={props} option={option} inputValue={inputValue} onClick={handleOnClick} />
       )}
       onInputChange={handleInputChange}
+      onKeyDown={handleKeyDown}
     />
   )
 }

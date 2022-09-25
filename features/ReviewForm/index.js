@@ -15,6 +15,7 @@ import { Form, Scroll, Buttons } from "./styled"
 import ReviewApi from "api/review"
 import Snackbar from "components/Snackbar"
 import StoreApi from "api/stores"
+import { useEffect } from "react"
 
 const option = (value, label) => ({
   value,
@@ -56,11 +57,16 @@ const ReviewForm = ({
   open,
   name,
   isHide = false,
-  myReview,
+  myReview = null,
   onClose = () => {},
   onSave = () => {},
 }) => {
-  const [data, setData] = React.useState({})
+  const [data, setData] = React.useState({
+    roomVolume: null,
+    timeLimit: null,
+    socketSupply: null,
+    description: ""
+  })
   const [alsoHide, setAlsoHide] = React.useState(true)
   const [showSnackbar, setShowSnackbar] = React.useState(null)
 
@@ -83,12 +89,25 @@ const ReviewForm = ({
     onSave()
   }
   const handleClose = () => {
-    setData({})
+    setData({
+      roomVolume: myReview?.roomVolume || null,
+      timeLimit: myReview?.timeLimit || null,
+      socketSupply: myReview?.socketSupply || null,
+      description: myReview?.description || "",
+    })
     onClose()
   }
   const handleSwitchChange = () => {
     setAlsoHide(cur => !cur)
   }
+  useEffect(() => {
+    setData({
+      roomVolume: myReview?.roomVolume || null,
+      timeLimit: myReview?.timeLimit || null,
+      socketSupply: myReview?.socketSupply || null,
+      description: myReview?.description || "",
+    })
+  }, [myReview])
 
   const showAlsoHide = data.recommend === "no" && !isHide
   const initFace = (typeof open === 'string') ? open : myReview?.recommend
@@ -117,7 +136,7 @@ const ReviewForm = ({
               multiline
               fullWidth
               rows={4}
-              defaultValue={myReview?.description}
+              value={data.description}
               placeholder="說明你在這間店的體驗"
               onChange={(e) => handleChange("description", e.target.value)}
             />
@@ -125,8 +144,8 @@ const ReviewForm = ({
               <FormControl key={name}>
                 <FormLabel>{label}</FormLabel>
                 <RadioGroup
-                  defaultValue={myReview?.[name]}
                   name={name}
+                  value={data[name]}
                   onChange={(event) => handleChange(name, event.target.value)}
                 >
                   {options.map(({ value, label }) => (

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Router from "next/router"
 import _ from "lodash"
 import useSWR from "swr"
@@ -20,7 +20,6 @@ import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
-import { Button } from "@mui/material"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
 
 const calcCenter = (stores) => {
@@ -126,7 +125,7 @@ const UserMap = () => {
         </StoreDetailContainer>
       )}
       <ShowLabelCheckbox onChange={handleToggle}/>
-      <MarkerStyle showLabel={showLabel}>
+      <MarkerStyle>
         <GoogleMapWrapper
           map={map}
           setMap={setMap}
@@ -141,6 +140,7 @@ const UserMap = () => {
               focus={store.placeId === placeId}
               bounce={store.placeId === bouncePlaceId}
               onClick={handleRefreshStore}
+              showLabel={showLabel}
             />
           ))}
           {stores?.length === 0 && store && (

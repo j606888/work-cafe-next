@@ -9,17 +9,26 @@ import { Container, Header, Tabs } from "./styled"
 import useAuthCheck from "hooks/useAuthCheck";
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
+import NewStoreRequest from "features/NewStoreRequest/NewStoreRequest";
 
 export default function UserDrawer({ open, onClose = () => {} }) {
   const clearStores = useStoreStore(state => state.clearStores)
   const setMode = useMapStore(state => state.setMode)
   const authCheck = useAuthCheck()
+  const [openNewStore, setOpenNewStore] = React.useState(false)
 
   const handleChangeMode = (mode) => {
     authCheck()
     onClose()
     clearStores()
     setMode(mode)
+  }
+
+  const openNewStoreRequest = () => {
+    setOpenNewStore(true)
+  }
+  const handleCloseNewStore = () => {
+    setOpenNewStore(false)
   }
 
   return (
@@ -47,6 +56,9 @@ export default function UserDrawer({ open, onClose = () => {} }) {
           </Tabs>
           <Divider />
           <Tabs>
+            <div onClick={openNewStoreRequest}>
+              <span>找不到店家</span>
+            </div>
             <div>
               <span>回報問題</span>
             </div>
@@ -56,6 +68,7 @@ export default function UserDrawer({ open, onClose = () => {} }) {
           </Tabs>
         </Container>
       </Drawer>
+      <NewStoreRequest open={openNewStore} onClose={handleCloseNewStore} />
     </>
   )
 }

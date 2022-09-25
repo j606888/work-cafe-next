@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react"
-import { MarkerWithLabel } from "@googlemaps/markerwithlabel"
-import { truncate } from 'lodash'
 
 const markerIcon = (focus = false) => {
   return {
@@ -14,18 +12,25 @@ export default function Marker({
   store,
   bounce = false,
   focus = false,
+  showLabel = false,
   onClick = () => {},
-  onMouseover = () => {},
-  onMouseout = () => {},
 }) {
   const [marker, setMarker] = useState(null)
-  const [windowInfo, setWindowInfo] = useState(null)
   const options = {
     position: {
       lat: store.lat,
       lng: store.lng,
     },
     icon: markerIcon(focus),
+  }
+  if (showLabel) {
+    options.label = {
+      text: store.name,
+      fontSize: "12px",
+      className: "labels",
+    }
+  } else {
+    options.label = null
   }
 
   if (marker) {
@@ -35,19 +40,7 @@ export default function Marker({
 
   useEffect(() => {
     if (map && !marker) {
-      setMarker(
-        new MarkerWithLabel({
-          labelContent: truncate(store.name),
-          labelAnchor: new google.maps.Point(15, -30),
-          labelStyle: { opacity: 1.0 },
-          labelClass: "labels",
-        })
-      )
-      setWindowInfo(
-        new google.maps.InfoWindow({
-          content: store.name,
-        })
-      )
+      setMarker(new window.google.maps.Marker())
     }
 
     return () => {
@@ -56,24 +49,33 @@ export default function Marker({
   }, [map, marker, store.name])
 
   useEffect(() => {
+    if (map && marker) {
+      setMarker(null)
+    }
+  }, [showLabel])
+
+  useEffect(() => {
     if (marker && map) {
       options.map = map
       marker.setOptions(options)
 
       marker.addListener("click", () => onClick(store.placeId))
       marker.addListener("mouseover", () => {
-        windowInfo.open({
-          anchor: marker,
-          map,
-        })
-        onMouseover(store.placeId)
+        options.label = {
+          text: store.name,
+          fontSize: "12px",
+          className: "labels",
+        }
+        marker.setOptions(options)
       })
       marker.addListener("mouseout", () => {
-        windowInfo.close()
-        onMouseout(store.placeId)
+        if (!showLabel) {
+          options.label = null
+          marker.setOptions(options)
+        }
       })
     }
-  }, [marker, map, options.icon])
+  }, [marker, map, options.icon, showLabel])
 
   return null
 }
