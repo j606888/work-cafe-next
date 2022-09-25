@@ -8,7 +8,9 @@ import Circle from "./Circle"
 import { createCrawlRecord } from "api/map-crawlers"
 import useInitMap from "hooks/useInitMap"
 import GoogleMap from "features/GoogleMap"
-
+import { Marker } from "@react-google-maps/api"
+import { laggy } from "utils/laggy"
+import { fetcher } from "api"
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 64px);
@@ -59,8 +61,8 @@ const AdminStoreCrawler = () => {
   })
   const { data: mapCrawlers } = useSWR([
     "/admin/map-crawlers",
-    { ...mapCenter, limit: 5 },
-  ])
+    { ...mapCenter, limit: 50 },
+  ], fetcher, { use: [laggy]})
 
   const handleFindMe = ({ lat, lng }) => {
     const center = { lat, lng }
@@ -130,6 +132,21 @@ const AdminStoreCrawler = () => {
         )}
         {controls.showArea && mapCrawlers?.map((mapCrawler) => (
           <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
+        ))}
+        {mapCrawlers?.map(mapCrawler => (
+          <Marker
+            key={mapCrawler.id}
+            position={
+              {
+                lat: mapCrawler.lat,
+                lng: mapCrawler.lng,
+              }
+            }
+            label={{
+              text: `${mapCrawler.newStoreCount}`,
+              fontWeight: 'bold'
+            }}
+          />
         ))}
       </GoogleMap>
     </Container>
