@@ -65,7 +65,7 @@ const StoreDetail = ({
     `/stores/${placeId}/reviews`
   )
   const { data: myReview, mutate: myReviewMutate } = useSWR(
-    `/stores/${placeId}/reviews/me`
+    userIsLogin() ? `/stores/${placeId}/reviews/me` : null
   )
 
   const handleBookmarkSubmit = () => {

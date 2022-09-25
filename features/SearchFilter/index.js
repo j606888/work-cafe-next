@@ -65,6 +65,7 @@ const RADIO_GROUPS = [
 const SearchFilter = ({ onChange = () => {} }) => {
   const [open, setOpen] = useState(false)
   const [wakeUp, setWakeUp] = useState(false)
+  const [exploreMode, setExploreMode] = useState(false)
   const [recommend, setRecommend] = useState(null)
   const [data, setData] = React.useState({
     roomVolume: "",
@@ -77,6 +78,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
     roomVolume: "",
     timeLimit: "",
     socketSupply: "",
+    exploreMode: false,
   })
 
   const handleOpen = () => {
@@ -86,6 +88,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
     setOpen(false)
     setWakeUp(initState.current.wakeUp)
     setRecommend(initState.current.recommend)
+    setExploreMode(initState.current.exploreMode)
     const { roomVolume, timeLimit, socketSupply } = initState.current
     setData({ roomVolume, timeLimit, socketSupply })
   }
@@ -99,16 +102,18 @@ const SearchFilter = ({ onChange = () => {} }) => {
     setData((cur) => ({ ...cur, [key]: value }))
   }
   const handleApply = () => {
-    onChange({ ...data, wakeUp, recommend })
+    onChange({ ...data, wakeUp, recommend, exploreMode })
     initState.current = {
       ...data,
       recommend,
       wakeUp,
+      exploreMode
     }
     setOpen(false)
   }
   const handleReset = () => {
     setWakeUp(false)
+    setExploreMode(false)
     setRecommend(null)
     setData({
       roomVolume: "",
@@ -134,6 +139,12 @@ const SearchFilter = ({ onChange = () => {} }) => {
                 <Checkbox checked={wakeUp} onChange={handleWakeUpChange} />
               }
               label="只顯示評論過、被儲存過的店家"
+            /><br/>
+            <FormControlLabel
+              control={
+                <Checkbox checked={exploreMode} onChange={(e) => setExploreMode(e.target.checked)} />
+              }
+              label="探索模式"
             />
           </div>
           <h4>最多人選擇</h4>

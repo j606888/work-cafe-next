@@ -1,5 +1,5 @@
-const { useRouter } = require("next/router")
-const { userIsLogin } = require("utils/user")
+import { useRouter } from "next/router"
+import { userIsLogin } from "utils/user"
 
 const useAuthCheck = () => {
   const route = useRouter()
