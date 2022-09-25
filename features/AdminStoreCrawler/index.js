@@ -9,7 +9,8 @@ import { createCrawlRecord } from "api/map-crawlers"
 import useInitMap from "hooks/useInitMap"
 import GoogleMap from "features/GoogleMap"
 import { Marker } from "@react-google-maps/api"
-
+import { laggy } from "utils/laggy"
+import { fetcher } from "api"
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 64px);
@@ -61,7 +62,7 @@ const AdminStoreCrawler = () => {
   const { data: mapCrawlers } = useSWR([
     "/admin/map-crawlers",
     { ...mapCenter, limit: 50 },
-  ])
+  ], fetcher, { use: [laggy]})
 
   const handleFindMe = ({ lat, lng }) => {
     const center = { lat, lng }
