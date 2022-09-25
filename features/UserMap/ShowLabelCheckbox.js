@@ -10,6 +10,7 @@ const Container = styled.div`
   border-radius: 12px;
   box-shadow: 0 0 4px 2px rgba(0,0,0,0.3);
   background-color: #ffffff;
+  z-index: 2;
 `
 
 const ShowLabelCheckbox = ({ onChange = () => {} }) => {
