@@ -14,10 +14,10 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
-    "@googlemaps/react-wrapper": "^1.1.35",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.99",
     "@mui/material": "^5.9.1",
+    "@react-google-maps/api": "^2.13.1",
     "@react-oauth/google": "^0.2.6",
     "autosuggest-highlight": "^3.3.4",
     "axios": "^0.27.2",

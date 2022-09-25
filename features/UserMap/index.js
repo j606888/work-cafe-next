@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react"
 import Router from "next/router"
 import _ from "lodash"
 import useSWR from "swr"
-import Marker from "features/GoogleMapWrapper/Marker"
-import GoogleMapWrapper from "features/GoogleMapWrapper"
 import StoreDetail from "features/StoreDetail"
 import {
   StoreDetailContainer,
@@ -15,33 +13,32 @@ import HiddenList from "features/HiddenList"
 import ContributeList from "features/ContributeList"
 import useInitMap from "hooks/useInitMap"
 import MyLocation from "features/MyLocation"
-import MeMarker from "features/MyLocation/MeMarker"
 import SearchStoreList from "features/SearchStoreList"
 import Skeleton from "components/Skeleton"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
+import GoogleMap from "features/GoogleMap"
+import { Marker } from "@react-google-maps/api"
+import StoreMarker from "features/GoogleMap/StoreMarker"
 
-const calcCenter = (stores) => {
-  const lats = stores.map((store) => store.lat)
-  const lngs = stores.map((store) => store.lng)
-
-  return {
-    lat: _.mean(lats),
-    lng: _.mean(lngs),
-  }
-}
 const UserMap = () => {
   const mode = useMapStore((state) => state.mode)
   const { stores, placeId, setPlaceId, bouncePlaceId } = useStoreStore()
-  const { isReady, mapSettings, map, setMap, myLocation } = useInitMap()
+  const { isReady, myLocation, map, setMap } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
   const { data: store, mutate: mutateStore } = useSWR(
     placeId ? `/stores/${placeId}` : null
   )
   const [showLabel, setShowLabel] = useState(true)
+  const [mouseOverStoreId, setMouseOverStoreId] = useState(null)
 
-  const handleOnIdle = ({ lat, lng, zoom }) => {
+  const handleIdle = () => {
+    if (!map) return
+
+    const zoom = map.zoom
+    const { lat, lng } = map.center.toJSON()
+
     const mapPath = [`@${lat},${lng},${zoom}z`, placeId]
       .filter(Boolean)
       .join("/")
@@ -67,6 +64,9 @@ const UserMap = () => {
     map.panTo(center)
     myLocation.current = center
   }
+  const handleLoad = (map) => {
+    setMap(map)
+  }
 
   useEffect(() => {
     if (store && map) {
@@ -80,25 +80,23 @@ const UserMap = () => {
       map.panTo(center)
       map.panBy(-400, 0)
     }
-  }, [store])
-
-  // Need to Optimize, if go to city center will be better
-  // useEffect(() => {
-  //   if (stores && stores.length > 0 && map) {
-  //     const storesCenter = calcCenter(stores)
-  //     map.panTo(storesCenter)
-  //     if (map.zoom < 15) {
-  //       map.setZoom(15)
-  //     }
-  //   }
-  // }, [stores])
+  }, [store, map])
 
   const handleToggle = (checked) => {
     setShowLabel(checked)
   }
 
   const me = myLocation.current && (
-    <MeMarker lat={myLocation.current.lat} lng={myLocation.current.lng} />
+    <Marker
+      position={{
+        lat: myLocation.current.lat,
+        lng: myLocation.current.lng,
+      }}
+      icon={{
+        url: "/me.svg",
+        scaledSize: new google.maps.Size(22, 22),
+      }}
+    />
   )
 
   if (!isReady) return <Skeleton />
@@ -124,34 +122,30 @@ const UserMap = () => {
           />
         </StoreDetailContainer>
       )}
-      <ShowLabelCheckbox onChange={handleToggle}/>
+      <ShowLabelCheckbox onChange={handleToggle} />
       <MarkerStyle>
-        <GoogleMapWrapper
-          map={map}
-          setMap={setMap}
-          onIdle={handleOnIdle}
-          mapSettings={mapSettings}
-        >
+        <GoogleMap onIdle={handleIdle} onLoad={handleLoad}>
           {me}
           {stores?.map((store) => (
-            <Marker
+            <StoreMarker
               key={store.placeId}
               store={store}
-              focus={store.placeId === placeId}
-              bounce={store.placeId === bouncePlaceId}
-              onClick={handleRefreshStore}
-              showLabel={showLabel}
+              isFocus={store.placeId === placeId}
+              isBounce={store.placeId === bouncePlaceId}
+              showLabel={store.placeId === mouseOverStoreId || showLabel}
+              onMouseOver={(placeId) => setMouseOverStoreId(placeId)}
+              onMouseOut={() => setMouseOverStoreId(null)}
             />
           ))}
           {stores?.length === 0 && store && (
-            <Marker
+            <StoreMarker
+              onClick={() => handleRefreshStore(store.placeId)}
               store={store}
-              focus={store.placeId === placeId}
-              bounce={store.placeId === bouncePlaceId}
-              onClick={handleRefreshStore}
+              isFocus={true}
+              isBounce={store.placeId === bouncePlaceId}
             />
           )}
-        </GoogleMapWrapper>
+        </GoogleMap>
       </MarkerStyle>
     </>
   )

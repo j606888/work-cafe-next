@@ -1,13 +1,13 @@
 import React, { useRef, useState, useReducer } from "react"
 import useSWR from "swr"
 import styled from "styled-components"
-import GoogleMapWrapper from "features/GoogleMapWrapper"
 import MyLocation from "features/MyLocation"
 import ControlPanel from "./ControlPanel"
 import SearchDialog from "./SearchDialog"
 import Circle from "./Circle"
 import { createCrawlRecord } from "api/map-crawlers"
 import useInitMap from "hooks/useInitMap"
+import GoogleMap from "features/GoogleMap"
 
 const Container = styled.div`
   position: relative;
@@ -50,7 +50,7 @@ const reducer = (state, action) => {
 }
 
 const AdminStoreCrawler = () => {
-  const { isReady, mapSettings, map, setMap } = useInitMap()
+  const { isReady, map, setMap } = useInitMap()
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
   const tempRef = useRef(null)
   const [mapCenter, setMapCenter] = useState({
@@ -59,7 +59,7 @@ const AdminStoreCrawler = () => {
   })
   const { data: mapCrawlers } = useSWR([
     "/admin/map-crawlers",
-    { ...mapCenter },
+    { ...mapCenter, limit: 5 },
   ])
 
   const handleFindMe = ({ lat, lng }) => {
@@ -77,19 +77,22 @@ const AdminStoreCrawler = () => {
     dispatch({ type: "TOGGLE_MODAL" })
   }
 
-  const handleOnClick = ({ lat, lng }) => {
-    tempRef.current = { lat, lng }
+  const handleClick = ({ latLng }) => {
+    tempRef.current = latLng.toJSON()
     dispatch({ type: "TOGGLE_MODAL" })
   }
 
-  const handleOnIdle = (center) => {
-    setMapCenter(center)
+  const handleIdle = () => {
+    console.log("HI")
+    if (!map) return
+
+    const { lat, lng } = map.center.toJSON()
+    setMapCenter({ lat, lng })
   }
 
-  const circles =
-    mapCrawlers?.map((mapCrawler) => (
-      <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
-    )) || []
+  const handleLoad = (map) => {
+    setMap(map)
+  }
 
   if (!isReady) return <div>NotReady</div>
 
@@ -111,21 +114,24 @@ const AdminStoreCrawler = () => {
       <MyLocationContainer>
         <MyLocation onClick={handleFindMe} />
       </MyLocationContainer>
-      <GoogleMapWrapper
-        map={map}
-        setMap={setMap}
-        onClick={handleOnClick}
-        onIdle={handleOnIdle}
-        mapSettings={mapSettings}
-        marginTop="64px"
+      <GoogleMap
+        onIdle={handleIdle}
+        onLoad={handleLoad}
+        onClick={handleClick}
+        style={{
+          width: "100%",
+          height: "90vh",
+        }}
       >
-        {controls.showArea && circles}
         {controls.showModal && tempRef.current && (
           <Circle
             mapCrawler={{ ...tempRef.current, radius: controls.searchRadius }}
           />
         )}
-      </GoogleMapWrapper>
+        {controls.showArea && mapCrawlers?.map((mapCrawler) => (
+          <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
+        ))}
+      </GoogleMap>
     </Container>
   )
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/router"
 import useStoreStore from "./useStoreStore"
+import _ from 'lodash'
 
 const DEFAULT_SETUP = {
   center: {
