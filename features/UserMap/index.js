@@ -133,6 +133,7 @@ const UserMap = () => {
               showLabel={store.placeId === mouseOverStoreId || showLabel}
               onMouseOver={(placeId) => setMouseOverStoreId(placeId)}
               onMouseOut={() => setMouseOverStoreId(null)}
+              onClick={handleRefreshStore}
             />
           ))}
           {stores?.length === 0 && store && (
