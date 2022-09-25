@@ -9,7 +9,25 @@ const containerStyle = {
   height: "100vh",
 }
 
-const GoogleMap = ({ children, onIdle = () => {}, onLoad = () => {} }) => {
+const OPTIONS = {
+  fullscreenControl: false,
+  mapTypeControl: false,
+  streetViewControl: false,
+  styles: [
+    {
+      featureType: "poi.business",
+      stylers: [{ visibility: "off" }],
+    },
+  ],
+}
+
+const GoogleMap = ({
+  children,
+  style,
+  onIdle = () => {},
+  onLoad = () => {},
+  onClick = () => {},
+}) => {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
   })
@@ -21,9 +39,11 @@ const GoogleMap = ({ children, onIdle = () => {}, onLoad = () => {} }) => {
     <ReactGoogleMap
       zoom={8}
       center={center}
-      mapContainerStyle={containerStyle}
+      mapContainerStyle={style || containerStyle}
       onIdle={onIdle}
       onLoad={onLoad}
+      options={OPTIONS}
+      onClick={onClick}
     >
       {children}
     </ReactGoogleMap>

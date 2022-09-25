@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { Circle as GoogleCircle } from '@react-google-maps/api'
 
-function buildOption({ id, lat, lng, radius, totalFound }) {
+function buildOption({ id, radius, totalFound }) {
   const pickColor = (totalFound) => {
     if (totalFound === 60) return "#E67E22"
     else if (totalFound === 0) return "#111"
@@ -10,7 +10,6 @@ function buildOption({ id, lat, lng, radius, totalFound }) {
 
   if (!id) {
     return {
-      center: { lat, lng },
       radius,
       fillColor: "#F1C40F",
       fillOpacity: 0.4,
@@ -22,29 +21,20 @@ function buildOption({ id, lat, lng, radius, totalFound }) {
     id,
     radius,
     fillColor: pickColor(totalFound),
-    center: { lat, lng },
     fillOpacity: 0.4,
     strokeOpacity: 0,
   }
 }
 
-const Circle = ({map, mapCrawler}) => {
-  const [circle, setCircle] = useState()
+const Circle = ({mapCrawler}) => {
   const options = buildOption(mapCrawler)
+  const center = {
+    lat: mapCrawler.lat,
+    lng: mapCrawler.lng
+  }
 
-  useEffect(() => {
-    if (!circle) setCircle(new google.maps.Circle())
 
-    return () => {
-      if (circle) circle.setMap(null)
-    }
-  }, [circle])
-
-  useEffect(() => {
-    if (circle) circle.setOptions({ map, options })
-  }, [map, circle])
-
-  return null
+  return <GoogleCircle center={center} options={options} />
 }
 
 export default Circle
