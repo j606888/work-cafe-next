@@ -25,7 +25,7 @@ import StoreMarker from "features/GoogleMap/StoreMarker"
 const UserMap = () => {
   const mode = useMapStore((state) => state.mode)
   const { stores, placeId, setPlaceId, bouncePlaceId } = useStoreStore()
-  const { isReady, myLocation, map, setMap } = useInitMap()
+  const { isReady, myLocation, map, setMap, mapSettings } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
   const [showLabel, setShowLabel] = useState(true)
   const [mouseOverStoreId, setMouseOverStoreId] = useState(null)
@@ -111,7 +111,7 @@ const UserMap = () => {
       )}
       <ShowLabelCheckbox onChange={handleToggle} />
       <MarkerStyle>
-        <GoogleMap onIdle={handleIdle} onLoad={handleLoad}>
+        <GoogleMap onIdle={handleIdle} onLoad={handleLoad} mapSettings={mapSettings}>
           {myLocation.current && (
             <Marker
               position={{
