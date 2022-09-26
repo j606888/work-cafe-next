@@ -77,7 +77,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
   }
   const handleSearch = () => {
     setPlaceId(null)
-    setOptions((cur) => ({ ...cur, go: true }))
+    setOptions((cur) => ({ ...cur, keyword: "", go: true }))
     setCenter(mapCenter)
   }
 
