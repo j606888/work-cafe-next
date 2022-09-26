@@ -7,11 +7,13 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  Tooltip,
 } from "@mui/material"
 import RecommendBlock from "features/ReviewForm/RecommendBlock"
 import React from "react"
 import { useRef, useState } from "react"
 import styled from "styled-components"
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 
 const Container = styled.div`
   width: 420px;
@@ -25,6 +27,11 @@ const ButtonGroup = styled.div`
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
+`
+
+const CheckboxOption = styled.div`
+  display: flex;
+  align-items: center;
 `
 
 const option = (value, label) => ({
@@ -107,7 +114,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
       ...data,
       recommend,
       wakeUp,
-      exploreMode
+      exploreMode,
     }
     setOpen(false)
   }
@@ -134,18 +141,31 @@ const SearchFilter = ({ onChange = () => {} }) => {
             重置
           </Button>
           <div>
-            <FormControlLabel
-              control={
-                <Checkbox checked={wakeUp} onChange={handleWakeUpChange} />
-              }
-              label="只顯示評論過、被儲存過的店家"
-            /><br/>
-            <FormControlLabel
-              control={
-                <Checkbox checked={exploreMode} onChange={(e) => setExploreMode(e.target.checked)} />
-              }
-              label="探索模式"
-            />
+            <CheckboxOption>
+              <FormControlLabel
+                control={
+                  <Checkbox checked={wakeUp} onChange={handleWakeUpChange} />
+                }
+                label="別人已探索"
+              />
+              <Tooltip title="只顯示被評論過或被儲存的店家"  placement="right">
+                <HelpOutlineIcon fontSize="small" sx={{color: '#333'}} />
+              </Tooltip>
+            </CheckboxOption>
+            <CheckboxOption>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={exploreMode}
+                    onChange={(e) => setExploreMode(e.target.checked)}
+                  />
+                }
+                label="拓荒模式"
+              />
+              <Tooltip title="被你評論、儲存的店家都不顯示" placement="right">
+                <HelpOutlineIcon fontSize="small" sx={{color: '#333'}} />
+              </Tooltip>
+            </CheckboxOption>
           </div>
           <h4>最多人選擇</h4>
           <RecommendBlock onChange={handleFaceChange} initFace={recommend} />

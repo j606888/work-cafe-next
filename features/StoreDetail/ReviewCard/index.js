@@ -70,7 +70,7 @@ const ReviewCard = ({
             sx={{ width: 28, height: 28, mr: 1.5 }}
             src={userAvatarUrl}
           />
-          <span>{userName}111</span>
+          <span>{userName}</span>
         </div>
         <FaceContainer>
           <FaceIconGroup mood={FACE_MAP[recommend]} />
