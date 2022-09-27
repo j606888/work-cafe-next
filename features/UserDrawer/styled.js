@@ -43,4 +43,14 @@ export const Tabs = styled.div`
       color: #2980B9;
     }
   }
+
+  a {
+    color: #333;
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
 `

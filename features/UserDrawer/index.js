@@ -2,33 +2,25 @@ import * as React from "react"
 import Drawer from "@mui/material/Drawer"
 import Divider from "@mui/material/Divider"
 import CloseIcon from "@mui/icons-material/Close"
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
-import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder"
+import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined"
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"
 import { Container, Header, Tabs } from "./styled"
-import useAuthCheck from "hooks/useAuthCheck";
+import useAuthCheck from "hooks/useAuthCheck"
 import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
-import NewStoreRequest from "features/NewStoreRequest/NewStoreRequest";
+import { Link } from "@mui/material"
 
 export default function UserDrawer({ open, onClose = () => {} }) {
-  const clearStores = useStoreStore(state => state.clearStores)
-  const setMode = useMapStore(state => state.setMode)
+  const clearStores = useStoreStore((state) => state.clearStores)
+  const setMode = useMapStore((state) => state.setMode)
   const authCheck = useAuthCheck()
-  const [openNewStore, setOpenNewStore] = React.useState(false)
 
   const handleChangeMode = (mode) => {
     authCheck()
     onClose()
     clearStores()
     setMode(mode)
-  }
-
-  const openNewStoreRequest = () => {
-    setOpenNewStore(true)
-  }
-  const handleCloseNewStore = () => {
-    setOpenNewStore(false)
   }
 
   return (
@@ -56,19 +48,27 @@ export default function UserDrawer({ open, onClose = () => {} }) {
           </Tabs>
           <Divider />
           <Tabs>
-            <div onClick={openNewStoreRequest}>
-              <span>找不到店家</span>
+            <div>
+              <Link
+                href="https://forms.gle/ji1wZiLVQ56uV1679"
+                target="_blank"
+                rel="noreferrer"
+              >
+                回報問題
+              </Link>
             </div>
             <div>
-              <span>回報問題</span>
-            </div>
-            <div>
-              <span>鼓勵我們</span>
+              <Link
+                href="https://forms.gle/sffkpKzUnEx9Ttd47"
+                target="_blank"
+                rel="noreferrer"
+              >
+                找不到店家
+              </Link>
             </div>
           </Tabs>
         </Container>
       </Drawer>
-      <NewStoreRequest open={openNewStore} onClose={handleCloseNewStore} />
     </>
   )
 }
