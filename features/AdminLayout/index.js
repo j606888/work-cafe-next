@@ -1,12 +1,10 @@
 import React from "react"
-import { styled } from "@mui/material/styles"
 import {
   Box,
 } from "@mui/material"
 import {
   Home as HomeIcon,
   Map as MapIcon,
-  Store as StoreIcon,
   Person as PersonIcon,
   BugReport as BugReportIcon,
   RemoveModerator as RemoveModeratorIcon,
@@ -32,11 +30,6 @@ const lists = [
     text: "GoogleMap",
     url: "/",
     icon: <MapIcon />,
-  },
-  {
-    text: "Stores",
-    url: "/admin/stores",
-    icon: <StoreIcon />,
   },
   {
     text: "BlackList",
