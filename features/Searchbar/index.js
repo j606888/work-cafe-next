@@ -43,9 +43,6 @@ const Searchbar = ({
     if (!resetBool) setResetBool(true)
   }, [resetBool])
 
-  const handleOnClick = () => {
-    onSearch(keyword)
-  }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       onSearch(keyword)
@@ -68,7 +65,7 @@ const Searchbar = ({
         />
       )}
       renderOption={(props, option, { inputValue }) => (
-        <OptionBox props={props} option={option} inputValue={inputValue} onClick={handleOnClick} />
+        <OptionBox props={props} option={option} inputValue={inputValue} />
       )}
       onInputChange={handleInputChange}
       onKeyDown={handleKeyDown}

@@ -2,9 +2,9 @@ import StoreOption from "../StoreOption"
 import LocationOption from "../LocationOption"
 import { Box } from "@mui/system"
 
-const OptionBox = ({ props, option, inputValue, onClick }) => {
+const OptionBox = ({ props, option, inputValue }) => {
   return (
-    <Box {...props} onClick={onClick}>
+    <Box {...props} >
       {option.type === "store" ? (
         <StoreOption {...option} inputValue={inputValue} />
       ) : (

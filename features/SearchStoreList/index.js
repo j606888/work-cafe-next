@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react"
 import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
 import SearchFilter from "features/SearchFilter"
+import useMapStore from "hooks/useMapStore"
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -40,6 +41,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
   const clearStores = useStoreStore((state) => state.clearStores)
   const setStores = useStoreStore((state) => state.setStores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
+  const setMoveMap = useMapStore((state) => state.setMoveMap)
 
   const [options, setOptions] = useState(INIT_OPTIONS)
   const [openDrawer, setOpenDrawer] = React.useState(false)
@@ -57,6 +59,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOpenDrawer(false)
   }
   const handleKeywordSearch = (keyword) => {
+    setMoveMap(true)
     setOptions((cur) => ({ ...cur, keyword, go: true }))
   }
   const handleClear = () => {
@@ -76,6 +79,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, ...filter, go: true}))
   }
   const handleSearch = () => {
+    setMoveMap(false)
     setPlaceId(null)
     setOptions((cur) => ({ ...cur, keyword: "", go: true }))
     setCenter(mapCenter)

@@ -24,6 +24,7 @@ import StoreMarker from "features/GoogleMap/StoreMarker"
 
 const UserMap = () => {
   const mode = useMapStore((state) => state.mode)
+  const moveMap = useMapStore((state) => state.moveMap)
   const { stores, placeId, setPlaceId, bouncePlaceId } = useStoreStore()
   const { isReady, myLocation, map, setMap, mapSettings } = useInitMap()
   const [showCardHead, setShowCardHead] = React.useState(false)
@@ -81,6 +82,18 @@ const UserMap = () => {
       map.panBy(-400, 0)
     }
   }, [store, map])
+
+  // When moveMap true & use 清單, will also move
+  useEffect(() => {
+    if (stores.length > 0 && map && moveMap) {
+      const center = {
+        lat: _.mean(stores.map(store => store.lat)),
+        lng: _.mean(stores.map(store => store.lng)),
+      }
+      map.panTo(center)
+      map.panBy(-400, 0)
+    }
+  }, [stores, map])
 
   const handleToggle = (checked) => {
     setShowLabel(checked)
