@@ -52,7 +52,7 @@ const reducer = (state, action) => {
 }
 
 const AdminStoreCrawler = () => {
-  const { isReady, map, setMap } = useInitMap()
+  const { isReady, map, setMap, mapSettings } = useInitMap()
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
   const tempRef = useRef(null)
   const [mapCenter, setMapCenter] = useState({
@@ -85,7 +85,6 @@ const AdminStoreCrawler = () => {
   }
 
   const handleIdle = () => {
-    console.log("HI")
     if (!map) return
 
     const { lat, lng } = map.center.toJSON()
@@ -120,6 +119,7 @@ const AdminStoreCrawler = () => {
         onIdle={handleIdle}
         onLoad={handleLoad}
         onClick={handleClick}
+        mapSettings={mapSettings}
         style={{
           width: "100%",
           height: "90vh",
