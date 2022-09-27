@@ -21,6 +21,7 @@ import ShowLabelCheckbox from "./ShowLabelCheckbox"
 import GoogleMap from "features/GoogleMap"
 import { Marker } from "@react-google-maps/api"
 import StoreMarker from "features/GoogleMap/StoreMarker"
+import AccountMenu from "features/AccountMenu"
 
 const UserMap = () => {
   const mode = useMapStore((state) => state.mode)
@@ -103,6 +104,7 @@ const UserMap = () => {
 
   return (
     <>
+      <AccountMenu />
       <MyLocationContainer>
         <MyLocation onClick={handleFindMe} />
       </MyLocationContainer>
