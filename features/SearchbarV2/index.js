@@ -93,9 +93,11 @@ const CityOption = ({ type, name, count, address }) => {
   )
 }
 
-const SearchbarV2 = () => {
+const SearchbarV2 = ({ onSearch = () => {} }) => {
   const [keyword, setKeyword] = useState("")
   const [isOnComposition, setIsOnComposition] = useState(false)
+  const [showOptions, setShowOptions] = useState(false)
+
   const { data } = useSWR(
     keyword.length > 0 ? ["/stores/hint", { keyword }] : null,
     fetcher
@@ -103,21 +105,18 @@ const SearchbarV2 = () => {
   const options = useMemo(() => {
     return data?.results || []
   }, [data])
-  const hasResult = options.length > 0
-
-  useEffect(() => {
-    if (!isOnComposition) {
-      console.log(keyword)
-    }
-  }, [keyword, isOnComposition])
+  const hasResult = showOptions && options.length > 0
 
   function handleOptionClick(name) {
     setKeyword(name)
+    onSearch(name)
+    setShowOptions(false)
   }
 
   function handleKeyDown(e) {
     if (!isOnComposition && e.key === "Enter") {
-      console.log("Search This")
+      onSearch(keyword)
+      setShowOptions(false)
     }
   }
 
@@ -142,6 +141,7 @@ const SearchbarV2 = () => {
         <Input
           value={keyword}
           onChange={handleChange}
+          onClick={() => setShowOptions(true)}
           onKeyDown={handleKeyDown}
           placeholder="搜尋縣市、地區或店名"
           onCompositionStart={handleComposition}
