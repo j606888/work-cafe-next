@@ -56,6 +56,12 @@ export const Option = styled.div`
   color: #333;
   white-space: nowrap;
 
+  ${({ focus }) =>
+    focus &&
+    css`
+      background-color: #f2f2f2;
+    `}
+
   svg {
     font-size: 16px;
     color: #666;
