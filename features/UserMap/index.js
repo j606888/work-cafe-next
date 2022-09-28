@@ -91,6 +91,9 @@ const UserMap = () => {
         lat: _.mean(stores.map(store => store.lat)),
         lng: _.mean(stores.map(store => store.lng)),
       }
+      if (map.zoom < 15) {
+        map.setZoom(15)
+      }
       map.panTo(center)
       map.panBy(-400, 0)
     }
