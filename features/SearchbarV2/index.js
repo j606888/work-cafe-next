@@ -6,6 +6,7 @@ import PlaceIcon from "@mui/icons-material/Place"
 import CircleIcon from "@mui/icons-material/Circle"
 import StoreIcon from "@mui/icons-material/Store"
 import { Container, SearchBox, Input, Options, Option } from "./styled"
+import { useEffect } from "react"
 
 const pointer = {
   cursor: "pointer",
@@ -92,9 +93,34 @@ const CityOption = ({ type, name, count, address }) => {
 const SearchbarV2 = () => {
   const [keyword, setKeyword] = useState("")
   const [options, setOptions] = useState(INIT_OPTIONS)
+  const [isOnComposition, setIsOnComposition] = useState(false)
+
+  useEffect(() => {
+    if (!isOnComposition) {
+      console.log(keyword)
+    }
+  }, [keyword, isOnComposition])
 
   function handleOptionClick(name) {
     setKeyword(name)
+  }
+
+  function handleKeyDown(e) {
+    if (!isOnComposition && e.key === 'Enter') {
+      console.log("Search This")
+    }
+  }
+
+  function handleChange(e) {
+    setKeyword(e.target.value)
+  }
+
+  const handleComposition = (e) => {
+    if (e.type === "compositionend") {
+      setIsOnComposition(false)
+    } else {
+      setIsOnComposition(true)
+    }
   }
 
   return (
@@ -105,8 +131,12 @@ const SearchbarV2 = () => {
         </Tooltip>
         <Input
           value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
           placeholder="搜尋縣市、地區或店名"
+          onCompositionStart={handleComposition}
+          onCompositionUpdate={handleComposition}
+          onCompositionEnd={handleComposition}
         />
         <Tooltip title="搜尋">
           <SearchIcon style={pointer} />
