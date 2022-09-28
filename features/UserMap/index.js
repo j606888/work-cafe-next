@@ -28,7 +28,7 @@ const UserMap = () => {
   const moveMap = useMapStore((state) => state.moveMap)
   const { stores, placeId, setPlaceId, bouncePlaceId } = useStoreStore()
   const { isReady, myLocation, map, setMap, mapSettings } = useInitMap()
-  const [showCardHead, setShowCardHead] = React.useState(false)
+  const [showCardHead, setShowCardHead] = useState(false)
   const [showLabel, setShowLabel] = useState(true)
   const [mouseOverStoreId, setMouseOverStoreId] = useState(null)
   const { data: store, mutate: mutateStore } = useSWR(
@@ -41,13 +41,9 @@ const UserMap = () => {
     const zoom = map.zoom
     const { lat, lng } = map.center.toJSON()
 
-    const mapPath = [`@${lat},${lng},${zoom}z`, placeId]
-      .filter(Boolean)
-      .join("/")
-    Router.push({
-      pathname: `/${mapPath}`,
-    })
-    localStorage.setItem("lastLocation", mapPath)
+    const mapPath = _mapPath(lat, lng, zoom, placeId)
+    _navigateTo(`/${mapPath}`)
+    _setLocalStorage("lastLocation", mapPath)
   }
   const handleRefreshStore = (placeId) => {
     setPlaceId(placeId)
@@ -69,6 +65,9 @@ const UserMap = () => {
   const handleLoad = (map) => {
     setMap(map)
   }
+  const handleToggle = (checked) => {
+    setShowLabel(checked)
+  }
 
   useEffect(() => {
     if (store && map) {
@@ -76,9 +75,7 @@ const UserMap = () => {
         lat: store.lat,
         lng: store.lng,
       }
-      if (map.zoom < 15) {
-        map.setZoom(15)
-      }
+      if (map.zoom < 15) map.setZoom(15)
       map.panTo(center)
       map.panBy(-400, 0)
     }
@@ -87,21 +84,12 @@ const UserMap = () => {
   // When moveMap true & use 清單, will also move
   useEffect(() => {
     if (stores.length > 0 && map && moveMap) {
-      const center = {
-        lat: _.mean(stores.map(store => store.lat)),
-        lng: _.mean(stores.map(store => store.lng)),
-      }
-      if (map.zoom < 15) {
-        map.setZoom(15)
-      }
+      const center = _calcStoresCenter(stores)
+      if (map.zoom < 15) map.setZoom(15)
       map.panTo(center)
       map.panBy(-400, 0)
     }
-  }, [stores, map])
-
-  const handleToggle = (checked) => {
-    setShowLabel(checked)
-  }
+  }, [stores, map, moveMap])
 
   if (!isReady) return <Skeleton />
 
@@ -129,7 +117,11 @@ const UserMap = () => {
       )}
       <ShowLabelCheckbox onChange={handleToggle} />
       <MarkerStyle>
-        <GoogleMap onIdle={handleIdle} onLoad={handleLoad} mapSettings={mapSettings}>
+        <GoogleMap
+          onIdle={handleIdle}
+          onLoad={handleLoad}
+          mapSettings={mapSettings}
+        >
           {myLocation.current && (
             <Marker
               position={{
@@ -169,3 +161,22 @@ const UserMap = () => {
 }
 
 export default UserMap
+
+function _navigateTo(pathname) {
+  Router.push({ pathname })
+}
+
+function _setLocalStorage(key, value) {
+  localStorage.setItem(key, value)
+}
+
+function _mapPath(lat, lng, zoom, placeId) {
+  return [`@${lat},${lng},${zoom}z`, placeId].filter(Boolean).join("/")
+}
+
+function _calcStoresCenter(stores) {
+  return {
+    lat: _.mean(stores.map((store) => store.lat)),
+    lng: _.mean(stores.map((store) => store.lng)),
+  }
+}
