@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const Container = styled.div`
   width: 100%;
@@ -10,12 +10,22 @@ export const SearchBox = styled.div`
   background: #fff;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-  /* box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.3); */
-  border-bottom: 2px solid #ccc;
   padding: 0.8rem 1.2rem;
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  ${({ hasResult }) => {
+    if (hasResult) {
+      return css`
+        border-bottom: 2px solid #ccc;
+      `
+    } else {
+      return css`
+        border-radius: 12px;
+      `
+    }
+  }}
 `
 
 export const Input = styled.input`
@@ -28,6 +38,7 @@ export const Input = styled.input`
 `
 
 export const Options = styled.div`
+  display: ${({ hasResult }) => (hasResult ? "block" : "none")};
   background: #fff;
   padding: 7px 0;
   border-bottom-right-radius: 12px;

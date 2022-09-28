@@ -7,6 +7,9 @@ import CircleIcon from "@mui/icons-material/Circle"
 import StoreIcon from "@mui/icons-material/Store"
 import { Container, SearchBox, Input, Options, Option } from "./styled"
 import { useEffect } from "react"
+import useSWR from "swr"
+import { fetcher } from "api"
+import { useMemo } from "react"
 
 const pointer = {
   cursor: "pointer",
@@ -92,8 +95,15 @@ const CityOption = ({ type, name, count, address }) => {
 
 const SearchbarV2 = () => {
   const [keyword, setKeyword] = useState("")
-  const [options, setOptions] = useState(INIT_OPTIONS)
   const [isOnComposition, setIsOnComposition] = useState(false)
+  const { data } = useSWR(
+    keyword.length > 0 ? ["/stores/hint", { keyword }] : null,
+    fetcher
+  )
+  const options = useMemo(() => {
+    return data?.results || []
+  }, [data])
+  const hasResult = options.length > 0
 
   useEffect(() => {
     if (!isOnComposition) {
@@ -106,7 +116,7 @@ const SearchbarV2 = () => {
   }
 
   function handleKeyDown(e) {
-    if (!isOnComposition && e.key === 'Enter') {
+    if (!isOnComposition && e.key === "Enter") {
       console.log("Search This")
     }
   }
@@ -125,7 +135,7 @@ const SearchbarV2 = () => {
 
   return (
     <Container>
-      <SearchBox>
+      <SearchBox hasResult={hasResult}>
         <Tooltip title="選單">
           <MenuIcon style={pointer} />
         </Tooltip>
@@ -142,7 +152,7 @@ const SearchbarV2 = () => {
           <SearchIcon style={pointer} />
         </Tooltip>
       </SearchBox>
-      <Options>
+      <Options hasResult={hasResult}>
         {options.map((option) => (
           <Option
             key={_optionKey(option)}
