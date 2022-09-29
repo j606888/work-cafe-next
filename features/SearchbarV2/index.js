@@ -36,7 +36,7 @@ const CityOption = ({ type, name, count, address }) => {
   )
 }
 
-const SearchbarV2 = ({ onSearch = () => {} }) => {
+const SearchbarV2 = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   const [keyword, setKeyword] = useState("")
   const [isOnComposition, setIsOnComposition] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
@@ -53,51 +53,22 @@ const SearchbarV2 = ({ onSearch = () => {} }) => {
   const hasResult = showOptions && options.length > 0
 
   function handleOptionClick(name) {
+    console.log("OPTION CLICK")
     setKeyword(name)
     onSearch(name)
     setShowOptions(false)
   }
 
-  function handleKeyDown(e) {
-    if (isOnComposition) return
-    setShowOptions(true)
-
-    const { key} = e
-
-    let nextIndexCount = 0
-    if (key === 'ArrowUp') {
-      nextIndexCount = (focusedIndex + options.length - 1) % options.length
-      e.preventDefault()
-    }
-
-    if (key === 'ArrowDown') {
-      nextIndexCount = (focusedIndex + 1) % options.length
-      e.preventDefault()
-    }
-
-    setFocusedIndex(nextIndexCount)
-
-    if (!isOnComposition && e.key === "Enter") {
-      const answer = options[focusedIndex].name
-      setKeyword(answer)
-      onSearch(answer)
-      setShowOptions(false)
-    }
+  function handleSearch() {
+    setShowOptions(false)
+    onSearch(keyword)
   }
-
-  useEffect(() => {
-    if (!resultContainer.current) return
-
-    resultContainer.current.scrollIntoView({
-      block: 'center'
-    })
-  }, [focusedIndex])
 
   function handleChange(e) {
     setKeyword(e.target.value)
   }
 
-  const handleComposition = (e) => {
+  function handleComposition(e) {
     if (e.type === "compositionend") {
       setIsOnComposition(false)
     } else {
@@ -105,10 +76,49 @@ const SearchbarV2 = ({ onSearch = () => {} }) => {
     }
   }
 
+  function handleBlue() {
+    console.log("BLUE");
+    setTimeout(() => {
+      setShowOptions(false)
+      setFocusedIndex(-1)
+
+    }, [100])
+  }
+
+  function handleKeyDown(e) {
+    if (isOnComposition) return
+    setShowOptions(true)
+
+    const { key } = e
+    const nextIndexCount = _calcIndexCount({ key, focusedIndex, options })
+    if (Number.isInteger(nextIndexCount)) {
+      setFocusedIndex(nextIndexCount)
+      e.preventDefault()
+    }
+
+    if (!isOnComposition && e.key === "Enter") {
+      const answer = options[focusedIndex]
+      const name = answer?.name || keyword
+      setKeyword(name)
+      setShowOptions(false)
+      onSearch(name)
+    }
+  }
+
+  useEffect(() => {
+    if (!resultContainer.current) return
+
+    resultContainer.current.scrollIntoView({
+      block: "center",
+    })
+  }, [focusedIndex])
+
   return (
-    <Container>
+    <Container
+      onBlur={handleBlue}
+    >
       <SearchBox hasResult={hasResult}>
-        <Tooltip title="選單">
+        <Tooltip title="選單" onClick={onOpenDrawer}>
           <MenuIcon style={pointer} />
         </Tooltip>
         <Input
@@ -121,7 +131,7 @@ const SearchbarV2 = ({ onSearch = () => {} }) => {
           onCompositionUpdate={handleComposition}
           onCompositionEnd={handleComposition}
         />
-        <Tooltip title="搜尋">
+        <Tooltip title="搜尋" onClick={handleSearch}>
           <SearchIcon style={pointer} />
         </Tooltip>
       </SearchBox>
@@ -145,4 +155,15 @@ export default SearchbarV2
 
 function _optionKey({ name, count, placeId }) {
   return `${name}${count}${placeId}`
+}
+
+function _calcIndexCount({ key, focusedIndex, options }) {
+  if (key === "ArrowUp") {
+    return (focusedIndex + options.length - 1) % options.length
+  }
+  if (key === "ArrowDown") {
+    return (focusedIndex + 1) % options.length
+  }
+
+  return null
 }

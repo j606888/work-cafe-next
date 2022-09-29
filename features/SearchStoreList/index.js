@@ -1,6 +1,5 @@
 import SearchHere from "components/Button/SearchHere"
 import OpenTime from "features/OpenTime"
-import Searchbar from "features/Searchbar"
 import StoreList from "features/StoreList"
 import UserDrawer from "features/UserDrawer"
 import {
@@ -15,6 +14,7 @@ import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
 import SearchFilter from "features/SearchFilter"
 import useMapStore from "hooks/useMapStore"
+import SearchbarV2 from "features/SearchbarV2"
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -62,11 +62,6 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setMoveMap(true)
     setOptions((cur) => ({ ...cur, keyword, go: true }))
   }
-  const handleClear = () => {
-    clearStores()
-    setPlaceId(null)
-    setOptions((cur) => ({ ...cur, keyword: "", go: false }))
-  }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
     const currentOpenTime = {
       openType,
@@ -99,10 +94,8 @@ const SearchStoreList = ({ store, mapCenter }) => {
     <>
       <UserDrawer open={openDrawer} onClose={handleCloseDrawer} />
       <SearchbarV2Container>
-        <Searchbar
+        <SearchbarV2
           onSearch={handleKeywordSearch}
-          hasResult={stores?.length !== 0}
-          onClear={handleClear}
           onOpenDrawer={() => setOpenDrawer(true)}
         />
       </SearchbarV2Container>

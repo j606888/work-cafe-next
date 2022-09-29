@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components"
 
 export const Container = styled.div`
-  width: 100%;
-  max-width: 380px;
+  width: 360px;
   box-sizing: border-box;
+  box-shadow: 0 0 12px -3px rgba(0,0,0,0.61);
 `
 
 export const SearchBox = styled.div`
