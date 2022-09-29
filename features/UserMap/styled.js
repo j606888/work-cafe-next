@@ -25,7 +25,7 @@ export const SearchHereContainer = styled.div`
   ${({ left }) => `left: ${left}`}
 `
 
-export const SearchbarV2Container = styled.div`
+export const SearchbarContainer = styled.div`
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;

@@ -4,7 +4,7 @@ import StoreList from "features/StoreList"
 import UserDrawer from "features/UserDrawer"
 import {
   MenuContainer,
-  SearchbarV2Container,
+  SearchbarContainer,
   SearchHereContainer,
   StoreListContainer,
 } from "features/UserMap/styled"
@@ -14,7 +14,7 @@ import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
 import SearchFilter from "features/SearchFilter"
 import useMapStore from "hooks/useMapStore"
-import SearchbarV2 from "features/SearchbarV2"
+import Searchbar from "features/Searchbar"
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -38,7 +38,6 @@ const INIT_OPTIONS = {
 
 const SearchStoreList = ({ store, mapCenter }) => {
   const stores = useStoreStore((state) => state.stores)
-  const clearStores = useStoreStore((state) => state.clearStores)
   const setStores = useStoreStore((state) => state.setStores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const setMoveMap = useMapStore((state) => state.setMoveMap)
@@ -93,12 +92,12 @@ const SearchStoreList = ({ store, mapCenter }) => {
   return (
     <>
       <UserDrawer open={openDrawer} onClose={handleCloseDrawer} />
-      <SearchbarV2Container>
-        <SearchbarV2
+      <SearchbarContainer>
+        <Searchbar
           onSearch={handleKeywordSearch}
           onOpenDrawer={() => setOpenDrawer(true)}
         />
-      </SearchbarV2Container>
+      </SearchbarContainer>
       <MenuContainer>
         <OpenTime onChange={handleOpenTimeChange} />
         <SearchFilter onChange={handleFilterChange}/>

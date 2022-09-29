@@ -36,7 +36,7 @@ const CityOption = ({ type, name, count, address }) => {
   )
 }
 
-const SearchbarV2 = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
+const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   const [keyword, setKeyword] = useState("")
   const [isOnComposition, setIsOnComposition] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
@@ -151,7 +151,7 @@ const SearchbarV2 = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   )
 }
 
-export default SearchbarV2
+export default Searchbar
 
 function _optionKey({ name, count, placeId }) {
   return `${name}${count}${placeId}`
