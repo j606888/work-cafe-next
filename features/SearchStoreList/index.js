@@ -1,11 +1,10 @@
 import SearchHere from "components/Button/SearchHere"
 import OpenTime from "features/OpenTime"
-import Searchbar from "features/Searchbar"
 import StoreList from "features/StoreList"
 import UserDrawer from "features/UserDrawer"
 import {
   MenuContainer,
-  SearchbarV2Container,
+  SearchbarContainer,
   SearchHereContainer,
   StoreListContainer,
 } from "features/UserMap/styled"
@@ -15,6 +14,7 @@ import useSWR from "swr"
 import useStoreStore from "hooks/useStoreStore"
 import SearchFilter from "features/SearchFilter"
 import useMapStore from "hooks/useMapStore"
+import Searchbar from "features/Searchbar"
 
 const calcSearchHereLeft = (stores, store) => {
   const leftMap = {
@@ -38,7 +38,6 @@ const INIT_OPTIONS = {
 
 const SearchStoreList = ({ store, mapCenter }) => {
   const stores = useStoreStore((state) => state.stores)
-  const clearStores = useStoreStore((state) => state.clearStores)
   const setStores = useStoreStore((state) => state.setStores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const setMoveMap = useMapStore((state) => state.setMoveMap)
@@ -61,11 +60,6 @@ const SearchStoreList = ({ store, mapCenter }) => {
   const handleKeywordSearch = (keyword) => {
     setMoveMap(true)
     setOptions((cur) => ({ ...cur, keyword, go: true }))
-  }
-  const handleClear = () => {
-    clearStores()
-    setPlaceId(null)
-    setOptions((cur) => ({ ...cur, keyword: "", go: false }))
   }
   const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
     const currentOpenTime = {
@@ -98,14 +92,12 @@ const SearchStoreList = ({ store, mapCenter }) => {
   return (
     <>
       <UserDrawer open={openDrawer} onClose={handleCloseDrawer} />
-      <SearchbarV2Container>
+      <SearchbarContainer>
         <Searchbar
           onSearch={handleKeywordSearch}
-          hasResult={stores?.length !== 0}
-          onClear={handleClear}
           onOpenDrawer={() => setOpenDrawer(true)}
         />
-      </SearchbarV2Container>
+      </SearchbarContainer>
       <MenuContainer>
         <OpenTime onChange={handleOpenTimeChange} />
         <SearchFilter onChange={handleFilterChange}/>

@@ -1,8 +1,8 @@
-import SearchbarV2 from "./index"
+import Searchbar from "./index"
 
 export default {
-  component: SearchbarV2,
+  component: Searchbar,
 }
 
-export const Default = (args) => <SearchbarV2 {...args} />
+export const Default = (args) => <Searchbar {...args} />
 Default.args = {}
