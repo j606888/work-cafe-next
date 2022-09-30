@@ -26,5 +26,9 @@ module.exports = {
     }
     return config
   },
-  staticDirs: ["../public"]
+  staticDirs: ["../public"],
+  env: (config) => ({
+    ...config,
+    STORYBOOK_MODE: 'ON'
+  })
 }
