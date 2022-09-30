@@ -34,6 +34,7 @@ const INIT_OPTIONS = {
   openHour: null,
   wakeUp: false,
   go: false,
+  limit: 30,
 }
 
 const SearchStoreList = ({ store, mapCenter }) => {
@@ -50,7 +51,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
   })
   const { data } = useSWR(
     options?.go
-      ? ["/stores/location", { ...options, ...center, limit: 30 }]
+      ? ["/stores/location", { ...options, ...center }]
       : null
   )
 
@@ -70,6 +71,7 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, ...currentOpenTime, go: true }))
   }
   const handleFilterChange = (filter) => {
+    console.log(filter)
     setOptions((cur) => ({ ...cur, ...filter, go: true}))
   }
   const handleSearch = () => {

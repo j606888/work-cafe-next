@@ -7,6 +7,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  Slider,
   Tooltip,
 } from "@mui/material"
 import RecommendBlock from "features/ReviewForm/RecommendBlock"
@@ -38,6 +39,17 @@ const option = (value, label) => ({
   value,
   label,
 })
+
+const marks = [
+  {
+    value: 10,
+    label: '10'
+  },
+  {
+    value: 100,
+    label: '100'
+  },
+]
 
 const RADIO_GROUPS = [
   {
@@ -79,6 +91,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
     timeLimit: "",
     socketSupply: "",
   })
+  const [limit, setLimit] = useState(30)
   const initState = useRef({
     wakeUp: false,
     recommend: null,
@@ -86,6 +99,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
     timeLimit: "",
     socketSupply: "",
     exploreMode: false,
+    limit: 30,
   })
 
   const handleOpen = () => {
@@ -94,6 +108,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
   const handleClose = () => {
     setOpen(false)
     setWakeUp(initState.current.wakeUp)
+    setLimit(initState.current.limit)
     setRecommend(initState.current.recommend)
     setExploreMode(initState.current.exploreMode)
     const { roomVolume, timeLimit, socketSupply } = initState.current
@@ -108,13 +123,17 @@ const SearchFilter = ({ onChange = () => {} }) => {
   const handleChange = (key, value) => {
     setData((cur) => ({ ...cur, [key]: value }))
   }
+  const handleSliderChange = (event, newValue) => {
+    setLimit(newValue)
+  }
   const handleApply = () => {
-    onChange({ ...data, wakeUp, recommend, exploreMode })
+    onChange({ ...data, wakeUp, recommend, exploreMode, limit })
     initState.current = {
       ...data,
       recommend,
       wakeUp,
       exploreMode,
+      limit
     }
     setOpen(false)
   }
@@ -122,6 +141,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
     setWakeUp(false)
     setExploreMode(false)
     setRecommend(null)
+    setLimit(50)
     setData({
       roomVolume: "",
       timeLimit: "",
@@ -166,6 +186,18 @@ const SearchFilter = ({ onChange = () => {} }) => {
                 <HelpOutlineIcon fontSize="small" sx={{color: '#333'}} />
               </Tooltip>
             </CheckboxOption>
+          </div>
+          <div>
+            <span>一次顯示店家數</span>
+            <Slider
+              value={limit}
+              step={10}
+              min={10}
+              max={100}
+              valueLabelDisplay="on"
+              marks={marks}
+              onChange={handleSliderChange}
+            />
           </div>
           <h4>最多人選擇</h4>
           <RecommendBlock onChange={handleFaceChange} initFace={recommend} />
