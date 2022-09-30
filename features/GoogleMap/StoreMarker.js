@@ -10,19 +10,13 @@ const StoreMarker = ({
   onMouseOver = () => {},
   onMouseOut = () => {},
 }) => {
-  const icon = isFocus ? "/pins/blue-pin.svg" : "/pins/red-pin.svg"
+  const icon = _iconColor({ isFocus, wakeUp: store.wakeUp })
   const position = {
     lat: store.lat,
     lng: store.lng,
   }
   const animation = isBounce ? 1 : null
-  const label = showLabel
-    ? {
-        text: store.name,
-        fontSize: "12px",
-        className: "labels",
-      }
-    : null
+  const label = _label({ store, showLabel })
 
   return (
     <Marker
@@ -38,3 +32,21 @@ const StoreMarker = ({
 }
 
 export default StoreMarker
+
+function _iconColor({ isFocus, wakeUp }) {
+  if (isFocus) return "/pins/blue-pin.svg"
+  if (wakeUp) return "/pins/red-pin.svg"
+  return "/pins/grey-pin.svg"
+}
+
+function _label({ showLabel, store }) {
+  if (showLabel) {
+    return {
+      text: store.name,
+      fontSize: "12px",
+      className: "labels",
+    }
+  }
+
+  return null
+}
