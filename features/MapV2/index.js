@@ -14,6 +14,21 @@ const Container = styled.div`
   top: 64px;
   width: 50%;
   height: calc(100vh - 64px);
+
+  .labels {
+    background-color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 4px 8px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 2.3rem;
+    left: 0.8rem;
+    overflow: hidden;
+    max-width: 240px;
+  }
 `
 
 const SearchHereContainer = styled.div`
@@ -28,6 +43,9 @@ const MapV2 = () => {
   const { isReady, myLocation, map, setMap, mapSettings } = useInitMap()
   const setCenter = useMapStore((state) => state.setCenter)
   const stores = useStoreStore((state) => state.stores)
+  const setPlaceId = useStoreStore((state) => state.setPlaceId)
+  const placeId = useStoreStore((state) => state.placeId)
+  const bouncePlaceId = useStoreStore((state) => state.bouncePlaceId)
 
   function handleLoad(map) {
     setMap(map)
@@ -45,6 +63,9 @@ const MapV2 = () => {
     // _setLocalStorage("lastLocation", mapPath)
   }
 
+  function handleClickMarker(placeId) {
+    setPlaceId(placeId)
+  }
 
   if (!isReady) return <Skeleton />
 
@@ -62,12 +83,13 @@ const MapV2 = () => {
             <StoreMarker
               key={store.placeId}
               store={store}
-              // isFocus={store.placeId === placeId}
-              // isBounce={store.placeId === bouncePlaceId}
+              showLabel={true}
+              isFocus={store.placeId === placeId}
+              isBounce={store.placeId === bouncePlaceId}
               // showLabel={store.placeId === mouseOverStoreId || showLabel}
               // onMouseOver={(placeId) => setMouseOverStoreId(placeId)}
               // onMouseOut={() => setMouseOverStoreId(null)}
-              // onClick={handleRefreshStore}
+              onClick={handleClickMarker}
             />
           ))}
       </GoogleMap>

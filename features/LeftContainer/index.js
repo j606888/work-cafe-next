@@ -30,8 +30,10 @@ const LeftContainer = () => {
   const [keyword, setKeyword] = useState("")
   const center = useMapStore(state => state.center)
   const setStores = useStoreStore(state => state.setStores)
+  const placeId = useStoreStore(state => state.placeId)
+  const setPlaceId = useStoreStore(state => state.setPlaceId)
+
   const { data } = useSWR(keyword ? ["stores/location", { keyword, ...center }] : null)
-  const [placeId, setPlaceId] = useState(null)
 
   useEffect(() => {
     if (data) {
