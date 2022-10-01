@@ -4,10 +4,11 @@ import { useState } from "react"
 import styled from "styled-components"
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount"
 import LogoutIcon from "@mui/icons-material/Logout"
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
 
 const Container = styled.div`
   height: 64px;
-  background-color: #D7C0AE;
+  background-color: #d7c0ae;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -18,8 +19,24 @@ const Container = styled.div`
 
   h2 {
     font-size: 24px;
-    color: #967E76;
+    color: #967e76;
   }
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+`
+
+const Link = styled.a`
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  gap: 0.5rem;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #fff;
 `
 
 const AppBar = () => {
@@ -36,9 +53,19 @@ const AppBar = () => {
     <>
       <Container>
         <h2>Work Cafe | Taiwan</h2>
-        <IconButton onClick={handleClick}>
-          <Avatar>H</Avatar>
-        </IconButton>
+        <div>
+          <Link
+            href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <LightbulbIcon />
+            <span>教學文件</span>
+          </Link>
+          <IconButton onClick={handleClick}>
+            <Avatar>H</Avatar>
+          </IconButton>
+        </div>
       </Container>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem>
