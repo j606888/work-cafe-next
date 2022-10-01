@@ -1,5 +1,7 @@
 import Searchbar from 'features/Searchbar'
 import SearchFilterV2 from 'features/SearchFilterV2'
+import StoreDetailV2 from 'features/StoreDetailV2'
+import StoreList from 'features/StoreList'
 import WelcomeMessage from 'features/WelcomeMessage'
 import useMapStore from 'hooks/useMapStore'
 import useStoreStore from 'hooks/useStoreStore'
@@ -29,6 +31,7 @@ const LeftContainer = () => {
   const center = useMapStore(state => state.center)
   const setStores = useStoreStore(state => state.setStores)
   const { data } = useSWR(keyword ? ["stores/location", { keyword, ...center }] : null)
+  const [placeId, setPlaceId] = useState(null)
 
   useEffect(() => {
     if (data) {
@@ -39,6 +42,9 @@ const LeftContainer = () => {
   function handleSearch(newKeyword) {
     setKeyword(newKeyword)
   }
+  function handleClickStore(placeId) {
+    setPlaceId(placeId)
+  }
 
   return (
     <Container>
@@ -47,6 +53,8 @@ const LeftContainer = () => {
         <SearchFilterV2 />
       </SearchContainer>
       <WelcomeMessage />
+      <StoreList stores={data || []} onClick={handleClickStore}/>
+      <StoreDetailV2 placeId={placeId} onClose={() => {setPlaceId(null)}} />
     </Container>
   )
 }
