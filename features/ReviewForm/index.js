@@ -114,7 +114,7 @@ const ReviewForm = ({
 
   return (
     <>
-      <Dialog open={!!open} onClose={handleClose}>
+      <Dialog open={!!open} onClose={handleClose} maxWidth='xl'>
         <Form>
           <h3>{name}</h3>
           <Scroll>
@@ -135,7 +135,7 @@ const ReviewForm = ({
               name="description"
               multiline
               fullWidth
-              rows={4}
+              rows={3}
               value={data.description}
               placeholder="說明你在這間店的體驗"
               onChange={(e) => handleChange("description", e.target.value)}
@@ -144,6 +144,7 @@ const ReviewForm = ({
               <FormControl key={name}>
                 <FormLabel>{label}</FormLabel>
                 <RadioGroup
+                  row
                   name={name}
                   value={data[name]}
                   onChange={(event) => handleChange(name, event.target.value)}
@@ -154,6 +155,7 @@ const ReviewForm = ({
                       value={value}
                       control={<Radio />}
                       label={label}
+                      sx={{ width: '32%'}}
                     />
                   ))}
                 </RadioGroup>
