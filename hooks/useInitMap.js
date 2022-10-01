@@ -18,6 +18,7 @@ const DEFAULT_SETUP = {
       stylers: [{ visibility: "off" }],
     },
   ],
+  gestureHandling: 'greedy'
 }
 
 const useInitMap = () => {
@@ -29,7 +30,8 @@ const useInitMap = () => {
   const router = useRouter()
 
   useEffect(() => {
-    if (router.isReady & !isReady) {
+    console.log({ router })
+    if (router && router.isReady && !isReady) {
       const urlLocation = router.query.location
       const lastLocation = localStorage.getItem("lastLocation")
       const location = _.isEmpty(urlLocation) ? [lastLocation] : urlLocation
@@ -54,6 +56,7 @@ const useInitMap = () => {
       }
 
       setIsReady(true)
+      console.log("SET SUCCESS");
     }
   }, [router, isReady])
 
