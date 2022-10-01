@@ -14,7 +14,7 @@ const Container = styled.div`
   padding: 0 1rem;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 20;
 
   h2 {
     font-size: 24px;
