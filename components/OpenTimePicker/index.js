@@ -9,39 +9,24 @@ import {
 } from "@mui/material"
 import styled from "styled-components"
 import { OPEN_TYPES, OPEN_WEEKS, OPEN_HOURS } from "constant/openTime"
-import { useState } from "react"
-import { useEffect } from "react"
 
 const Container = styled.div``
 
-const OpenTimePicker = ({ initProps, onChange = () => {} }) => {
-  const [openType, setOpenType] = useState(
-    initProps?.openType || OPEN_TYPES[0].value
-  )
-  const [openWeek, setOpenWeek] = useState(
-    initProps?.openWeek || OPEN_WEEKS[0].value
-  )
-  const [openHour, setOpenHour] = useState(
-    initProps?.openHour || OPEN_HOURS[0].value
-  )
-
+const OpenTimePicker = ({ openType, openWeek, openHour, onChange = () => {} }) => {
   const handleChange = (event) => {
-    setOpenType(event.target.value)
+    const newOpenType = event.target.value
+    onChange({ openType: newOpenType, openWeek, openHour })
   }
 
   const handleChangeWeek = (event) => {
-    setOpenWeek(event.target.value)
+    const newOpenWeek = event.target.value
+    onChange({ openType, openWeek: newOpenWeek, openHour })
   }
 
   const handleChangeHour = (event) => {
-    setOpenHour(event.target.value)
+    const newOpenHour = event.target.value
+    onChange({ openType, openWeek, openHour: newOpenHour })
   }
-
-  useEffect(() => {
-    openType === "OPEN_AT"
-      ? onChange({ openType, openWeek, openHour })
-      : onChange({ openType })
-  }, [openType, openWeek, openHour])
 
   return (
     <Container>
