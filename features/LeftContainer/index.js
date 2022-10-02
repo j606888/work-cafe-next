@@ -37,9 +37,7 @@ const LeftContainer = () => {
   const { data } = useSWR(keyword ? ["stores/location", { keyword, ...center }] : null)
 
   useEffect(() => {
-    if (data) {
-      setStores(data)
-    }
+    setStores(data || [])
   }, [data, setStores])
 
   function handleSearch(newKeyword) {
