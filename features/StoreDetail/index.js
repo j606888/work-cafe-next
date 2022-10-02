@@ -31,6 +31,8 @@ import Chip from "components/Chip"
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined"
 import ReviewApi from "api/review"
 import useStoreStore from "hooks/useStoreStore"
+import { useState } from "react"
+import NotCafeReport from "./NotCafeReport"
 
 const StoreDetail = ({
   id,
@@ -58,6 +60,7 @@ const StoreDetail = ({
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
+  const [openNotCafe, setOpenNotCafe] = useState(false)
   const { data: bookmarks } = useSWR(
     userIsLogin() ? `/stores/${placeId}/bookmarks` : null
   )
@@ -123,6 +126,7 @@ const StoreDetail = ({
             <RatingStars rating={rating} />
             <span className="reviews">{userRatingsTotal} 則評論</span>
           </div>
+          <button onClick={() => setOpenNotCafe(true)}>回報不是咖啡廳</button>
         </MainInfo>
         <Divider />
         <ButtonGroup>
@@ -233,6 +237,11 @@ const StoreDetail = ({
         onSave={refreshReview}
         isHide={isHide}
         myReview={myReview}
+      />
+      <NotCafeReport
+        placeId={placeId}
+        open={openNotCafe}
+        onClose={() => setOpenNotCafe(false)}
       />
     </>
   )

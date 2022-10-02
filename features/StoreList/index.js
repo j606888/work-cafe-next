@@ -1,9 +1,9 @@
 import * as React from "react"
 import Card from "features/Drawer/Card"
-import { Scrollbar } from "./styled"
+import { Container } from "./styled"
 import useStoreStore from "hooks/useStoreStore"
 
-export default function StoreList({ stores = [] }) {
+export default function StoreList({ stores = [], onClick=() => {} }) {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
@@ -16,6 +16,7 @@ export default function StoreList({ stores = [] }) {
   }
   const handleClick = (placeId) => {
     setPlaceId(placeId)
+    onClick(placeId)
   }
 
   if (stores.length === 0) {
@@ -23,7 +24,7 @@ export default function StoreList({ stores = [] }) {
   }
 
   return (
-    <Scrollbar>
+    <Container>
       {stores.map((store) => (
         <Card
           key={store.placeId}
@@ -34,6 +35,6 @@ export default function StoreList({ stores = [] }) {
           focus={store.placeId === placeId}
         />
       ))}
-    </Scrollbar>
+    </Container>
   )
 }
