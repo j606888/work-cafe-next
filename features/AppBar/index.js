@@ -8,18 +8,19 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 
 const Container = styled.div`
   height: 64px;
-  background-color: #d7c0ae;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 2rem;
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 10;
+  border-bottom: 1px solid #eee;
+  background: #fff;
 
   h2 {
-    font-size: 24px;
-    color: #967e76;
+    font-size: 18px;
+    font-weight: 700;
   }
 
   div {

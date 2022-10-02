@@ -24,6 +24,7 @@ const SearchContainer = styled.div`
   justify-content: center;
   gap: 2rem;
   background-color: #fff;
+  flex-wrap: wrap;
 `
 
 const LeftContainer = () => {
