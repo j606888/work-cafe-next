@@ -12,12 +12,7 @@ const DEFAULT_SETUP = {
   fullscreenControl: false,
   mapTypeControl: false,
   streetViewControl: false,
-  styles: [
-    {
-      featureType: "poi.business",
-      stylers: [{ visibility: "off" }],
-    },
-  ],
+  mapId: process.env.NEXT_PUBLIC_MAP_ID,
   gestureHandling: 'greedy'
 }
 
