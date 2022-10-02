@@ -19,7 +19,7 @@ import GoogleReviewCard from "./GoogleReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
 import Bookmarks from "./Bookmarks"
-import useSWR, { useSWRConfig } from "swr"
+import useSWR from "swr"
 import SecondaryInfo from "./SecondaryInfo"
 import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
@@ -33,35 +33,20 @@ import ReviewApi from "api/review"
 import useStoreStore from "hooks/useStoreStore"
 import { useState } from "react"
 import NotCafeReport from "./NotCafeReport"
+import Skeleton from "components/Skeleton"
 
 const StoreDetail = ({
-  id,
   placeId,
-  name,
-  rating,
-  userRatingsTotal,
-  isOpenNow,
-  address,
-  website,
-  phone,
-  url,
-  isHide,
-  isReview,
-  showCardHead = false,
-  photos = [],
-  reviewReport = {},
-  reviews: googleReviews = [],
-  openingHours = [],
-  onShare = () => {},
-  onRefresh = () => {},
 }) => {
   const setPlaceId = useStoreStore(state => state.setPlaceId)
-  const { mutate } = useSWRConfig()
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
   const [openNotCafe, setOpenNotCafe] = useState(false)
-  const { data: bookmarks } = useSWR(
+  const { data: store, mutate: mutateStore } = useSWR(
+    `/stores/${placeId}`
+  )
+  const { data: bookmarks, mutate: mutateBookmarks } = useSWR(
     userIsLogin() ? `/stores/${placeId}/bookmarks` : null
   )
   const { data: reviews, mutate: reviewsMutate } = useSWR(
@@ -71,33 +56,35 @@ const StoreDetail = ({
     userIsLogin() ? `/stores/${placeId}/reviews/me` : null
   )
 
+  const refreshStore = () => {
+    mutateStore()
+  }
   const handleBookmarkSubmit = () => {
-    mutate(`/stores/${placeId}/bookmarks`)
+    mutateBookmarks()
   }
   const handleHide = async () => {
     authCheck()
     await storeApi.hideStore({ placeId })
-    onRefresh(placeId)
+    refreshStore()
   }
   const handleUnHide = async () => {
     authCheck()
     await storeApi.unhideStore({ placeId })
-    onRefresh(placeId)
+    refreshStore()
   }
   const handleClose = () => {
     setPlaceId(null)
   }
   const refreshReview = () => {
+    mutateStore()
     reviewsMutate()
     myReviewMutate()
-    onRefresh(placeId)
+    refreshStore()
   }
   const handleOpenReview = () => {
-    authCheck()
     setOpenReview(true)
   }
   const handleFaceClick = (recommend) => {
-    authCheck()
     setOpenReview(recommend)
   }
   const handleOpenGoogle = () => {
@@ -105,26 +92,29 @@ const StoreDetail = ({
   }
   const handleDeleteReview = async () => {
     await ReviewApi.deleteMyReview({ placeId })
-    onRefresh(placeId)
+    refreshStore()
     myReviewMutate()
   }
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
+  if (!store) return <Skeleton />
 
   return (
     <>
       <Container>
-        <StickyHeader showCardHead={showCardHead}>
-          <span>{name}</span>
+        <StickyHeader
+        // showCardHead={showCardHead}
+        >
+          <span>{store.name}</span>
           <CloseButton onClick={handleClose}>
             <CloseIcon />
           </CloseButton>
         </StickyHeader>
-        <ImageSlide photos={photos} />
+        <ImageSlide photos={store.photos} />
         <MainInfo>
-          <h3>{name}</h3>
+          <h3>{store.name}</h3>
           <div className="sub-info">
-            <RatingStars rating={rating} />
-            <span className="reviews">{userRatingsTotal} 則評論</span>
+            <RatingStars rating={store.rating} />
+            <span className="reviews">{store.userRatingsTotal} 則評論</span>
           </div>
           <button onClick={() => setOpenNotCafe(true)}>回報不是咖啡廳</button>
         </MainInfo>
@@ -133,7 +123,7 @@ const StoreDetail = ({
           <ActionButton
             type="comment"
             text="評論"
-            primary={isReview}
+            primary={store.isReview}
             onClick={handleOpenReview}
           />
           <ActionButton
@@ -144,7 +134,7 @@ const StoreDetail = ({
             onClick={(e) => setBookmarkAnchor(e.currentTarget)}
           />
 
-          {isHide ? (
+          {store.isHide ? (
             <ActionButton
               type="hide"
               text="隱藏中"
@@ -164,30 +154,30 @@ const StoreDetail = ({
         </ButtonGroup>
         <Divider />
         <SecondaryInfo
-          address={address}
-          website={website}
-          phone={phone}
-          isOpenNow={isOpenNow}
-          openingHours={openingHours}
+          address={store.address}
+          website={store.website}
+          phone={store.phone}
+          isOpenNow={store.isOpenNow}
+          openingHours={store.openingHours}
         />
         <Divider />
         <UploadPhotoContainer>
           <StorePhotoUpload
             placeId={placeId}
-            name={name}
-            onSuccess={() => onRefresh(placeId)}
+            name={store.name}
+            onSuccess={refreshStore}
           />
         </UploadPhotoContainer>
-        <ReviewsBlock reviewReport={reviewReport} onClick={handleFaceClick} />
+        <ReviewsBlock reviewReport={store.reviewReport} onClick={handleFaceClick} />
         <Divider />
-        {myReview && (
+        {store.myReview && (
           <>
             <GoogleReviews>
               <div className="review-header">
                 <h4>你的評論</h4>
               </div>
               <ReviewCard
-                {...myReview}
+                {...store.myReview}
                 noDivider
                 isOwner
                 onDelete={handleDeleteReview}
@@ -217,7 +207,7 @@ const StoreDetail = ({
               <span>排序</span>
             </div>
           </div>
-          {googleReviews.map((review) => (
+          {store.googleReviews?.map((review) => (
             <GoogleReviewCard key={review.authorName} {...review} />
           ))}
         </GoogleReviews>
@@ -232,10 +222,10 @@ const StoreDetail = ({
       <ReviewForm
         placeId={placeId}
         open={openReview}
-        name={name}
+        name={store.name}
         onClose={() => setOpenReview(false)}
         onSave={refreshReview}
-        isHide={isHide}
+        isHide={store.isHide}
         myReview={myReview}
       />
       <NotCafeReport

@@ -1,10 +1,8 @@
-import { Avatar, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
 import React from "react"
-import { useState } from "react"
 import styled from "styled-components"
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount"
-import LogoutIcon from "@mui/icons-material/Logout"
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import LightbulbIcon from "@mui/icons-material/Lightbulb"
+import AccountMenu from "features/AccountMenu"
 
 const Container = styled.div`
   height: 64px;
@@ -34,55 +32,32 @@ const Link = styled.a`
   display: inline-flex;
   align-items: center;
   text-decoration: none;
-  color: #fff;
+  color: #666;
   gap: 0.5rem;
   padding-bottom: 2px;
-  border-bottom: 1px solid #fff;
+
+  &:hover {
+    border-bottom: 1px solid #666;
+  }
+
 `
 
 const AppBar = () => {
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-
   return (
-    <>
-      <Container>
-        <h2>Work Cafe | Taiwan</h2>
-        <div>
-          <Link
-            href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <LightbulbIcon />
-            <span>教學文件</span>
-          </Link>
-          <IconButton onClick={handleClick}>
-            <Avatar>H</Avatar>
-          </IconButton>
-        </div>
-      </Container>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem>
-          <ListItemIcon>
-            <SupervisorAccountIcon fontSize="small" />
-          </ListItemIcon>
-          後台管理
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <LogoutIcon fontSize="small" />
-          </ListItemIcon>
-          登出
-        </MenuItem>
-      </Menu>
-    </>
+    <Container>
+      <h2>Work Cafe | Taiwan</h2>
+      <div>
+        <Link
+          href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <AutoStoriesIcon fontSize="small" />
+          <span>教學文件</span>
+        </Link>
+        <AccountMenu />
+      </div>
+    </Container>
   )
 }
 

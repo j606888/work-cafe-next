@@ -6,10 +6,6 @@ import { getUser } from "utils/user"
 import { useRouter } from 'next/router'
 
 const Container = styled.div`
-  position: absolute;
-  top: 1.5rem;
-  right: 2rem;
-  z-index: 999;
 `
 
 const AccountMenu = () => {
