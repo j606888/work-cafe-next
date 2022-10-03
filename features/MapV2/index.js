@@ -42,6 +42,8 @@ const SearchHereContainer = styled.div`
 const MapV2 = () => {
   const { isReady, myLocation, map, setMap, mapSettings } = useInitMap()
   const setCenter = useMapStore((state) => state.setCenter)
+  const center = useMapStore((state) => state.center)
+  const setLastLatLng = useMapStore((state) => state.setLastLatLng)
   const stores = useStoreStore((state) => state.stores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
@@ -67,12 +69,16 @@ const MapV2 = () => {
     setPlaceId(placeId)
   }
 
+  function handleSearchHere() {
+    setLastLatLng(center)
+  }
+
   if (!isReady) return <Skeleton />
 
   return (
     <Container>
       <SearchHereContainer>
-        <SearchHere />
+        <SearchHere onClick={handleSearchHere} />
       </SearchHereContainer>
       <GoogleMap
         onLoad={handleLoad}

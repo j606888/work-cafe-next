@@ -30,13 +30,17 @@ const SearchContainer = styled.div`
 const LeftContainer = () => {
   const [keyword, setKeyword] = useState("")
   const center = useMapStore((state) => state.center)
+  const lastLatLng = useMapStore((state) => state.lastLatLng)
+  const setLastLatLng = useMapStore((state) => state.setLastLatLng)
   const setStores = useStoreStore((state) => state.setStores)
   const placeId = useStoreStore((state) => state.placeId)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const [settings, setSettings] = useState({})
 
   const { data } = useSWR(
-    keyword ? ["stores/location", { keyword, ...center, ...settings }] : null
+    keyword
+      ? ["stores/location", { keyword, ...lastLatLng, ...settings }]
+      : null
   )
 
   useEffect(() => {
@@ -44,13 +48,14 @@ const LeftContainer = () => {
   }, [data, setStores])
 
   function handleSearch(newKeyword) {
+    setLastLatLng(center)
     setKeyword(newKeyword)
   }
   function handleClickStore(placeId) {
     setPlaceId(placeId)
   }
   function handleFilterChange(settings) {
-    console.log(settings)
+    setLastLatLng(center)
     setSettings(settings)
   }
 
@@ -60,7 +65,7 @@ const LeftContainer = () => {
         <Searchbar onSearch={handleSearch} />
         <SearchFilterV2 onChange={handleFilterChange} />
       </SearchContainer>
-      <WelcomeMessage />
+      {!data && <WelcomeMessage />}
       <StoreList stores={data || []} onClick={handleClickStore} />
       <StoreDetailV2
         placeId={placeId}
