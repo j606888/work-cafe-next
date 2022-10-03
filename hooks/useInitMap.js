@@ -25,7 +25,6 @@ const useInitMap = () => {
   const router = useRouter()
 
   useEffect(() => {
-    console.log({ router })
     if (router && router.isReady && !isReady) {
       const urlLocation = router.query.location
       const lastLocation = localStorage.getItem("lastLocation")
@@ -51,7 +50,6 @@ const useInitMap = () => {
       }
 
       setIsReady(true)
-      console.log("SET SUCCESS");
     }
   }, [router, isReady])
 
