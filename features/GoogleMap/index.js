@@ -19,6 +19,7 @@ const GoogleMap = ({
 }) => {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
+    mapIds: [process.env.NEXT_PUBLIC_MAP_ID]
   })
 
   if (!isLoaded) return <div>Loading...</div>

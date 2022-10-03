@@ -5,6 +5,7 @@ import {
   Place as PlaceIcon,
   Circle as CircleIcon,
   Store as StoreIcon,
+  Clear as ClearIcon,
 } from "@mui/icons-material"
 import { Tooltip } from "@mui/material"
 import useSWR from "swr"
@@ -53,7 +54,6 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   const hasResult = showOptions && options.length > 0
 
   function handleOptionClick(name) {
-    console.log("OPTION CLICK")
     setKeyword(name)
     onSearch(name)
     setShowOptions(false)
@@ -62,6 +62,12 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   function handleSearch() {
     setShowOptions(false)
     onSearch(keyword)
+  }
+
+  function handleClear() {
+    setShowOptions(false)
+    setKeyword("")
+    onSearch("")
   }
 
   function handleChange(e) {
@@ -77,7 +83,6 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   }
 
   function handleBlue() {
-    console.log("BLUE");
     setTimeout(() => {
       setShowOptions(false)
       setFocusedIndex(-1)
@@ -118,9 +123,6 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
       onBlur={handleBlue}
     >
       <SearchBox hasResult={hasResult}>
-        <Tooltip title="選單" onClick={onOpenDrawer}>
-          <MenuIcon style={pointer} />
-        </Tooltip>
         <Input
           value={keyword}
           onChange={handleChange}
@@ -133,6 +135,9 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
         />
         <Tooltip title="搜尋" onClick={handleSearch}>
           <SearchIcon style={pointer} />
+        </Tooltip>
+        <Tooltip title="清除" onClick={handleClear}>
+          <ClearIcon style={pointer} />
         </Tooltip>
       </SearchBox>
       <Options hasResult={hasResult}>

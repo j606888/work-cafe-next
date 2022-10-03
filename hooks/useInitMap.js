@@ -12,12 +12,7 @@ const DEFAULT_SETUP = {
   fullscreenControl: false,
   mapTypeControl: false,
   streetViewControl: false,
-  styles: [
-    {
-      featureType: "poi.business",
-      stylers: [{ visibility: "off" }],
-    },
-  ],
+  mapId: process.env.NEXT_PUBLIC_MAP_ID,
   gestureHandling: 'greedy'
 }
 
@@ -30,7 +25,6 @@ const useInitMap = () => {
   const router = useRouter()
 
   useEffect(() => {
-    console.log({ router })
     if (router && router.isReady && !isReady) {
       const urlLocation = router.query.location
       const lastLocation = localStorage.getItem("lastLocation")
@@ -56,7 +50,6 @@ const useInitMap = () => {
       }
 
       setIsReady(true)
-      console.log("SET SUCCESS");
     }
   }, [router, isReady])
 
