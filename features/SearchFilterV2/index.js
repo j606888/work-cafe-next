@@ -45,21 +45,10 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
   const [open, setOpen] = useState(false)
   const [settingsMemo, setSettingsMemo] = useState(INIT_FILTERS)
   const [settings, setSettings] = useState(INIT_FILTERS)
-  const badgeCount = useMemo(() => {
-    let i = 0
-
-    ;["recommend", "roomVolume", "timeLimit", "socketSupply"].forEach((key) => {
-      if (settings[key] !== INIT_FILTERS[key]) {
-        i++
-      }
-    })
-
-    if (settingsMemo.openType !== "NONE") {
-      i++
-    }
-
-    return i
-  }, [settingsMemo])
+  const badgeCount = useMemo(
+    () => _calcBadgeCount(settingsMemo),
+    [settingsMemo]
+  )
 
   const handleClose = () => {
     setOpen(false)
@@ -72,7 +61,7 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
 
   const handleApply = () => {
     setSettingsMemo(settings)
-    onChange(settings)
+    onChange(_filterCleanSettings(settings))
     setOpen(false)
   }
 
@@ -129,3 +118,45 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
 }
 
 export default SearchFilterV2
+
+function _calcBadgeCount(settingsMemo) {
+  let i = 0
+  ;["recommend", "roomVolume", "timeLimit", "socketSupply"].forEach((key) => {
+    if (settingsMemo[key] !== INIT_FILTERS[key]) {
+      i++
+    }
+  })
+
+  if (settingsMemo.openType !== "NONE") {
+    i++
+  }
+
+  return i
+}
+
+function _filterCleanSettings(settings) {
+  const result = {}
+
+  result.openType = settings.openType
+  if (settings.openType === 'OPEN_AT') {
+    result.openWeek = settings.openWeek
+    if (settings.openHour !== 99) {
+      result.openHour = settings.openHour
+    }
+  }
+  if (settings.recommend) {
+    result.recommend = settings.recommend
+  }
+
+  if (settings.roomVolume !== '') {
+    result.roomVolume = settings.roomVolume
+  }
+  if (settings.timeLimit !== '') {
+    result.timeLimit = settings.timeLimit
+  }
+  if (settings.socketSupply !== '') {
+    result.socketSupply = settings.socketSupply
+  }
+
+  return result
+}

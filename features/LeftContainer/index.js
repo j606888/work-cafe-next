@@ -1,15 +1,15 @@
-import Searchbar from 'features/Searchbar'
-import SearchFilterV2 from 'features/SearchFilterV2'
-import StoreDetailV2 from 'features/StoreDetailV2'
-import StoreList from 'features/StoreList'
-import WelcomeMessage from 'features/WelcomeMessage'
-import useMapStore from 'hooks/useMapStore'
-import useStoreStore from 'hooks/useStoreStore'
-import React from 'react'
-import { useEffect } from 'react'
-import { useState } from 'react'
-import styled from 'styled-components'
-import useSWR from 'swr'
+import Searchbar from "features/Searchbar"
+import SearchFilterV2 from "features/SearchFilterV2"
+import StoreDetailV2 from "features/StoreDetailV2"
+import StoreList from "features/StoreList"
+import WelcomeMessage from "features/WelcomeMessage"
+import useMapStore from "hooks/useMapStore"
+import useStoreStore from "hooks/useStoreStore"
+import React from "react"
+import { useEffect } from "react"
+import { useState } from "react"
+import styled from "styled-components"
+import useSWR from "swr"
 
 const Container = styled.div`
   width: 50%;
@@ -29,12 +29,15 @@ const SearchContainer = styled.div`
 
 const LeftContainer = () => {
   const [keyword, setKeyword] = useState("")
-  const center = useMapStore(state => state.center)
-  const setStores = useStoreStore(state => state.setStores)
-  const placeId = useStoreStore(state => state.placeId)
-  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const center = useMapStore((state) => state.center)
+  const setStores = useStoreStore((state) => state.setStores)
+  const placeId = useStoreStore((state) => state.placeId)
+  const setPlaceId = useStoreStore((state) => state.setPlaceId)
+  const [settings, setSettings] = useState({})
 
-  const { data } = useSWR(keyword ? ["stores/location", { keyword, ...center }] : null)
+  const { data } = useSWR(
+    keyword ? ["stores/location", { keyword, ...center, ...settings }] : null
+  )
 
   useEffect(() => {
     setStores(data || [])
@@ -46,16 +49,25 @@ const LeftContainer = () => {
   function handleClickStore(placeId) {
     setPlaceId(placeId)
   }
+  function handleFilterChange(settings) {
+    console.log(settings)
+    setSettings(settings)
+  }
 
   return (
     <Container>
       <SearchContainer>
-        <Searchbar onSearch={handleSearch}/>
-        <SearchFilterV2 />
+        <Searchbar onSearch={handleSearch} />
+        <SearchFilterV2 onChange={handleFilterChange} />
       </SearchContainer>
       <WelcomeMessage />
-      <StoreList stores={data || []} onClick={handleClickStore}/>
-      <StoreDetailV2 placeId={placeId} onClose={() => {setPlaceId(null)}} />
+      <StoreList stores={data || []} onClick={handleClickStore} />
+      <StoreDetailV2
+        placeId={placeId}
+        onClose={() => {
+          setPlaceId(null)
+        }}
+      />
     </Container>
   )
 }
