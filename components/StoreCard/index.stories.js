@@ -10,6 +10,7 @@ Default.args = {
   shortAddress: "台南市中西區",
   rating: 4.6,
   reviewsCount: 20,
+  isOpen: true,
   tags: ["不限時間", "大部分有插座"],
   images: [
     "https://work-cafe-staging.s3.ap-southeast-1.amazonaws.com/stores/ChIJ--JpicY1aDQRwAEH1-fv5j4/8bc11298abfda37e.jpeg",
