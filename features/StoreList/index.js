@@ -2,6 +2,7 @@ import * as React from "react"
 import Card from "features/Drawer/Card"
 import { Container } from "./styled"
 import useStoreStore from "hooks/useStoreStore"
+import StoreCard from "components/StoreCard"
 
 export default function StoreList({ stores = [], onClick=() => {} }) {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
@@ -26,8 +27,11 @@ export default function StoreList({ stores = [], onClick=() => {} }) {
   return (
     <Container>
       {stores.map((store) => (
-        <Card
+        <StoreCard
           key={store.placeId}
+          images={[store.imageUrl]}
+          shortAddress={store.address}
+          reviewsCount={store.userRatingsTotal}
           {...store}
           onClick={handleClick}
           onMouseEnter={handleMouseEnter}

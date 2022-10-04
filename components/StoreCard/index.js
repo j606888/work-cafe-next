@@ -9,9 +9,11 @@ import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
 import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices"
 import { Chip } from "@mui/material"
 import { ReviewWords } from "constant/i18n"
+import _ from 'lodash'
 
 const Container = styled.div`
   width: 280px;
+  height: 360px;
 
   h3 {
     margin: 0;
@@ -83,7 +85,7 @@ const StoreCard = ({
   return <Container>
     <ImageSlider images={images} />
     <MainInfo>
-      <h3>{name}</h3>
+      <h3>{_.truncate(name)}</h3>
       <div>
         <StarIcon sx={{fontSize: 18}}/>
         <span>{rating}({reviewsCount})</span>
