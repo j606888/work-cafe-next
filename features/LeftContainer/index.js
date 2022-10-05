@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material"
 import Searchbar from "features/Searchbar"
 import SearchFilterV2 from "features/SearchFilterV2"
 import StoreDetailV2 from "features/StoreDetailV2"
@@ -10,6 +11,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
+import { TypeAnimation } from 'react-type-animation'
 
 const Container = styled.div`
   width: 50%;
@@ -19,13 +21,12 @@ const Container = styled.div`
 
 const SearchContainer = styled.div`
   display: flex;
-  padding: 1rem 0;
+  padding: 1rem 0 0;
   align-items: center;
   justify-content: center;
   gap: 2rem;
   background-color: #fff;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
 `
 
 const LeftContainer = () => {
@@ -62,10 +63,17 @@ const LeftContainer = () => {
 
   return (
     <Container>
+      {!data && <TypeAnimation sequence={['', 800, '嗨～', 1000, '嗨～今天想去哪喝咖啡呢？']}
+        wrapper='div'
+        style={{ fontSize: '36px', textAlign: 'center', margin: '2rem' }}
+        cursor={true}
+        speed={50}
+      />}
       <SearchContainer>
         <Searchbar onSearch={handleSearch} />
         <SearchFilterV2 onChange={handleFilterChange} />
       </SearchContainer>
+      <Divider sx={{ marginY: 3}}/>
       {!data && <WelcomeMessage />}
       <StoreList stores={data || []} onClick={handleClickStore} />
       <StoreDetailV2
