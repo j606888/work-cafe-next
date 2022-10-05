@@ -62,6 +62,7 @@ const ReviewForm = ({
   onSave = () => {},
 }) => {
   const [data, setData] = React.useState({
+    recommend: "",
     roomVolume: null,
     timeLimit: null,
     socketSupply: null,
@@ -110,7 +111,6 @@ const ReviewForm = ({
   }, [myReview])
 
   const showAlsoHide = data.recommend === "no" && !isHide
-  const initFace = (typeof open === 'string') ? open : myReview?.recommend
 
   return (
     <>
@@ -118,7 +118,7 @@ const ReviewForm = ({
         <Form>
           <h3>{name}</h3>
           <Scroll>
-            <RecommendBlock onChange={handleRecommendChange} initFace={initFace} />
+            <RecommendBlock onChange={handleRecommendChange} recommend={data.recommend} />
             {showAlsoHide && (
               <FormControlLabel
                 control={

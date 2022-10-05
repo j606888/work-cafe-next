@@ -6,9 +6,9 @@ import {
 } from "@mui/icons-material"
 
 const ACTIVE_COLOR = {
-  happy: "#00897B",
-  normal: "#FFC107",
-  bad: "#E53935",
+  happy: "#A5D6A7",
+  normal: "#FFD54F",
+  bad: "#EF9A9A",
 }
 
 const FaceIcon = ({ size, type, active=false }) => {

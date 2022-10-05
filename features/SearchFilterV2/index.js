@@ -3,6 +3,7 @@ import styled from "styled-components"
 import FilterAltIcon from "@mui/icons-material/FilterAlt"
 import {
   Badge,
+  Box,
   Button,
   Dialog,
   DialogActions,
@@ -104,13 +105,12 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
           <ReviewFilters {...settings} onChange={handleReviewFilterChange} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleReset}>重回預設</Button>
-          <Button variant="outlined" onClick={handleClose}>
-            取消
-          </Button>
-          <Button variant="contained" onClick={handleApply}>
-            套用
-          </Button>
+          <Button onClick={handleReset} >重回預設</Button>
+          <Box style={{ flex: '1 0 0', textAlign: 'right'}}>
+            <Button variant="contained" onClick={handleApply} >
+              套用
+            </Button>
+          </Box>
         </DialogActions>
       </Dialog>
     </>

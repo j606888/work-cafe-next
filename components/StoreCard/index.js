@@ -75,6 +75,7 @@ const IconChip = ({ type, value }) => {
 
 
 const StoreCard = ({
+  placeId,
   name,
   shortAddress,
   rating,
@@ -82,8 +83,13 @@ const StoreCard = ({
   isOpen,
   tags = [],
   images = [],
+  onClick = () => {},
 }) => {
-  return <Container>
+  function handleClick() {
+    console.log("LEVEL 2");
+    onClick(placeId)
+  }
+  return <Container onClick={handleClick}>
     <ImageSlider images={images} />
     <MainInfo>
       <h3>{_.truncate(name)}</h3>

@@ -4,8 +4,6 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import { useEffect } from "react"
 
-
-
 const ArrowContainer = styled.div`
   width: 32px;
   height: 32px;
@@ -39,6 +37,7 @@ const Container = styled.div`
   align-items: center;
   border-radius: 12px;
   overflow: hidden;
+  cursor: pointer;
 
   ${ArrowContainer} {
     opacity: 0;
@@ -91,6 +90,11 @@ const Dot = styled.div`
   cursor: pointer;
   z-index: 5;
 
+  &:hover {
+    cursor: pointer;
+    background-color: #fff;
+  }
+
   ${({ active }) => active && `background-color: #fff;`}
 `
 
@@ -98,19 +102,19 @@ const ImageSlider = ({ images = [] }) => {
   const [current, setCurrent] = useState(0)
   const length = images.length
 
-  const nextSlide = () => {
+  const nextSlide = (e) => {
+    e.stopPropagation()
     setCurrent(current === length - 1 ? 0 : current + 1)
   }
-  const prevSlide = () => {
+  const prevSlide = (e) => {
+    e.stopPropagation()
     setCurrent(current === 0 ? length - 1 : current - 1)
   }
-  const handleClick = (index) => {
+  const handleClick = (e, index) => {
+    e.stopPropagation()
     setCurrent(index)
   }
 
-  useEffect(() => {
-    console.log(current)
-  }, [current])
   return (
     <Container>
       <ArrowContainer left>
@@ -129,7 +133,13 @@ const ImageSlider = ({ images = [] }) => {
       })}
       <DotsContainer>
         {images.map((_image, index) => {
-          return <Dot key={index} active={index === current} onClick={() => handleClick(index)}/>
+          return (
+            <Dot
+              key={index}
+              active={index === current}
+              onClick={(e) => handleClick(e, index)}
+            />
+          )
         })}
       </DotsContainer>
     </Container>

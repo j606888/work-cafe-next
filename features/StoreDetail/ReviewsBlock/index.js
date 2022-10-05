@@ -50,15 +50,15 @@ const ReviewsBlock = ({ reviewReport, onClick = () => {} }) => {
     <Container>
       <FaceBlock>
         <div onClick={() => handleClick("no")}>
-          <BadFace sx={{ color: "#E53935" }} />
+          <BadFace sx={{ color: "#EF9A9A" }} />
           <span>{recommend.no}</span>
         </div>
         <div onClick={() => handleClick("normal")}>
-          <NormalFace sx={{ color: "#FFC107" }} />
+          <NormalFace sx={{ color: "#FFD54F" }} />
           <span>{recommend.normal}</span>
         </div>
         <div onClick={() => handleClick("yes")}>
-          <HappyFace sx={{ color: "#00897B" }} />
+          <HappyFace sx={{ color: "#A5D6A7" }} />
           <span>{recommend.yes}</span>
         </div>
       </FaceBlock>
