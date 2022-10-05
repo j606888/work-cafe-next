@@ -29,7 +29,7 @@ export default function StoreList({ stores = [], onClick=() => {} }) {
       {stores.map((store) => (
         <StoreCard
           key={store.placeId}
-          images={[store.imageUrl]}
+          images={store.photos}
           shortAddress={store.address}
           reviewsCount={store.userRatingsTotal}
           {...store}

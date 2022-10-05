@@ -13,7 +13,8 @@ import _ from 'lodash'
 
 const Container = styled.div`
   width: 280px;
-  height: 360px;
+  height: 320px;
+  background-color: #fff;
 
   h3 {
     margin: 0;
