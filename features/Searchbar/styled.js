@@ -1,31 +1,20 @@
 import styled, { css } from "styled-components"
 
+const WIDTH = '320px'
+
 export const Container = styled.div`
-  width: 360px;
-  box-sizing: border-box;
-  box-shadow: 0 0 12px -3px rgba(0,0,0,0.61);
+  width: ${WIDTH};
+  position: relative;
 `
 
 export const SearchBox = styled.div`
   background: #fff;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border: 1px solid #ccc;
+  border-radius: 24px;
   padding: 0.8rem 1.2rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
-
-  ${({ hasResult }) => {
-    if (hasResult) {
-      return css`
-        border-bottom: 2px solid #ccc;
-      `
-    } else {
-      return css`
-        border-radius: 12px;
-      `
-    }
-  }}
+  gap: .3rem;
 `
 
 export const Input = styled.input`
@@ -41,10 +30,15 @@ export const Options = styled.div`
   display: ${({ hasResult }) => (hasResult ? "block" : "none")};
   background: #fff;
   padding: 7px 0;
-  border-bottom-right-radius: 12px;
-  border-bottom-left-radius: 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
   overflow-y: auto;
   max-height: 12rem;
+  position: absolute;
+  left: 0;
+  top: calc(100% + 4px);
+  width: ${WIDTH};
+  z-index: 20;
 `
 
 export const Option = styled.div`

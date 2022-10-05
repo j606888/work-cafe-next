@@ -4,12 +4,11 @@ import {
   SentimentDissatisfiedOutlined as BadFace,
   SentimentSatisfiedOutlined as HappyFace,
 } from "@mui/icons-material"
-import { Radio } from "@mui/material"
-import { Container, RadioContainer } from "./styled"
-import { useEffect } from "react"
+import { FormControl, FormLabel, Radio } from "@mui/material"
+import { Container, RadioContainer, RadioGroup } from "./styled"
 
 const FaceRadio = ({
-  selectedValue,
+  checked,
   label,
   icon,
   value,
@@ -19,12 +18,11 @@ const FaceRadio = ({
   const handleChange = () => {
     onChange(value)
   }
-  const isChecked = selectedValue === value
 
   return (
-    <RadioContainer onClick={handleChange} isChecked={isChecked} color={color}>
+    <RadioContainer onClick={handleChange} isChecked={checked} color={color}>
       <Radio
-        checked={isChecked}
+        checked={checked}
         name="recommend"
         value={value}
         icon={icon}
@@ -39,52 +37,41 @@ const OPTIONS = [
   {
     icon: <BadFace />,
     value: "no",
-    label: "不推薦",
-    color: "#E53935",
+    label: "不適合",
+    color: "#EF9A9A",
   },
   {
     icon: <NormalFace />,
     value: "normal",
-    label: "一般",
-    color: "#FFC107",
+    label: "普通",
+    color: "#FFD54F",
   },
   {
     icon: <HappyFace />,
     value: "yes",
-    label: "推薦",
-    color: "#00897B",
+    label: "適合",
+    color: "#A5D6A7",
   },
 ]
 
-const RecommendBlock = ({ onChange = () => {}, initFace }) => {
-  const [selectedValue, setSelectedValue] = React.useState(null)
-
-  const handleChange = (value) => {
-    setSelectedValue(value)
-    onChange(value)
-  }
-
-  useEffect(() => {
-    if (initFace !== true && initFace !== false) {
-      setSelectedValue(initFace)
-      onChange(initFace)
-    }
-  }, [initFace])
-
+const RecommendBlock = ({ onChange = () => {}, recommend }) => {
   return (
-    <Container>
-      {OPTIONS.map(({ value, icon, label, color }) => (
-        <FaceRadio
-          key={value}
-          selectedValue={selectedValue}
-          icon={icon}
-          value={value}
-          label={label}
-          color={color}
-          onChange={handleChange}
-        />
-      ))}
-    </Container>
+    <FormControl>
+      <FormLabel>適合安靜做事</FormLabel>
+      <RadioGroup>
+        {OPTIONS.map(({ value, icon, label, color }) => (
+          <FaceRadio
+            key={value}
+            checked={value === recommend}
+            icon={icon}
+            value={value}
+            label={label}
+            color={color}
+            onChange={onChange}
+          />
+        ))}
+      </RadioGroup>
+    </FormControl>
   )
 }
 

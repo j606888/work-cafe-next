@@ -71,7 +71,6 @@ const SearchStoreList = ({ store, mapCenter }) => {
     setOptions((cur) => ({ ...cur, ...currentOpenTime, go: true }))
   }
   const handleFilterChange = (filter) => {
-    console.log(filter)
     setOptions((cur) => ({ ...cur, ...filter, go: true}))
   }
   const handleSearch = () => {

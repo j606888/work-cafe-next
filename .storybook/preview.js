@@ -1,4 +1,5 @@
 import { initialize, mswDecorator } from 'msw-storybook-addon'
+import { RouterContext } from "next/dist/shared/lib/router-context"; //
 
 initialize()
 
@@ -11,5 +12,8 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 }

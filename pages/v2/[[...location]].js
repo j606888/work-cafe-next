@@ -3,7 +3,7 @@ import LeftContainer from "features/LeftContainer";
 import MapV2 from "features/MapV2";
 import Head from "next/head";
 
-export default function MapPage() {
+export default function MapPageV2() {
   return (
     <>
       <Head>
