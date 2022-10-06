@@ -39,4 +39,10 @@ export const Container = styled.div`
       font-size: 0.9rem;
     }
   }
+
+  .google-signin {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 8px;
+  }
 `
