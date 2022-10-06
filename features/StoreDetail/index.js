@@ -15,6 +15,7 @@ import {
 } from "./styled"
 import storeApi from "api/stores"
 import SortIcon from "@mui/icons-material/Sort"
+import CommentIcon from '@mui/icons-material/Comment';
 import GoogleReviewCard from "./GoogleReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
@@ -56,6 +57,10 @@ const StoreDetail = ({
     userIsLogin() ? `/stores/${placeId}/reviews/me` : null
   )
 
+  const handleBookmarkClick = (e) => {
+    authCheck()
+    setBookmarkAnchor(e.currentTarget)
+  }
   const refreshStore = () => {
     mutateStore()
   }
@@ -84,11 +89,8 @@ const StoreDetail = ({
   const handleOpenReview = () => {
     setOpenReview(true)
   }
-  const handleFaceClick = (recommend) => {
-    setOpenReview(recommend)
-  }
   const handleOpenGoogle = () => {
-    window.open(url)
+    window.open(store.url)
   }
   const handleDeleteReview = async () => {
     await ReviewApi.deleteMyReview({ placeId })
@@ -121,19 +123,12 @@ const StoreDetail = ({
         <Divider />
         <ButtonGroup>
           <ActionButton
-            type="comment"
-            text="評論"
-            primary={store.isReview}
-            onClick={handleOpenReview}
-          />
-          <ActionButton
             type="bookmark"
             text={isSaved ? "已儲存" : "儲存"}
             color={isSaved ? "#FB507D" : "#1B72E8"}
             primary={isSaved}
-            onClick={(e) => setBookmarkAnchor(e.currentTarget)}
+            onClick={handleBookmarkClick}
           />
-
           {store.isHide ? (
             <ActionButton
               type="hide"
@@ -145,7 +140,6 @@ const StoreDetail = ({
           ) : (
             <ActionButton type="show" text="顯示中" onClick={handleHide} />
           )}
-          <ActionButton type="share" text="分享" onClick={() => onShare(id)} />
           <ActionButton
             type="navigate"
             text="導航"
@@ -167,8 +161,11 @@ const StoreDetail = ({
             name={store.name}
             onSuccess={refreshStore}
           />
+          <Chip text="新增評論" onClick={handleOpenReview}>
+            <CommentIcon />
+          </Chip>
         </UploadPhotoContainer>
-        <ReviewsBlock reviewReport={store.reviewReport} onClick={handleFaceClick} />
+        <ReviewsBlock reviewReport={store.reviewReport} />
         <Divider />
         {store.myReview && (
           <>
@@ -197,18 +194,6 @@ const StoreDetail = ({
           </div>
           {reviews?.reviews.map((review) => (
             <ReviewCard key={review.id} {...review} />
-          ))}
-        </GoogleReviews>
-        <GoogleReviews>
-          <div className="review-header">
-            <h4>Google 評論</h4>
-            <div className="sort">
-              <SortIcon />
-              <span>排序</span>
-            </div>
-          </div>
-          {store.googleReviews?.map((review) => (
-            <GoogleReviewCard key={review.authorName} {...review} />
           ))}
         </GoogleReviews>
       </Container>

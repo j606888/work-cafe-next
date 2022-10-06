@@ -26,8 +26,11 @@ export const CloseButton = styled.div`
 `
 
 export const UploadPhotoContainer = styled.div`
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 1rem;
+  gap: 1rem;
 `
 
 export const MainInfo = styled.div`
@@ -87,7 +90,7 @@ export const GoogleReviews = styled.div`
 export const ButtonGroup = styled.div`
   padding: 1rem 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `
 
 const showStyle = css`

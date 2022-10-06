@@ -115,6 +115,22 @@ const ImageSlider = ({ images = [] }) => {
     setCurrent(index)
   }
 
+  if (length === 0 || images[0] === null) return (
+    <Container>
+      <Slide active>
+        <Img src='/no-egg.png' alt='no photo' />
+      </Slide>
+    </Container>
+  )
+
+  if (length === 1) return (
+    <Container>
+      <Slide active>
+        <Img src={images[0]} alt='store' />
+      </Slide>
+    </Container>
+  )
+
   return (
     <Container>
       <ArrowContainer left>
@@ -127,7 +143,7 @@ const ImageSlider = ({ images = [] }) => {
       {images.map((image, index) => {
         return (
           <Slide key={index} active={index === current}>
-            {index === current && <Img src={image} alt="xxx" />}
+            {index === current && <Img src={image} alt="store" />}
           </Slide>
         )
       })}

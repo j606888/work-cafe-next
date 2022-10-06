@@ -99,13 +99,14 @@ const Login = () => {
               </Button>
             </div>
             <Divider light>或者使用以下登入</Divider>
-            <GoogleLogin
-              onSuccess={handleLogin}
-              onError={() => {
-                console.log("Login Failed")
-              }}
-              type="icon"
-            />
+            <div className="google-signin">
+              <GoogleLogin
+                onSuccess={handleLogin}
+                onError={() => {
+                  console.log("Login Failed")
+                }}
+              />
+            </div>
             <p className="no-account">
               沒有帳號嗎？<Link href="/signup">註冊</Link>
             </p>

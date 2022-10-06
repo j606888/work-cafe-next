@@ -19,7 +19,7 @@ const NotCafeReport = ({ placeId, open, onClose }) => {
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle>感謝您提供的資訊！</DialogTitle>
       <DialogActions>
-        <Button onClick={handleClose}>返回</Button>
+        <Button onClick={handleClose}>不客氣</Button>
       </DialogActions>
     </Dialog>
   ) : (
