@@ -7,7 +7,7 @@ const Container = styled.div`
   max-width: 560px;
   margin: 6rem auto;
   text-align: left;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
 
   p {
     line-height: 150%;
