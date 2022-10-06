@@ -40,7 +40,7 @@ const LeftContainer = () => {
   const [settings, setSettings] = useState({})
 
   const { data } = useSWR(
-    keyword
+    keyword || lastLatLng
       ? ["stores/location", { keyword, ...lastLatLng, ...settings }]
       : null
   )

@@ -1,7 +1,9 @@
+import { Marker } from '@react-google-maps/api'
 import SearchHere from 'components/Button/SearchHere'
 import Skeleton from 'components/Skeleton'
 import GoogleMap from 'features/GoogleMap'
 import StoreMarker from 'features/GoogleMap/StoreMarker'
+import MyLocation from 'features/MyLocation'
 import useInitMap from 'hooks/useInitMap'
 import useMapStore from 'hooks/useMapStore'
 import useStoreStore from 'hooks/useStoreStore'
@@ -29,6 +31,13 @@ const Container = styled.div`
     overflow: hidden;
     max-width: 240px;
   }
+`
+
+const MyLocationContainer = styled.div`
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 5;
 `
 
 const SearchHereContainer = styled.div`
@@ -65,6 +74,13 @@ const MapV2 = () => {
     // _setLocalStorage("lastLocation", mapPath)
   }
 
+  const handleFindMe = ({ lat, lng }) => {
+    const center = { lat, lng }
+    map.setZoom(15)
+    map.panTo(center)
+    myLocation.current = center
+  }
+
   function handleClickMarker(placeId) {
     setPlaceId(placeId)
   }
@@ -77,6 +93,9 @@ const MapV2 = () => {
 
   return (
     <Container>
+      <MyLocationContainer>
+        <MyLocation onClick={handleFindMe}/>
+      </MyLocationContainer>
       <SearchHereContainer>
         <SearchHere onClick={handleSearchHere} />
       </SearchHereContainer>
@@ -85,6 +104,18 @@ const MapV2 = () => {
         onIdle={handleIdle}
         mapSettings={mapSettings}
       >
+        {myLocation.current && (
+            <Marker
+              position={{
+                lat: myLocation.current.lat,
+                lng: myLocation.current.lng,
+              }}
+              icon={{
+                url: "/me.svg",
+                scaledSize: new google.maps.Size(22, 22),
+              }}
+            />
+          )}
         {stores.map((store) => (
             <StoreMarker
               key={store.placeId}
