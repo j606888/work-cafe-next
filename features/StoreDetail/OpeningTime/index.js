@@ -42,39 +42,31 @@ const Container = styled.div`
 `
 
 const OpeningTime = ({ openingHours = [], isOpenNow = false }) => {
-  const [openTab, setOpenTab] = React.useState(false)
-
   return (
     <Container isOpen={isOpenNow}>
-      <div className="icon-list" onClick={() => setOpenTab((cur) => !cur)}>
+      <div className="icon-list">
         <AccessTimeIcon />
         <span className="open-status">{isOpenNow ? "營業中" : "已打烊"}</span>
-        {/* <span>&nbsp;⋅ 開始營業時間：週二 12:00 </span> */}
-        {openTab ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       </div>
-      {openTab && (
-        <>
-          <div className="opening-list">
-            {openingHours.map((openingHour) => {
-              const periods = openingHour.periods.map((period) => {
-                return (
-                  <span key={`${period.start}${period.end}`}>
-                    {`${period.start}-${period.end}`}
-                  </span>
-                )
-              })
-              return (
-                <div className="weekday" key={openingHour.label}>
-                  <span>{openingHour.label}</span>
-                  <div className="opening-hour">
-                    {periods.length === 0 ? <span>休息</span> : periods}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </>
-      )}
+      <div className="opening-list">
+        {openingHours.map((openingHour) => {
+          const periods = openingHour.periods.map((period) => {
+            return (
+              <span key={`${period.start}${period.end}`}>
+                {`${period.start}-${period.end}`}
+              </span>
+            )
+          })
+          return (
+            <div className="weekday" key={openingHour.label}>
+              <span>{openingHour.label}</span>
+              <div className="opening-hour">
+                {periods.length === 0 ? <span>休息</span> : periods}
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </Container>
   )
 }

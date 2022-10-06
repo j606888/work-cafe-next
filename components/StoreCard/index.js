@@ -86,7 +86,6 @@ const StoreCard = ({
   onClick = () => {},
 }) => {
   function handleClick() {
-    console.log("LEVEL 2");
     onClick(placeId)
   }
   return <Container onClick={handleClick}>

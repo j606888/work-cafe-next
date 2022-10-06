@@ -39,25 +39,22 @@ const DetailPart = ({ name, en, scores = {} }) => {
   )
 }
 
-const ReviewsBlock = ({ reviewReport, onClick = () => {} }) => {
+const ReviewsBlock = ({ reviewReport }) => {
   const recommend = reviewReport.recommend
-
-  const handleClick = (score) => {
-    onClick(score)
-  }
 
   return (
     <Container>
+      <p>適合安靜做事</p>
       <FaceBlock>
-        <div onClick={() => handleClick("no")}>
+        <div>
           <BadFace sx={{ color: "#EF9A9A" }} />
           <span>{recommend.no}</span>
         </div>
-        <div onClick={() => handleClick("normal")}>
+        <div>
           <NormalFace sx={{ color: "#FFD54F" }} />
           <span>{recommend.normal}</span>
         </div>
-        <div onClick={() => handleClick("yes")}>
+        <div>
           <HappyFace sx={{ color: "#A5D6A7" }} />
           <span>{recommend.yes}</span>
         </div>
