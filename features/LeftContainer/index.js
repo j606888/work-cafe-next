@@ -78,6 +78,7 @@ const LeftContainer = () => {
       <StoreList stores={data || []} onClick={handleClickStore} />
       <StoreDetailV2
         placeId={placeId}
+        key={placeId}
         onClose={() => {
           setPlaceId(null)
         }}

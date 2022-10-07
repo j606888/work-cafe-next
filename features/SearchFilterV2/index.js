@@ -9,6 +9,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
+  FormControlLabel,
+  FormGroup,
+  Switch,
 } from "@mui/material"
 import { useState } from "react"
 import OpenTimePicker from "components/OpenTimePicker"
@@ -40,6 +44,8 @@ const INIT_FILTERS = {
   roomVolume: "",
   timeLimit: "",
   socketSupply: "",
+  wakeUp: false,
+  exploreMode: false,
 }
 
 const SearchFilterV2 = ({ onChange = () => {} }) => {
@@ -86,6 +92,14 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
     }
   }
 
+  const handleWakeUpChange = (e) => {
+    setSettings((cur) => ({ ...cur, wakeUp: e.target.checked }))
+  }
+
+  const handleExploreModeChange = (e) => {
+    setSettings((cur) => ({ ...cur, exploreMode: e.target.checked }))
+  }
+
   return (
     <>
       <Badge badgeContent={badgeCount} color="primary">
@@ -103,11 +117,33 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
             recommend={settings.recommend}
           />
           <ReviewFilters {...settings} onChange={handleReviewFilterChange} />
+          <Divider />
+          <p>進階</p>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={settings.wakeUp}
+                  onChange={handleWakeUpChange}
+                />
+              }
+              label="只顯示有評論的店家"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={settings.exploreMode}
+                  onChange={handleExploreModeChange}
+                />
+              }
+              label="只顯示你尚未評論的店家(需登入)"
+            />
+          </FormGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleReset} >重回預設</Button>
-          <Box style={{ flex: '1 0 0', textAlign: 'right'}}>
-            <Button variant="contained" onClick={handleApply} >
+          <Button onClick={handleReset}>重回預設</Button>
+          <Box style={{ flex: "1 0 0", textAlign: "right" }}>
+            <Button variant="contained" onClick={handleApply}>
               套用
             </Button>
           </Box>
@@ -121,7 +157,14 @@ export default SearchFilterV2
 
 function _calcBadgeCount(settingsMemo) {
   let i = 0
-  ;["recommend", "roomVolume", "timeLimit", "socketSupply"].forEach((key) => {
+  ;[
+    "recommend",
+    "roomVolume",
+    "timeLimit",
+    "socketSupply",
+    "wakeUp",
+    "exploreMode",
+  ].forEach((key) => {
     if (settingsMemo[key] !== INIT_FILTERS[key]) {
       i++
     }
@@ -138,7 +181,7 @@ function _filterCleanSettings(settings) {
   const result = {}
 
   result.openType = settings.openType
-  if (settings.openType === 'OPEN_AT') {
+  if (settings.openType === "OPEN_AT") {
     result.openWeek = settings.openWeek
     if (settings.openHour !== 99) {
       result.openHour = settings.openHour
@@ -148,14 +191,20 @@ function _filterCleanSettings(settings) {
     result.recommend = settings.recommend
   }
 
-  if (settings.roomVolume !== '') {
+  if (settings.roomVolume !== "") {
     result.roomVolume = settings.roomVolume
   }
-  if (settings.timeLimit !== '') {
+  if (settings.timeLimit !== "") {
     result.timeLimit = settings.timeLimit
   }
-  if (settings.socketSupply !== '') {
+  if (settings.socketSupply !== "") {
     result.socketSupply = settings.socketSupply
+  }
+  if (!!settings.wakeUp) {
+    result.wakeUp = settings.wakeUp
+  }
+  if (!!settings.exploreMode) {
+    result.exploreMode = settings.exploreMode
   }
 
   return result
