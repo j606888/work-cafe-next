@@ -1,6 +1,6 @@
 import { Divider } from "@mui/material"
 import Searchbar from "features/Searchbar"
-import SearchFilterV2 from "features/SearchFilterV2"
+import SearchFilter from "features/SearchFilter"
 import StoreDetailV2 from "features/StoreDetailV2"
 import StoreList from "features/StoreList"
 import WelcomeMessage from "features/WelcomeMessage"
@@ -77,7 +77,7 @@ const LeftContainer = () => {
       />}
       <SearchContainer>
         <Searchbar onSearch={handleSearch} />
-        <SearchFilterV2 onChange={handleFilterChange} />
+        <SearchFilter onChange={handleFilterChange} />
       </SearchContainer>
       <Divider sx={{ marginY: 3}}/>
       {!data && <WelcomeMessage />}

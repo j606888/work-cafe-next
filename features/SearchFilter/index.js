@@ -12,7 +12,7 @@ import {
   Divider,
 } from "@mui/material"
 import { useState } from "react"
-import OpenTimePicker from "features/SearchFilterV2/OpenTimePicker"
+import OpenTimePicker from "features/SearchFilter/OpenTimePicker"
 import { useMemo } from "react"
 import _ from "lodash"
 import useSWR from "swr"
@@ -44,7 +44,7 @@ const INIT_FILTERS = {
   tagIds: [],
 }
 
-const SearchFilterV2 = ({ onChange = () => {} }) => {
+const SearchFilter = ({ onChange = () => {} }) => {
   const [open, setOpen] = useState(false)
   const [settingsMemo, setSettingsMemo] = useState(INIT_FILTERS)
   const [settings, setSettings] = useState(INIT_FILTERS)
@@ -127,7 +127,7 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
   )
 }
 
-export default SearchFilterV2
+export default SearchFilter
 
 function _calcBadgeCount(settingsMemo) {
   let i = 0
