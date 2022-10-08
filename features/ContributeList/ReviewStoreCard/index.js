@@ -1,18 +1,8 @@
-import { Avatar, Chip, Divider } from "@mui/material"
+import { Avatar, Divider } from "@mui/material"
 import React from "react"
-import VolumeUpIcon from "@mui/icons-material/VolumeUp"
-import AccessAlarmIcon from "@mui/icons-material/AccessAlarm"
-import ElectricalServicesIcon from "@mui/icons-material/ElectricalServices"
-import { ReviewWords } from "constant/i18n"
 import useTimeAgo from "hooks/useTimeAgo"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
-import {
-  Container,
-  InfoBox,
-  ScoreDateBox,
-  TagsContainer,
-  MoreContainer,
-} from "./styled"
+import { Container, InfoBox, ScoreDateBox, MoreContainer } from "./styled"
 import FaceIconGroup from "components/FaceIconGroup"
 import useStoreStore from "hooks/useStoreStore"
 
@@ -22,30 +12,7 @@ const FACE_MAP = {
   no: "bad",
 }
 
-const ICON_MAP = {
-  roomVolume: <VolumeUpIcon />,
-  timeLimit: <AccessAlarmIcon />,
-  socketSupply: <ElectricalServicesIcon />,
-}
-
-const IconChip = ({ type, value }) => {
-  if (!value) return null
-  const label = ReviewWords[type][value]
-
-  return (
-    <Chip icon={ICON_MAP[type]} label={label} variant="outlined" size="small" />
-  )
-}
-
-const ReviewStoreCard = ({
-  store,
-  recommend,
-  roomVolume,
-  timeLimit,
-  socketSupply,
-  description,
-  createdAt,
-}) => {
+const ReviewStoreCard = ({ store, recommend, description, createdAt }) => {
   const timeAgo = useTimeAgo()
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
@@ -82,11 +49,6 @@ const ReviewStoreCard = ({
           <FaceIconGroup mood={FACE_MAP[recommend]} />
           <span>{timeAgo(createdAt)}</span>
         </ScoreDateBox>
-        <TagsContainer>
-          <IconChip type="roomVolume" value={roomVolume} />
-          <IconChip type="timeLimit" value={timeLimit} />
-          <IconChip type="socketSupply" value={socketSupply} />
-        </TagsContainer>
         <p>{description}</p>
         <MoreContainer>
           <MoreVertIcon />
