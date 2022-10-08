@@ -56,7 +56,6 @@ const ReviewForm = ({
   placeId,
   open,
   name,
-  isHide = false,
   myReview = null,
   onClose = () => {},
   onSave = () => {},
@@ -68,7 +67,6 @@ const ReviewForm = ({
     socketSupply: null,
     description: ""
   })
-  const [alsoHide, setAlsoHide] = React.useState(true)
   const [showSnackbar, setShowSnackbar] = React.useState(null)
 
   const handleRecommendChange = (recommend) => {
@@ -83,9 +81,6 @@ const ReviewForm = ({
       data,
     })
     setShowSnackbar("評論成功")
-    if (showAlsoHide && alsoHide) {
-      await StoreApi.hideStore({ placeId })
-    }
     handleClose()
     onSave()
   }
@@ -98,9 +93,6 @@ const ReviewForm = ({
     })
     onClose()
   }
-  const handleSwitchChange = () => {
-    setAlsoHide(cur => !cur)
-  }
   useEffect(() => {
     setData({
       roomVolume: myReview?.roomVolume || null,
@@ -110,8 +102,6 @@ const ReviewForm = ({
     })
   }, [myReview])
 
-  const showAlsoHide = data.recommend === "no" && !isHide
-
   return (
     <>
       <Dialog open={!!open} onClose={handleClose} maxWidth='xl'>
@@ -119,18 +109,6 @@ const ReviewForm = ({
           <h3>{name}</h3>
           <Scroll>
             <RecommendBlock onChange={handleRecommendChange} recommend={data.recommend} />
-            {showAlsoHide && (
-              <FormControlLabel
-                control={
-                  <Switch
-                    defaultChecked
-                    checked={alsoHide}
-                    onChange={handleSwitchChange}
-                  />
-                }
-                label="同時隱藏"
-              />
-            )}
             <TextField
               name="description"
               multiline

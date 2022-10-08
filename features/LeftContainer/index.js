@@ -69,9 +69,9 @@ const LeftContainer = () => {
 
   return (
     <Container>
-      {!data && <TypeAnimation sequence={['', 800, '嗨～', 800, '嗨～今天想去哪喝咖啡呢？']}
+      {!data && <TypeAnimation sequence={['', 800, '嗨～', 800, '嗨～今天想去哪辦公呢？']}
         wrapper='div'
-        style={{ fontSize: '36px', textAlign: 'center', margin: '2rem' }}
+        style={{ fontSize: '36px', textAlign: 'center', marginTop: '2rem', marginBottom: '1rem' }}
         cursor={true}
         speed={50}
       />}

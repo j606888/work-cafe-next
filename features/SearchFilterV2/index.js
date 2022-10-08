@@ -45,7 +45,6 @@ const INIT_FILTERS = {
   timeLimit: "",
   socketSupply: "",
   wakeUp: false,
-  exploreMode: false,
 }
 
 const SearchFilterV2 = ({ onChange = () => {} }) => {
@@ -96,10 +95,6 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
     setSettings((cur) => ({ ...cur, wakeUp: e.target.checked }))
   }
 
-  const handleExploreModeChange = (e) => {
-    setSettings((cur) => ({ ...cur, exploreMode: e.target.checked }))
-  }
-
   return (
     <>
       <Badge badgeContent={badgeCount} color="primary">
@@ -129,15 +124,6 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
               }
               label="只顯示有評論的店家"
             />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={settings.exploreMode}
-                  onChange={handleExploreModeChange}
-                />
-              }
-              label="只顯示你尚未評論的店家(需登入)"
-            />
           </FormGroup>
         </DialogContent>
         <DialogActions>
@@ -163,7 +149,6 @@ function _calcBadgeCount(settingsMemo) {
     "timeLimit",
     "socketSupply",
     "wakeUp",
-    "exploreMode",
   ].forEach((key) => {
     if (settingsMemo[key] !== INIT_FILTERS[key]) {
       i++
@@ -202,9 +187,6 @@ function _filterCleanSettings(settings) {
   }
   if (!!settings.wakeUp) {
     result.wakeUp = settings.wakeUp
-  }
-  if (!!settings.exploreMode) {
-    result.exploreMode = settings.exploreMode
   }
 
   return result
