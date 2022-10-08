@@ -7,8 +7,9 @@ import MyLocation from 'features/MyLocation'
 import useInitMap from 'hooks/useInitMap'
 import useMapStore from 'hooks/useMapStore'
 import useStoreStore from 'hooks/useStoreStore'
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import ShowLabelCheckbox from './ShowLabelCheckbox'
 
 const Container = styled.div`
   position: fixed;
@@ -57,6 +58,7 @@ const MapV2 = () => {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const bouncePlaceId = useStoreStore((state) => state.bouncePlaceId)
+  const [showLabel, setShowLabel] = useState(true)
 
   function handleLoad(map) {
     setMap(map)
@@ -89,6 +91,10 @@ const MapV2 = () => {
     setLastLatLng(center)
   }
 
+  function handleToggle(checked) {
+    setShowLabel(checked)
+  }
+
   if (!isReady) return <Skeleton />
 
   return (
@@ -99,6 +105,7 @@ const MapV2 = () => {
       <SearchHereContainer>
         <SearchHere onClick={handleSearchHere} />
       </SearchHereContainer>
+      <ShowLabelCheckbox onChange={handleToggle} />
       <GoogleMap
         onLoad={handleLoad}
         onIdle={handleIdle}
@@ -120,7 +127,7 @@ const MapV2 = () => {
             <StoreMarker
               key={store.placeId}
               store={store}
-              showLabel={true}
+              showLabel={showLabel}
               isFocus={store.placeId === placeId}
               isBounce={store.placeId === bouncePlaceId}
               // showLabel={store.placeId === mouseOverStoreId || showLabel}

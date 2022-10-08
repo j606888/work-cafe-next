@@ -1,16 +1,20 @@
-import { Checkbox, FormControlLabel } from "@mui/material"
+import { Checkbox, FormControlLabel, Switch } from "@mui/material"
 import React, { useState } from "react"
 import styled from "styled-components"
 
 const Container = styled.div`
   position: absolute;
-  left: 41rem;
+  left: 1rem;
   top: 1rem;
-  padding: 0 0.7rem;
+  padding-left: 0.7rem;
   border-radius: 12px;
-  box-shadow: 0 0 4px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.3);
   background-color: #ffffff;
   z-index: 2;
+
+  span {
+    font-size: 12px;
+  }
 `
 
 const ShowLabelCheckbox = ({ onChange = () => {} }) => {
@@ -22,8 +26,8 @@ const ShowLabelCheckbox = ({ onChange = () => {} }) => {
   return (
     <Container>
       <FormControlLabel
-        control={<Checkbox checked={checked} onChange={handleChange} />}
-        label="顯示店名"
+        control={<Switch checked={checked} onChange={handleChange} />}
+        label={<span>顯示店名</span>}
       />
     </Container>
   )
