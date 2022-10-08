@@ -12,7 +12,7 @@ const ReviewOverLabel = () => {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
       <span>多人推薦的店家</span>
-      <Tooltip title="超過 6成以上推薦的店家" placement="right">
+      <Tooltip title="超過6成以上推薦的店家" placement="right">
         <HelpOutlineIcon />
       </Tooltip>
     </Box>
@@ -36,7 +36,7 @@ const AdvancedPicker = ({ wakeUp, reviewOver, onChange }) => {
           label="只顯示有評論的店家"
         />
         <FormControlLabel
-          control={<Switch checked={reviewOver} onChange={reviewOverChange} />}
+          control={<Switch checked={reviewOver} onChange={reviewOverChange} disabled />}
           label={<ReviewOverLabel />}
         />
       </FormGroup>
