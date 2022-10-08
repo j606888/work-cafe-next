@@ -1,73 +1,27 @@
-import {
-  Button,
-  Dialog,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  Switch,
-  TextField,
-} from "@mui/material"
+import { Button, Chip, Dialog, TextField } from "@mui/material"
 import React from "react"
 import RecommendBlock from "./RecommendBlock"
-import { Form, Scroll, Buttons } from "./styled"
+import { Form, Scroll, Buttons, ChipContainer } from "./styled"
 import ReviewApi from "api/review"
 import Snackbar from "components/Snackbar"
-import StoreApi from "api/stores"
 import { useEffect } from "react"
-
-const option = (value, label) => ({
-  value,
-  label,
-})
-
-const RADIO_GROUPS = [
-  {
-    name: "roomVolume",
-    label: "音量",
-    options: [
-      option("quiet", "幾乎無人說話"),
-      option("normal", "輕聲交談"),
-      option("loud", "正常交談"),
-    ],
-  },
-  {
-    name: "timeLimit",
-    label: "限時規定",
-    options: [
-      option("yes", "無限時"),
-      option("weekend", "週末限時"),
-      option("no", "有限時"),
-    ],
-  },
-  {
-    name: "socketSupply",
-    label: "插座供應",
-    options: [
-      option("yes", "大部分有插座"),
-      option("rare", "些許插座"),
-      option("no", "沒有插座"),
-    ],
-  },
-]
+import useSWR from "swr"
 
 const ReviewForm = ({
   placeId,
   open,
   name,
-  myReview = null,
+  // myReview = null,
   onClose = () => {},
   onSave = () => {},
 }) => {
   const [data, setData] = React.useState({
     recommend: "",
-    roomVolume: null,
-    timeLimit: null,
-    socketSupply: null,
-    description: ""
+    description: "",
+    tagIds: [],
   })
   const [showSnackbar, setShowSnackbar] = React.useState(null)
+  const { data: tags } = useSWR("/tags")
 
   const handleRecommendChange = (recommend) => {
     handleChange("recommend", recommend)
@@ -86,29 +40,41 @@ const ReviewForm = ({
   }
   const handleClose = () => {
     setData({
-      roomVolume: myReview?.roomVolume || null,
-      timeLimit: myReview?.timeLimit || null,
-      socketSupply: myReview?.socketSupply || null,
-      description: myReview?.description || "",
+      recommend: "",
+      description: "",
+      tagIds: [],
     })
     onClose()
   }
-  useEffect(() => {
-    setData({
-      roomVolume: myReview?.roomVolume || null,
-      timeLimit: myReview?.timeLimit || null,
-      socketSupply: myReview?.socketSupply || null,
-      description: myReview?.description || "",
+  // useEffect(() => {
+  //   if (myReview) {
+  //     setData({
+  //       description: myReview?.description || "",
+  //     })
+  //   }
+  // }, [myReview])
+
+  const handleClick = (tagId) => {
+    setData((cur) => {
+      if (cur.tagIds.includes(tagId)) {
+        const tagIds = cur.tagIds.filter((id) => id !== tagId)
+        return { ...cur, tagIds }
+      } else {
+        return { ...cur, tagIds: [...cur.tagIds, tagId] }
+      }
     })
-  }, [myReview])
+  }
 
   return (
     <>
-      <Dialog open={!!open} onClose={handleClose} maxWidth='xl'>
+      <Dialog open={!!open} onClose={handleClose} maxWidth="xl">
         <Form>
           <h3>{name}</h3>
           <Scroll>
-            <RecommendBlock onChange={handleRecommendChange} recommend={data.recommend} />
+            <RecommendBlock
+              onChange={handleRecommendChange}
+              recommend={data.recommend}
+            />
             <TextField
               name="description"
               multiline
@@ -118,27 +84,34 @@ const ReviewForm = ({
               placeholder="說明你在這間店的體驗"
               onChange={(e) => handleChange("description", e.target.value)}
             />
-            {RADIO_GROUPS.map(({ name, label, options }) => (
-              <FormControl key={name}>
-                <FormLabel>{label}</FormLabel>
-                <RadioGroup
-                  row
-                  name={name}
-                  value={data[name]}
-                  onChange={(event) => handleChange(name, event.target.value)}
-                >
-                  {options.map(({ value, label }) => (
-                    <FormControlLabel
-                      key={value}
-                      value={value}
-                      control={<Radio />}
-                      label={label}
-                      sx={{ width: '32%'}}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-            ))}
+            <p>主標籤選擇</p>
+            <ChipContainer>
+              {tags
+                ?.filter((tag) => tag.primary)
+                ?.map((tag) => (
+                  <Chip
+                    key={tag.id}
+                    label={tag.name}
+                    onClick={() => handleClick(tag.id)}
+                    color="primary"
+                    variant={_variant(data.tagIds, tag.id)}
+                  />
+                ))}
+            </ChipContainer>
+            <p>副標籤選擇</p>
+            <ChipContainer>
+              {tags
+                ?.filter((tag) => !tag.primary)
+                ?.map((tag) => (
+                  <Chip
+                    key={tag.id}
+                    label={tag.name}
+                    onClick={() => handleClick(tag.id)}
+                    color="primary"
+                    variant={_variant(data.tagIds, tag.id)}
+                  />
+                ))}
+            </ChipContainer>
           </Scroll>
           <Buttons>
             <Button variant="outlined" onClick={handleClose}>
@@ -162,6 +135,10 @@ const ReviewForm = ({
       )}
     </>
   )
+}
+
+function _variant(tagIds, id) {
+  return tagIds.includes(id) ? "contained" : "outlined"
 }
 
 export default ReviewForm

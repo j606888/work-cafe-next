@@ -1,28 +1,23 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
-export const Container = styled.div`
-
-`
+export const Container = styled.div``
 
 export const RadioContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   svg {
     font-size: 64px;
   }
 
-  ${({ isChecked, color }) =>
-    isChecked &&
-    css`
-      span {
-        color: ${color};
-      }
-
-      svg {
-        color: ${color};
-      }
-    `}
+  span,
+  svg {
+    color: ${({ isChecked, color }) => (isChecked ? color : "#aaa")};
+  }
 `
 
 export const RadioGroup = styled.div`
   display: flex;
   justify-content: flex-start;
+  gap: 2rem;
 `

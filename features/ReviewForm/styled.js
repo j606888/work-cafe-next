@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const Form = styled.form`
   background-color: #fff;
@@ -23,5 +23,10 @@ export const Buttons = styled.div`
   padding: 1rem 2rem;
   display: flex;
   justify-content: flex-end;
+  gap: 1rem;
+`
+export const ChipContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 `

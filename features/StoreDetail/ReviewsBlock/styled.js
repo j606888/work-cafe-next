@@ -11,10 +11,8 @@ export const FaceBlock = styled.div`
 
   & > div {
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
     gap: 0.5rem;
-    cursor: pointer;
 
     svg {
       font-size: 48px;
@@ -38,9 +36,8 @@ export const DetailContainer = styled.div`
 `
 
 export const Details = styled.div`
-  margin-top: 1rem;
   display: flex;
-  flex-direction: column;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
 `

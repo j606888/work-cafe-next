@@ -86,7 +86,6 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
     setTimeout(() => {
       setShowOptions(false)
       setFocusedIndex(-1)
-
     }, [100])
   }
 
@@ -119,9 +118,7 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   }, [focusedIndex])
 
   return (
-    <Container
-      onBlur={handleBlue}
-    >
+    <Container onBlur={handleBlue}>
       <SearchBox hasResult={hasResult}>
         <Input
           value={keyword}
@@ -134,12 +131,9 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
           onCompositionEnd={handleComposition}
         />
         {keyword && (
-          <>
-          <Divider orientation="vertical" />
-        <Tooltip title="清除" onClick={handleClear}>
-          <ClearIcon style={pointer} />
-        </Tooltip>
-</>
+          <Tooltip title="清除" onClick={handleClear}>
+            <ClearIcon style={pointer} />
+          </Tooltip>
         )}
         <Tooltip title="搜尋" onClick={handleSearch}>
           <SearchIcon style={pointer} />
