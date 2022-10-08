@@ -33,7 +33,7 @@ const AccountMenu = () => {
 
   if (!user) return (
     <Container>
-      <Button variant='contained' onClick={handleLogin}>登入</Button>
+      <Button variant='contained' size="small" onClick={handleLogin}>登入</Button>
     </Container>
   )
 

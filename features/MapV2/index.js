@@ -14,7 +14,7 @@ import ShowLabelCheckbox from './ShowLabelCheckbox'
 const Container = styled.div`
   position: fixed;
   left: 50%;
-  top: 64px;
+  top: 88px;
   width: 50%;
   height: calc(100vh - 64px);
 

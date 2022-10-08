@@ -5,13 +5,18 @@ import styled from 'styled-components'
 const Container = styled.div`
   width: 80%;
   max-width: 560px;
-  margin: 6rem auto;
+  margin: 2rem auto;
   text-align: left;
   font-family: 'Roboto', sans-serif;
+
+  h3 {
+    font-size: 20px;
+  }
 
   p {
     line-height: 150%;
     font-weight: 400;
+    margin: 0;
   }
 
   span {
@@ -22,17 +27,20 @@ const Container = styled.div`
 const ImageContainer = styled.div`
   text-align: center;
   margin: 3rem;
+
+  img {
+    width: 200px;
+  }
 `
 
 const WelcomeMessage = () => {
   return (
     <Container>
-      <h3>Work Cafe 如何篩選「適合工作」的咖啡店？</h3>
-      <p>在Work Cafe註冊登入後，所有人都能為去過的咖啡店評分。我們優先推薦<b>至少5位用戶評過分，且超過6成評分者標註為「適合工作」</b>的咖啡店。</p>
+      <h3>不只是咖啡廳，還要適合辦公的咖啡廳！</h3>
+      <p>透過串連 Google Map，以及我們自定義的篩選。讓你更快速的找到理想的店家。</p>
       <ImageContainer>
         <img src="human2.png" alt="human2" />
       </ImageContainer>
-      <Alert severity='info'>這是一個剛起步的網站，如果大家能夠幫忙建立評論就太感謝了。如果有看到什麼問題或是想建議的都歡迎填寫以下表單 - <a href="https://forms.gle/YHYz3bGUimFtuTyZ9" target="_blank" rel="noreferrer">https://forms.gle/YHYz3bGUimFtuTyZ9</a></Alert>
     </Container>
   )
 }
