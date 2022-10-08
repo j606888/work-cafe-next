@@ -210,7 +210,6 @@ const StoreDetail = ({
         name={store.name}
         onClose={() => setOpenReview(false)}
         onSave={refreshReview}
-        isHide={store.isHide}
         myReview={myReview}
       />
       <NotCafeReport
