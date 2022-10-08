@@ -16,7 +16,7 @@ const Container = styled.div`
   left: 50%;
   top: 88px;
   width: 50%;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 88px);
 
   .labels {
     background-color: white;
@@ -36,15 +36,15 @@ const Container = styled.div`
 
 const MyLocationContainer = styled.div`
   position: absolute;
-  top: 2rem;
-  right: 2rem;
-  z-index: 5;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
 `
 
 const SearchHereContainer = styled.div`
   position: absolute;
   left: 50%;
-  top: 2rem;
+  top: 1rem;
   transform: translateX(-50%);
   z-index: 2;
 `

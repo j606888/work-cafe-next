@@ -13,10 +13,7 @@ import {
   UploadPhotoContainer,
   ChipContainer,
 } from "./styled"
-import storeApi from "api/stores"
-import SortIcon from "@mui/icons-material/Sort"
 import CommentIcon from '@mui/icons-material/Comment';
-import GoogleReviewCard from "./GoogleReviewCard"
 import "react-slideshow-image/dist/styles.css"
 import ImageSlide from "./ImageSlide"
 import Bookmarks from "./Bookmarks"
@@ -67,16 +64,6 @@ const StoreDetail = ({
   const handleBookmarkSubmit = () => {
     mutateBookmarks()
   }
-  const handleHide = async () => {
-    authCheck()
-    await storeApi.hideStore({ placeId })
-    refreshStore()
-  }
-  const handleUnHide = async () => {
-    authCheck()
-    await storeApi.unhideStore({ placeId })
-    refreshStore()
-  }
   const handleClose = () => {
     setPlaceId(null)
   }
@@ -104,7 +91,6 @@ const StoreDetail = ({
     <>
       <Container>
         <StickyHeader
-        // showCardHead={showCardHead}
         >
           <span>{store.name}</span>
           <CloseButton onClick={handleClose}>
@@ -129,17 +115,6 @@ const StoreDetail = ({
             primary={isSaved}
             onClick={handleBookmarkClick}
           />
-          {store.isHide ? (
-            <ActionButton
-              type="hide"
-              text="隱藏中"
-              color="#90A4AE"
-              primary
-              onClick={handleUnHide}
-            />
-          ) : (
-            <ActionButton type="show" text="顯示中" onClick={handleHide} />
-          )}
           <ActionButton
             type="navigate"
             text="導航"
