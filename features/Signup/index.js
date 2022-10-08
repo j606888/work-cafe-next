@@ -1,7 +1,5 @@
 import React, { useState } from "react"
-import { Button, IconButton, Paper, TextField } from "@mui/material"
-import Link from "next/link"
-import { useRouter } from "next/router"
+import { Button, Dialog, IconButton, Paper, TextField } from "@mui/material"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import Visibility from "@mui/icons-material/Visibility"
@@ -26,7 +24,7 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
           ),
         }
       : {}
-  const fieldType = (type === 'text' || showPassword) ? 'text' : 'password'
+  const fieldType = type === "text" || showPassword ? "text" : "password"
 
   return (
     <TextField
@@ -44,8 +42,7 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
   )
 }
 
-const Signup = () => {
-  const router = useRouter()
+const Signup = ({ open, onClose, onChangeMode }) => {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -63,32 +60,38 @@ const Signup = () => {
       const { accessToken, refreshToken } = await signup(values)
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
-      router.push("/")
+      onClose()
     },
   })
 
   return (
-    <Container>
-      <Paper elevation={3}>
-        <Form onSubmit={formik.handleSubmit}>
-          <div className="headline">
-            <h2>註冊</h2>
-            <p>繼續使用 Work Cafe</p>
-          </div>
-          <div className="account">
-            <FormikTextField label="name" formik={formik} />
-            <FormikTextField label="email" formik={formik} />
-            <FormikTextField label="password" formik={formik} type="password" />
-            <Button variant="contained" type="submit" size="large">
-              註冊
-            </Button>
-          </div>
-          <p className="no-account">
-            已經有帳號了嗎？<Link href="/login">登入</Link>
-          </p>
-        </Form>
-      </Paper>
-    </Container>
+    <Dialog open={open} onClose={onClose}>
+      <Container>
+        <Paper elevation={3}>
+          <Form onSubmit={formik.handleSubmit}>
+            <div className="headline">
+              <h2>註冊</h2>
+              <p>繼續使用 Work Cafe</p>
+            </div>
+            <div className="account">
+              <FormikTextField label="name" formik={formik} />
+              <FormikTextField label="email" formik={formik} />
+              <FormikTextField
+                label="password"
+                formik={formik}
+                type="password"
+              />
+              <Button variant="contained" type="submit" size="large">
+                註冊
+              </Button>
+            </div>
+            <p className="no-account">
+              已經有帳號了嗎？<Button onClick={onChangeMode}>登入</Button>
+            </p>
+          </Form>
+        </Paper>
+      </Container>
+    </Dialog>
   )
 }
 
