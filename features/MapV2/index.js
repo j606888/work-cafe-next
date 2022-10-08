@@ -36,8 +36,8 @@ const Container = styled.div`
 
 const MyLocationContainer = styled.div`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  bottom: 7rem;
+  right: 0.7rem;
   z-index: 2;
 `
 

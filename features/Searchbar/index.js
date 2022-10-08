@@ -7,7 +7,7 @@ import {
   Store as StoreIcon,
   Clear as ClearIcon,
 } from "@mui/icons-material"
-import { Tooltip } from "@mui/material"
+import { Divider, Tooltip } from "@mui/material"
 import useSWR from "swr"
 import { fetcher } from "api"
 import { Container, SearchBox, Input, Options, Option } from "./styled"
@@ -133,11 +133,16 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
           onCompositionUpdate={handleComposition}
           onCompositionEnd={handleComposition}
         />
-        <Tooltip title="搜尋" onClick={handleSearch}>
-          <SearchIcon style={pointer} />
-        </Tooltip>
+        {keyword && (
+          <>
+          <Divider orientation="vertical" />
         <Tooltip title="清除" onClick={handleClear}>
           <ClearIcon style={pointer} />
+        </Tooltip>
+</>
+        )}
+        <Tooltip title="搜尋" onClick={handleSearch}>
+          <SearchIcon style={pointer} />
         </Tooltip>
       </SearchBox>
       <Options hasResult={hasResult}>
