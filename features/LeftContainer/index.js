@@ -12,6 +12,7 @@ import { useState } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
 import { TypeAnimation } from 'react-type-animation'
+import NoMatch from "./NoMatch"
 
 const Container = styled.div`
   width: 50%;
@@ -50,7 +51,12 @@ const LeftContainer = () => {
   }, [data, setStores])
 
   function handleSearch(newKeyword) {
-    setLastLatLng(center)
+    if (newKeyword === "") {
+      setLastLatLng({})
+    } else {
+      setLastLatLng(center)
+    }
+
     setKeyword(newKeyword)
   }
   function handleClickStore(placeId) {
@@ -63,7 +69,7 @@ const LeftContainer = () => {
 
   return (
     <Container>
-      {!data && <TypeAnimation sequence={['', 800, '嗨～', 1000, '嗨～今天想去哪喝咖啡呢？']}
+      {!data && <TypeAnimation sequence={['', 800, '嗨～', 800, '嗨～今天想去哪喝咖啡呢？']}
         wrapper='div'
         style={{ fontSize: '36px', textAlign: 'center', margin: '2rem' }}
         cursor={true}
@@ -75,6 +81,7 @@ const LeftContainer = () => {
       </SearchContainer>
       <Divider sx={{ marginY: 3}}/>
       {!data && <WelcomeMessage />}
+      {data && data.length === 0 && <NoMatch />}
       <StoreList stores={data || []} onClick={handleClickStore} />
       <StoreDetailV2
         placeId={placeId}
