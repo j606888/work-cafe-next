@@ -81,7 +81,7 @@ const SecondaryInfo = ({
       {phone && (
         <div>
           <LocalPhoneIcon />
-          <span>{phone}</span>
+          <a href={`tel:${phone}`}>{phone}</a>
         </div>
       )}
     </Container>
