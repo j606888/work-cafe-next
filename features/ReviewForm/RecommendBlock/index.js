@@ -4,6 +4,8 @@ import {
   SentimentDissatisfiedOutlined as BadFace,
   SentimentSatisfiedOutlined as HappyFace,
 } from "@mui/icons-material"
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import { FormControl, FormLabel, Radio } from "@mui/material"
 import { Container, RadioContainer, RadioGroup } from "./styled"
 
@@ -35,29 +37,23 @@ const FaceRadio = ({
 
 const OPTIONS = [
   {
-    icon: <BadFace />,
+    icon: <ThumbDownIcon />,
     value: "no",
-    label: "不適合",
-    color: "#EF9A9A",
+    label: "不推薦",
+    color: "#EC4135",
   },
   {
-    icon: <NormalFace />,
-    value: "normal",
-    label: "普通",
-    color: "#FFD54F",
-  },
-  {
-    icon: <HappyFace />,
+    icon: <ThumbUpIcon />,
     value: "yes",
-    label: "適合",
-    color: "#A5D6A7",
-  },
+    label: "推薦",
+    color: "#54ADDB",
+  }
 ]
 
 const RecommendBlock = ({ onChange = () => {}, recommend }) => {
   return (
     <FormControl>
-      <FormLabel>適合安靜做事</FormLabel>
+      <FormLabel>你推薦給想辦公的人來嗎？</FormLabel>
       <RadioGroup>
         {OPTIONS.map(({ value, icon, label, color }) => (
           <FaceRadio
