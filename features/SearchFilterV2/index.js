@@ -10,16 +10,14 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  FormControlLabel,
-  FormGroup,
-  Switch,
 } from "@mui/material"
 import { useState } from "react"
-import OpenTimePicker from "components/OpenTimePicker"
+import OpenTimePicker from "features/SearchFilterV2/OpenTimePicker"
 import { useMemo } from "react"
-import RecommendBlock from "features/ReviewForm/RecommendBlock"
-import ReviewFilters from "./ReviewFilters"
 import _ from "lodash"
+import useSWR from "swr"
+import TagsPicker from "./TagsPicker"
+import AdvancedPicker from "./AdvancedPicker"
 
 const Container = styled.div`
   display: flex;
@@ -41,16 +39,16 @@ const INIT_FILTERS = {
   openWeek: 0,
   openHour: 99,
   recommend: null,
-  roomVolume: "",
-  timeLimit: "",
-  socketSupply: "",
   wakeUp: false,
+  reviewOver: false,
+  tagIds: [],
 }
 
 const SearchFilterV2 = ({ onChange = () => {} }) => {
   const [open, setOpen] = useState(false)
   const [settingsMemo, setSettingsMemo] = useState(INIT_FILTERS)
   const [settings, setSettings] = useState(INIT_FILTERS)
+  const { data: tags } = useSWR("/tags")
   const badgeCount = useMemo(
     () => _calcBadgeCount(settingsMemo),
     [settingsMemo]
@@ -75,24 +73,19 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
     setSettings((cur) => ({ ...cur, openType, openWeek, openHour }))
   }
 
-  const handleRecommendChange = (recommend) => {
-    if (settings.recommend === recommend) {
-      setSettings((cur) => ({ ...cur, recommend: null }))
-    } else {
-      setSettings((cur) => ({ ...cur, recommend }))
-    }
+  const handleClick = (tagId) => {
+    setSettings((cur) => {
+      if (cur.tagIds.includes(tagId)) {
+        const tagIds = cur.tagIds.filter((id) => id !== tagId)
+        return { ...cur, tagIds }
+      } else {
+        return { ...cur, tagIds: [...cur.tagIds, tagId] }
+      }
+    })
   }
 
-  const handleReviewFilterChange = (key, value) => {
-    if (settings[key] === value) {
-      setSettings((cur) => ({ ...cur, [key]: "" }))
-    } else {
-      setSettings((cur) => ({ ...cur, [key]: value }))
-    }
-  }
-
-  const handleWakeUpChange = (e) => {
-    setSettings((cur) => ({ ...cur, wakeUp: e.target.checked }))
+  const handleAdvanceChange = (label, checked) => {
+    setSettings((cur) => ({ ...cur, [label]: checked }))
   }
 
   return (
@@ -107,24 +100,19 @@ const SearchFilterV2 = ({ onChange = () => {} }) => {
         <DialogTitle>篩選</DialogTitle>
         <DialogContent>
           <OpenTimePicker {...settings} onChange={handleOpenTimeChange} />
-          <RecommendBlock
-            onChange={handleRecommendChange}
-            recommend={settings.recommend}
-          />
-          <ReviewFilters {...settings} onChange={handleReviewFilterChange} />
           <Divider />
-          <p>進階</p>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={settings.wakeUp}
-                  onChange={handleWakeUpChange}
-                />
-              }
-              label="只顯示有評論的店家"
-            />
-          </FormGroup>
+          <TagsPicker
+            tags={tags}
+            primary
+            selectedTagIds={settings.tagIds}
+            onClick={handleClick}
+          />
+          <Divider />
+          <AdvancedPicker
+            wakeUp={settings.wakeUp}
+            reviewOver={settings.reviewOver}
+            onChange={handleAdvanceChange}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleReset}>重回預設</Button>
@@ -143,21 +131,13 @@ export default SearchFilterV2
 
 function _calcBadgeCount(settingsMemo) {
   let i = 0
-  ;[
-    "recommend",
-    "roomVolume",
-    "timeLimit",
-    "socketSupply",
-    "wakeUp",
-  ].forEach((key) => {
+  ;["recommend", "wakeUp", "reviewOver"].forEach((key) => {
     if (settingsMemo[key] !== INIT_FILTERS[key]) {
       i++
     }
   })
-
-  if (settingsMemo.openType !== "NONE") {
-    i++
-  }
+  if (settingsMemo.openType !== "NONE") i++
+  i += settingsMemo.tagIds.length
 
   return i
 }
@@ -172,22 +152,11 @@ function _filterCleanSettings(settings) {
       result.openHour = settings.openHour
     }
   }
-  if (settings.recommend) {
-    result.recommend = settings.recommend
-  }
 
-  if (settings.roomVolume !== "") {
-    result.roomVolume = settings.roomVolume
-  }
-  if (settings.timeLimit !== "") {
-    result.timeLimit = settings.timeLimit
-  }
-  if (settings.socketSupply !== "") {
-    result.socketSupply = settings.socketSupply
-  }
-  if (!!settings.wakeUp) {
-    result.wakeUp = settings.wakeUp
-  }
+  if (settings.recommend) result.recommend = settings.recommend
+  if (!!settings.wakeUp) result.wakeUp = settings.wakeUp
+  if (!!settings.reviewOver) result.reviewOver = settings.reviewOver
+  if (settings.tagIds.length !== 0) result.tagIds = settings.tagIds
 
   return result
 }
