@@ -89,13 +89,14 @@ const LeftContainer = () => {
         <SearchFilter onChange={handleFilterChange} />
       </SearchContainer>
       <Divider sx={{ marginY: 3 }} />
-      {!data && <WelcomeMessage />}
+      {!data && !placeId && <WelcomeMessage />}
       {data && data.length === 0 && <NoMatch />}
       {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
       {placeId && (
         <StoreDetail
           placeId={placeId}
           key={placeId}
+          canBack={!!data && data.length !== 0}
           onClose={() => {
             setPlaceId(null)
           }}

@@ -105,7 +105,7 @@ const MapV2 = () => {
 
   function handleSearchHere() {
     setLastLatLng(center)
-    setPlaceId(placeId)
+    setPlaceId(null)
   }
 
   function handleToggle(checked) {

@@ -25,16 +25,15 @@ import StorePhotoUpload from "./StorePhotoUpload"
 import Chip from "components/Chip"
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined"
 import ReviewApi from "api/review"
-import useStoreStore from "hooks/useStoreStore"
 import { useState, useEffect } from "react"
 import NotCafeReport from "./NotCafeReport"
 import Skeleton from "components/Skeleton"
 
 const StoreDetail = ({
   placeId,
-  onClose
+  onClose,
+  canBack = false,
 }) => {
-  const stores = useStoreStore(state => state.stores)
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
@@ -92,7 +91,7 @@ const StoreDetail = ({
   return (
     <>
       <Container>
-        {stores && (<Button onClick={handleClose}>返回清單</Button>)}
+        {canBack && (<Button onClick={handleClose}>返回清單</Button>)}
         <ImageSlide photos={store.photos} />
         <MainInfo>
           <h3>{store.name}</h3>
