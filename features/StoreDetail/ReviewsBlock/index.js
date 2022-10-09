@@ -19,7 +19,7 @@ const ReviewsBlock = ({ reviewReport }) => {
           <span>{recommend.no}</span>
         </div>
         <div>
-          <ThumbUp sx={{ color: "#A5D6A7" }} />
+          <ThumbUp sx={{ color: "#54ADDB" }} />
           <span>{recommend.yes}</span>
         </div>
       </FaceBlock>

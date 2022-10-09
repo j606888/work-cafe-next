@@ -3,12 +3,12 @@ import create from 'zustand'
 const useMapStore = create((set) => ({
   mode: 'MAP',
   center: {},
-  lastLatLng: {},
+  lastLatLng: null,
   moveMap: false,
   setMode: (mode) => set({ mode }),
   setMoveMap: (moveMap) => set({ moveMap }),
   setCenter: ({ lat, lng }) => set({ center: { lat, lng }}),
-  setLastLatLng: ({ lat, lng }) => set({ lastLatLng: { lat, lng }})
+  setLastLatLng: (latLng) => set({ lastLatLng: latLng})
 }))
 
 export default useMapStore

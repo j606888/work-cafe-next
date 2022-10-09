@@ -52,7 +52,7 @@ const LeftContainer = () => {
 
   function handleSearch(newKeyword) {
     if (newKeyword === "") {
-      setLastLatLng({})
+      setLastLatLng(null)
     } else {
       setLastLatLng(center)
     }
