@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { devices } from 'constant/styled-theme'
 
 const Container = styled.div`
   width: 80%;
@@ -22,6 +23,10 @@ const Container = styled.div`
 
   span {
     font-size: 12px;
+  }
+
+  @media ${devices.iphoneSE} {
+    display: none;
   }
 `
 

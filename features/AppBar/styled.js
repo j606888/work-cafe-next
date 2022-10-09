@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { devices } from 'constant/styled-theme'
 
 export const Container = styled.div`
   position: sticky;
@@ -33,6 +34,11 @@ export const HelpUs = styled.div`
       color: #555;
     }
   }
+
+  @media ${devices.iphoneSE} {
+    height: 36px;
+    font-size: 12px;
+  }
 `
 
 export const Content = styled.div`
@@ -55,6 +61,27 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
     gap: 2rem;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  @media ${devices.iphoneSE} {
+    height: 64px;
+    padding: 0 24px;
+
+    h2 {
+      font-size: 16px;
+    }
+
+    .menu {
+      display: none;
+    }
+
+    .hamburger {
+      display: block;
+    }
   }
 `
 
@@ -81,5 +108,9 @@ export const HelpButton = styled.button`
 
   &:hover {
     color: #555;
+  }
+
+  @media ${devices.iphoneSE} {
+    font-size: 12px;
   }
 `

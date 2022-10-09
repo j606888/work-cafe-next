@@ -3,18 +3,27 @@ import { SWRConfig } from "swr"
 import { fetcher } from "api"
 import { ThemeProvider } from "styled-components"
 import styledTheme from "constant/styled-theme"
+import Head from "next/head"
 
 function MyApp({ Component, pageProps }) {
   return (
-    <SWRConfig
-      value={{
-        fetcher,
-      }}
-    >
-      <ThemeProvider theme={styledTheme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </SWRConfig>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=0"
+        />
+      </Head>
+      <SWRConfig
+        value={{
+          fetcher,
+        }}
+      >
+        <ThemeProvider theme={styledTheme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </SWRConfig>
+    </>
   )
 }
 
