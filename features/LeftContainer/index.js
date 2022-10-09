@@ -26,6 +26,7 @@ const Container = styled.div`
 
   @media ${devices.iphoneSE} {
     width: 100%;
+    z-index: 5;
   }
 `
 
