@@ -1,7 +1,7 @@
 import { Divider } from "@mui/material"
 import Searchbar from "features/Searchbar"
 import SearchFilter from "features/SearchFilter"
-import StoreDetailV2 from "features/StoreDetailV2"
+import StoreDetail from "features/StoreDetail"
 import StoreList from "features/StoreList"
 import WelcomeMessage from "features/WelcomeMessage"
 import useMapStore from "hooks/useMapStore"
@@ -11,7 +11,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
-import { TypeAnimation } from 'react-type-animation'
+import { TypeAnimation } from "react-type-animation"
 import NoMatch from "./NoMatch"
 
 const Container = styled.div`
@@ -42,7 +42,7 @@ const LeftContainer = () => {
 
   const { data } = useSWR(
     keyword || lastLatLng
-      ? ["stores/location", { keyword, ...lastLatLng, ...settings }]
+      ? ["stores/location", { keyword, ...lastLatLng, ...settings, limit: 30 }]
       : null
   )
 
@@ -69,21 +69,29 @@ const LeftContainer = () => {
 
   return (
     <Container>
-      {!data && <TypeAnimation sequence={['', 800, '嗨～', 800, '嗨～今天想去哪辦公呢？']}
-        wrapper='div'
-        style={{ fontSize: '36px', textAlign: 'center', marginTop: '2rem', marginBottom: '1rem' }}
-        cursor={true}
-        speed={50}
-      />}
+      {!data && (
+        <TypeAnimation
+          sequence={["", 800, "嗨～", 800, "嗨～今天想去哪辦公呢？"]}
+          wrapper="div"
+          style={{
+            fontSize: "36px",
+            textAlign: "center",
+            marginTop: "2rem",
+            marginBottom: "1rem",
+          }}
+          cursor={true}
+          speed={50}
+        />
+      )}
       <SearchContainer>
         <Searchbar onSearch={handleSearch} />
         <SearchFilter onChange={handleFilterChange} />
       </SearchContainer>
-      <Divider sx={{ marginY: 3}}/>
+      <Divider sx={{ marginY: 3 }} />
       {!data && <WelcomeMessage />}
       {data && data.length === 0 && <NoMatch />}
-      <StoreList stores={data || []} onClick={handleClickStore} />
-      <StoreDetailV2
+      {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
+      <StoreDetail
         placeId={placeId}
         key={placeId}
         onClose={() => {

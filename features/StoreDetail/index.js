@@ -1,15 +1,12 @@
 import React from "react"
-import CloseIcon from "@mui/icons-material/Close"
 import RatingStars from "components/RatingStars"
-import { Divider } from "@mui/material"
+import { Button, Divider } from "@mui/material"
 import ActionButton from "./ActionButton"
 import {
   Container,
-  CloseButton,
   MainInfo,
   ButtonGroup,
   GoogleReviews,
-  StickyHeader,
   UploadPhotoContainer,
   ChipContainer,
 } from "./styled"
@@ -29,14 +26,15 @@ import Chip from "components/Chip"
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined"
 import ReviewApi from "api/review"
 import useStoreStore from "hooks/useStoreStore"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import NotCafeReport from "./NotCafeReport"
 import Skeleton from "components/Skeleton"
 
 const StoreDetail = ({
   placeId,
+  onClose
 }) => {
-  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const stores = useStoreStore(state => state.stores)
   const authCheck = useAuthCheck()
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
@@ -65,7 +63,7 @@ const StoreDetail = ({
     mutateBookmarks()
   }
   const handleClose = () => {
-    setPlaceId(null)
+    onClose()
   }
   const refreshReview = () => {
     mutateStore()
@@ -84,19 +82,17 @@ const StoreDetail = ({
     refreshStore()
     myReviewMutate()
   }
+
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
   const isSaved = bookmarks?.some((bookmark) => bookmark.isSaved)
   if (!store) return <Skeleton />
 
   return (
     <>
       <Container>
-        <StickyHeader
-        >
-          <span>{store.name}</span>
-          <CloseButton onClick={handleClose}>
-            <CloseIcon />
-          </CloseButton>
-        </StickyHeader>
+        {stores && (<Button onClick={handleClose}>返回清單</Button>)}
         <ImageSlide photos={store.photos} />
         <MainInfo>
           <h3>{store.name}</h3>

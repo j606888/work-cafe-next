@@ -2,27 +2,7 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
-  width: 360px;
   position: relative;
-`
-
-export const CloseButton = styled.div`
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: #fff;
-  position: absolute;
-  right: 12px;
-  top: 12px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #eee;
-  }
 `
 
 export const UploadPhotoContainer = styled.div`
@@ -99,33 +79,6 @@ const showStyle = css`
 
   span {
     display: block;
-  }
-`
-const hideStyle = css`
-  background: none;
-
-  span {
-    display: none;
-  }
-`
-
-export const StickyHeader = styled.div`
-  ${({showCardHead}) => showCardHead ? showStyle : hideStyle}
-  
-
-  position: fixed;
-  height: 64px;
-  width: 360px;
-  z-index: 100;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  span {
-    font-weight: 500;
   }
 `
 
