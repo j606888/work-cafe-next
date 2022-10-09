@@ -1,15 +1,17 @@
-import { Marker } from '@react-google-maps/api'
-import SearchHere from 'components/Button/SearchHere'
-import Skeleton from 'components/Skeleton'
-import GoogleMap from 'features/GoogleMap'
-import StoreMarker from 'features/GoogleMap/StoreMarker'
-import MyLocation from 'features/MyLocation'
-import useInitMap from 'hooks/useInitMap'
-import useMapStore from 'hooks/useMapStore'
-import useStoreStore from 'hooks/useStoreStore'
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import ShowLabelCheckbox from './ShowLabelCheckbox'
+import { Marker } from "@react-google-maps/api"
+import SearchHere from "components/Button/SearchHere"
+import Skeleton from "components/Skeleton"
+import GoogleMap from "features/GoogleMap"
+import StoreMarker from "features/GoogleMap/StoreMarker"
+import MyLocation from "features/MyLocation"
+import useInitMap from "hooks/useInitMap"
+import useMapStore from "hooks/useMapStore"
+import useStoreStore from "hooks/useStoreStore"
+import Router from "next/router"
+import React, { useEffect, useState } from "react"
+import styled from "styled-components"
+import useSWR from "swr"
+import ShowLabelCheckbox from "./ShowLabelCheckbox"
 
 const Container = styled.div`
   position: fixed;
@@ -60,20 +62,34 @@ const MapV2 = () => {
   const bouncePlaceId = useStoreStore((state) => state.bouncePlaceId)
   const [showLabel, setShowLabel] = useState(true)
 
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
+
   function handleLoad(map) {
     setMap(map)
   }
 
-  function handleIdle () {
+  useEffect(() => {
     if (!map) return
 
     const zoom = map.zoom
     const { lat, lng } = map.center.toJSON()
     setCenter({ lat, lng })
 
-    // const mapPath = _mapPath(lat, lng, zoom, placeId)
-    // _navigateTo(`/${mapPath}`)
-    // _setLocalStorage("lastLocation", mapPath)
+    const mapPath = _mapPath(lat, lng, zoom, placeId)
+    _navigateTo(`/${mapPath}`)
+    _setLocalStorage("lastLocation", mapPath)
+  }, [placeId])
+
+  function handleIdle() {
+    if (!map) return
+
+    const zoom = map.zoom
+    const { lat, lng } = map.center.toJSON()
+    setCenter({ lat, lng })
+
+    const mapPath = _mapPath(lat, lng, zoom, placeId)
+    _navigateTo(`/${mapPath}`)
+    _setLocalStorage("lastLocation", mapPath)
   }
 
   const handleFindMe = ({ lat, lng }) => {
@@ -89,6 +105,7 @@ const MapV2 = () => {
 
   function handleSearchHere() {
     setLastLatLng(center)
+    setPlaceId(placeId)
   }
 
   function handleToggle(checked) {
@@ -100,7 +117,7 @@ const MapV2 = () => {
   return (
     <Container>
       <MyLocationContainer>
-        <MyLocation onClick={handleFindMe}/>
+        <MyLocation onClick={handleFindMe} />
       </MyLocationContainer>
       <SearchHereContainer>
         <SearchHere onClick={handleSearchHere} />
@@ -112,33 +129,54 @@ const MapV2 = () => {
         mapSettings={mapSettings}
       >
         {myLocation.current && (
-            <Marker
-              position={{
-                lat: myLocation.current.lat,
-                lng: myLocation.current.lng,
-              }}
-              icon={{
-                url: "/me.svg",
-                scaledSize: new google.maps.Size(22, 22),
-              }}
-            />
-          )}
+          <Marker
+            position={{
+              lat: myLocation.current.lat,
+              lng: myLocation.current.lng,
+            }}
+            icon={{
+              url: "/me.svg",
+              scaledSize: new google.maps.Size(22, 22),
+            }}
+          />
+        )}
         {stores.map((store) => (
-            <StoreMarker
-              key={store.placeId}
-              store={store}
-              showLabel={showLabel}
-              isFocus={store.placeId === placeId}
-              isBounce={store.placeId === bouncePlaceId}
-              // showLabel={store.placeId === mouseOverStoreId || showLabel}
-              // onMouseOver={(placeId) => setMouseOverStoreId(placeId)}
-              // onMouseOut={() => setMouseOverStoreId(null)}
-              onClick={handleClickMarker}
-            />
-          ))}
+          <StoreMarker
+            key={store.placeId}
+            store={store}
+            showLabel={showLabel}
+            isFocus={store.placeId === placeId}
+            isBounce={store.placeId === bouncePlaceId}
+            // showLabel={store.placeId === mouseOverStoreId || showLabel}
+            // onMouseOver={(placeId) => setMouseOverStoreId(placeId)}
+            // onMouseOut={() => setMouseOverStoreId(null)}
+            onClick={handleClickMarker}
+          />
+        ))}
+        {stores.length === 0 && store && (
+          <StoreMarker
+            key={store.placeId}
+            store={store}
+            showLabel={showLabel}
+            isFocus
+          />
+        )}
       </GoogleMap>
     </Container>
   )
 }
 
+function _mapPath(lat, lng, zoom, placeId) {
+  return [`@${lat.toFixed(5)},${lng.toFixed(5)},${zoom}z`, placeId]
+    .filter(Boolean)
+    .join("/")
+}
+
+function _navigateTo(path) {
+  Router.push(path)
+}
+
+function _setLocalStorage(key, value) {
+  localStorage.setItem(key, value)
+}
 export default MapV2
