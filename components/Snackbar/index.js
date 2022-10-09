@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import MuiSnackbar from "@mui/material/Snackbar"
-import { Alert } from "@mui/material"
 
 const Snackbar = ({ message = "Give me something", onClose = () => {} }) => {
   const [open, setOpen] = useState(true)

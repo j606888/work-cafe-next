@@ -6,8 +6,7 @@ import StoreMarker from "features/GoogleMap/StoreMarker"
 import MyLocation from "features/MyLocation"
 import useInitMap from "hooks/useInitMap"
 import useStoreStore from "stores/useStoreStore"
-import Router from "next/router"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import useSWR from "swr"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
 import { Container, MyLocationContainer, SearchHereContainer } from "./styled"
@@ -78,9 +77,6 @@ const MapV2 = () => {
             showLabel={showLabel}
             isFocus={store.placeId === placeId}
             isBounce={store.placeId === bouncePlaceId}
-            // showLabel={store.placeId === mouseOverStoreId || showLabel}
-            // onMouseOver={(placeId) => setMouseOverStoreId(placeId)}
-            // onMouseOut={() => setMouseOverStoreId(null)}
             onClick={handleClickMarker}
           />
         ))}
@@ -97,17 +93,4 @@ const MapV2 = () => {
   )
 }
 
-function _mapPath(lat, lng, zoom, placeId) {
-  return [`@${lat.toFixed(5)},${lng.toFixed(5)},${zoom}z`, placeId]
-    .filter(Boolean)
-    .join("/")
-}
-
-function _navigateTo(path) {
-  Router.push(path)
-}
-
-function _setLocalStorage(key, value) {
-  localStorage.setItem(key, value)
-}
 export default MapV2
