@@ -1,4 +1,4 @@
-import { Divider } from "@mui/material"
+import { CircularProgress, Divider } from "@mui/material"
 import Searchbar from "features/Searchbar"
 import SearchFilter from "features/SearchFilter"
 import StoreDetail from "features/StoreDetail"
@@ -15,7 +15,8 @@ import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import shallow from "zustand/shallow"
 import useInitMap from "hooks/useInitMap"
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import useFindMe from "hooks/useFindMe"
 
 const Container = styled.div`
   width: 628px;
@@ -65,7 +66,7 @@ const SearchNearbyButton = styled.div`
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 50%);
-  padding: 15px 25px 15px 15px;
+  padding: 12px 25px 12px 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,10 +81,16 @@ const SearchNearbyButton = styled.div`
 const LeftContainer = () => {
   const { center, moveTo, updateWithPlaceId } = useControlMap()
   const { placeIdFromUrl } = useInitMap()
-  const [params, keywordSearch, updateSettings] = useLocationParamsStore(
-    (state) => [state.params, state.keywordSearch, state.updateSettings],
-    shallow
-  )
+  const [params, keywordSearch, updateSettings, searchHere] =
+    useLocationParamsStore(
+      (state) => [
+        state.params,
+        state.keywordSearch,
+        state.updateSettings,
+        state.searchHere,
+      ],
+      shallow
+    )
   const [setStores, placeId, setPlaceId] = useStoreStore(
     (state) => [state.setStores, state.placeId, state.setPlaceId],
     shallow
@@ -91,6 +98,7 @@ const LeftContainer = () => {
   const { data } = useSWR(
     params.lat ? ["stores/location", { ...params }] : null
   )
+  const { findMe, loading } = useFindMe()
 
   useEffect(() => {
     if (placeIdFromUrl) {
@@ -120,6 +128,11 @@ const LeftContainer = () => {
   function handleFilterChange(settings) {
     updateSettings(settings)
   }
+  async function handleNearbySearch() {
+    const latLng = await findMe()
+    moveTo({ latLng })
+    searchHere(latLng)
+  }
 
   return (
     <Container>
@@ -127,7 +140,7 @@ const LeftContainer = () => {
         {!data && (
           <HelloContainer>
             <TypeAnimation
-              sequence={["", 800, "嗨! ", 800, "嗨～今天想去哪辦公呢？"]}
+              sequence={["", 800, "嗨! ", 800, "嗨! 今天想去哪辦公呢？"]}
               wrapper="div"
               style={{
                 fontSize: "28px",
@@ -144,8 +157,8 @@ const LeftContainer = () => {
           {/* <SearchFilter onChange={handleFilterChange} /> */}
         </SearchContainer>
         <Or>或</Or>
-        <SearchNearbyButton>
-          <ArrowForwardIcon />
+        <SearchNearbyButton onClick={handleNearbySearch}>
+          {loading ? <CircularProgress size={24} /> : <ArrowForwardIcon />}
           <span>搜尋 我附近的咖啡店</span>
         </SearchNearbyButton>
       </Upper>
