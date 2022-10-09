@@ -11,22 +11,30 @@ export async function alreadyGranted() {
 }
 
 async function getCurrentPosition() {
-  if (navigator.geolocation) {
-    try {
-      const position = await new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-      })
-
-      return {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  } else {
-    console.log("Your browser not support geolocation")
+  let result = {
+    success: false,
+    latLng: {},
+    failedReason: ""
   }
+
+  if (!navigator.geolocation) {
+    result.failedReason = "Your browser not support geolocation"
+    return result
+  }
+
+  try {
+    const position = await new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+    result.success = true
+    result.latLng = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    }
+  } catch (err) {
+    result.failedReason = err.message
+  }
+  return result
 }
 
 const MyLocation = ({ onClick = () => {} }) => {
@@ -38,10 +46,15 @@ const MyLocation = ({ onClick = () => {} }) => {
     if (!location) {
       setUserClick(true)
       setIsLoading(true)
-      const { lat, lng } = await getCurrentPosition()
-      setLocation({ lat, lng })
+      const { success, latLng, failedReason } = await getCurrentPosition()
       setIsLoading(false)
-      onClick({ lat, lng })
+      if (success) {
+        console.log(latLng)
+        setLocation(latLng)
+        onClick(latLng)
+      } else {
+        console.warn(failedReason)
+      }
     } else {
       onClick(location)
     }
@@ -56,8 +69,8 @@ const MyLocation = ({ onClick = () => {} }) => {
         return
       }
 
-      const { lat, lng } = await getCurrentPosition()
-      setLocation({ lat, lng })
+      const { latLng } = await getCurrentPosition()
+      setLocation(latLng)
       setIsLoading(false)
     })()
   }, [])

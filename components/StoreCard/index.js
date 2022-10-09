@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import ImageSlider from "./ImageSlider"
-import StarIcon from '@mui/icons-material/Star';
-import _ from 'lodash'
+import StarIcon from "@mui/icons-material/Star"
+import _ from "lodash"
 
 const Container = styled.div`
   width: 280px;
@@ -43,7 +43,6 @@ const Address = styled.p`
   font-size: 12px;
 `
 
-
 const StoreCard = ({
   placeId,
   name,
@@ -53,24 +52,38 @@ const StoreCard = ({
   isOpen,
   images = [],
   onClick = () => {},
+  onMouseEnter = () => {},
+  onMouseLeave = () => {},
 }) => {
   function handleClick() {
     onClick(placeId)
   }
-  return <Container onClick={handleClick}>
-    <ImageSlider images={images} />
-    <MainInfo>
-      <h3>{_.truncate(name)}</h3>
-      <div>
-        <StarIcon sx={{fontSize: 18}}/>
-        <span>{rating}({reviewsCount})</span>
-      </div>
-    </MainInfo>
-    <SecondInfo>
-      <Address>{shortAddress}</Address>
-      <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
-    </SecondInfo>
-  </Container>
+
+  function handleMouseEnter() {
+    onMouseEnter(placeId)
+  }
+  return (
+    <Container
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <ImageSlider images={images} />
+      <MainInfo>
+        <h3>{_.truncate(name)}</h3>
+        <div>
+          <StarIcon sx={{ fontSize: 18 }} />
+          <span>
+            {rating}({reviewsCount})
+          </span>
+        </div>
+      </MainInfo>
+      <SecondInfo>
+        <Address>{shortAddress}</Address>
+        <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
+      </SecondInfo>
+    </Container>
+  )
 }
 
 export default StoreCard

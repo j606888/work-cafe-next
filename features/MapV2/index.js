@@ -5,57 +5,20 @@ import GoogleMap from "features/GoogleMap"
 import StoreMarker from "features/GoogleMap/StoreMarker"
 import MyLocation from "features/MyLocation"
 import useInitMap from "hooks/useInitMap"
-import useMapStore from "hooks/useMapStore"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 import Router from "next/router"
-import React, { useEffect, useState } from "react"
-import styled from "styled-components"
+import { useEffect, useState } from "react"
 import useSWR from "swr"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
-
-const Container = styled.div`
-  position: fixed;
-  right: 0;
-  top: 88px;
-  width: calc(100% - 677px);
-  height: calc(100vh - 88px);
-
-  .labels {
-    background-color: white;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 12px;
-    padding: 4px 8px;
-    border: 1px solid #999;
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 2.3rem;
-    left: 0.8rem;
-    overflow: hidden;
-    max-width: 240px;
-  }
-`
-
-const MyLocationContainer = styled.div`
-  position: absolute;
-  bottom: 7rem;
-  right: 0.7rem;
-  z-index: 2;
-`
-
-const SearchHereContainer = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 1rem;
-  transform: translateX(-50%);
-  z-index: 2;
-`
+import { Container, MyLocationContainer, SearchHereContainer } from "./styled"
+import useControlMap from "hooks/useControlMap"
+import useLocationParamsStore from "stores/useLocationParamsStore"
 
 const MapV2 = () => {
-  const { isReady, myLocation, map, setMap, mapSettings } = useInitMap()
-  const setCenter = useMapStore((state) => state.setCenter)
-  const center = useMapStore((state) => state.center)
-  const setLastLatLng = useMapStore((state) => state.setLastLatLng)
+  const { isReady, mapSettings } = useInitMap()
+  const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } = useControlMap()
+  const searchHere = useLocationParamsStore((state) => state.searchHere)
+  const [myLocation, setMyLocation] = useState(null)
   const stores = useStoreStore((state) => state.stores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
@@ -64,52 +27,23 @@ const MapV2 = () => {
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
-  function handleLoad(map) {
-    setMap(map)
-  }
-
-  useEffect(() => {
-    if (!map) return
-
-    const zoom = map.zoom
-    const { lat, lng } = map.center.toJSON()
-    setCenter({ lat, lng })
-
-    const mapPath = _mapPath(lat, lng, zoom, placeId)
-    _navigateTo(`/${mapPath}`)
-    _setLocalStorage("lastLocation", mapPath)
-  }, [placeId])
-
-  function handleIdle() {
-    if (!map) return
-
-    const zoom = map.zoom
-    const { lat, lng } = map.center.toJSON()
-    setCenter({ lat, lng })
-
-    const mapPath = _mapPath(lat, lng, zoom, placeId)
-    _navigateTo(`/${mapPath}`)
-    _setLocalStorage("lastLocation", mapPath)
-  }
-
-  const handleFindMe = ({ lat, lng }) => {
-    const center = { lat, lng }
-    map.setZoom(15)
-    map.panTo(center)
-    myLocation.current = center
-  }
-
   function handleClickMarker(placeId) {
     setPlaceId(placeId)
+    updateWithPlaceId(placeId)
   }
 
   function handleSearchHere() {
-    setLastLatLng(center)
+    searchHere(center)
     setPlaceId(null)
   }
 
   function handleToggle(checked) {
     setShowLabel(checked)
+  }
+
+  function handleFindMe(latLng) {
+    moveTo({ latLng })
+    setMyLocation(latLng)
   }
 
   if (!isReady) return <Skeleton />
@@ -128,12 +62,9 @@ const MapV2 = () => {
         onIdle={handleIdle}
         mapSettings={mapSettings}
       >
-        {myLocation.current && (
+        {myLocation && (
           <Marker
-            position={{
-              lat: myLocation.current.lat,
-              lng: myLocation.current.lng,
-            }}
+            position={myLocation}
             icon={{
               url: "/me.svg",
               scaledSize: new google.maps.Size(22, 22),

@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import useStoreStore from "./useStoreStore"
-import _ from 'lodash'
+import { isEmpty } from "lodash"
 
+const REGEX = /@(?<lat>\d+(\.\d+)?),(?<lng>\d+(\.\d+)?),(?<zoom>\d+)z/
 const DEFAULT_SETUP = {
   center: {
     lat: 23.546162,
@@ -13,39 +13,30 @@ const DEFAULT_SETUP = {
   mapTypeControl: false,
   streetViewControl: false,
   mapId: process.env.NEXT_PUBLIC_MAP_ID,
-  gestureHandling: 'greedy'
+  gestureHandling: "greedy",
 }
 
 const useInitMap = () => {
-  const setPlaceId = useStoreStore((state) => state.setPlaceId)
+  const [placeIdFromUrl, setPlaceIdFromUrl] = useState(null)
   const [mapSettings, setMapSettings] = useState(DEFAULT_SETUP)
   const [isReady, setIsReady] = useState(false)
-  const [map, setMap] = useState(null)
-  const myLocation = useRef(null)
   const router = useRouter()
 
   useEffect(() => {
     if (router && router.isReady && !isReady) {
       const urlLocation = router.query.location
-      const lastLocation = localStorage.getItem("lastLocation")
-      const location = _.isEmpty(urlLocation) ? [lastLocation] : urlLocation
+      const lastLocation = _getLocalStorage("lastLocation")
+      const location = isEmpty(urlLocation) ? [lastLocation] : urlLocation
 
       if (location) {
         const pureString = location[0]
-        const re = /@(?<lat>\d+(\.\d+)?),(?<lng>\d+(\.\d+)?),(?<zoom>\d+)z/
-        const match = re.exec(pureString)
-
+        const match = REGEX.exec(pureString)
         const placeId = location[1]
-        if (placeId) {
-          setPlaceId(placeId)
-        }
+        if (placeId) setPlaceIdFromUrl(placeId)
 
         if (match) {
-          const lat = +match.groups.lat
-          const lng = +match.groups.lng
-          const zoom = +match.groups.zoom
-
-          setMapSettings((cur) => ({ ...cur, zoom, center: { lat, lng } }))
+          const { zoom, center } = _parseMatch(match)
+          setMapSettings((cur) => ({ ...cur, zoom, center }))
         }
       }
 
@@ -53,7 +44,21 @@ const useInitMap = () => {
     }
   }, [router, isReady])
 
-  return { mapSettings, isReady, map, setMap, myLocation }
+  return { mapSettings, isReady, placeIdFromUrl }
+}
+
+function _getLocalStorage(key) {
+  localStorage.getItem(key)
+}
+
+function _parseMatch(match) {
+  const zoom = +match.groups.zoom
+  const center = {
+    lat: +match.groups.lat,
+    lng: +match.groups.lng,
+  }
+
+  return { zoom, center }
 }
 
 export default useInitMap
