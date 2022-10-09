@@ -12,6 +12,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     height: 220px;
+    max-width: 240px;
   }
 `
 const SingleImageContainer = styled.div`
@@ -19,6 +20,7 @@ const SingleImageContainer = styled.div`
 
   .imgBox {
     width: 100%;
+    max-width: 240px;
     height: 220px;
 
     & > img {
@@ -48,7 +50,7 @@ const ImageSlide = ({ photos=[] }) => {
       <Slide {...slideArgs}>
         {photos.map((image, index) => (
           <div className="each-slide" key={index}>
-            <div style={{ 
+            <div style={{
               backgroundImage: `url(${image})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center'

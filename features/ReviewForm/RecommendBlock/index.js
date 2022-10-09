@@ -40,7 +40,7 @@ const OPTIONS = [
     icon: <ThumbDownIcon />,
     value: "no",
     label: "不推薦",
-    color: "#EC4135",
+    color: "#EF9A9A",
   },
   {
     icon: <ThumbUpIcon />,

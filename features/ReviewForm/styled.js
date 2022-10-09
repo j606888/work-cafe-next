@@ -7,19 +7,25 @@ export const Form = styled.form`
   box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
 
   h3 {
+    padding: 1rem;
     text-align: center;
-    margin: 1rem;
+    background-color: #1B72E8;
+    color: #fff;
+    margin: 0;
   }
 `
 
 export const Scroll = styled.div`
-  padding: 1rem 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: .8rem;
+  max-height: calc(80vh - 130px);
+  overflow: scroll;
 `
 
 export const Buttons = styled.div`
+  border-top: 1px solid #ccc;
   padding: 1rem 2rem;
   display: flex;
   justify-content: flex-end;

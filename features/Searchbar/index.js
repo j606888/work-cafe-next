@@ -131,9 +131,16 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
           onCompositionEnd={handleComposition}
         />
         {keyword && (
-          <Tooltip title="清除" onClick={handleClear}>
-            <ClearIcon style={pointer} />
-          </Tooltip>
+          <>
+            <Tooltip title="清除" onClick={handleClear}>
+              <ClearIcon style={pointer} />
+            </Tooltip>
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ borderColor: "#555" }}
+            />
+          </>
         )}
         <Tooltip title="搜尋" onClick={handleSearch}>
           <SearchIcon style={pointer} />
