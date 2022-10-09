@@ -1,5 +1,4 @@
 import * as React from "react"
-import Card from "features/Drawer/Card"
 import { Container } from "./styled"
 import useStoreStore from "stores/useStoreStore"
 import StoreCard from "components/StoreCard"
@@ -10,6 +9,7 @@ export default function StoreList({ stores = [], onClick=() => {} }) {
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
 
   const handleMouseEnter = (placeId) => {
+    console.log({ placeId });
     setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {

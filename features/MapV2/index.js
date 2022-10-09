@@ -17,10 +17,6 @@ import useLocationParamsStore from "stores/useLocationParamsStore"
 const MapV2 = () => {
   const { isReady, mapSettings } = useInitMap()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } = useControlMap()
-  // const [params, searchHere] = useLocationParamsStore(
-  //   (state) => [state.params, state.searchHere],
-  //   shallow
-  // )
   const searchHere = useLocationParamsStore((state) => state.searchHere)
   const [myLocation, setMyLocation] = useState(null)
   const stores = useStoreStore((state) => state.stores)
