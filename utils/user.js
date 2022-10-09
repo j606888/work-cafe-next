@@ -1,6 +1,8 @@
 import jwt_decode from "jwt-decode"
 
 export function userIsLogin() {
+  if (typeof window === 'undefined') return false
+
   return !!localStorage.getItem("accessToken")
 }
 

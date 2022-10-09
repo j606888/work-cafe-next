@@ -15,7 +15,8 @@ import { TypeAnimation } from "react-type-animation"
 import NoMatch from "./NoMatch"
 
 const Container = styled.div`
-  width: 50%;
+  /* width: 50%; */
+  width: 677px;
   position: relative;
   padding: 1px 0;
 `
@@ -91,13 +92,15 @@ const LeftContainer = () => {
       {!data && <WelcomeMessage />}
       {data && data.length === 0 && <NoMatch />}
       {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
-      <StoreDetail
-        placeId={placeId}
-        key={placeId}
-        onClose={() => {
-          setPlaceId(null)
-        }}
-      />
+      {placeId && (
+        <StoreDetail
+          placeId={placeId}
+          key={placeId}
+          onClose={() => {
+            setPlaceId(null)
+          }}
+        />
+      )}
     </Container>
   )
 }
