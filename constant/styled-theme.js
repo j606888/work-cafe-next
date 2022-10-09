@@ -3,7 +3,8 @@ const styledTheme = {
 }
 
 const sizes = {
-  iphoneSE: '375px',
+  // iphoneSE: '375px',
+  iphoneSE: '390px',
   iphone13: '390px',
   macBookPro14: '1440px',
 }

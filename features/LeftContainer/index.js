@@ -98,6 +98,7 @@ const SearchNearbyButton = styled.div`
   justify-content: center;
   gap: 1rem;
   cursor: pointer;
+  z-index: 3;
 
   &:hover {
     background-color: #fcfcfc;
