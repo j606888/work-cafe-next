@@ -4,19 +4,18 @@ import SearchFilter from "features/SearchFilter"
 import StoreDetail from "features/StoreDetail"
 import StoreList from "features/StoreList"
 import WelcomeMessage from "features/WelcomeMessage"
-import useMapStore from "hooks/useMapStore"
 import useStoreStore from "hooks/useStoreStore"
-import React from "react"
 import { useEffect } from "react"
-import { useState } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
 import { TypeAnimation } from "react-type-animation"
 import NoMatch from "./NoMatch"
-import _ from 'lodash'
+import _ from "lodash"
+import useControlMap from "hooks/useControlMap"
+import useLocationParamsStore from "stores/useLocationParamsStore"
+import shallow from "zustand/shallow"
 
 const Container = styled.div`
-  /* width: 50%; */
   width: 677px;
   position: relative;
   padding: 1px 0;
@@ -33,47 +32,35 @@ const SearchContainer = styled.div`
 `
 
 const LeftContainer = () => {
-  const [keyword, setKeyword] = useState("")
-  const center = useMapStore((state) => state.center)
-  const lastLatLng = useMapStore((state) => state.lastLatLng)
-  const moveMap = useMapStore((state) => state.moveMap)
-  const setLastLatLng = useMapStore((state) => state.setLastLatLng)
+  const { center, moveTo } = useControlMap()
+  const [params, keywordSearch, updateSettings] = useLocationParamsStore(
+    (state) => [state.params, state.keywordSearch, state.updateSettings],
+    shallow
+  )
   const setStores = useStoreStore((state) => state.setStores)
   const placeId = useStoreStore((state) => state.placeId)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
-  const [settings, setSettings] = useState({})
-  const [shouldMove, setShouldMove] = useState(false)
 
   const { data } = useSWR(
-    keyword || lastLatLng
-      ? ["stores/location", { keyword, ...lastLatLng, ...settings, limit: 30 }]
-      : null
+    params.lat ? ["stores/location", { ...params }] : null
   )
 
   useEffect(() => {
     setStores(data || [])
-    if (data && shouldMove) {
-      const center2 = _calCenter(data)
-      moveMap(center2)
+    if (data && data.length > 0 && params.moveAfter) {
+      const latLng = _calCenter(data)
+      moveTo({ latLng })
     }
   }, [data, setStores])
 
-  function handleSearch(newKeyword) {
-    if (newKeyword === "") {
-      setLastLatLng(null)
-    } else {
-      setLastLatLng(center)
-      setShouldMove(true)
-    }
-
-    setKeyword(newKeyword)
+  function handleSearch(keyword) {
+    keywordSearch({ ...center, keyword, limit: 30 })
   }
   function handleClickStore(placeId) {
     setPlaceId(placeId)
   }
   function handleFilterChange(settings) {
-    setLastLatLng(center)
-    setSettings(settings)
+    updateSettings(settings)
   }
 
   return (
@@ -120,7 +107,7 @@ function _calCenter(data) {
 
   return {
     lat: _.mean(lats),
-    lng: _.mean(lngs)
+    lng: _.mean(lngs),
   }
 }
 
