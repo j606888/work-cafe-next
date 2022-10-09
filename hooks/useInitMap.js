@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/router"
 import useStoreStore from "./useStoreStore"
 import _ from 'lodash'
+import useMapStore from "./useMapStore"
 
 const DEFAULT_SETUP = {
   center: {
@@ -20,7 +21,8 @@ const useInitMap = () => {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const [mapSettings, setMapSettings] = useState(DEFAULT_SETUP)
   const [isReady, setIsReady] = useState(false)
-  const [map, setMap] = useState(null)
+  const map = useMapStore((state) => state.map)
+  const setMap = useMapStore((state) => state.setMap)
   const myLocation = useRef(null)
   const router = useRouter()
 

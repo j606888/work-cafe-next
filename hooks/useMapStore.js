@@ -1,14 +1,18 @@
 import create from 'zustand'
 
-const useMapStore = create((set) => ({
+const useMapStore = create((set, get) => ({
+  map: null,
   mode: 'MAP',
   center: {},
   lastLatLng: null,
-  moveMap: false,
+  setMap: (map) => set({ map }),
   setMode: (mode) => set({ mode }),
-  setMoveMap: (moveMap) => set({ moveMap }),
   setCenter: ({ lat, lng }) => set({ center: { lat, lng }}),
-  setLastLatLng: (latLng) => set({ lastLatLng: latLng})
+  setLastLatLng: (latLng) => set({ lastLatLng: latLng}),
+  moveMap: (latLng) => {
+    get().map.setZoom(15)
+    get().map.panTo(latLng)
+  }
 }))
 
 export default useMapStore

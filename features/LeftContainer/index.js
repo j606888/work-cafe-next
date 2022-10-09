@@ -13,6 +13,7 @@ import styled from "styled-components"
 import useSWR from "swr"
 import { TypeAnimation } from "react-type-animation"
 import NoMatch from "./NoMatch"
+import _ from 'lodash'
 
 const Container = styled.div`
   /* width: 50%; */
@@ -35,11 +36,13 @@ const LeftContainer = () => {
   const [keyword, setKeyword] = useState("")
   const center = useMapStore((state) => state.center)
   const lastLatLng = useMapStore((state) => state.lastLatLng)
+  const moveMap = useMapStore((state) => state.moveMap)
   const setLastLatLng = useMapStore((state) => state.setLastLatLng)
   const setStores = useStoreStore((state) => state.setStores)
   const placeId = useStoreStore((state) => state.placeId)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const [settings, setSettings] = useState({})
+  const [shouldMove, setShouldMove] = useState(false)
 
   const { data } = useSWR(
     keyword || lastLatLng
@@ -49,6 +52,10 @@ const LeftContainer = () => {
 
   useEffect(() => {
     setStores(data || [])
+    if (data && shouldMove) {
+      const center2 = _calCenter(data)
+      moveMap(center2)
+    }
   }, [data, setStores])
 
   function handleSearch(newKeyword) {
@@ -56,6 +63,7 @@ const LeftContainer = () => {
       setLastLatLng(null)
     } else {
       setLastLatLng(center)
+      setShouldMove(true)
     }
 
     setKeyword(newKeyword)
@@ -104,6 +112,16 @@ const LeftContainer = () => {
       )}
     </Container>
   )
+}
+
+function _calCenter(data) {
+  const lats = data.map(({ lat }) => lat)
+  const lngs = data.map(({ lng }) => lng)
+
+  return {
+    lat: _.mean(lats),
+    lng: _.mean(lngs)
+  }
 }
 
 export default LeftContainer

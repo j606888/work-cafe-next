@@ -30,14 +30,17 @@ const CityOption = ({ type, name, count, address }) => {
   ) : (
     <>
       <PlaceIcon />
-      <span className="city-name">{name}</span>
+      <div className="city-name">
+        <span>{name}</span>
+        <span className="address">{address}</span>
+      </div>
       <CircleIcon />
       <span className="city-count">{count}</span>
     </>
   )
 }
 
-const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
+const Searchbar = ({ onSearch = () => {} }) => {
   const [keyword, setKeyword] = useState("")
   const [isOnComposition, setIsOnComposition] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
@@ -53,9 +56,14 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
   }, [data])
   const hasResult = showOptions && options.length > 0
 
-  function handleOptionClick(name) {
-    setKeyword(name)
-    onSearch(name)
+  function handleOptionClick({ type, name, address }) {
+    if (type === 'district') {
+      setKeyword(address + name)
+      onSearch(address + name)
+    } else {
+      setKeyword(name)
+      onSearch(name)
+    }
     setShowOptions(false)
   }
 
@@ -103,9 +111,14 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
     if (!isOnComposition && e.key === "Enter") {
       const answer = options[focusedIndex]
       const name = answer?.name || keyword
-      setKeyword(name)
+      if (answer?.type === 'district') {
+        setKeyword(answer.address + answer.name)
+        onSearch(answer.address + answer.name)
+      } else {
+        setKeyword(name)
+        onSearch(name)
+      }
       setShowOptions(false)
-      onSearch(name)
     }
   }
 
@@ -150,7 +163,7 @@ const Searchbar = ({ onSearch = () => {}, onOpenDrawer = () => {} }) => {
         {options.map((option, index) => (
           <Option
             key={_optionKey(option)}
-            onClick={() => handleOptionClick(option.name)}
+            onClick={() => handleOptionClick(option)}
             ref={index === focusedIndex ? resultContainer : null}
             focus={index === focusedIndex}
           >
