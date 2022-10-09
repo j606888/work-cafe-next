@@ -1,20 +1,20 @@
 import styled, { css } from "styled-components"
 
-const WIDTH = '320px'
 
 export const Container = styled.div`
-  width: ${WIDTH};
   position: relative;
+  width: 100%;
 `
 
 export const SearchBox = styled.div`
   background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 24px;
-  padding: 0.8rem 1.2rem;
+  border: 1px solid #757575;
+  border-radius: 12px;
+  height: 52px;
+  padding: 0 8px 0 1.2rem;
   display: flex;
   align-items: center;
-  gap: .3rem;
+  gap: 1rem;
 `
 
 export const Input = styled.input`
@@ -31,14 +31,14 @@ export const Options = styled.div`
   background: #fff;
   padding: 7px 0;
   border-radius: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #757575;
   overflow-y: auto;
   max-height: 12rem;
   position: absolute;
   left: 0;
   top: calc(100% + 4px);
-  width: ${WIDTH};
   z-index: 20;
+  width: 100%;
 `
 
 export const Option = styled.div`

@@ -3,9 +3,9 @@ import styled from "styled-components"
 export const Container = styled.div`
   position: fixed;
   right: 0;
-  top: 88px;
-  width: calc(100% - 677px);
-  height: calc(100vh - 88px);
+  top: 128px;
+  width: calc(100% - 628px);
+  height: calc(100vh - 128px);
 
   .labels {
     background-color: white;
