@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
 import StorePhotoCard from "../StorePhotoCard"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 
 const Container = styled.div`
   height: calc(100vh - 80px - 48px);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import styled from "styled-components"
 import ReviewStoreCard from "../ReviewStoreCard"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 import useScrollFetch from "hooks/useScrollFetch"
 
 export const ListContainer = styled.div`

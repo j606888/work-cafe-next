@@ -4,7 +4,7 @@ import SearchFilter from "features/SearchFilter"
 import StoreDetail from "features/StoreDetail"
 import StoreList from "features/StoreList"
 import WelcomeMessage from "features/WelcomeMessage"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 import { useEffect } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
@@ -14,6 +14,7 @@ import _ from "lodash"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import shallow from "zustand/shallow"
+import useInitMap from "hooks/useInitMap"
 
 const Container = styled.div`
   width: 677px;
@@ -32,18 +33,25 @@ const SearchContainer = styled.div`
 `
 
 const LeftContainer = () => {
-  const { center, moveTo } = useControlMap()
+  const { center, moveTo, updateWithPlaceId } = useControlMap()
+  const { placeIdFromUrl } = useInitMap()
   const [params, keywordSearch, updateSettings] = useLocationParamsStore(
     (state) => [state.params, state.keywordSearch, state.updateSettings],
     shallow
   )
-  const setStores = useStoreStore((state) => state.setStores)
-  const placeId = useStoreStore((state) => state.placeId)
-  const setPlaceId = useStoreStore((state) => state.setPlaceId)
-
+  const [setStores, placeId, setPlaceId] = useStoreStore(
+    (state) => [state.setStores, state.placeId, state.setPlaceId],
+    shallow
+  )
   const { data } = useSWR(
     params.lat ? ["stores/location", { ...params }] : null
   )
+
+  useEffect(() => {
+    if (placeIdFromUrl) {
+      setPlaceId(placeIdFromUrl)
+    }
+  }, [placeIdFromUrl, setPlaceId])
 
   useEffect(() => {
     setStores(data || [])
@@ -58,6 +66,11 @@ const LeftContainer = () => {
   }
   function handleClickStore(placeId) {
     setPlaceId(placeId)
+    updateWithPlaceId(placeId)
+  }
+  function handleCloseStore() {
+    setPlaceId(null)
+    updateWithPlaceId()
   }
   function handleFilterChange(settings) {
     updateSettings(settings)
@@ -92,9 +105,7 @@ const LeftContainer = () => {
           placeId={placeId}
           key={placeId}
           canBack={!!data && data.length !== 0}
-          onClose={() => {
-            setPlaceId(null)
-          }}
+          onClose={handleCloseStore}
         />
       )}
     </Container>

@@ -4,7 +4,7 @@ import useTimeAgo from "hooks/useTimeAgo"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { Container, InfoBox, ScoreDateBox, MoreContainer } from "./styled"
 import FaceIconGroup from "components/FaceIconGroup"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 
 const FACE_MAP = {
   yes: "happy",

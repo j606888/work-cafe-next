@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
 import useMapStore from "hooks/useMapStore"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 
 const BookmarkContainer = styled.div`
   position: absolute;

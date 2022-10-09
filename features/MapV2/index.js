@@ -5,9 +5,9 @@ import GoogleMap from "features/GoogleMap"
 import StoreMarker from "features/GoogleMap/StoreMarker"
 import MyLocation from "features/MyLocation"
 import useInitMap from "hooks/useInitMap"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 import Router from "next/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useSWR from "swr"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
 import { Container, MyLocationContainer, SearchHereContainer } from "./styled"
@@ -15,8 +15,8 @@ import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 
 const MapV2 = () => {
-  const { isReady, mapSettings, placeIdFromUrl } = useInitMap()
-  const { handleLoad, handleIdle, moveTo, center } = useControlMap()
+  const { isReady, mapSettings } = useInitMap()
+  const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } = useControlMap()
   // const [params, searchHere] = useLocationParamsStore(
   //   (state) => [state.params, state.searchHere],
   //   shallow
@@ -31,20 +31,9 @@ const MapV2 = () => {
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
-  // useEffect(() => {
-  //   if (!map) return
-
-  //   const zoom = map.zoom
-  //   const { lat, lng } = map.center.toJSON()
-  //   setCenter({ lat, lng })
-
-  //   const mapPath = _mapPath(lat, lng, zoom, placeId)
-  //   _navigateTo(`/${mapPath}`)
-  //   _setLocalStorage("lastLocation", mapPath)
-  // }, [placeId])
-
   function handleClickMarker(placeId) {
     setPlaceId(placeId)
+    updateWithPlaceId(placeId)
   }
 
   function handleSearchHere() {

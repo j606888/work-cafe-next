@@ -8,7 +8,7 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import { Container, Header, Tabs } from "./styled"
 import useAuthCheck from "hooks/useAuthCheck"
 import useMapStore from "hooks/useMapStore"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 import { Link } from "@mui/material"
 
 export default function UserDrawer({ open, onClose = () => {} }) {

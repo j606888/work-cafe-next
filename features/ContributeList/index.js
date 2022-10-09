@@ -5,7 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import ReviewList from "./ReviewList"
 import StorePhotoList from "./StorePhotoList"
 import useMapStore from "hooks/useMapStore"
-import useStoreStore from "hooks/useStoreStore"
+import useStoreStore from "stores/useStoreStore"
 
 const ContributeList = () => {
   const setMode = useMapStore(state => state.setMode)
