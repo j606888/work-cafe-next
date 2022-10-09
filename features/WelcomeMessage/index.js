@@ -1,22 +1,23 @@
-import { Alert } from '@mui/material'
 import React from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
   width: 80%;
   max-width: 560px;
-  margin: 2rem auto;
+  margin: 6rem auto;
   text-align: left;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
+  color: #757575;
 
   h3 {
     font-size: 20px;
   }
 
   p {
-    line-height: 150%;
+    line-height: 170%;
     font-weight: 400;
     margin: 0;
+    font-size: 14px;
   }
 
   span {
@@ -39,9 +40,9 @@ const WelcomeMessage = () => {
       <h3>不只是咖啡廳，還要適合辦公的咖啡廳！</h3>
       <p>透過串連 Google Map，以及我們自定義的篩選。</p>
       <p>讓你快速找到理想的店家。</p>
-      <ImageContainer>
+      {/* <ImageContainer>
         <img src="human2.png" alt="human2" />
-      </ImageContainer>
+      </ImageContainer> */}
     </Container>
   )
 }

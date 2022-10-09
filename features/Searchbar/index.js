@@ -18,6 +18,13 @@ const pointer = {
   cursor: "pointer",
 }
 
+const searchIconStyle = {
+  backgroundColor: '#757575',
+  color: '#fff',
+  padding: '6px',
+  borderRadius: '8px',
+}
+
 const CityOption = ({ type, name, count, address }) => {
   return type === "store" ? (
     <>
@@ -146,18 +153,11 @@ const Searchbar = ({ onSearch = () => {} }) => {
         {keyword && (
           <>
             <Tooltip title="清除" onClick={handleClear}>
-              <ClearIcon style={pointer} />
+              <ClearIcon style={pointer} sx={{ color: '#757575'}}/>
             </Tooltip>
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ borderColor: "#555" }}
-            />
           </>
         )}
-        <Tooltip title="搜尋" onClick={handleSearch}>
-          <SearchIcon style={pointer} />
-        </Tooltip>
+        <SearchIcon style={pointer} onClick={handleSearch} sx={searchIconStyle} />
       </SearchBox>
       <Options hasResult={hasResult}>
         {options.map((option, index) => (
