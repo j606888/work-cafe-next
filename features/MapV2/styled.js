@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { devices } from 'constant/styled-theme'
 
 export const Container = styled.div`
   position: fixed;
@@ -20,6 +21,13 @@ export const Container = styled.div`
     left: 0.8rem;
     overflow: hidden;
     max-width: 240px;
+  }
+
+  @media ${devices.iphoneSE} {
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: calc(100vh - 320px);
   }
 `
 

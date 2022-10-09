@@ -49,7 +49,6 @@ const MyLocation = ({ onClick = () => {} }) => {
       const { success, latLng, failedReason } = await getCurrentPosition()
       setIsLoading(false)
       if (success) {
-        console.log(latLng)
         setLocation(latLng)
         onClick(latLng)
       } else {

@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@mui/material"
 import { Container, HelpUs, Content, Link, HelpButton } from "./styled"
+import MenuIcon from "@mui/icons-material/Menu"
 
 const AppBar = () => {
   const [open, setOpen] = useState(false)
@@ -27,7 +28,7 @@ const AppBar = () => {
         </HelpUs>
         <Content>
           <h2>Work Cafe | Taiwan</h2>
-          <div>
+          <div class="menu">
             <Link
               href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
               target="_blank"
@@ -37,6 +38,9 @@ const AppBar = () => {
               <span>教學文件</span>
             </Link>
             <AccountMenu />
+          </div>
+          <div class="hamburger">
+            <MenuIcon sx={{ color: "#757575", cursor: "pointer" }} />
           </div>
         </Content>
       </Container>

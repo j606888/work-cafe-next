@@ -8,7 +8,6 @@ import useStoreStore from "stores/useStoreStore"
 import { useEffect } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
-import { TypeAnimation } from "react-type-animation"
 import NoMatch from "./NoMatch"
 import _ from "lodash"
 import useControlMap from "hooks/useControlMap"
@@ -17,11 +16,17 @@ import shallow from "zustand/shallow"
 import useInitMap from "hooks/useInitMap"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import useFindMe from "hooks/useFindMe"
+import WhereToGo from "./WhereToGo"
+import { devices } from 'constant/styled-theme'
 
 const Container = styled.div`
   width: 628px;
   position: relative;
   padding: 1px 0;
+
+  @media ${devices.iphoneSE} {
+    width: 100%;
+  }
 `
 
 const Or = styled.p`
@@ -29,6 +34,12 @@ const Or = styled.p`
   color: #757575;
   font-size: 14px;
   padding: 0.5rem 0 1rem;
+
+  @media ${devices.iphoneSE} {
+    font-size: 12px;
+
+    padding: 0;
+  }
 `
 
 const Upper = styled.div`
@@ -44,6 +55,10 @@ const SearchContainer = styled.div`
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
+
+  @media ${devices.iphoneSE} {
+  padding: 1rem 23px 0;
+  }
 `
 
 const HelloContainer = styled.div`
@@ -53,6 +68,17 @@ const HelloContainer = styled.div`
   p {
     font-size: 14px;
     margin: 4px 0 8px;
+  }
+
+  @media ${devices.iphoneSE} {
+    padding: 0;
+    text-align: center;
+
+    p {
+      font-size: 12px;
+      margin: 4px auto;
+    }
+
   }
 `
 
@@ -72,9 +98,17 @@ const SearchNearbyButton = styled.div`
   justify-content: center;
   gap: 1rem;
   cursor: pointer;
+  z-index: 3;
 
   &:hover {
     background-color: #fcfcfc;
+  }
+
+  @media ${devices.iphoneSE} {
+    padding: 6px 12px 6px 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    gap: 0.5rem;
   }
 `
 
@@ -139,16 +173,7 @@ const LeftContainer = () => {
       <Upper>
         {!data && (
           <HelloContainer>
-            <TypeAnimation
-              sequence={["", 800, "嗨! ", 800, "嗨! 今天想去哪辦公呢？"]}
-              wrapper="div"
-              style={{
-                fontSize: "28px",
-                fontWeight: 700,
-              }}
-              cursor={true}
-              speed={50}
-            />
+            <WhereToGo />
             <p>Work Cafe 幫你快速篩選 適合辦公的咖啡店</p>
           </HelloContainer>
         )}
