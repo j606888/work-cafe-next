@@ -1,0 +1,38 @@
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material"
+
+const HelpUsModal = ({ open, onClose }) => {
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>幫助我們做得更好</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          這個網站才剛起步，需要眾人的力量才能讓整個網站的功能更加完整。
+        </DialogContentText>
+        <br />
+        <DialogContentText>
+          <b>填寫評論：</b>
+          <br />
+          無需登入，透過搜尋匡直接找尋你已知的口袋名單，並且給予評論。這會是最大的幫助！
+        </DialogContentText>
+        <br />
+        <DialogContentText>
+          <b>回報不是咖啡廳：</b>
+          <br />
+          有些店家根本不適合出現在這邊（例如：連鎖手搖飲、無內用空間或是純餐廳）。點擊店家資訊中的回報按鈕，我們會定期去將這些回報的店家移除
+        </DialogContentText>
+        <DialogActions>
+          <Button onClick={onClose}>我知道了</Button>
+        </DialogActions>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export default HelpUsModal
