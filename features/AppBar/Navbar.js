@@ -10,6 +10,7 @@ import {
 } from "./styled"
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
+import LoginForm from "features/AccountMenu/LoginForm"
 
 const TutorialLink = () => {
   return (
@@ -34,22 +35,25 @@ const OpenCloseIcon = ({ onClick, show = false }) => {
 
 const MobileNavbar = () => {
   const [showNav, setShowNav] = useState(false)
-  function handleLogin() {}
-  function handleSignup() {}
+  const [mode, setMode] = useState(null)
+
   function toggleShowNav() {
     setShowNav((cur) => !cur)
   }
 
   return (
-    <NavbarContainer>
-      <h2>Work Cafe | Taiwan</h2>
-      <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
-      <NavLinks show={showNav}>
-        <TutorialLink />
-        <CtaButton onClick={handleSignup}>註冊</CtaButton>
-        <Button onClick={handleLogin}>登入</Button>
-      </NavLinks>
-    </NavbarContainer>
+    <>
+      <NavbarContainer>
+        <h2>Work Cafe | Taiwan</h2>
+        <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
+        <NavLinks show={showNav}>
+          <TutorialLink />
+          <CtaButton onClick={() => setMode('signup')}>註冊</CtaButton>
+          <Button onClick={() => setMode('login')}>登入</Button>
+        </NavLinks>
+      </NavbarContainer>
+      <LoginForm mode={mode} setMode={setMode} onClose={() => setMode(null)} />
+    </>
   )
 }
 
