@@ -15,9 +15,14 @@ import MenuIcon from "@mui/icons-material/Menu"
 
 const AppBar = () => {
   const [open, setOpen] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  function toggleMenu() {
+    setShowMenu(cur => !cur)
   }
   return (
     <>
@@ -26,7 +31,7 @@ const AppBar = () => {
           <span>我們需要你的幫助，讓這個網站更好用！</span>
           <HelpButton onClick={() => setOpen(true)}>怎麼幫？</HelpButton>
         </HelpUs>
-        <Content>
+        <Content showMenu={showMenu}>
           <h2>Work Cafe | Taiwan</h2>
           <div class="menu">
             <Link
@@ -37,10 +42,12 @@ const AppBar = () => {
               <AutoStoriesIcon fontSize="small" />
               <span>教學文件</span>
             </Link>
-            <AccountMenu />
+            <div className="action-button">
+              <AccountMenu />
+            </div>
           </div>
           <div class="hamburger">
-            <MenuIcon sx={{ color: "#757575", cursor: "pointer" }} />
+            <MenuIcon sx={{ color: "#757575", cursor: "pointer" }} onClick={toggleMenu} />
           </div>
         </Content>
       </Container>
