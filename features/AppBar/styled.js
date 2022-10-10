@@ -7,42 +7,6 @@ export const Container = styled.div`
   z-index: 10;
 `
 
-export const HelpUs = styled.div`
-  text-align: center;
-  background-color: #A6A6A6;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-
-  span {
-    color: #fff;
-  }
-
-  @media ${devices.iphoneSE} {
-    height: 36px;
-    font-size: 12px;
-  }
-`
-
-export const HelpButton = styled.button`
-  background: none;
-  border: none;
-  font-weight: 500;
-  font-size: 14px;
-  text-decoration:underline;
-  cursor: pointer;
-
-  &:hover {
-    color: #555;
-  }
-
-  @media ${devices.iphoneSE} {
-    font-size: 12px;
-  }
-`
-
 export const Link = styled.a`
   display: inline-flex;
   align-items: center;

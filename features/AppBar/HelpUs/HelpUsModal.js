@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@mui/material"
 
-const HelpUsImprove = ({ open, onClose }) => {
+const HelpUsModal = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>幫助我們做得更好</DialogTitle>
@@ -35,4 +35,4 @@ const HelpUsImprove = ({ open, onClose }) => {
   )
 }
 
-export default HelpUsImprove
+export default HelpUsModal
