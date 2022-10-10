@@ -27,7 +27,7 @@ export const Container = styled.div`
     top: auto;
     bottom: 0;
     width: 100%;
-    height: calc(100vh - 160px);
+    height: 100vh;
   }
 `
 
