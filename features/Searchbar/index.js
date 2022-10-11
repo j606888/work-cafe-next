@@ -10,20 +10,11 @@ import {
 import { Divider, Tooltip } from "@mui/material"
 import useSWR from "swr"
 import { fetcher } from "api"
-import { Container, SearchBox, Input, Options, Option } from "./styled"
+import { Container, SearchBox, Input, Options, Option, SearchButton } from "./styled"
 import { useEffect } from "react"
 import { useRef } from "react"
-
-const pointer = {
-  cursor: "pointer",
-}
-
-const searchIconStyle = {
-  backgroundColor: '#757575',
-  color: '#fff',
-  padding: '6px',
-  borderRadius: '8px',
-}
+import useKeyword from "stores/useKeyword"
+import useLocationParamsStore from "stores/useLocationParamsStore"
 
 const CityOption = ({ type, name, count, address }) => {
   return type === "store" ? (
@@ -48,11 +39,13 @@ const CityOption = ({ type, name, count, address }) => {
 }
 
 const Searchbar = ({ onSearch = () => {} }) => {
-  const [keyword, setKeyword] = useState("")
+  const keyword = useKeyword(state => state.keyword)
+  const setKeyword = useKeyword(state => state.setKeyword)
   const [isOnComposition, setIsOnComposition] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const resultContainer = useRef(null)
+  const clear = useLocationParamsStore(state => state.clear)
 
   const { data } = useSWR(
     keyword.length > 0 ? ["/stores/hint", { keyword }] : null,
@@ -83,6 +76,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
     setShowOptions(false)
     setKeyword("")
     onSearch("")
+    clear()
   }
 
   function handleChange(e) {
@@ -153,11 +147,15 @@ const Searchbar = ({ onSearch = () => {} }) => {
         {keyword && (
           <>
             <Tooltip title="清除" onClick={handleClear}>
-              <ClearIcon style={pointer} sx={{ color: '#757575'}}/>
+              <SearchButton noBg>
+                <ClearIcon />
+              </SearchButton>
             </Tooltip>
           </>
         )}
-        <SearchIcon style={pointer} onClick={handleSearch} sx={searchIconStyle} />
+        <SearchButton onClick={handleSearch}>
+          <SearchIcon />
+        </SearchButton>
       </SearchBox>
       <Options hasResult={hasResult}>
         {options.map((option, index) => (

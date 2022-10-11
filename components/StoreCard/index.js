@@ -1,12 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 import ImageSlider from "./ImageSlider"
-import StarIcon from "@mui/icons-material/Star"
-import _ from "lodash"
 
 const Container = styled.div`
-  width: 280px;
-  height: 320px;
+  width: 239px;
   background-color: #fff;
 
   h3 {
@@ -14,6 +11,7 @@ const Container = styled.div`
     font-size: 16px;
   }
 `
+
 const MainInfo = styled.div`
   display: flex;
   align-items: center;
@@ -23,6 +21,12 @@ const MainInfo = styled.div`
   div {
     display: flex;
     align-items: center;
+  }
+
+  h3 {
+    max-width: 70%;
+    overflow: hidden;
+    white-space: nowrap;
   }
 `
 
@@ -41,6 +45,9 @@ const Address = styled.p`
   color: #999;
   margin: 0;
   font-size: 12px;
+  max-width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
 `
 
 const StoreCard = ({
@@ -70,17 +77,15 @@ const StoreCard = ({
     >
       <ImageSlider images={images} />
       <MainInfo>
-        <h3>{_.truncate(name)}</h3>
+        <h3>{name}</h3>
         <div>
-          <StarIcon sx={{ fontSize: 18 }} />
-          <span>
-            {rating}({reviewsCount})
-          </span>
+            <img src='/icon-good.svg' alt='icon-good' />
+            <span>&nbsp;&nbsp;{reviewsCount}</span>
         </div>
       </MainInfo>
       <SecondInfo>
-        <Address>{shortAddress}</Address>
         <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
+        <Address>{shortAddress}</Address>
       </SecondInfo>
     </Container>
   )
