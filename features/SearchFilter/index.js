@@ -18,6 +18,7 @@ import _ from "lodash"
 import useSWR from "swr"
 import TagsPicker from "./TagsPicker"
 import AdvancedPicker from "./AdvancedPicker"
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -34,6 +35,19 @@ const Container = styled.div`
 
   &:hover {
     background-color: #f6f6f6;
+  }
+  @media ${devices.iphoneSE} {
+    display: none;
+  }
+`
+
+const SmallContainer = styled(Container)`
+  display: none;
+  width: 44px;
+  height: 44px;
+
+  @media ${devices.iphoneSE} {
+    display: flex;
   }
 `
 
@@ -97,6 +111,9 @@ const SearchFilter = ({ onChange = () => {} }) => {
         <Container onClick={() => setOpen(true)}>
           篩選條件
         </Container>
+        <SmallContainer onClick={() => setOpen(true)}>
+          <FilterAltIcon />
+        </SmallContainer>
       </Badge>
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>篩選</DialogTitle>

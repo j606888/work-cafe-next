@@ -10,22 +10,11 @@ import {
 import { Divider, Tooltip } from "@mui/material"
 import useSWR from "swr"
 import { fetcher } from "api"
-import { Container, SearchBox, Input, Options, Option } from "./styled"
+import { Container, SearchBox, Input, Options, Option, SearchButton } from "./styled"
 import { useEffect } from "react"
 import { useRef } from "react"
 import useKeyword from "stores/useKeyword"
 import useLocationParamsStore from "stores/useLocationParamsStore"
-
-const pointer = {
-  cursor: "pointer",
-}
-
-const searchIconStyle = {
-  backgroundColor: '#757575',
-  color: '#fff',
-  padding: '6px',
-  borderRadius: '8px',
-}
 
 const CityOption = ({ type, name, count, address }) => {
   return type === "store" ? (
@@ -158,11 +147,15 @@ const Searchbar = ({ onSearch = () => {} }) => {
         {keyword && (
           <>
             <Tooltip title="清除" onClick={handleClear}>
-              <ClearIcon style={pointer} sx={{ color: '#757575'}}/>
+              <SearchButton noBg>
+                <ClearIcon />
+              </SearchButton>
             </Tooltip>
           </>
         )}
-        <SearchIcon style={pointer} onClick={handleSearch} sx={searchIconStyle} />
+        <SearchButton onClick={handleSearch}>
+          <SearchIcon />
+        </SearchButton>
       </SearchBox>
       <Options hasResult={hasResult}>
         {options.map((option, index) => (

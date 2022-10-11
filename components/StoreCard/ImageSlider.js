@@ -30,8 +30,8 @@ const ArrowContainer = styled.div`
 
 const Container = styled.div`
   position: relative;
-  width: 280px;
-  height: 250px;
+  width: 240px;
+  height: 240px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,8 +51,8 @@ const Container = styled.div`
 `
 
 const Img = styled.img`
-  width: 280px;
-  height: 250px;
+  width: 240px;
+  height: 240px;
   object-fit: cover;
 `
 

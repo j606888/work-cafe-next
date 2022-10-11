@@ -1,15 +1,15 @@
 import * as React from "react"
-import { Container } from "./styled"
+import { Container, StoreCount } from "./styled"
 import useStoreStore from "stores/useStoreStore"
 import StoreCard from "components/StoreCard"
 
-export default function StoreList({ stores = [], onClick=() => {} }) {
+export default function StoreList({ stores = [], onClick = () => {} }) {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
 
   const handleMouseEnter = (placeId) => {
-    console.log({ placeId });
+    console.log({ placeId })
     setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
@@ -25,20 +25,23 @@ export default function StoreList({ stores = [], onClick=() => {} }) {
   }
 
   return (
-    <Container>
-      {stores.map((store) => (
-        <StoreCard
-          key={store.placeId}
-          images={store.photos}
-          shortAddress={store.address}
-          reviewsCount={store.userRatingsTotal}
-          {...store}
-          onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          focus={store.placeId === placeId}
-        />
-      ))}
-    </Container>
+    <>
+      <StoreCount>{stores.length} 間咖啡店</StoreCount>
+      <Container>
+        {stores.map((store) => (
+          <StoreCard
+            key={store.placeId}
+            images={store.photos}
+            shortAddress={store.address}
+            reviewsCount={store.userRatingsTotal}
+            {...store}
+            onClick={handleClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            focus={store.placeId === placeId}
+          />
+        ))}
+      </Container>
+    </>
   )
 }

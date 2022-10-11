@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-
+import { devices } from "constant/styled-theme"
 
 export const Container = styled.div`
   position: relative;
@@ -7,6 +7,7 @@ export const Container = styled.div`
 `
 
 export const SearchBox = styled.div`
+  box-sizing: border-box;
   background: #fff;
   border: 1px solid #757575;
   border-radius: 12px;
@@ -14,7 +15,12 @@ export const SearchBox = styled.div`
   padding: 0 8px 0 1.2rem;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 9px;
+
+  @media ${devices.iphoneSE} {
+    height: 44px;
+    padding-left: 16px;
+  }
 `
 
 export const Input = styled.input`
@@ -24,6 +30,10 @@ export const Input = styled.input`
   outline: none;
   padding: 240x 20px;
   font-size: 16px;
+
+  @media ${devices.iphoneSE} {
+    font-size: 14px;
+  }
 `
 
 export const Options = styled.div`
@@ -82,5 +92,30 @@ export const Option = styled.div`
 
   .hidden {
     overflow: hidden;
+  }
+`
+
+export const SearchButton = styled.div`
+  ${({ noBg }) => noBg ? null : `
+    background-color:#757575;
+  `}
+  ${({ noBg }) => noBg ? `color: #757575;` : `
+    color: #fff;
+  `}
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  @media ${devices.iphoneSE} {
+    width: 28px;
+    height: 28px;
+
+    svg {
+      font-size: 20px;
+    }
   }
 `
