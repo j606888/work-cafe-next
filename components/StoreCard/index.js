@@ -1,14 +1,21 @@
 import React from "react"
 import styled from "styled-components"
 import ImageSlider from "./ImageSlider"
+import { devices } from "constant/styled-theme"
+
 
 const Container = styled.div`
   width: 239px;
   background-color: #fff;
+  position: relative;
 
   h3 {
     margin: 0;
     font-size: 16px;
+  }
+
+  @media ${devices.iphoneSE} {
+    width: 154px;
   }
 `
 
@@ -27,6 +34,15 @@ const MainInfo = styled.div`
     max-width: 70%;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  @media ${devices.iphoneSE} {
+    flex-direction: column;
+    align-items: flex-start;
+
+    h3 {
+      max-width: 100%;
+    }
   }
 `
 
@@ -48,6 +64,24 @@ const Address = styled.p`
   max-width: 80%;
   overflow: hidden;
   white-space: nowrap;
+`
+
+const GoodSpan = styled.div`
+  @media ${devices.iphoneSE} {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    z-index: 10;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 4px 10px;
+
+    font-size: 12px;
+
+    img {
+      width: 14px;
+    }
+  }
 `
 
 const StoreCard = ({
@@ -78,10 +112,10 @@ const StoreCard = ({
       <ImageSlider images={images} />
       <MainInfo>
         <h3>{name}</h3>
-        <div>
+        <GoodSpan>
             <img src='/icon-good.svg' alt='icon-good' />
             <span>&nbsp;&nbsp;{reviewsCount}</span>
-        </div>
+        </GoodSpan>
       </MainInfo>
       <SecondInfo>
         <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
