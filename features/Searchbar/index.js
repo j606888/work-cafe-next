@@ -13,6 +13,7 @@ import { fetcher } from "api"
 import { Container, SearchBox, Input, Options, Option } from "./styled"
 import { useEffect } from "react"
 import { useRef } from "react"
+import useKeyword from "stores/useKeyword"
 
 const pointer = {
   cursor: "pointer",
@@ -48,7 +49,8 @@ const CityOption = ({ type, name, count, address }) => {
 }
 
 const Searchbar = ({ onSearch = () => {} }) => {
-  const [keyword, setKeyword] = useState("")
+  const keyword = useKeyword(state => state.keyword)
+  const setKeyword = useKeyword(state => state.setKeyword)
   const [isOnComposition, setIsOnComposition] = useState(false)
   const [showOptions, setShowOptions] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)

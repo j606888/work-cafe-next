@@ -20,13 +20,16 @@ import TagsPicker from "./TagsPicker"
 import AdvancedPicker from "./AdvancedPicker"
 
 const Container = styled.div`
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
+  height: 52px;
+  padding: 0 18px;
   background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  color: #757575;
+  border: 1px solid #757575;
+  border-radius: 12px;
   cursor: pointer;
 
   &:hover {
@@ -92,8 +95,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
     <>
       <Badge badgeContent={badgeCount} color="primary">
         <Container onClick={() => setOpen(true)}>
-          篩選
-          <FilterAltIcon />
+          篩選條件
         </Container>
       </Badge>
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>

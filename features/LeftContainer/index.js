@@ -14,6 +14,7 @@ import useInitMap from "hooks/useInitMap"
 import useFindMe from "hooks/useFindMe"
 import { devices } from "constant/styled-theme"
 import WelcomeBlock from "./WelcomeBlock/WelcomeBlock"
+import ShortBlock from "./ShortBlock/ShortBlock"
 
 const Container = styled.div`
   width: 628px;
@@ -82,13 +83,20 @@ const LeftContainer = () => {
     searchHere(latLng)
   }
 
-  return (
-    <Container>
+  const searchBlock =
+    data && data.length > 0 ? (
+      <ShortBlock onSearch={handleSearch} onFilterChange={handleFilterChange} />
+    ) : (
       <WelcomeBlock
         loading={loading}
         onSearch={handleSearch}
         onNearbySearch={handleNearbySearch}
       />
+    )
+
+  return (
+    <Container>
+      {searchBlock}
       {data && data.length === 0 && <NoMatch />}
       {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
       {placeId && (
