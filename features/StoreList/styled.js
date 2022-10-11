@@ -12,16 +12,16 @@ export const Container = styled.div`
   padding: 0 56px;
 
   @media ${devices.iphoneSE} {
-    flex-wrap: nowrap;
+    flex-wrap: initial;
+    justify-content: flex-start;
     width: 100%;
-    overflow: scroll;
+    overflow-x: scroll;
     position: fixed;
     left: 0;
     bottom: 0;
-    padding: 12px 24px;
+    padding: 12px 12px;
     gap: 10px;
     background-color: #ffffff;
-    z-index: 1;
   }
 `
 
