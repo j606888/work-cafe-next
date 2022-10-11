@@ -14,6 +14,7 @@ import { Container, SearchBox, Input, Options, Option } from "./styled"
 import { useEffect } from "react"
 import { useRef } from "react"
 import useKeyword from "stores/useKeyword"
+import useLocationParamsStore from "stores/useLocationParamsStore"
 
 const pointer = {
   cursor: "pointer",
@@ -55,6 +56,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
   const [showOptions, setShowOptions] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const resultContainer = useRef(null)
+  const clear = useLocationParamsStore(state => state.clear)
 
   const { data } = useSWR(
     keyword.length > 0 ? ["/stores/hint", { keyword }] : null,
@@ -85,6 +87,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
     setShowOptions(false)
     setKeyword("")
     onSearch("")
+    clear()
   }
 
   function handleChange(e) {

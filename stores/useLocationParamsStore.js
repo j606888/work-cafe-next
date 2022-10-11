@@ -23,6 +23,7 @@ const useLocationParamsStore = create((set, get) => ({
     }
     set({ params: newParams })
   },
+  clear: () => set({ params: {} })
 }))
 
 export default useLocationParamsStore
