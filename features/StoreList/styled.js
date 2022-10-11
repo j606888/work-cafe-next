@@ -15,7 +15,7 @@ export const Container = styled.div`
     flex-wrap: nowrap;
     width: 100%;
     overflow: scroll;
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     padding: 25px 24px;
@@ -30,4 +30,8 @@ export const StoreCount = styled.p`
   font-size: 16px;
   color: #757575;
   margin-top: 0;
+
+  @media ${devices.iphoneSE} {
+    display: none;
+  }
 `
