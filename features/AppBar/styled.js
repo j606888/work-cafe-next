@@ -1,6 +1,11 @@
 import styled from "styled-components"
 import { devices } from 'constant/styled-theme'
 
+let vh
+if (typeof window !== 'undefined') {
+  vh = window.innerHeight * 0.01;
+}
+
 export const Container = styled.div`
   position: sticky;
   top: 0;
@@ -57,7 +62,7 @@ export const NavLinks = styled.div`
     top: 64px;
     left: 0;
     width: 100%;
-    height: calc(var(--vh, 1vh) * 100 - 64px - 36px);
+    height: calc(${vh * 100}px - 64px - 36px);
     background-color: #FFFFFF;
     flex-direction: column;
 
