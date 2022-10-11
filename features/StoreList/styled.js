@@ -18,7 +18,7 @@ export const Container = styled.div`
     position: fixed;
     left: 0;
     bottom: 0;
-    padding: 25px 24px;
+    padding: 12px 24px;
     gap: 10px;
     background-color: #ffffff;
     z-index: 1;

@@ -50,6 +50,11 @@ const SecondInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media ${devices.iphoneSE} {
+    width: 90%;
+    white-space: nowrap;
+  }
 `
 
 const OpenStatus = styled.div`
