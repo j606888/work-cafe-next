@@ -19,7 +19,6 @@ import ShortBlock from "./ShortBlock/ShortBlock"
 const Container = styled.div`
   width: 628px;
   position: relative;
-  padding: 1px 0;
 
   @media ${devices.iphoneSE} {
     width: 100%;
