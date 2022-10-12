@@ -6,6 +6,7 @@ import Header from "./Header/Header";
 import TagList from "./TagList/TagList";
 import TimeAndAddress from "./TimeAndAddress/TimeAndAddress";
 import Recommend from "./Recommend/Recommend";
+import ImagePreview from "./ImagePreview/ImagePreview";
 
 const Container = styled.div``
 
@@ -17,7 +18,7 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
   if (!store) return <Skeleton />
 
   return <Container>
-    <Header name={store.name} />
+    <Header name={store.name} onClick={onClose}/>
     <TagList />
     <TimeAndAddress
       address={store.address}
@@ -28,6 +29,7 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
       url={store.url}
     />
     <Recommend />
+    <ImagePreview photos={store.photos} />
   </Container>
 }
 

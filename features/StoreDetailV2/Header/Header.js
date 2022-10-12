@@ -58,10 +58,10 @@ const Button = styled.button`
   }
 `
 
-const Header = ({ name }) => {
+const Header = ({ name, onClick }) => {
   return (
     <Container>
-      <BackButton>
+      <BackButton onClick={onClick}>
         <ArrowBackIcon />
       </BackButton>
       <h3>{name}</h3>
