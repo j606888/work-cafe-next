@@ -15,6 +15,7 @@ import useFindMe from "hooks/useFindMe"
 import { devices } from "constant/styled-theme"
 import WelcomeBlock from "./WelcomeBlock/WelcomeBlock"
 import ShortBlock from "./ShortBlock/ShortBlock"
+import StoreDetailV2 from "features/StoreDetailV2"
 
 const Container = styled.div`
   width: 628px;
@@ -103,7 +104,7 @@ const LeftContainer = () => {
       {data && data.length === 0 && <NoMatch />}
       {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
       {placeId && (
-        <StoreDetail
+        <StoreDetailV2
           placeId={placeId}
           key={placeId}
           canBack={!!data && data.length !== 0}
