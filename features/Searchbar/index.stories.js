@@ -1,5 +1,4 @@
 import Searchbar from "./index"
-import { rest } from "msw"
 
 export default {
   component: Searchbar,
@@ -46,14 +45,4 @@ const mockResponse = {
       count: 1,
     },
   ],
-}
-
-Default.parameters = {
-  msw: {
-    handlers: [
-      rest.get("/stores/hint", (_req, res, ctx) => {
-        return res(ctx.json(mockResponse))
-      }),
-    ],
-  },
 }
