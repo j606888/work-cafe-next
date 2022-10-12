@@ -1,9 +1,4 @@
-import { initialize, mswDecorator } from 'msw-storybook-addon'
 import { RouterContext } from "next/dist/shared/lib/router-context"; //
-
-initialize()
-
-export const decorators = [mswDecorator]
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

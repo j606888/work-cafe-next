@@ -15,6 +15,7 @@ import { useEffect } from "react"
 import { useRef } from "react"
 import useKeyword from "stores/useKeyword"
 import useLocationParamsStore from "stores/useLocationParamsStore"
+import useStoreStore from "stores/useStoreStore"
 
 const CityOption = ({ type, name, count, address }) => {
   return type === "store" ? (
@@ -46,6 +47,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const resultContainer = useRef(null)
   const clear = useLocationParamsStore(state => state.clear)
+  const placeId = useStoreStore(state => state.placeId)
 
   const { data } = useSWR(
     keyword.length > 0 ? ["/stores/hint", { keyword }] : null,
@@ -132,7 +134,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
   }, [focusedIndex])
 
   return (
-    <Container onBlur={handleBlue}>
+    <Container onBlur={handleBlue} hide={!!placeId}>
       <SearchBox hasResult={hasResult}>
         <Input
           value={keyword}

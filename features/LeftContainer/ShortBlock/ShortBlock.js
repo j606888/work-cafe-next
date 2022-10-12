@@ -16,11 +16,13 @@ const Container = styled.div`
   }
 `
 
-const ShortBlock = ({ onSearch, onFilterChange }) => {
+const ShortBlock = ({ onSearch, onFilterChange, showFilter = true }) => {
   return (
     <Container>
       <Searchbar onSearch={onSearch} />
-      <SearchFilter onChange={onFilterChange} />
+      {showFilter && (
+        <SearchFilter onChange={onFilterChange} />
+      )}
     </Container>
   )
 }

@@ -53,8 +53,6 @@
     "eslint": "8.20.0",
     "eslint-config-next": "12.2.2",
     "eslint-plugin-storybook": "^0.6.4",
-    "msw": "0.35.0",
-    "msw-storybook-addon": "^1.6.3",
     "storybook-addon-next-router": "^4.0.0"
   }
 }
