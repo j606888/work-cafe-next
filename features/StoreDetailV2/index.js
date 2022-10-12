@@ -7,11 +7,15 @@ import TagList from "./TagList/TagList";
 import TimeAndAddress from "./TimeAndAddress/TimeAndAddress";
 import Recommend from "./Recommend/Recommend";
 import ImagePreview from "./ImagePreview/ImagePreview";
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   background-color: #fff;
-
   padding-bottom: 1px;
+
+  @media ${devices.iphoneSE} {
+    min-height: 100vh;
+  }
 `
 
 const StoreDetailV2 = ({ placeId, onClose }) => {

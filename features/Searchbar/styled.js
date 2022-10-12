@@ -4,6 +4,12 @@ import { devices } from "constant/styled-theme"
 export const Container = styled.div`
   position: relative;
   width: 100%;
+
+  @media ${devices.iphoneSE} {
+    ${({ hide }) => hide && `
+      display: none;
+    `}
+  }
 `
 
 export const SearchBox = styled.div`
