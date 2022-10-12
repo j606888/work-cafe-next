@@ -84,7 +84,11 @@ const LeftContainer = () => {
 
   const searchBlock =
     data && data.length > 0 ? (
-      <ShortBlock onSearch={handleSearch} onFilterChange={handleFilterChange} />
+      <ShortBlock
+        onSearch={handleSearch}
+        onFilterChange={handleFilterChange}
+        showFilter={!placeId}
+      />
     ) : (
       <WelcomeBlock
         loading={loading}
