@@ -3,17 +3,30 @@ import styled from "styled-components"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import CircleIcon from "@mui/icons-material/Circle"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   display: flex;
   align-items: start;
   margin: 0 56px;
+  position: relative;
 
   h3 {
     margin: 0 auto 0 1rem;
     font-size: 24px;
     color: #757575;
     max-width: 50%;
+  }
+
+  @media ${devices.iphoneSE} {
+    margin: 0 24px;
+    flex-direction: column;
+    gap: 12px;
+
+    h3 {
+      font-size: 20px;
+      margin: 0;
+    }
   }
 `
 
@@ -41,6 +54,13 @@ const BackButton = styled.button`
 const ButtonGroup = styled.div`
   display: flex;
   gap: 8px;
+
+  @media ${devices.iphoneSE} {
+    position: absolute;
+    top: 0;
+    right: 0;
+    gap: 0;
+  }
 `
 
 const Button = styled.button`
@@ -56,6 +76,18 @@ const Button = styled.button`
   svg {
     color: #757575;
   }
+
+  @media ${devices.iphoneSE} {
+    border: none;
+
+    span {
+      display: none;
+    }
+
+    svg {
+      font-size: 32px;
+    }
+  }
 `
 
 const Header = ({ name, onClick }) => {
@@ -68,11 +100,11 @@ const Header = ({ name, onClick }) => {
       <ButtonGroup>
         <Button>
           <CircleIcon />
-          收藏
+          <span>收藏</span>
         </Button>
         <Button>
           <CircleIcon />
-          分享
+          <span>分享</span>
         </Button>
         <Button>
           <MoreVertIcon />

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   margin: 2rem 56px;
@@ -11,6 +12,14 @@ const Container = styled.div`
     "A B"
     "A C";
   position: relative;
+
+  @media ${devices.iphoneSE} {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin: 1rem 28px 1rem 28px;
+    
+  }
 `
 
 const Box = styled.div`
@@ -22,6 +31,13 @@ const Box = styled.div`
     width: 100%;
     max-height: 100%;
     object-fit: cover;
+  }
+
+  @media ${devices.iphoneSE} {
+    width: 240px;
+    height: 240px;
+    flex: none;
+    border-radius: 0 !important;
   }
 `
 
@@ -50,6 +66,10 @@ const Button = styled.button`
   padding: 0 12px;
   border: 1px solid #757575;
   cursor: pointer;
+
+  @media ${devices.iphoneSE} {
+    display: none;
+  }
 `
 
 const ImagePreview = ({ photos=[] }) => {

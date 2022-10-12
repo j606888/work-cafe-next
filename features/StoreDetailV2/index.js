@@ -8,7 +8,11 @@ import TimeAndAddress from "./TimeAndAddress/TimeAndAddress";
 import Recommend from "./Recommend/Recommend";
 import ImagePreview from "./ImagePreview/ImagePreview";
 
-const Container = styled.div``
+const Container = styled.div`
+  background-color: #fff;
+
+  padding-bottom: 1px;
+`
 
 const StoreDetailV2 = ({ placeId, onClose }) => {
   const { data: store, mutate: mutateStore } = useSWR(

@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   margin-left: 104px;
@@ -7,6 +8,11 @@ const Container = styled.div`
   display: flex;
   gap: 2.5rem;
   margin-top: 1rem;
+
+  @media ${devices.iphoneSE} {
+    margin: 0 24px;
+    gap: 1.2rem;
+  }
 `
 
 const BlockContainer = styled.div`
@@ -17,10 +23,21 @@ const BlockContainer = styled.div`
   img {
     width: 42px;
   }
+
+  @media ${devices.iphoneSE} {
+    gap: 0.6rem;
+    img {
+      width: 32px;
+    }
+  }
 `
 const Number = styled.span`
   font-size: 32px;
   font-weight: 500;
+
+  @media ${devices.iphoneSE} {
+    font-size: 24px;
+  }
 `
 
 const Text = styled.span`

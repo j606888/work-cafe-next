@@ -2,10 +2,16 @@ import React from "react"
 import styled from "styled-components"
 import CircleIcon from "@mui/icons-material/Circle"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   margin-left: 104px;
   margin-top: 12px;
+
+  @media ${devices.iphoneSE} {
+    margin: 0 24px 12px;
+  }
+
 `
 
 const ListItem = styled.div`
@@ -17,6 +23,12 @@ const ListItem = styled.div`
 
   a {
     color: #757575;
+  }
+
+  @media ${devices.iphoneSE} {
+    a {
+      display: none;
+    }
   }
 `
 
@@ -31,7 +43,7 @@ const TimeAndAddress = ({ address, isOpenNow, openingHours, url }) => {
       </ListItem>
       <ListItem>
         <CircleIcon />
-        <span>{address}・</span>
+        <span>{address} </span>
         <a href={url} target="_blank" rel="noreferrer">
           開啟Google Map導航
         </a>
