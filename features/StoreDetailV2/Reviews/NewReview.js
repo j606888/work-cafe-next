@@ -3,12 +3,17 @@ import ReviewForm from "features/ReviewForm"
 import React from "react"
 import { useState } from "react"
 import styled from "styled-components"
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
   margin: 28px 0;
+
+  @media ${devices.iphoneSE} {
+    margin: 24px 0;
+  }
 `
 
 const FakeTextBox = styled.div`
@@ -20,6 +25,11 @@ const FakeTextBox = styled.div`
   padding: 0 12px;
   border-radius: 12px;
   cursor: pointer;
+
+  @media ${devices.iphoneSE} {
+    height: 36px;
+    font-size: 12px;
+  }
 `
 
 const NewReview = ({ placeId, name, onSave }) => {

@@ -1,6 +1,7 @@
 import { Avatar } from "@mui/material"
 import React from "react"
 import styled, { css } from "styled-components"
+import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
   display: flex;
@@ -26,15 +27,36 @@ const Content = styled.div`
   p {
     font-size: 14px;
   }
+
+  @media ${devices.iphoneSE} {
+    h6 {
+      font-size: 14px;
+    }
+
+    span {
+      font-size: 10px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+
+    max-width: calc(100% - 40px);
+  }
 `
 
 const ImageList = styled.div`
   display: flex;
   gap: 8px;
+
+  @media ${devices.iphoneSE} {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
 `
 
 const ImageBox = styled.div`
-  position: relative;
   height: 120px;
   width: 120px;
   border-radius: 12px;
@@ -52,6 +74,10 @@ const ImageBox = styled.div`
       transform: translate(-50%, -50%);
     }
   `}
+
+  @media ${devices.iphoneSE} {
+    flex: none;
+  }
 `
 
 const WorkCafeReviews = () => {

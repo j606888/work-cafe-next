@@ -1,17 +1,10 @@
 import { Divider } from "@mui/material"
 import React from "react"
 import { useState } from "react"
-import styled, { css } from "styled-components"
 import Chooser from "./Chooser"
 import NewReview from "./NewReview"
 import WorkCafeReviews from "./WorkCafeReviews"
-
-const Container = styled.div`
-  margin: 0 56px;
-  color: #757575;
-
-  font-family: "Noto Sans", sans-serif;
-`
+import { Container } from './styled'
 
 const Reviews = ({ placeId, name, onSave }) => {
   const [active, setActive] = useState("workCafe")

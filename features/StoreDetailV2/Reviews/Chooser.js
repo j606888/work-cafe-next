@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 
 const Container = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 `
 
 const WordButton = styled.button`
