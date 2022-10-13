@@ -52,7 +52,7 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
     />
     <Recommend good={store.recommendYes} bad={store.recommendNo} />
     <ImagePreview photos={store.photos} />
-    <Reviews placeId={store.placeId} name={store.name} onSave={handleReviewSave} />
+    <Reviews placeId={store.placeId} name={store.name} onSave={handleReviewSave} googleReviews={store.reviews} />
   </Container>
 }
 

@@ -7,8 +7,9 @@ import WorkCafeReviews from "./WorkCafeReviews"
 import { Container } from './styled'
 import useSWR from "swr"
 import Skeleton from "components/Skeleton"
+import GoogleReviewCard from "./GoogleReviewCard"
 
-const Reviews = ({ placeId, name, onSave }) => {
+const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
   const [active, setActive] = useState("workCafe")
   const { data: reviews, mutate: reviewsMutate } = useSWR(
     `/stores/${placeId}/reviews`
@@ -45,6 +46,15 @@ const Reviews = ({ placeId, name, onSave }) => {
           ))}
         </>
       )}
+      {
+        active === 'googleMap' && (
+          <>
+            {googleReviews.map(review => (
+              <GoogleReviewCard key={review.time} {...review }/>
+            ))}
+          </>
+        )
+      }
     </Container>
   )
 }

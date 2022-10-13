@@ -61,6 +61,7 @@ const ImageBox = styled.div`
   width: 120px;
   border-radius: 12px;
   background-color: #EDEDED;
+  position: relative;
 
   ${({ more }) => more && css`
     background-color: #bbb;
@@ -83,7 +84,7 @@ const ImageBox = styled.div`
 const WorkCafeReviews = ({ userName, userAvatarUrl, createdAt, description, }) => {
   return (
     <Container>
-      <Avatar>{userAvatarUrl}</Avatar>
+      <Avatar alt={userName} src={userAvatarUrl}/>
       <Content>
         <h6>{userName}</h6>
         <span>{_dateString(createdAt)}</span>
