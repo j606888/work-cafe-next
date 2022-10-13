@@ -1,14 +1,14 @@
 import React from "react"
 import styled from "styled-components"
 import useSWR from "swr"
-import Skeleton from "components/Skeleton";
-import Header from "./Header/Header";
-import TagList from "../../components/TagList/TagList";
-import TimeAndAddress from "./TimeAndAddress/TimeAndAddress";
-import Recommend from "./Recommend/Recommend";
-import ImagePreview from "./ImagePreview/ImagePreview";
+import Skeleton from "components/Skeleton"
+import Header from "./Header/Header"
+import TagList from "../../components/TagList/TagList"
+import TimeAndAddress from "./TimeAndAddress/TimeAndAddress"
+import Recommend from "./Recommend/Recommend"
+import ImagePreview from "./ImagePreview/ImagePreview"
 import { devices } from "constant/styled-theme"
-import Reviews from "./Reviews/Reviews";
+import Reviews from "./Reviews/Reviews"
 
 const Container = styled.div`
   background-color: #fff;
@@ -27,9 +27,7 @@ const TagListContainer = styled.div`
   }
 `
 const StoreDetailV2 = ({ placeId, onClose }) => {
-  const { data: store, mutate: mutateStore } = useSWR(
-    `/stores/${placeId}`
-  )
+  const { data: store, mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   function handleReviewSave() {
     mutateStore()
@@ -37,23 +35,30 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
 
   if (!store) return <Skeleton />
 
-  return <Container>
-    <Header name={store.name} onClick={onClose}/>
-    <TagListContainer>
-      <TagList tags={store.tags}/>
-    </TagListContainer>
-    <TimeAndAddress
-      address={store.address}
-      // website={store.website}
-      // phone={store.phone}
-      isOpenNow={store.isOpenNow}
-      openingHours={store.openingHours}
-      url={store.url}
-    />
-    <Recommend good={store.recommendYes} bad={store.recommendNo} />
-    <ImagePreview photos={store.photos} />
-    <Reviews placeId={store.placeId} name={store.name} onSave={handleReviewSave} googleReviews={store.reviews} />
-  </Container>
+  return (
+    <Container>
+      <Header name={store.name} onClick={onClose} placeId={store.placeId} />
+      <TagListContainer>
+        <TagList tags={store.tags} />
+      </TagListContainer>
+      <TimeAndAddress
+        address={store.address}
+        // website={store.website}
+        // phone={store.phone}
+        isOpenNow={store.isOpenNow}
+        openingHours={store.openingHours}
+        url={store.url}
+      />
+      <Recommend good={store.recommendYes} bad={store.recommendNo} />
+      <ImagePreview photos={store.photos} />
+      <Reviews
+        placeId={store.placeId}
+        name={store.name}
+        onSave={handleReviewSave}
+        googleReviews={store.reviews}
+      />
+    </Container>
+  )
 }
 
 export default StoreDetailV2

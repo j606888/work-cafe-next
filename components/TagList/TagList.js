@@ -43,8 +43,8 @@ const MOCK_TAGS = [
 const TagList = ({ tags = MOCK_TAGS }) => {
   return (
     <Container>
-      {tags.map((tag) => (
-        <Tag key={tag.name}>
+      {tags.map((tag, index) => (
+        <Tag key={index}>
           {tag.name} ({tag.count})
         </Tag>
       ))}

@@ -63,7 +63,7 @@ const GoogleReviewCard = ({
   return (
     <>
       <Container>
-        <Avatar alt={authorName} src={authorUrl}/>
+        <Avatar>{authorName[0]}</Avatar>
         <Content>
           <Main>
             <h6>{authorName}</h6>
