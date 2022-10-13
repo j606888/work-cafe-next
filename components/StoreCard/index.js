@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import ImageSlider from "./ImageSlider"
 import { devices } from "constant/styled-theme"
+import TagList from "components/TagList/TagList"
 
 
 const Container = styled.div`
@@ -97,6 +98,7 @@ const StoreCard = ({
   reviewsCount,
   isOpen,
   images = [],
+  tags = [],
   onClick = () => {},
   onMouseEnter = () => {},
   onMouseLeave = () => {},
@@ -126,6 +128,7 @@ const StoreCard = ({
         <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
         <Address>{shortAddress}</Address>
       </SecondInfo>
+      <TagList tags={tags}/>
     </Container>
   )
 }

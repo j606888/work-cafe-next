@@ -3,13 +3,18 @@ import styled from "styled-components"
 import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
-  margin-left: 104px;
   display: flex;
   gap: 8px;
   margin-top: 8px;
+  flex-wrap: wrap;
 
   @media ${devices.iphoneSE} {
-    margin: 8px 24px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+
+    & > span {
+      white-space: nowrap;
+    }
   }
 `
 
