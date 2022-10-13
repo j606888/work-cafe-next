@@ -5,6 +5,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { Menu, MenuItem } from "@mui/material"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import { Container, BackButton, ButtonGroup, Button } from "./styled"
+import ShareButton from "./ShareButton"
 
 const Header = ({ name, placeId, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -31,10 +32,7 @@ const Header = ({ name, placeId, onClick }) => {
             <CircleIcon />
             <span>收藏</span>
           </Button>
-          <Button>
-            <CircleIcon />
-            <span>分享</span>
-          </Button>
+          <ShareButton />
           <Button onClick={handleMoreClick}>
             <MoreVertIcon />
           </Button>
