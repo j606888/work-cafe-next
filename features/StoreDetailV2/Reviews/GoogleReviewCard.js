@@ -15,6 +15,7 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   h6 {
     font-size: 16px;
