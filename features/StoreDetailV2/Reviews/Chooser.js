@@ -13,6 +13,7 @@ const WordButton = styled.button`
   position: relative;
   padding: 8px 0;
   cursor: pointer;
+  color: #757575;
 
   &:hover {
     background-color: #f9f9f9;
