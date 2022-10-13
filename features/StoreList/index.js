@@ -9,7 +9,6 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
 
   const handleMouseEnter = (placeId) => {
-    console.log({ placeId })
     setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
