@@ -8,6 +8,7 @@ import TimeAndAddress from "./TimeAndAddress/TimeAndAddress";
 import Recommend from "./Recommend/Recommend";
 import ImagePreview from "./ImagePreview/ImagePreview";
 import { devices } from "constant/styled-theme"
+import Reviews from "./Reviews/Reviews";
 
 const Container = styled.div`
   background-color: #fff;
@@ -30,12 +31,16 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
     `/stores/${placeId}`
   )
 
+  function handleReviewSave() {
+    mutateStore()
+  }
+
   if (!store) return <Skeleton />
 
   return <Container>
     <Header name={store.name} onClick={onClose}/>
     <TagListContainer>
-      <TagList />
+      <TagList tags={store.tags}/>
     </TagListContainer>
     <TimeAndAddress
       address={store.address}
@@ -45,8 +50,9 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
       openingHours={store.openingHours}
       url={store.url}
     />
-    <Recommend />
+    <Recommend good={store.recommendYes} bad={store.recommendNo} />
     <ImagePreview photos={store.photos} />
+    <Reviews placeId={store.placeId} name={store.name} onSave={handleReviewSave} />
   </Container>
 }
 
