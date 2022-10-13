@@ -33,7 +33,7 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
             key={store.placeId}
             images={store.photos}
             shortAddress={store.address}
-            reviewsCount={store.userRatingsTotal}
+            reviewsCount={store.recommendCount}
             {...store}
             onClick={handleClick}
             onMouseEnter={handleMouseEnter}

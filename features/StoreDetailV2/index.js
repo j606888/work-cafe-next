@@ -3,7 +3,7 @@ import styled from "styled-components"
 import useSWR from "swr"
 import Skeleton from "components/Skeleton";
 import Header from "./Header/Header";
-import TagList from "./TagList/TagList";
+import TagList from "../../components/TagList/TagList";
 import TimeAndAddress from "./TimeAndAddress/TimeAndAddress";
 import Recommend from "./Recommend/Recommend";
 import ImagePreview from "./ImagePreview/ImagePreview";
@@ -18,6 +18,13 @@ const Container = styled.div`
   }
 `
 
+const TagListContainer = styled.div`
+  margin-left: 104px;
+
+  @media ${devices.iphoneSE} {
+    margin: 8px 24px;
+  }
+`
 const StoreDetailV2 = ({ placeId, onClose }) => {
   const { data: store, mutate: mutateStore } = useSWR(
     `/stores/${placeId}`
@@ -27,7 +34,9 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
 
   return <Container>
     <Header name={store.name} onClick={onClose}/>
-    <TagList />
+    <TagListContainer>
+      <TagList />
+    </TagListContainer>
     <TimeAndAddress
       address={store.address}
       // website={store.website}
