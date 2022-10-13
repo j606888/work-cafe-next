@@ -80,16 +80,15 @@ const ImageBox = styled.div`
   }
 `
 
-const WorkCafeReviews = () => {
+const WorkCafeReviews = ({ userName, userAvatarUrl, createdAt, description, }) => {
   return (
     <Container>
-      <Avatar></Avatar>
+      <Avatar>{userAvatarUrl}</Avatar>
       <Content>
-        <h6>訪客</h6>
-        <span>2022年10月9日・平日造訪</span>
+        <h6>{userName}</h6>
+        <span>{_dateString(createdAt)}</span>
         <p>
-          這裡很適合平日來用電腦做事！空間明亮，又沒有限制時間。
-          雖然不是每個座位都有插座，但平日空位都蠻多的，算容易找到有插座的位置。WiFi穩定，讚讚！
+          {description}
         </p>
         <ImageList>
           <ImageBox />
@@ -101,4 +100,15 @@ const WorkCafeReviews = () => {
   )
 }
 
+
+function _dateString(timestamp) {
+  const time = new Date(timestamp * 1000)
+  const year = time.getFullYear()
+  const month = time.getMonth()
+  const date = time.getDate()
+  const day = time.getDay()
+  const isWeekend = [5,6].includes(day) ? "週末造訪" : "平日造訪"
+
+  return `${year}年${month}月${date}日・${isWeekend}`
+}
 export default WorkCafeReviews
