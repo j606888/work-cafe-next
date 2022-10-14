@@ -4,9 +4,11 @@ import styled, { css } from "styled-components"
 const Container = styled.div`
   display: flex;
   gap: 2rem;
+  box-sizing: border-box;
 `
 
 const WordButton = styled.button`
+  box-sizing: border-box;
   border: none;
   background: none;
   font-size: 16px;
@@ -14,10 +16,6 @@ const WordButton = styled.button`
   padding: 8px 0;
   cursor: pointer;
   color: #757575;
-
-  &:hover {
-    background-color: #f9f9f9;
-  }
 
   ${({ active }) =>
     active &&
