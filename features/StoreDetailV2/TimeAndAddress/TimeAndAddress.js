@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 import CircleIcon from "@mui/icons-material/Circle"
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
@@ -11,7 +10,6 @@ const Container = styled.div`
   @media ${devices.iphoneSE} {
     margin: 0 24px 12px;
   }
-
 `
 
 const ListItem = styled.div`
@@ -32,15 +30,9 @@ const ListItem = styled.div`
   }
 `
 
-const TimeAndAddress = ({ address, isOpenNow, openingHours, url }) => {
+const TimeAndAddress = ({ address,  url }) => {
   return (
     <Container>
-      <ListItem>
-        <CircleIcon />
-        {isOpenNow ? "營業中" : "休息中"}・ 結束營業時間
-        <span>下午 6:00</span>
-        <KeyboardArrowDownIcon />
-      </ListItem>
       <ListItem>
         <CircleIcon />
         <span>{address} </span>

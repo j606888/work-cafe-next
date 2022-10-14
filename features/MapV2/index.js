@@ -12,17 +12,19 @@ import ShowLabelCheckbox from "./ShowLabelCheckbox"
 import { Container, MyLocationContainer, SearchHereContainer } from "./styled"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
+import useMapStoreV2 from "stores/useMapStoreV2"
 
 const MapV2 = () => {
   const { isReady, mapSettings } = useInitMap()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } = useControlMap()
   const searchHere = useLocationParamsStore((state) => state.searchHere)
-  const [myLocation, setMyLocation] = useState(null)
   const stores = useStoreStore((state) => state.stores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const bouncePlaceId = useStoreStore((state) => state.bouncePlaceId)
   const [showLabel, setShowLabel] = useState(true)
+  const myLocation = useMapStoreV2(state => state.myLocation)
+  const setMyLocation = useMapStoreV2(state => state.setMyLocation)
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 

@@ -29,6 +29,7 @@ const Content = styled.div`
 
   p {
     font-size: 14px;
+    white-space: pre-line;
   }
 
   @media ${devices.iphoneSE} {

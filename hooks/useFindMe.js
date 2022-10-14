@@ -1,18 +1,20 @@
 import { useState } from "react"
+import useMapStoreV2 from "stores/useMapStoreV2"
 
 const useFindMe = () => {
   const [loading, setLoading] = useState(false)
-  const [location, setLocation] = useState(null)
+  const myLocation = useMapStoreV2(store => store.myLocation)
+  const setMyLocation = useMapStoreV2(store => store.setMyLocation)
 
   async function findMe() {
-    if (location) return location
+    if (myLocation) return myLocation
 
     setLoading(true)
     const { success, latLng, failedReason } = await _getCurrentPosition()
     setLoading(false)
 
     if (success) {
-      setLocation(latLng)
+      setMyLocation(latLng)
       return latLng
     } else {
       console.warn(failedReason)
@@ -47,11 +49,6 @@ async function _getCurrentPosition() {
     result.failedReason = err.message
   }
   return result
-}
-
-async function _alreadyGranted() {
-  const permission = await navigator.permissions.query({ name: "geolocation" })
-  return permission.state === "granted"
 }
 
 export default useFindMe

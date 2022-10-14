@@ -9,6 +9,7 @@ import Recommend from "./Recommend/Recommend"
 import ImagePreview from "./ImagePreview/ImagePreview"
 import { devices } from "constant/styled-theme"
 import Reviews from "./Reviews/Reviews"
+import OpenTime from "./OpenTime/OpenTime"
 
 const Container = styled.div`
   background-color: #fff;
@@ -41,6 +42,11 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
       <TagListContainer>
         <TagList tags={store.tags} />
       </TagListContainer>
+      <OpenTime
+        isOpenNow={store.isOpenNow}
+        openingHours={store.openingHours}
+        closeTime={store.closeTime}
+      />
       <TimeAndAddress
         address={store.address}
         // website={store.website}
