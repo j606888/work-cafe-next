@@ -2,6 +2,7 @@ import { Avatar } from "@mui/material"
 import React from "react"
 import styled, { css } from "styled-components"
 import { devices } from "constant/styled-theme"
+import ImagesWorm from "components/ImagesWorm/ImagesWorm"
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const Container = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 
   h6 {
     font-size: 16px;
@@ -26,6 +28,7 @@ const Content = styled.div`
 
   p {
     font-size: 14px;
+    white-space: pre-line;
   }
 
   @media ${devices.iphoneSE} {
@@ -91,11 +94,7 @@ const WorkCafeReviews = ({ userName, userAvatarUrl, createdAt, description, }) =
         <p>
           {description}
         </p>
-        <ImageList>
-          <ImageBox />
-          <ImageBox />
-          <ImageBox more/>
-        </ImageList>
+        <ImagesWorm images={[1,1,1,1,1,1]}/>
       </Content>
     </Container>
   )
