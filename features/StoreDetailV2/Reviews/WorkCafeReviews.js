@@ -48,44 +48,6 @@ const Content = styled.div`
   }
 `
 
-const ImageList = styled.div`
-  display: flex;
-  gap: 8px;
-
-  @media ${devices.iphoneSE} {
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    white-space: nowrap;
-  }
-`
-
-const ImageBox = styled.div`
-  height: 120px;
-  width: 120px;
-  border-radius: 12px;
-  background-color: #ededed;
-  position: relative;
-
-  ${({ more }) =>
-    more &&
-    css`
-      background-color: #bbb;
-      &::after {
-        content: "+1";
-        font-size: 24px;
-        color: #fff;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-    `}
-
-  @media ${devices.iphoneSE} {
-    flex: none;
-  }
-`
-
 const WorkCafeReviews = ({
   userName,
   userAvatarUrl,

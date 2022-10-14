@@ -1,6 +1,7 @@
 import { ImageList, ImageListItem } from "@mui/material"
 import React from "react"
 import styled from "styled-components"
+import { devices } from "constant/styled-theme"
 
 const IMAGE = "https://picsum.photos/460/240"
 
@@ -11,7 +12,10 @@ const More = styled.div`
   transform: translate(-50%, -50%);
   font-size: 24px;
   color: #fff;
-  letter-spacing: 2px;
+
+  @media ${devices.iphoneSE} {
+    font-size: 16px;
+  }
 `
 const One = ({ images }) => {
   return (
