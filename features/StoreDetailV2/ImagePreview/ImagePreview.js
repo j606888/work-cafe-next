@@ -1,6 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useState } from "react"
+import styled, { css } from "styled-components"
 import { devices } from "constant/styled-theme"
+import ImageCanvas from "./ImageCanvas"
 
 const Container = styled.div`
   margin: 2rem 56px;
@@ -18,12 +19,10 @@ const Container = styled.div`
     gap: 8px;
     overflow-x: auto;
     margin: 1rem 28px 1rem 28px;
-    
   }
 `
 
 const Box = styled.div`
-  /* background-color:  */
   background: ${({ img }) => `url(${img}) #EDEDED`};
   background-size: cover;
 
@@ -34,7 +33,8 @@ const Box = styled.div`
   }
 
   @media ${devices.iphoneSE} {
-    width: 240px;
+    ${({ hide }) => hide && `display: none;`}
+    width: 90%;
     height: 240px;
     flex: none;
     border-radius: 0 !important;
@@ -45,7 +45,6 @@ const BoxA = styled(Box)`
   grid-area: A;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
-
 `
 const BoxB = styled(Box)`
   grid-area: B;
@@ -54,6 +53,27 @@ const BoxB = styled(Box)`
 const BoxC = styled(Box)`
   grid-area: C;
   border-bottom-right-radius: 12px;
+  position: relative;
+  overflow: hidden;
+
+  ${({ leftCount }) =>
+    leftCount > 0 &&
+    css`
+      &::after {
+        content: "還有${leftCount}張";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.6);
+      }
+    `}
 `
 
 const Button = styled.button`
@@ -72,14 +92,28 @@ const Button = styled.button`
   }
 `
 
-const ImagePreview = ({ photos=[] }) => {
+// TODO, should not load all images, only after click
+const ImagePreview = ({ photos = [] }) => {
+  const [open, setOpen] = useState(false)
+  const leftCount = photos.length - 3
+  function handleClose() {
+    setOpen(false)
+  }
+
   return (
-    <Container>
-      <BoxA img={photos[0]}></BoxA>
-      <BoxB img={photos[1]}></BoxB>
-      <BoxC img={photos[2]}></BoxC>
-      <Button>所有照片</Button>
-    </Container>
+    <>
+      <Container onClick={() => setOpen(true)}>
+        <BoxA img={photos[0]}></BoxA>
+        <BoxB img={photos[1]} hide={photos.length < 2}></BoxB>
+        <BoxC
+          img={photos[2]}
+          hide={photos.length < 3}
+          leftCount={leftCount}
+        ></BoxC>
+        <Button onClick={() => setOpen(true)}>所有照片</Button>
+      </Container>
+      <ImageCanvas photos={photos} open={open} onClose={handleClose} />
+    </>
   )
 }
 
