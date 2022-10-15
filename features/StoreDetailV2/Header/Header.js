@@ -33,7 +33,7 @@ const Header = ({ name, placeId, url, onClick }) => {
           <MobileGoogleUrl href={url} target="_blank" rel="noreferrer">
             <MapIcon />
           </MobileGoogleUrl>
-          <Button>
+          <Button disable>
             <BookmarkIcon />
             <span>收藏</span>
           </Button>

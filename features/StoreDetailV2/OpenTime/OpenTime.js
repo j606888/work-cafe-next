@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
-import CircleIcon from "@mui/icons-material/Circle"
+import BedtimeIcon from '@mui/icons-material/Bedtime';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { Container, ToggleButton, OpenHours, DayBox } from "./styled"
 
 const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
@@ -9,10 +10,11 @@ const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
   const closeText =
     !open && closeTime && `・ 結束營業時間 ${_closePeriod(closeTime)}`
   const icon = open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
+  const leftIcon = isOpenNow ? <WbSunnyIcon /> : <BedtimeIcon />
 
   return (
     <ToggleButton onClick={onClick}>
-      <CircleIcon />
+      {leftIcon}
       <span>{displayText}</span>
       <span>{closeText}</span>
       {icon}

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { devices } from "constant/styled-theme"
 
 export const Container = styled.div`
@@ -86,6 +86,14 @@ export const Button = styled.button`
   border-radius: 12px;
   background-color: #fff;
   cursor: pointer;
+
+  ${({ disable }) =>
+    disable &&
+    css`
+      background-color: #e0e0e0;
+      color: #999;
+      cursor: not-allowed;
+    `}
 
   svg {
     color: #757575;
