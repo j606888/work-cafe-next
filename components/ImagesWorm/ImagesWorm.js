@@ -3,8 +3,6 @@ import React from "react"
 import styled from "styled-components"
 import { devices } from "constant/styled-theme"
 
-const IMAGE = "https://picsum.photos/460/240"
-
 const More = styled.div`
   position: absolute;
   top: 50%;
@@ -26,7 +24,7 @@ const One = ({ images }) => {
       rowHeight={240}
     >
       <ImageListItem cols={1} rows={1}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[0]} alt="hey" loading="lazy" />
       </ImageListItem>
     </ImageList>
   )
@@ -40,10 +38,10 @@ const Two = ({ images }) => {
       rowHeight={240}
     >
       <ImageListItem cols={1} rows={1}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[0]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={1} rows={1}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[1]} alt="hey" loading="lazy" />
       </ImageListItem>
     </ImageList>
   )
@@ -52,13 +50,13 @@ const Three = ({ images }) => {
   return (
     <ImageList sx={{ width: "100%" }} variant="quilted" cols={4} rowHeight={60}>
       <ImageListItem cols={2} rows={4}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[0]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[1]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[2]} alt="hey" loading="lazy" />
       </ImageListItem>
     </ImageList>
   )
@@ -67,16 +65,16 @@ const Four = ({ images }) => {
   return (
     <ImageList sx={{ width: "100%" }} variant="quilted" cols={4} rowHeight={60}>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[0]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[1]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[2]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[3]} alt="hey" loading="lazy" />
       </ImageListItem>
     </ImageList>
   )
@@ -86,16 +84,16 @@ const MoreThanFour = ({ images }) => {
   return (
     <ImageList sx={{ width: "100%" }} variant="quilted" cols={4} rowHeight={60}>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[0]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[1]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" />
+        <img src={images[2]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={IMAGE} alt="hey" loading="lazy" style={{ filter: 'brightness(50%)'}} />
+        <img src={images[3]} alt="hey" loading="lazy" style={{ filter: 'brightness(50%)'}} />
         <More>還有 {leftCount} 張</More>
       </ImageListItem>
     </ImageList>
