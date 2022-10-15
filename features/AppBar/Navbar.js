@@ -8,6 +8,7 @@ import {
   CtaButton,
   IconContainer,
 } from "./styled"
+import styled from "styled-components"
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import LoginForm from "features/AccountMenu/LoginForm"
@@ -24,6 +25,14 @@ const TutorialLink = () => {
     </Link>
   )
 }
+
+const HomeLink = styled.a`
+  font-family: 'Noto Sans',sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #757575;
+  text-decoration: none;
+`
 
 const OpenCloseIcon = ({ onClick, show = false }) => {
   return (
@@ -50,7 +59,9 @@ const MobileNavbar = () => {
   return (
     <>
       <NavbarContainer>
-        <h2>Work Cafe | Taiwan</h2>
+        <HomeLink href="/">
+          Work Cafe | Taiwan
+        </HomeLink>
         <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
         <NavLinks show={showNav} vh={vh}>
           <TutorialLink />

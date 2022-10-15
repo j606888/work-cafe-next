@@ -28,15 +28,17 @@ export const Container = styled.div`
 `
 
 export const MobileGoogleUrl = styled.a`
-  height: 28px;
-  width: 28px;
-  background-color: green;
+  display: none;
   text-decoration: none;
   display: none;
-  border-radius: 50%;
+  color: #757575;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  margin-right: 8px;
 
   @media ${devices.iphoneSE} {
-    display: inline-block;
+    display: flex;
   }
 `
 
@@ -90,15 +92,11 @@ export const Button = styled.button`
   }
 
   @media ${devices.iphoneSE} {
+    /* border-radius: 50%; */
     border: none;
 
     span {
       display: none;
-    }
-
-    svg {
-      font-size: 32px;
-      color: red;
     }
   }
 `
