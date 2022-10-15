@@ -1,15 +1,6 @@
 import styled from "styled-components"
 
 export const Form = styled.form`
-  background-color: #fff;
-  width: 480px;
-  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  
-
   h3 {
     text-align: center;
     box-shadow: 0 2px 4px -2px gray;

@@ -64,7 +64,7 @@ const WorkCafeReviews = ({
           <p>{description}</p>
         </Content>
       </Container>
-      <ImagesWorm images={[1, 1, 1, 1, 1, 1]} />
+      <ImagesWorm images={[]} />
     </>
   )
 }

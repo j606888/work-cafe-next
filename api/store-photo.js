@@ -5,8 +5,8 @@ const getUploadLink = async ({ placeId }) => {
   return res.data
 }
 
-const createStorePhoto = async ({ placeId, url }) => {
-  await instance.post(`/stores/${placeId}/store-photos`, { url })
+const createStorePhoto = async ({ placeId, url, reviewId }) => {
+  await instance.post(`/stores/${placeId}/store-photos`, { url, reviewId })
 }
 
 const StorePhotoApi = {
