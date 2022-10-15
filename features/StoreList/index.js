@@ -14,9 +14,9 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
   const handleMouseLeave = (_placeId) => {
     setBouncePlaceId(null)
   }
-  const handleClick = (placeId) => {
+  const handleClick = ({ placeId, lat, lng }) => {
     setPlaceId(placeId)
-    onClick(placeId)
+    onClick({ placeId, lat, lng })
   }
 
   if (stores.length === 0) {

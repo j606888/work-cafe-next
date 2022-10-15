@@ -4,7 +4,6 @@ import ImageSlider from "./ImageSlider"
 import { devices } from "constant/styled-theme"
 import TagList from "components/TagList/TagList"
 
-
 const Container = styled.div`
   width: 239px;
   background-color: #fff;
@@ -97,6 +96,8 @@ const StoreCard = ({
   rating,
   reviewsCount,
   isOpen,
+  lat,
+  lng,
   images = [],
   tags = [],
   onClick = () => {},
@@ -104,7 +105,7 @@ const StoreCard = ({
   onMouseLeave = () => {},
 }) => {
   function handleClick() {
-    onClick(placeId)
+    onClick({ placeId, lat, lng })
   }
 
   function handleMouseEnter() {
@@ -120,15 +121,15 @@ const StoreCard = ({
       <MainInfo>
         <h3>{name}</h3>
         <GoodSpan>
-            <img src='/icon-good.svg' alt='icon-good' />
-            <span>&nbsp;&nbsp;{reviewsCount}</span>
+          <img src="/icon-good.svg" alt="icon-good" />
+          <span>&nbsp;&nbsp;{reviewsCount}</span>
         </GoodSpan>
       </MainInfo>
       <SecondInfo>
         <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
         <Address>{shortAddress}</Address>
       </SecondInfo>
-      <TagList tags={tags}/>
+      <TagList tags={tags} />
     </Container>
   )
 }

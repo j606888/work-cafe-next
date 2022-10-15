@@ -28,7 +28,9 @@ const Container = styled.div`
 `
 
 const LeftContainer = () => {
-  const { center, moveTo, updateWithPlaceId } = useControlMap({ navigate: true })
+  const { center, moveTo, updateWithPlaceId } = useControlMap({
+    navigate: true,
+  })
   const { placeIdFromUrl } = useInitMap()
   const [params, keywordSearch, updateSettings, searchHere] =
     useLocationParamsStore(
@@ -67,9 +69,10 @@ const LeftContainer = () => {
     setPlaceId(null)
     keywordSearch({ ...center, keyword, limit: 30 })
   }
-  function handleClickStore(placeId) {
+  function handleClickStore({ placeId, lat, lng }) {
     setPlaceId(placeId)
     updateWithPlaceId(placeId)
+    moveTo({ latLng: { lat, lng } })
   }
   function handleCloseStore() {
     setPlaceId(null)
