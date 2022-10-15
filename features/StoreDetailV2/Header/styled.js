@@ -84,6 +84,7 @@ export const Button = styled.button`
 
     svg {
       font-size: 32px;
+      color: red;
     }
   }
 `

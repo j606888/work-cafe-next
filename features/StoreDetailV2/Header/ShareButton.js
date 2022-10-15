@@ -28,7 +28,7 @@ const ShareButton = () => {
         autoHideDuration={3000}
         onClose={handleClose}
         message="已複製到剪貼簿"
-        anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center'}}
       />
     </>
   )
