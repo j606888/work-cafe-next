@@ -11,6 +11,7 @@ import GoogleMap from "features/GoogleMap"
 import { Marker } from "@react-google-maps/api"
 import { laggy } from "utils/laggy"
 import { fetcher } from "api"
+import useControlMap from "hooks/useControlMap"
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 64px);
@@ -52,17 +53,16 @@ const reducer = (state, action) => {
 }
 
 const AdminStoreCrawler = () => {
-  const { isReady, map, setMap, mapSettings } = useInitMap()
+  const { isReady, mapSettings } = useInitMap()
+  const { handleLoad, handleIdle, center } = useControlMap({ navigate: false })
+
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
   const tempRef = useRef(null)
-  const [mapCenter, setMapCenter] = useState({
-    lat: 23.546162,
-    lng: 120.6402133,
-  })
-  const { data: mapCrawlers } = useSWR([
-    "/admin/map-crawlers",
-    { ...mapCenter, limit: 50 },
-  ], fetcher, { use: [laggy]})
+  const { data: mapCrawlers } = useSWR(
+    ["/admin/map-crawlers", { ...center, limit: 50 }],
+    fetcher,
+    { use: [laggy] }
+  )
 
   const handleFindMe = ({ lat, lng }) => {
     const center = { lat, lng }
@@ -82,17 +82,6 @@ const AdminStoreCrawler = () => {
   const handleClick = ({ latLng }) => {
     tempRef.current = latLng.toJSON()
     dispatch({ type: "TOGGLE_MODAL" })
-  }
-
-  const handleIdle = () => {
-    if (!map) return
-
-    const { lat, lng } = map.center.toJSON()
-    setMapCenter({ lat, lng })
-  }
-
-  const handleLoad = (map) => {
-    setMap(map)
   }
 
   if (!isReady) return <div>NotReady</div>
@@ -130,21 +119,20 @@ const AdminStoreCrawler = () => {
             mapCrawler={{ ...tempRef.current, radius: controls.searchRadius }}
           />
         )}
-        {controls.showArea && mapCrawlers?.map((mapCrawler) => (
-          <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
-        ))}
-        {mapCrawlers?.map(mapCrawler => (
+        {controls.showArea &&
+          mapCrawlers?.map((mapCrawler) => (
+            <Circle key={mapCrawler.id} mapCrawler={mapCrawler} />
+          ))}
+        {mapCrawlers?.map((mapCrawler) => (
           <Marker
             key={mapCrawler.id}
-            position={
-              {
-                lat: mapCrawler.lat,
-                lng: mapCrawler.lng,
-              }
-            }
+            position={{
+              lat: mapCrawler.lat,
+              lng: mapCrawler.lng,
+            }}
             label={{
               text: `${mapCrawler.newStoreCount}`,
-              fontWeight: 'bold'
+              fontWeight: "bold",
             }}
           />
         ))}

@@ -16,7 +16,7 @@ import useMapStoreV2 from "stores/useMapStoreV2"
 
 const MapV2 = () => {
   const { isReady, mapSettings } = useInitMap()
-  const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } = useControlMap()
+  const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } = useControlMap({ navigate: true })
   const searchHere = useLocationParamsStore((state) => state.searchHere)
   const stores = useStoreStore((state) => state.stores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)

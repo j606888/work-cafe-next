@@ -3,7 +3,7 @@ import shallow from "zustand/shallow"
 import Router from "next/router"
 import useStoreStore from "stores/useStoreStore"
 
-const useControlMap = () => {
+const useControlMap = ({ navigate=true }) => {
   const [map, setMap, center, setCenter] = useMapStoreV2(
     (state) => [state.map, state.setMap, state.center, state.setCenter],
     shallow
@@ -22,7 +22,9 @@ const useControlMap = () => {
     setCenter({ lat, lng })
 
     const mapPath = _mapPath(lat, lng, zoom, placeId)
-    _navigateTo(`/${mapPath}`)
+    if (navigate) {
+      _navigateTo(`/${mapPath}`)
+    }
     _setLocalStorage("lastLocation", mapPath)
   }
 

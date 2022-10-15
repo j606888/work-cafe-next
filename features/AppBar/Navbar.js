@@ -1,5 +1,5 @@
 import Link from "next/link"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   NavbarContainer,
   NavLinks,
@@ -36,6 +36,12 @@ const OpenCloseIcon = ({ onClick, show = false }) => {
 const MobileNavbar = () => {
   const [showNav, setShowNav] = useState(false)
   const [mode, setMode] = useState(null)
+  const [vh, setVh] = useState(null)
+
+  useEffect(() => {
+    const height = window.innerHeight
+    setVh(height / 100)
+  }, [])
 
   function toggleShowNav() {
     setShowNav((cur) => !cur)
@@ -46,7 +52,7 @@ const MobileNavbar = () => {
       <NavbarContainer>
         <h2>Work Cafe | Taiwan</h2>
         <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
-        <NavLinks show={showNav}>
+        <NavLinks show={showNav} vh={vh}>
           <TutorialLink />
           <CtaButton onClick={() => setMode('signup')}>註冊</CtaButton>
           <Button onClick={() => setMode('login')}>登入</Button>
