@@ -49,5 +49,7 @@ export const SearchHereContainer = styled.div`
     top: calc(172px + 40px);
     left: 1rem;
     transform: none;
+    z-index: 20;
+
   }
 `
