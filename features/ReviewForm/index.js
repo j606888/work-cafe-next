@@ -8,6 +8,7 @@ import useSWR from "swr"
 import UploadForm from "features/StoreDetail/StorePhotoUpload/UploadForm"
 import StorePhotoApi from "api/store-photo"
 import axios from "axios"
+import useMediaQuery from "@mui/material/useMediaQuery"
 
 const ReviewForm = ({
   placeId,
@@ -25,6 +26,7 @@ const ReviewForm = ({
   const [files, setFiles] = useState([])
   const [showSnackbar, setShowSnackbar] = useState(null)
   const { data: tags } = useSWR("/tags")
+  const fullScreen = useMediaQuery('(max-width:390px)');
 
   const handleUploadImage = async (reviewId) => {
     for (let file of files) {
@@ -81,7 +83,7 @@ const ReviewForm = ({
 
   return (
     <>
-      <Dialog open={!!open} onClose={handleClose} maxWidth="xl">
+      <Dialog open={!!open} onClose={handleClose} maxWidth="xl"fullScreen={fullScreen}>
         <Form>
           <h3>{name}</h3>
           <Scroll>
