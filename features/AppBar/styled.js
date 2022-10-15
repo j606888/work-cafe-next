@@ -115,3 +115,16 @@ export const IconContainer = styled.div`
     display: block;
   }
 `
+
+
+export const HomeLink = styled.a`
+  font-family: 'Noto Sans',sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #757575;
+  text-decoration: none;
+
+  @media ${devices.iphoneSE} {
+    font-size: 16px;
+  }
+`

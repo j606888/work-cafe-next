@@ -25,6 +25,8 @@ const Container = styled.div`
 const Box = styled.div`
   background: ${({ img }) => `url(${img}) #EDEDED`};
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   img {
     width: 100%;

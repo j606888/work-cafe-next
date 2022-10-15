@@ -7,8 +7,8 @@ import {
   Button,
   CtaButton,
   IconContainer,
+  HomeLink,
 } from "./styled"
-import styled from "styled-components"
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import LoginForm from "features/AccountMenu/LoginForm"
@@ -25,14 +25,6 @@ const TutorialLink = () => {
     </Link>
   )
 }
-
-const HomeLink = styled.a`
-  font-family: 'Noto Sans',sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #757575;
-  text-decoration: none;
-`
 
 const OpenCloseIcon = ({ onClick, show = false }) => {
   return (
