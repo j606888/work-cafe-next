@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-export const Form = styled.form`
+export const Form = styled.div`
   h3 {
     text-align: center;
     box-shadow: 0 2px 4px -2px gray;

@@ -30,7 +30,7 @@ const UploadForm = ({ onChange }) => {
     <>
       <Form>
         <UploadContainer>
-          <UploadButton for="upload-photo">
+          <UploadButton htmlFor="upload-photo">
             <CameraAltIcon />
             <span>選擇照片</span>
           </UploadButton>

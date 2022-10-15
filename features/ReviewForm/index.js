@@ -70,6 +70,7 @@ const ReviewForm = ({
       description: "",
       tagIds: [],
     })
+    setLoading(false)
     onClose()
   }
 

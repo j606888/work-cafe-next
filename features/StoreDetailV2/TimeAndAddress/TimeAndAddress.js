@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import CircleIcon from "@mui/icons-material/Circle"
+import BusinessIcon from '@mui/icons-material/Business';
 import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
@@ -34,7 +34,7 @@ const TimeAndAddress = ({ address,  url }) => {
   return (
     <Container>
       <ListItem>
-        <CircleIcon />
+        <BusinessIcon />
         <span>{address} </span>
         <a href={url} target="_blank" rel="noreferrer">
           開啟Google Map導航

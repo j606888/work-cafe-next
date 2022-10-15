@@ -6,6 +6,8 @@ import { Menu, MenuItem } from "@mui/material"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import { Container, BackButton, ButtonGroup, Button, MobileGoogleUrl } from "./styled"
 import ShareButton from "./ShareButton"
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import MapIcon from '@mui/icons-material/Map';
 
 const Header = ({ name, placeId, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -28,9 +30,11 @@ const Header = ({ name, placeId, url, onClick }) => {
         </BackButton>
         <h3>{name}</h3>
         <ButtonGroup>
-          <MobileGoogleUrl href={url} target="_blank" rel="noreferrer" />
-          <Button>
-            <CircleIcon />
+          <MobileGoogleUrl href={url} target="_blank" rel="noreferrer">
+            <MapIcon />
+          </MobileGoogleUrl>
+          <Button disable>
+            <BookmarkIcon />
             <span>收藏</span>
           </Button>
           <ShareButton />
