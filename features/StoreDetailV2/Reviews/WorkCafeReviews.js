@@ -53,6 +53,7 @@ const WorkCafeReviews = ({
   userAvatarUrl,
   createdAt,
   description,
+  photos=[]
 }) => {
   return (
     <>
@@ -64,7 +65,7 @@ const WorkCafeReviews = ({
           <p>{description}</p>
         </Content>
       </Container>
-      <ImagesWorm images={[1, 1, 1, 1, 1, 1]} />
+      <ImagesWorm images={photos} />
     </>
   )
 }

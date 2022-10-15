@@ -2,7 +2,8 @@ import { instance } from "./index"
 
 const createReview = async ({ placeId, data }) => {
   const path = `/stores/${placeId}/reviews`
-  await instance.post(path, data)
+  const res = await instance.post(path, data)
+  return res.data
 }
 
 const deleteMyReview = async ({ placeId }) => {
