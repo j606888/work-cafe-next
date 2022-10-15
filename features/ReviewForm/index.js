@@ -1,4 +1,5 @@
 import { Button, Chip, Dialog, TextField } from "@mui/material"
+import { LoadingButton } from "@mui/lab"
 import React, { useState } from "react"
 import RecommendBlock from "./RecommendBlock"
 import { Form, Scroll, Buttons, ChipContainer } from "./styled"
@@ -8,12 +9,12 @@ import useSWR from "swr"
 import UploadForm from "features/StoreDetail/StorePhotoUpload/UploadForm"
 import StorePhotoApi from "api/store-photo"
 import axios from "axios"
+import useMediaQuery from "@mui/material/useMediaQuery"
 
 const ReviewForm = ({
   placeId,
   open,
   name,
-  // myReview = null,
   onClose = () => {},
   onSave = () => {},
 }) => {
@@ -25,6 +26,8 @@ const ReviewForm = ({
   const [files, setFiles] = useState([])
   const [showSnackbar, setShowSnackbar] = useState(null)
   const { data: tags } = useSWR("/tags")
+  const fullScreen = useMediaQuery('(max-width:390px)');
+  const [loading, setLoading] = useState(false)
 
   const handleUploadImage = async (reviewId) => {
     for (let file of files) {
@@ -50,6 +53,7 @@ const ReviewForm = ({
     setFiles(fileArr)
   }
   const handleSubmit = async () => {
+    setLoading(true)
     const { id } = await ReviewApi.createReview({
       placeId,
       data,
@@ -58,6 +62,7 @@ const ReviewForm = ({
     setShowSnackbar("評論成功")
     handleClose()
     onSave()
+    setLoading(false)
   }
   const handleClose = () => {
     setData({
@@ -81,7 +86,7 @@ const ReviewForm = ({
 
   return (
     <>
-      <Dialog open={!!open} onClose={handleClose} maxWidth="xl">
+      <Dialog open={!!open} onClose={handleClose} maxWidth="xl"fullScreen={fullScreen}>
         <Form>
           <h3>{name}</h3>
           <Scroll>
@@ -132,13 +137,14 @@ const ReviewForm = ({
             <Button variant="outlined" onClick={handleClose}>
               取消
             </Button>
-            <Button
+            <LoadingButton
               variant="contained"
               onClick={handleSubmit}
               disabled={!data.recommend}
+              loading={loading}
             >
               送出
-            </Button>
+            </LoadingButton>
           </Buttons>
         </Form>
       </Dialog>

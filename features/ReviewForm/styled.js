@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components"
+import { devices } from "constant/styled-theme"
 
 export const Form = styled.form`
   background-color: #fff;
@@ -13,6 +14,10 @@ export const Form = styled.form`
     color: #fff;
     margin: 0;
   }
+
+  @media ${devices.iphoneSE} {
+    width: 100%;
+  }
 `
 
 export const Scroll = styled.div`
@@ -22,6 +27,12 @@ export const Scroll = styled.div`
   gap: .8rem;
   max-height: calc(80vh - 130px);
   overflow: scroll;
+
+  @media ${devices.iphoneSE} {
+    padding: 1rem;
+    max-height: none;
+    overflow: auto;
+  }
 `
 
 export const Buttons = styled.div`
@@ -31,6 +42,7 @@ export const Buttons = styled.div`
   justify-content: flex-end;
   gap: 1rem;
 `
+
 export const ChipContainer = styled.div`
   display: flex;
   flex-wrap: wrap;

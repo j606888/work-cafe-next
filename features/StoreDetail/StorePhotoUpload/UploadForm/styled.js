@@ -11,15 +11,22 @@ export const Form = styled.form`
   input {
     display: none;
   }
+`
 
-  label {
-    background-color: #1a73e8;
-    color: #ffffff;
-    padding: 0.3rem 0.6rem;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-left: 1rem;
-  }
+export const UploadButton = styled.label`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #757575;
+  color: #757575;
+  font-size: 14px;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+`
+
+export const UploadContainer = styled.div`
+  text-align: center;
 `
 
 export const ButtonContainer = styled.div`

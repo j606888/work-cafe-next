@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
-import { Form, PreviewImageContainer } from "./styled"
+import { Form, PreviewImageContainer, UploadButton, UploadContainer } from "./styled"
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 const UploadForm = ({ onChange }) => {
   const [files, setFiles] = useState([])
@@ -28,7 +29,12 @@ const UploadForm = ({ onChange }) => {
   return (
     <>
       <Form>
-        <label for="upload-photo">選擇照片</label>
+        <UploadContainer>
+          <UploadButton for="upload-photo">
+            <CameraAltIcon />
+            <span>選擇照片</span>
+          </UploadButton>
+        </UploadContainer>
         <input
           id="upload-photo"
           type="file"
