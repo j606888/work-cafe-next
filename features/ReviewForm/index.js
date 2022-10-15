@@ -1,4 +1,5 @@
 import { Button, Chip, Dialog, TextField } from "@mui/material"
+import { LoadingButton } from "@mui/lab"
 import React, { useState } from "react"
 import RecommendBlock from "./RecommendBlock"
 import { Form, Scroll, Buttons, ChipContainer } from "./styled"
@@ -14,7 +15,6 @@ const ReviewForm = ({
   placeId,
   open,
   name,
-  // myReview = null,
   onClose = () => {},
   onSave = () => {},
 }) => {
@@ -27,6 +27,7 @@ const ReviewForm = ({
   const [showSnackbar, setShowSnackbar] = useState(null)
   const { data: tags } = useSWR("/tags")
   const fullScreen = useMediaQuery('(max-width:390px)');
+  const [loading, setLoading] = useState(false)
 
   const handleUploadImage = async (reviewId) => {
     for (let file of files) {
@@ -52,6 +53,7 @@ const ReviewForm = ({
     setFiles(fileArr)
   }
   const handleSubmit = async () => {
+    setLoading(true)
     const { id } = await ReviewApi.createReview({
       placeId,
       data,
@@ -60,6 +62,7 @@ const ReviewForm = ({
     setShowSnackbar("評論成功")
     handleClose()
     onSave()
+    setLoading(false)
   }
   const handleClose = () => {
     setData({
@@ -134,13 +137,14 @@ const ReviewForm = ({
             <Button variant="outlined" onClick={handleClose}>
               取消
             </Button>
-            <Button
+            <LoadingButton
               variant="contained"
               onClick={handleSubmit}
               disabled={!data.recommend}
+              loading={loading}
             >
               送出
-            </Button>
+            </LoadingButton>
           </Buttons>
         </Form>
       </Dialog>
