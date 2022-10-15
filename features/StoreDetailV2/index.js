@@ -38,7 +38,7 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
 
   return (
     <Container>
-      <Header name={store.name} onClick={onClose} placeId={store.placeId} />
+      <Header name={store.name} onClick={onClose} placeId={store.placeId} url={ store.url }/>
       <TagListContainer>
         <TagList tags={store.tags} />
       </TagListContainer>

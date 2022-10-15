@@ -27,6 +27,19 @@ export const Container = styled.div`
   }
 `
 
+export const MobileGoogleUrl = styled.a`
+  height: 28px;
+  width: 28px;
+  background-color: green;
+  text-decoration: none;
+  display: none;
+  border-radius: 50%;
+
+  @media ${devices.iphoneSE} {
+    display: inline-block;
+  }
+`
+
 export const BackButton = styled.button`
   border: 1px solid #757575;
   border-radius: 50%;
@@ -50,6 +63,7 @@ export const BackButton = styled.button`
 
 export const ButtonGroup = styled.div`
   display: flex;
+  align-items: center;
   gap: 8px;
 
   @media ${devices.iphoneSE} {

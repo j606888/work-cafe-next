@@ -46,7 +46,7 @@ export const SearchHereContainer = styled.div`
   z-index: 2;
 
   @media ${devices.iphoneSE} {
-    top: calc(172px + 20px);
+    top: calc(172px + 40px);
     left: 1rem;
     transform: none;
   }

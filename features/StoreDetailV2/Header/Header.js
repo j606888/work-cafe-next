@@ -4,10 +4,10 @@ import CircleIcon from "@mui/icons-material/Circle"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { Menu, MenuItem } from "@mui/material"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
-import { Container, BackButton, ButtonGroup, Button } from "./styled"
+import { Container, BackButton, ButtonGroup, Button, MobileGoogleUrl } from "./styled"
 import ShareButton from "./ShareButton"
 
-const Header = ({ name, placeId, onClick }) => {
+const Header = ({ name, placeId, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
   const open = Boolean(anchorEl)
@@ -28,6 +28,7 @@ const Header = ({ name, placeId, onClick }) => {
         </BackButton>
         <h3>{name}</h3>
         <ButtonGroup>
+          <MobileGoogleUrl href={url} target="_blank" rel="noreferrer" />
           <Button>
             <CircleIcon />
             <span>收藏</span>
