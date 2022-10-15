@@ -64,6 +64,7 @@ const LeftContainer = () => {
   }, [data, setStores])
 
   function handleSearch(keyword) {
+    setPlaceId(null)
     keywordSearch({ ...center, keyword, limit: 30 })
   }
   function handleClickStore(placeId) {
