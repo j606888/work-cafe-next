@@ -89,7 +89,7 @@ const GoodSpan = styled.div`
   }
 `
 
-const StoreCard = ({
+const StoreCard = React.forwardRef(({
   placeId,
   name,
   shortAddress,
@@ -103,7 +103,7 @@ const StoreCard = ({
   onClick = () => {},
   onMouseEnter = () => {},
   onMouseLeave = () => {},
-}) => {
+}, ref) => {
   function handleClick() {
     onClick({ placeId, lat, lng })
   }
@@ -116,6 +116,7 @@ const StoreCard = ({
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={onMouseLeave}
+      ref={ref}
     >
       <ImageSlider images={images} />
       <MainInfo>
@@ -132,6 +133,7 @@ const StoreCard = ({
       <TagList tags={tags} />
     </Container>
   )
-}
+})
+StoreCard.displayName = 'StoreCard'
 
 export default StoreCard
