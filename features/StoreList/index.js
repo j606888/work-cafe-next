@@ -7,6 +7,7 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const focusPlaceId = useStoreStore((state) => state.focusPlaceId)
+  const setFocusPlaceId = useStoreStore((state) => state.setFocusPlaceId)
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
   const storesRef = React.useRef({})
 
@@ -18,11 +19,12 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
   }
   const handleClick = ({ placeId, lat, lng }) => {
     setPlaceId(placeId)
+    setFocusPlaceId(placeId)
     onClick({ placeId, lat, lng })
   }
 
   React.useEffect(() => {
-    if (focusPlaceId) {
+    if (focusPlaceId && storesRef.current[focusPlaceId]) {
       storesRef.current[focusPlaceId].scrollIntoView(
         { inline: 'start' }
       )
