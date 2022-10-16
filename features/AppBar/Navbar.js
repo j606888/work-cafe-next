@@ -12,6 +12,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import LoginForm from "features/AccountMenu/LoginForm"
+import { userIsLogin } from "utils/user"
+import AccountMenu from "features/AccountMenu"
 
 const TutorialLink = () => {
   return (
@@ -51,14 +53,18 @@ const MobileNavbar = () => {
   return (
     <>
       <NavbarContainer>
-        <HomeLink href="/">
-          Work Cafe | Taiwan
-        </HomeLink>
+        <HomeLink href="/">Work Cafe | Taiwan</HomeLink>
         <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
         <NavLinks show={showNav} vh={vh}>
           <TutorialLink />
-          <CtaButton onClick={() => setMode('signup')}>註冊</CtaButton>
-          <Button onClick={() => setMode('login')}>登入</Button>
+          {userIsLogin() ? (
+            <AccountMenu />
+          ) : (
+            <>
+              <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
+              <Button onClick={() => setMode("login")}>登入</Button>
+            </>
+          )}
         </NavLinks>
       </NavbarContainer>
       <LoginForm mode={mode} setMode={setMode} onClose={() => setMode(null)} />
