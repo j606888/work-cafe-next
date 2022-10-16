@@ -36,7 +36,7 @@ const OpenCloseIcon = ({ onClick, show = false }) => {
   )
 }
 
-const MobileNavbar = () => {
+const Navbar = () => {
   const [showNav, setShowNav] = useState(false)
   const [mode, setMode] = useState(null)
   const [vh, setVh] = useState(null)
@@ -72,4 +72,4 @@ const MobileNavbar = () => {
   )
 }
 
-export default MobileNavbar
+export default Navbar

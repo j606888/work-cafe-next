@@ -89,7 +89,7 @@ const MapV2 = () => {
             }}
           />
         )}
-        {stores.map((store) => (
+        {stores?.map((store) => (
           <StoreMarker
             key={store.placeId}
             store={store}
