@@ -6,7 +6,10 @@ import StoreCard from "components/StoreCard"
 export default function StoreList({ stores = [], onClick = () => {} }) {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
+  const focusPlaceId = useStoreStore((state) => state.focusPlaceId)
+  const setFocusPlaceId = useStoreStore((state) => state.setFocusPlaceId)
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
+  const storesRef = React.useRef({})
 
   const handleMouseEnter = (placeId) => {
     setBouncePlaceId(placeId)
@@ -16,8 +19,17 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
   }
   const handleClick = ({ placeId, lat, lng }) => {
     setPlaceId(placeId)
+    setFocusPlaceId(placeId)
     onClick({ placeId, lat, lng })
   }
+
+  React.useEffect(() => {
+    if (focusPlaceId && storesRef.current[focusPlaceId]) {
+      storesRef.current[focusPlaceId].scrollIntoView(
+        { inline: 'start' }
+      )
+    }
+  }, [focusPlaceId])
 
   if (stores.length === 0) {
     return null
@@ -27,8 +39,9 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
     <>
       <StoreCount>{stores.length} 間咖啡店</StoreCount>
       <Container>
-        {stores.map((store) => (
+        {stores.map((store, i) => (
           <StoreCard
+            ref={el => storesRef.current[store.placeId] = el}
             key={store.placeId}
             images={store.photos}
             shortAddress={store.address}
