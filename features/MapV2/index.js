@@ -13,6 +13,7 @@ import { Container, MyLocationContainer, SearchHereContainer } from "./styled"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import useMapStoreV2 from "stores/useMapStoreV2"
+import { useMediaQuery } from "@mui/material"
 
 const MapV2 = () => {
   const { isReady, mapSettings } = useInitMap()
@@ -25,6 +26,8 @@ const MapV2 = () => {
   const [showLabel, setShowLabel] = useState(true)
   const myLocation = useMapStoreV2(state => state.myLocation)
   const setMyLocation = useMapStoreV2(state => state.setMyLocation)
+  const fullScreen = useMediaQuery('(max-width:390px)');
+  const map = useMapStoreV2(state => state.map)
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
@@ -47,6 +50,14 @@ const MapV2 = () => {
     setMyLocation(latLng)
   }
 
+  function handleOnIdle() {
+    handleIdle()
+    const shouldShow = map?.zoom >= 16
+    if (fullScreen) {
+      setShowLabel(shouldShow)
+    }
+  }
+
   if (!isReady) return <Skeleton />
 
   return (
@@ -60,7 +71,7 @@ const MapV2 = () => {
       <ShowLabelCheckbox onChange={handleToggle} />
       <GoogleMap
         onLoad={handleLoad}
-        onIdle={handleIdle}
+        onIdle={handleOnIdle}
         mapSettings={mapSettings}
       >
         {myLocation && (
