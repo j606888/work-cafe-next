@@ -78,7 +78,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
     setShowOptions(false)
     setKeyword("")
     onSearch("")
-    clear()
+    // clear()
   }
 
   function handleChange(e) {

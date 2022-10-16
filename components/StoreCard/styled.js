@@ -9,7 +9,7 @@ export const ArrowContainer = styled.div`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 10;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;

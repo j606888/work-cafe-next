@@ -19,6 +19,8 @@ import useSWR from "swr"
 import TagsPicker from "./TagsPicker"
 import AdvancedPicker from "./AdvancedPicker"
 import { devices } from "constant/styled-theme"
+import useFilterStore from "stores/useFilterStore"
+import { useEffect } from "react"
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -63,8 +65,10 @@ const INIT_FILTERS = {
 
 const SearchFilter = ({ onChange = () => {} }) => {
   const [open, setOpen] = useState(false)
-  const [settingsMemo, setSettingsMemo] = useState(INIT_FILTERS)
-  const [settings, setSettings] = useState(INIT_FILTERS)
+  const filters = useFilterStore(state => state.filters)
+  const setFilters = useFilterStore(state => state.setFilters)
+  const [settingsMemo, setSettingsMemo] = useState(filters)
+  const [settings, setSettings] = useState(filters)
   const { data: tags } = useSWR("/tags")
   const badgeCount = useMemo(
     () => _calcBadgeCount(settingsMemo),
@@ -74,14 +78,17 @@ const SearchFilter = ({ onChange = () => {} }) => {
   const handleClose = () => {
     setOpen(false)
     setSettings(settingsMemo)
+    setFilters(settingsMemo)
   }
 
   const handleReset = () => {
     setSettings(INIT_FILTERS)
+    setFilters(settings)
   }
 
   const handleApply = () => {
     setSettingsMemo(settings)
+    setFilters(settings)
     onChange(_filterCleanSettings(settings))
     setOpen(false)
   }
