@@ -10,6 +10,8 @@ import UploadForm from "features/StoreDetail/StorePhotoUpload/UploadForm"
 import StorePhotoApi from "api/store-photo"
 import axios from "axios"
 import useMediaQuery from "@mui/material/useMediaQuery"
+import LinearProgressWithLabel from "./LinearProgressWithLabel"
+import { sleep } from "utils/helper"
 
 const ReviewForm = ({
   placeId,
@@ -28,8 +30,10 @@ const ReviewForm = ({
   const { data: tags } = useSWR("/tags")
   const fullScreen = useMediaQuery('(max-width:390px)');
   const [loading, setLoading] = useState(false)
+  const [currentI, setCurrentI] = useState(0)
 
   const handleUploadImage = async (reviewId) => {
+    let pic = 100 / files.length
     for (let file of files) {
       const { url } = await StorePhotoApi.getUploadLink({ placeId })
       const config = {
@@ -40,6 +44,7 @@ const ReviewForm = ({
       await axios.put(url, file, config)
       const link = url.split("?")[0]
       await StorePhotoApi.createStorePhoto({ placeId, url: link, reviewId })
+      setCurrentI(cur => cur + pic)
     }
   }
 
@@ -59,10 +64,12 @@ const ReviewForm = ({
       data,
     })
     await handleUploadImage(id)
+    await sleep(0.5)
     setShowSnackbar("評論成功")
     handleClose()
     onSave()
     setLoading(false)
+    setCurrentI(0)
   }
   const handleClose = () => {
     setData({
@@ -88,6 +95,7 @@ const ReviewForm = ({
   return (
     <>
       <Dialog open={!!open} onClose={handleClose} maxWidth="xl"fullScreen={fullScreen}>
+        {currentI}
         <Form>
           <h3>{name}</h3>
           <Scroll>
@@ -105,6 +113,7 @@ const ReviewForm = ({
               onChange={(e) => handleChange("description", e.target.value)}
             />
             <UploadForm onChange={handleFileChange} />
+            {loading && <LinearProgressWithLabel value={currentI} />}
             <p>主標籤選擇</p>
             <ChipContainer>
               {tags

@@ -22,6 +22,7 @@ const MapV2 = () => {
   const stores = useStoreStore((state) => state.stores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
+  const focusPlaceId = useStoreStore((state) => state.focusPlaceId)
   const setFocusPlaceId = useStoreStore((state) => state.setFocusPlaceId)
   const bouncePlaceId = useStoreStore((state) => state.bouncePlaceId)
   const [showLabel, setShowLabel] = useState(true)
@@ -93,7 +94,7 @@ const MapV2 = () => {
             key={store.placeId}
             store={store}
             showLabel={showLabel}
-            isFocus={store.placeId === placeId}
+            isFocus={store.placeId === placeId || store.placeId === focusPlaceId}
             isBounce={store.placeId === bouncePlaceId}
             onClick={handleClickMarker}
           />
