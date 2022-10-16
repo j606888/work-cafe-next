@@ -22,6 +22,7 @@ const MapV2 = () => {
   const stores = useStoreStore((state) => state.stores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
+  const setFocusPlaceId = useStoreStore((state) => state.setFocusPlaceId)
   const bouncePlaceId = useStoreStore((state) => state.bouncePlaceId)
   const [showLabel, setShowLabel] = useState(true)
   const myLocation = useMapStoreV2(state => state.myLocation)
@@ -32,8 +33,12 @@ const MapV2 = () => {
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
   function handleClickMarker(placeId) {
-    setPlaceId(placeId)
-    updateWithPlaceId(placeId)
+    if (fullScreen) {
+      setFocusPlaceId(placeId)
+    } else {
+      setPlaceId(placeId)
+      updateWithPlaceId(placeId)
+    }
   }
 
   function handleSearchHere() {

@@ -6,12 +6,9 @@ import StoreCard from "components/StoreCard"
 export default function StoreList({ stores = [], onClick = () => {} }) {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
+  const focusPlaceId = useStoreStore((state) => state.focusPlaceId)
   const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
-  const storesRef = React.useRef([])
-
-  React.useEffect(() => {
-    storesRef.current = storesRef.current.slice(0, stores.length)
-  }, [stores])
+  const storesRef = React.useRef({})
 
   const handleMouseEnter = (placeId) => {
     setBouncePlaceId(placeId)
@@ -20,13 +17,17 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
     setBouncePlaceId(null)
   }
   const handleClick = ({ placeId, lat, lng }) => {
-    console.log(storesRef)
-    storesRef.current[30].scrollIntoView({
-      behavior: 'smooth'
-    })
-    // setPlaceId(placeId)
-    // onClick({ placeId, lat, lng })
+    setPlaceId(placeId)
+    onClick({ placeId, lat, lng })
   }
+
+  React.useEffect(() => {
+    if (focusPlaceId) {
+      storesRef.current[focusPlaceId].scrollIntoView(
+        { inline: 'start' }
+      )
+    }
+  }, [focusPlaceId])
 
   if (stores.length === 0) {
     return null
@@ -38,7 +39,7 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
       <Container>
         {stores.map((store, i) => (
           <StoreCard
-            ref={el => storesRef.current[i] = el}
+            ref={el => storesRef.current[store.placeId] = el}
             key={store.placeId}
             images={store.photos}
             shortAddress={store.address}
