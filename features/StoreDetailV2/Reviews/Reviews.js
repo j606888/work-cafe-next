@@ -4,7 +4,7 @@ import { useState } from "react"
 import Chooser from "./Chooser"
 import NewReview from "./NewReview"
 import WorkCafeReviews from "./WorkCafeReviews"
-import { Container } from './styled'
+import { Container, LeaveFirstReview } from './styled'
 import useSWR from "swr"
 import Skeleton from "components/Skeleton"
 import GoogleReviewCard from "./GoogleReviewCard"
@@ -44,6 +44,12 @@ const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
               {...review}
             />
           ))}
+          {reviews.reviews.length === 0 && (
+            <LeaveFirstReview>
+              <h3>還沒有人給過評論</h3>
+              <p>不如你就當第一個吧！</p>
+            </LeaveFirstReview>
+          )}
         </>
       )}
       {

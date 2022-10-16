@@ -31,7 +31,7 @@ const ImageSlider = ({ images = [] }) => {
     return (
       <Container>
         <Slide active>
-          <Img src="/no-egg.png" alt="no photo" />
+          <Img src="/no-egg.png" alt="no photo"  loading="lazy"/>
         </Slide>
       </Container>
     )
@@ -40,7 +40,7 @@ const ImageSlider = ({ images = [] }) => {
     return (
       <Container>
         <Slide active>
-          <Img src={images[0]} alt="store" />
+          <Img src={images[0]} alt="store"  loading="lazy"/>
         </Slide>
       </Container>
     )
@@ -57,7 +57,7 @@ const ImageSlider = ({ images = [] }) => {
       {images.map((image, index) => {
         return (
           <Slide key={index} active={index === current}>
-            {index === current && <Img src={image} alt="store" />}
+            {index === current && <Img src={image} alt="store" loading="lazy"/>}
           </Slide>
         )
       })}

@@ -1,7 +1,5 @@
 import styled from "styled-components"
 
-export const Container = styled.div``
-
 export const RadioContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,6 +16,6 @@ export const RadioContainer = styled.div`
 
 export const RadioGroup = styled.div`
   display: flex;
-  justify-content: flex-start;
-  gap: 2rem;
+  justify-content: space-around;
+  padding: 0 2rem;
 `

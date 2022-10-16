@@ -95,7 +95,6 @@ const ReviewForm = ({
   return (
     <>
       <Dialog open={!!open} onClose={handleClose} maxWidth="xl"fullScreen={fullScreen}>
-        {currentI}
         <Form>
           <h3>{name}</h3>
           <Scroll>

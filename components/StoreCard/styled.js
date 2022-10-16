@@ -65,15 +65,12 @@ export const Img = styled.img`
 
 export const Slide = styled.div`
   opacity: 0;
-  transition: 200ms opacity ease-in-out;
-  transition-delay: 200ms;
 
   ${({ active }) =>
     active &&
     css`
       opacity: 1;
       z-index: 1;
-      transition-delay: 0ms;
     `}
 `
 

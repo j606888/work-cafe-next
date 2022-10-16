@@ -1,13 +1,8 @@
 import React from "react"
-import {
-  SentimentNeutralOutlined as NormalFace,
-  SentimentDissatisfiedOutlined as BadFace,
-  SentimentSatisfiedOutlined as HappyFace,
-} from "@mui/icons-material"
-import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from "@mui/icons-material/ThumbDown"
+import ThumbUpIcon from "@mui/icons-material/ThumbUp"
 import { FormControl, FormLabel, Radio } from "@mui/material"
-import { Container, RadioContainer, RadioGroup } from "./styled"
+import { RadioContainer, RadioGroup } from "./styled"
 
 const FaceRadio = ({
   checked,
@@ -47,13 +42,15 @@ const OPTIONS = [
     value: "yes",
     label: "推薦",
     color: "#54ADDB",
-  }
+  },
 ]
 
 const RecommendBlock = ({ onChange = () => {}, recommend }) => {
   return (
     <FormControl>
-      <FormLabel>你推薦給想辦公的人來嗎？</FormLabel>
+      <FormLabel>
+        <sup>*</sup>你推薦給想辦公的人來嗎？
+      </FormLabel>
       <RadioGroup>
         {OPTIONS.map(({ value, icon, label, color }) => (
           <FaceRadio

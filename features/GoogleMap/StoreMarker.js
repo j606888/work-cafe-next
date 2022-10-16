@@ -16,14 +16,14 @@ const StoreMarker = ({
     lng: store.lng,
   }
   const animation = isBounce ? 1 : null
-  const label = _label({ store, showLabel })
+  const label = _label({ store, showLabel, isFocus })
 
   return (
     <Marker
       onClick={() => onClick(store.placeId)}
       icon={icon}
       position={position}
-      animation={animation}
+      // animation={animation}
       label={label}
       onMouseOver={() => onMouseOver(store.placeId)}
       onMouseOut={() => onMouseOut(store.placeId)}
@@ -39,8 +39,8 @@ function _iconColor({ isFocus, wakeUp }) {
   return "/pins/grey-pin.svg"
 }
 
-function _label({ showLabel, store }) {
-  if (showLabel) {
+function _label({ showLabel, store, isFocus }) {
+  if (showLabel || isFocus) {
     return {
       text: store.name,
       fontSize: "12px",

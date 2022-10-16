@@ -27,6 +27,21 @@ const HelpUsModal = ({ open, onClose }) => {
           <br />
           有些店家根本不適合出現在這邊（例如：連鎖手搖飲、無內用空間或是純餐廳）。點擊店家資訊中的回報按鈕，我們會定期去將這些回報的店家移除
         </DialogContentText>
+        <br />
+        <DialogContentText>
+          <b>回報問題或建議：</b>
+          <br />
+          如果使用中有發現任何 Bug,
+          或是你覺得有什麼很酷的點子都歡迎填寫
+          <a
+            href="https://forms.gle/Y5XjmzsRW7pG7Wbu8"
+            target="_blank"
+            rel="noreferrer"
+          >
+            表單
+          </a>
+          來回報
+        </DialogContentText>
         <DialogActions>
           <Button onClick={onClose}>我知道了</Button>
         </DialogActions>
