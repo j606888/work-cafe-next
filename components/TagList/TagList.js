@@ -9,12 +9,13 @@ const Container = styled.div`
   flex-wrap: wrap;
 
   @media ${devices.iphoneSE} {
-    flex-wrap: nowrap;
+    display: none;
+    /* flex-wrap: nowrap;
     overflow: hidden;
 
     & > span {
       white-space: nowrap;
-    }
+    } */
   }
 `
 
