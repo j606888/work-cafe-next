@@ -14,6 +14,8 @@ import CloseIcon from "@mui/icons-material/Close"
 import LoginForm from "features/AccountMenu/LoginForm"
 import { userIsLogin } from "utils/user"
 import AccountMenu from "features/AccountMenu"
+import useLoginModeStore from "stores/useLoginModeStore"
+import shallow from "zustand/shallow"
 
 const TutorialLink = () => {
   return (
@@ -38,7 +40,7 @@ const OpenCloseIcon = ({ onClick, show = false }) => {
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false)
-  const [mode, setMode] = useState(null)
+  const [mode, setMode] = useLoginModeStore((state) => [state.mode, state.setMode], shallow)
   const [vh, setVh] = useState(null)
 
   useEffect(() => {
