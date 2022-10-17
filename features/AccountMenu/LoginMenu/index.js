@@ -4,9 +4,12 @@ import React from "react"
 import SettingsIcon from "@mui/icons-material/Settings"
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { Container, Header, Body, Button } from "./styled"
+import useUserStore from "stores/useUserStore";
 
 const LoginMenu = ({ avatar_url, email, name, role, onLogout = () => {} }) => {
+  const logout = useUserStore(state => state.logout)
   const handleLogout = () => {
+    logout()
     onLogout()
   }
 

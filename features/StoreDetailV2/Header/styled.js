@@ -87,17 +87,20 @@ export const Button = styled.button`
   background-color: #fff;
   cursor: pointer;
 
-  ${({ disable }) =>
-    disable &&
-    css`
-      background-color: #e0e0e0;
-      color: #999;
-      cursor: not-allowed;
-    `}
-
   svg {
     color: #757575;
   }
+
+  ${({ active }) =>
+    active &&
+    css`
+      border-color: #ef5350;
+      color: #ef5350;
+
+      svg {
+        color: #ef5350;
+      }
+    `}
 
   @media ${devices.iphoneSE} {
     /* border-radius: 50%; */

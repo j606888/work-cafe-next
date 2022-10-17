@@ -6,6 +6,7 @@ import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import { signup } from "api/auth"
 import { Container, Form } from "./styled"
+import useUserStore from "stores/useUserStore"
 
 const FormikTextField = ({ label, formik, type = "text" }) => {
   const showError = !!(formik.touched[label] && formik.errors[label])
@@ -43,6 +44,7 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 }
 
 const Signup = ({ open, onClose, onChangeMode }) => {
+  const login = useUserStore(state => state.login)
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -60,6 +62,7 @@ const Signup = ({ open, onClose, onChangeMode }) => {
       const { accessToken, refreshToken } = await signup(values)
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
+      login(accessToken)
       onClose()
     },
   })

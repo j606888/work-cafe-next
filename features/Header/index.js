@@ -1,22 +1,18 @@
 import React from "react"
 import { Container } from "./styled"
 import Link from "next/link"
-import { getUser } from "utils/user"
 import { useEffect } from "react"
 import { useState } from "react"
 import UserMenu from "./UserMenu"
+import useUserStore from "stores/useUserStore"
 
 const Header = () => {
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const u = getUser()
-    setUser(u)
-  }, [])
+  const user = useUserStore(state => state.user)
+  const logout = useUserStore(state => state.logout)
 
   function handleLogout() {
     localStorage.clear()
-    setUser(null)
+    logout()
   }
 
   return (

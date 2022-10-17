@@ -14,6 +14,7 @@ import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import { googleLogin, login } from "api/auth"
 import { Container } from "./styled"
+import useUserStore from "stores/useUserStore"
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
@@ -53,12 +54,14 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 }
 
 const Login = ({ open, onClose, onChangeMode }) => {
+  const login = useUserStore(state => state.login)
   async function handleLogin(tokenResponse) {
     const { accessToken, refreshToken } = await googleLogin({
       credential: tokenResponse.credential,
     })
     localStorage.setItem("accessToken", accessToken)
     localStorage.setItem("refreshToken", refreshToken)
+    login(accessToken)
 
     onClose()
   }

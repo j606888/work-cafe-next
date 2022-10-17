@@ -38,7 +38,14 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
 
   return (
     <Container>
-      <Header name={store.name} onClick={onClose} placeId={store.placeId} url={ store.url }/>
+      <Header
+        name={store.name}
+        onClick={onClose}
+        placeId={store.placeId}
+        isBookmark={store.isBookmark}
+        url={store.url}
+        onBookmarkUpdate={mutateStore}
+      />
       <TagListContainer>
         <TagList tags={store.tags} />
       </TagListContainer>

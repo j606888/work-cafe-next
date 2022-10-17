@@ -14,6 +14,7 @@ import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import useMapStoreV2 from "stores/useMapStoreV2"
 import { useMediaQuery } from "@mui/material"
+import useUserStore from "stores/useUserStore"
 
 const MapV2 = () => {
   const { isReady, mapSettings } = useInitMap()
@@ -30,8 +31,10 @@ const MapV2 = () => {
   const setMyLocation = useMapStoreV2(state => state.setMyLocation)
   const fullScreen = useMediaQuery('(max-width:390px)');
   const map = useMapStoreV2(state => state.map)
+  const isLogin = useUserStore(state => state.isLogin)
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
+  const { data: bookmarkStores } = useSWR(isLogin ? `/user-bookmarks` : null)
 
   function handleClickMarker(placeId) {
     if (fullScreen) {
@@ -93,9 +96,19 @@ const MapV2 = () => {
           <StoreMarker
             key={store.placeId}
             store={store}
+            isBookmark={store.bookmark}
             showLabel={showLabel}
             isFocus={store.placeId === placeId || store.placeId === focusPlaceId}
             isBounce={store.placeId === bouncePlaceId}
+            onClick={handleClickMarker}
+          />
+        ))}
+        {bookmarkStores?.map((store) => (
+          <StoreMarker
+            key={store.placeId}
+            isBookmark
+            store={store}
+            showLabel={showLabel}
             onClick={handleClickMarker}
           />
         ))}
