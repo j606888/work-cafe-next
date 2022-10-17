@@ -96,6 +96,7 @@ const MapV2 = () => {
           <StoreMarker
             key={store.placeId}
             store={store}
+            isBookmark={store.bookmark}
             showLabel={showLabel}
             isFocus={store.placeId === placeId || store.placeId === focusPlaceId}
             isBounce={store.placeId === bouncePlaceId}
