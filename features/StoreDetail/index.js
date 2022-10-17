@@ -16,7 +16,6 @@ import ImageSlide from "./ImageSlide"
 import Bookmarks from "./Bookmarks"
 import useSWR from "swr"
 import SecondaryInfo from "./SecondaryInfo"
-import { userIsLogin } from "utils/user"
 import useAuthCheck from "hooks/useAuthCheck"
 import ReviewForm from "features/ReviewForm"
 import ReviewsBlock from "./ReviewsBlock"
@@ -28,6 +27,7 @@ import ReviewApi from "api/review"
 import { useState, useEffect } from "react"
 import NotCafeReport from "./NotCafeReport"
 import Skeleton from "components/Skeleton"
+import useUserStore from "stores/useUserStore"
 
 const StoreDetail = ({
   placeId,
@@ -38,17 +38,18 @@ const StoreDetail = ({
   const [bookmarkAnchor, setBookmarkAnchor] = React.useState(null)
   const [openReview, setOpenReview] = React.useState(false)
   const [openNotCafe, setOpenNotCafe] = useState(false)
+  const isLogin = useUserStore(state => state.isLogin)
   const { data: store, mutate: mutateStore } = useSWR(
     `/stores/${placeId}`
   )
   const { data: bookmarks, mutate: mutateBookmarks } = useSWR(
-    userIsLogin() ? `/stores/${placeId}/bookmarks` : null
+    isLogin ? `/stores/${placeId}/bookmarks` : null
   )
   const { data: reviews, mutate: reviewsMutate } = useSWR(
     `/stores/${placeId}/reviews`
   )
   const { data: myReview, mutate: myReviewMutate } = useSWR(
-    userIsLogin() ? `/stores/${placeId}/reviews/me` : null
+    isLogin ? `/stores/${placeId}/reviews/me` : null
   )
 
   const handleBookmarkClick = (e) => {

@@ -13,9 +13,9 @@ import {
 import ShareButton from "./ShareButton"
 import BookmarkIcon from "@mui/icons-material/Bookmark"
 import MapIcon from "@mui/icons-material/Map"
-import { userIsLogin } from "utils/user"
 import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
 import useLoginModeStore from "stores/useLoginModeStore"
+import useUserStore from "stores/useUserStore"
 
 const Header = ({
   name,
@@ -29,6 +29,7 @@ const Header = ({
   const [openNotCafe, setOpenNotCafe] = useState(false)
   const setMode = useLoginModeStore(state => state.setMode)
   const open = Boolean(anchorEl)
+  const isLogin = useUserStore(state => state.isLogin)
 
   function handleMoreClick(e) {
     setAnchorEl(e.currentTarget)
@@ -38,7 +39,7 @@ const Header = ({
     setOpenNotCafe(false)
   }
   async function handleAddBookmark() {
-    if (userIsLogin()) {
+    if (isLogin) {
       await addToBookmark({ placeId })
       onBookmarkUpdate()
     } else {
@@ -47,7 +48,7 @@ const Header = ({
   }
 
   async function handleRemoveBookmark() {
-    if (userIsLogin()) {
+    if (isLogin) {
       await removeFromBookmark({ placeId })
       onBookmarkUpdate()
     } else {

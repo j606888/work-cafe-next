@@ -1,16 +1,13 @@
-import { Badge, Button, ListItemIcon, Menu, MenuItem } from "@mui/material"
+import { Badge, ListItemIcon, Menu, MenuItem } from "@mui/material"
 import React from "react"
 import styled from "styled-components"
 import FavoriteIcon from "@mui/icons-material/Favorite"
-
 import FlagIcon from "@mui/icons-material/Flag"
 import ListIcon from "@mui/icons-material/List"
 import AddIcon from "@mui/icons-material/Add"
 import NewBookmarkForm from "features/BookmarkList/NewBookmarkForm"
 import { saveBookmarkStore, unSaveBookmarkStore } from "api/bookmark"
 import Snackbar from "components/Snackbar"
-import { userIsLogin } from "utils/user"
-import { useRouter } from "next/router"
 import useAuthCheck from "hooks/useAuthCheck"
 import { useEffect } from "react"
 

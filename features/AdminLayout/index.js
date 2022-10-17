@@ -11,9 +11,9 @@ import {
 } from "@mui/icons-material"
 import AppBar from "./AppBar"
 import MiniDrawer from "../../components/MiniDrawer"
-import { getUser, userIsAdmin, userIsLogin } from "utils/user"
 import { useRouter } from "next/router"
 import Skeleton from "components/Skeleton"
+import useUserStore from "stores/useUserStore"
 
 const lists = [
   {
@@ -47,23 +47,18 @@ const AdminLayout = ({ children }) => {
   const [open, setOpen] = React.useState(false)
   const [isReady, setIsReady] = React.useState(false)
   const router = useRouter()
-  const [user, setUser] = React.useState(null)
+  const user = useUserStore(state => state.user)
 
   React.useEffect(() => {
-    const u = getUser()
-    setUser(u)
-  }, [])
-
-  React.useEffect(() => {
-    if (!userIsLogin()) {
+    if (!user) {
       const currentUrl = window.location.href
       router.push(`/login?to=${currentUrl}`)
-    } else if (!userIsAdmin()) {
+    } else if (user.role !== "admin") {
       router.push("/")
     } else {
       setIsReady(true)
     }
-  }, [router])
+  }, [user, router])
 
   const toggleDrawer = () => {
     setOpen((cur) => !cur)

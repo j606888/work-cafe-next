@@ -12,10 +12,10 @@ import {
 import MenuIcon from "@mui/icons-material/Menu"
 import CloseIcon from "@mui/icons-material/Close"
 import LoginForm from "features/AccountMenu/LoginForm"
-import { userIsLogin } from "utils/user"
 import AccountMenu from "features/AccountMenu"
 import useLoginModeStore from "stores/useLoginModeStore"
 import shallow from "zustand/shallow"
+import useUserStore from "stores/useUserStore"
 
 const TutorialLink = () => {
   return (
@@ -42,11 +42,17 @@ const Navbar = () => {
   const [showNav, setShowNav] = useState(false)
   const [mode, setMode] = useLoginModeStore((state) => [state.mode, state.setMode], shallow)
   const [vh, setVh] = useState(null)
+  const [isLogin, setIsLogin] = useState(false)
+  const user = useUserStore(state => state.user)
 
   useEffect(() => {
     const height = window.innerHeight
     setVh(height / 100)
   }, [])
+
+  useEffect(() => {
+    setIsLogin(!!user)
+  }, [user])
 
   function toggleShowNav() {
     setShowNav((cur) => !cur)
@@ -59,7 +65,7 @@ const Navbar = () => {
         <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
         <NavLinks show={showNav} vh={vh}>
           <TutorialLink />
-          {userIsLogin() ? (
+          {isLogin ? (
             <AccountMenu />
           ) : (
             <>
