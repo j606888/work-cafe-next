@@ -16,6 +16,7 @@ import MapIcon from "@mui/icons-material/Map"
 import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
 import useLoginModeStore from "stores/useLoginModeStore"
 import useUserStore from "stores/useUserStore"
+import useSWR from "swr"
 
 const Header = ({
   name,
@@ -30,6 +31,7 @@ const Header = ({
   const setMode = useLoginModeStore(state => state.setMode)
   const open = Boolean(anchorEl)
   const isLogin = useUserStore(state => state.isLogin)
+  const { mutate } = useSWR(isLogin ? `/user-bookmarks` : null)
 
   function handleMoreClick(e) {
     setAnchorEl(e.currentTarget)
@@ -42,6 +44,7 @@ const Header = ({
     if (isLogin) {
       await addToBookmark({ placeId })
       onBookmarkUpdate()
+      mutate()
     } else {
       setMode('login')
     }
@@ -51,6 +54,7 @@ const Header = ({
     if (isLogin) {
       await removeFromBookmark({ placeId })
       onBookmarkUpdate()
+      mutate()
     } else {
       setMode('login')
     }
