@@ -1,20 +1,15 @@
 import React, { useState } from "react"
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google"
-import {
-  Button,
-  IconButton,
-  Paper,
-  TextField,
-  Divider,
-  Dialog,
-} from "@mui/material"
+import { Button, IconButton, TextField, Divider, Dialog } from "@mui/material"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
-import { googleLogin, login } from "api/auth"
-import { Container } from "./styled"
+import { googleLogin, login as apiLogin } from "api/auth"
+import { Container , CloseButton} from "./styled"
 import useUserStore from "stores/useUserStore"
+import { useMediaQuery } from "@mui/material"
+import CloseIcon from '@mui/icons-material/Close';
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
@@ -54,7 +49,9 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 }
 
 const Login = ({ open, onClose, onChangeMode }) => {
-  const login = useUserStore(state => state.login)
+  const login = useUserStore((state) => state.login)
+  const fullScreen = useMediaQuery("(max-width:390px)")
+
   async function handleLogin(tokenResponse) {
     const { accessToken, refreshToken } = await googleLogin({
       credential: tokenResponse.credential,
@@ -63,7 +60,7 @@ const Login = ({ open, onClose, onChangeMode }) => {
     localStorage.setItem("refreshToken", refreshToken)
     login(accessToken)
 
-    onClose()
+    onClose({ deep: true })
   }
 
   const formik = useFormik({
@@ -78,48 +75,49 @@ const Login = ({ open, onClose, onChangeMode }) => {
         .required("Required"),
     }),
     onSubmit: async (values) => {
-      const { accessToken, refreshToken } = await login(values)
+      const { accessToken, refreshToken } = await apiLogin(values)
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
-      onClose()
+      onClose({ deep: true })
     },
   })
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_LOGIN_KEY}>
-      <Dialog open={open} onClose={onClose}>
+      <Dialog open={open} onClose={onClose} fullScreen={fullScreen}>
         <Container>
-          <Paper elevation={3}>
-            <form onSubmit={formik.handleSubmit}>
-              <div className="headline">
-                <h2>登入</h2>
-                <p>繼續使用 Work Cafe</p>
-              </div>
-              <div className="account">
-                <FormikTextField label="email" formik={formik} />
-                <FormikTextField
-                  label="password"
-                  formik={formik}
-                  type="password"
-                />
-                <Button variant="contained" type="submit" size="large">
-                  登入
-                </Button>
-              </div>
-              <Divider light>或者使用以下登入</Divider>
-              <div className="google-signin">
-                <GoogleLogin
-                  onSuccess={handleLogin}
-                  onError={() => {
-                    console.log("Login Failed")
-                  }}
-                />
-              </div>
-              <p className="no-account">
-                沒有帳號嗎？<Button onClick={onChangeMode}>註冊</Button>
-              </p>
-            </form>
-          </Paper>
+          <form onSubmit={formik.handleSubmit}>
+            <div className="headline">
+              <h2>登入</h2>
+              <p>繼續使用 Work Cafe</p>
+            </div>
+            <div className="account">
+              <FormikTextField label="email" formik={formik} />
+              <FormikTextField
+                label="password"
+                formik={formik}
+                type="password"
+              />
+              <Button variant="contained" type="submit" size="large">
+                登入
+              </Button>
+            </div>
+            <Divider light>或者使用以下登入</Divider>
+            <div className="google-signin">
+              <GoogleLogin
+                onSuccess={handleLogin}
+                onError={() => {
+                  console.log("Login Failed")
+                }}
+              />
+            </div>
+            <p className="no-account">
+              沒有帳號嗎？<Button onClick={onChangeMode}>註冊</Button>
+            </p>
+          </form>
+          <CloseButton onClick={onClose}>
+            <CloseIcon />
+          </CloseButton>
         </Container>
       </Dialog>
     </GoogleOAuthProvider>

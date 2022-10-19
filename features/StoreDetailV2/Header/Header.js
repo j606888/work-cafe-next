@@ -74,7 +74,7 @@ const Header = ({
           {isBookmark ? (
             <Button onClick={handleRemoveBookmark} active>
               <BookmarkIcon />
-              <span>收藏中</span>
+              <span>已收藏</span>
             </Button>
           ) : (
             <Button onClick={handleAddBookmark}>

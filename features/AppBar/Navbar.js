@@ -58,6 +58,13 @@ const Navbar = () => {
     setShowNav((cur) => !cur)
   }
 
+  function handleClose({ deep }) {
+    setMode(null)
+    if (deep) {
+      toggleShowNav()
+    }
+  }
+
   return (
     <>
       <NavbarContainer>
@@ -75,7 +82,7 @@ const Navbar = () => {
           )}
         </NavLinks>
       </NavbarContainer>
-      <LoginForm mode={mode} setMode={setMode} onClose={() => setMode(null)} />
+      <LoginForm mode={mode} setMode={setMode} onClose={handleClose} />
     </>
   )
 }

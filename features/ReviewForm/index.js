@@ -12,17 +12,19 @@ import axios from "axios"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import LinearProgressWithLabel from "./LinearProgressWithLabel"
 import { sleep } from "utils/helper"
+import { useEffect } from "react"
 
 const ReviewForm = ({
   placeId,
   open,
   name,
+  myReview,
   onClose = () => {},
   onSave = () => {},
 }) => {
   const [data, setData] = useState({
-    recommend: "",
-    description: "",
+    recommend: myReview?.recommend || "",
+    description: myReview?.description || "",
     tagIds: [],
   })
   const [files, setFiles] = useState([])
@@ -31,6 +33,14 @@ const ReviewForm = ({
   const fullScreen = useMediaQuery('(max-width:390px)');
   const [loading, setLoading] = useState(false)
   const [currentI, setCurrentI] = useState(0)
+
+  useEffect(() => {
+    if (myReview?.primaryTags) {
+      const tagIds = tags.filter(tag => myReview.primaryTags.includes(tag.name))
+        .map(tag => tag.id)
+      setData(cur => ({ ...cur, tagIds }))
+    }
+  }, [tags, myReview])
 
   const handleUploadImage = async (reviewId) => {
     let pic = 100 / files.length
@@ -69,14 +79,17 @@ const ReviewForm = ({
     handleClose()
     onSave()
     setLoading(false)
+    setFiles([])
     setCurrentI(0)
   }
   const handleClose = () => {
-    setData({
-      recommend: "",
-      description: "",
-      tagIds: [],
-    })
+    if (!myReview) {
+      setData({
+        recommend: "",
+        description: "",
+        tagIds: [],
+      })
+    }
     setLoading(false)
     onClose()
   }

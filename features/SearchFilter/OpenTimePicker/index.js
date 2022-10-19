@@ -10,7 +10,8 @@ import {
 import styled from "styled-components"
 import { OPEN_TYPES, OPEN_WEEKS, OPEN_HOURS } from "constant/openTime"
 
-const Container = styled.div``
+const Container = styled.div`
+`
 
 const OpenTimePicker = ({ openType, openWeek, openHour, onChange = () => {} }) => {
   const handleChange = (event) => {

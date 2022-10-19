@@ -63,7 +63,7 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
         url={store.url}
       />
       <Recommend good={store.recommendYes} bad={store.recommendNo} />
-      <ImagePreview photos={store.photos} />
+      <ImagePreview photos={store.photos} name={store.name} />
       <Reviews
         placeId={store.placeId}
         name={store.name}

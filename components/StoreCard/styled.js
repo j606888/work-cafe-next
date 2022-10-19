@@ -23,6 +23,11 @@ export const ArrowContainer = styled.div`
     cursor: pointer;
     background-color: #fff;
   }
+
+  @media ${devices.iphoneSE} {
+    width: 20px;
+    height: 20px;
+  }
 `
 
 export const Container = styled.div`
@@ -49,6 +54,10 @@ export const Container = styled.div`
   @media ${devices.iphoneSE} {
     width: 154px;
     height: 154px;
+
+    ${ArrowContainer} {
+      opacity: 1;
+    }
   }
 `
 

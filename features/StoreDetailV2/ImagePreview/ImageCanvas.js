@@ -21,7 +21,7 @@ const Slider = styled.div`
 `
 
 const BoxBox = styled.div`
-  width: 220px;
+  width: 320px;
   background-color: #fff;
   cursor: pointer;
 
@@ -49,7 +49,16 @@ const Img = styled.img`
   max-height: 100%;
 `
 
-const ImageCanvas = ({ photos, open, onClose }) => {
+const StoreName = styled.div`
+  background-color: #fff;
+  position: sticky;
+  left: 0;
+  top: 0;
+  padding: .8rem;
+  text-align: center;
+`
+
+const ImageCanvas = ({ photos, open, onClose, name }) => {
   const [imageIndex, setImageIndex] = useState(0)
   const fullScreen = useMediaQuery("(max-width:390px)")
 
@@ -63,6 +72,7 @@ const ImageCanvas = ({ photos, open, onClose }) => {
     >
       <DialogContainer>
         <Slider>
+          <StoreName>{name}</StoreName>
           {photos.map((photo, index) => (
             <BoxBox key={index} onClick={() => setImageIndex(index)}>
               <Img src={photo} alt="slide" />
@@ -74,11 +84,12 @@ const ImageCanvas = ({ photos, open, onClose }) => {
         </FullImage>
         <CloseIcon
           sx={{
-            color: "#fff",
+            color: "#999",
             position: "absolute",
             top: 12,
             right: 12,
             cursor: "pointer",
+            zIndex: 10,
           }}
           onClick={onClose}
         />

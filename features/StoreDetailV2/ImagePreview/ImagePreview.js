@@ -95,7 +95,7 @@ const Button = styled.button`
 `
 
 // TODO, should not load all images, only after click
-const ImagePreview = ({ photos = [] }) => {
+const ImagePreview = ({ photos = [], name }) => {
   const [open, setOpen] = useState(false)
   const leftCount = photos.length - 3
   function handleClose() {
@@ -114,7 +114,12 @@ const ImagePreview = ({ photos = [] }) => {
         ></BoxC>
         <Button onClick={() => setOpen(true)}>所有照片</Button>
       </Container>
-      <ImageCanvas photos={photos} open={open} onClose={handleClose} />
+      <ImageCanvas
+        photos={photos}
+        open={open}
+        onClose={handleClose}
+        name={name}
+      />
     </>
   )
 }

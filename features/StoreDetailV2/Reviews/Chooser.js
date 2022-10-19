@@ -2,9 +2,10 @@ import React, { useState } from "react"
 import styled, { css } from "styled-components"
 
 const Container = styled.div`
-  display: flex;
+  display: inline-flex;
   gap: 2rem;
   box-sizing: border-box;
+  border-bottom: 2px solid #ddd;
 `
 
 const WordButton = styled.button`
