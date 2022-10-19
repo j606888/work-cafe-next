@@ -29,10 +29,7 @@ export const HelpButton = styled.button`
   font-size: 14px;
   text-decoration: underline;
   cursor: pointer;
-
-  &:hover {
-    color: #555;
-  }
+  color: #fff;
 
   @media ${devices.iphoneSE} {
     font-size: 12px;

@@ -17,20 +17,14 @@ const WordButton = styled.button`
   padding: 8px 0;
   cursor: pointer;
   color: #757575;
+  border-bottom: 2px solid #ddd;
 
   ${({ active }) =>
     active &&
     css`
       font-weight: 500;
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-bottom: 2px solid #757575;
-        z-index: 1;
-      }
+      border-bottom: 2px solid #757575;
+      z-index: 1;
     `}
 `
 
