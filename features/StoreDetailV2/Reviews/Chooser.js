@@ -2,38 +2,31 @@ import React, { useState } from "react"
 import styled, { css } from "styled-components"
 
 const Container = styled.div`
-  display: inline-flex;
-  gap: 2rem;
+  display: flex;
   box-sizing: border-box;
   position: relative;
 `
 
 const WordButton = styled.button`
+  flex: 1;
   box-sizing: border-box;
   border: none;
   background: none;
   font-size: 16px;
   position: relative;
-  padding: 8px 0;
+  padding: 8px;
   cursor: pointer;
-  color: #757575;
+  color: #999;
   border-bottom: 2px solid #ddd;
 
   ${({ active }) =>
     active &&
     css`
       font-weight: 500;
+      color: #757575;
       border-bottom: 2px solid #757575;
       z-index: 1;
     `}
-`
-
-const BottomLine = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-bottom: 2px solid #ddd;
 `
 
 const Chooser = ({ onChange }) => {
@@ -58,7 +51,6 @@ const Chooser = ({ onChange }) => {
       >
         Google Map 評論
       </WordButton>
-      <BottomLine />
     </Container>
   )
 }
