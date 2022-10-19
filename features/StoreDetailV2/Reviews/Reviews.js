@@ -3,7 +3,7 @@ import React from "react"
 import { useState } from "react"
 import Chooser from "./Chooser"
 import NewReview from "./NewReview"
-import WorkCafeReviews from "./WorkCafeReviews"
+import WorkCafeReviews from "./WorkCafeReviews/WorkCafeReviews"
 import { Container, LeaveFirstReview } from './styled'
 import useSWR from "swr"
 import Skeleton from "components/Skeleton"
