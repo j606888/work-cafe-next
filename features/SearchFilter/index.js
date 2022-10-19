@@ -20,9 +20,11 @@ import TagsPicker from "./TagsPicker"
 import AdvancedPicker from "./AdvancedPicker"
 import { devices } from "constant/styled-theme"
 import useFilterStore from "stores/useFilterStore"
-import { useEffect } from "react"
+import CloseIcon from '@mui/icons-material/Close';
+import { useMediaQuery } from "@mui/material"
 
 const Container = styled.div`
+  position: relative;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -53,6 +55,12 @@ const SmallContainer = styled(Container)`
   }
 `
 
+const CloseContainer = styled.div`
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+`
+
 const INIT_FILTERS = {
   openType: "NONE",
   openWeek: 0,
@@ -69,6 +77,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
   const setFilters = useFilterStore(state => state.setFilters)
   const [settingsMemo, setSettingsMemo] = useState(filters)
   const [settings, setSettings] = useState(filters)
+  const fullScreen = useMediaQuery("(max-width:390px)")
   const { data: tags } = useSWR("/tags")
   const badgeCount = useMemo(
     () => _calcBadgeCount(settingsMemo),
@@ -122,7 +131,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
           <FilterAltIcon />
         </SmallContainer>
       </Badge>
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth fullScreen={fullScreen}>
         <DialogTitle>篩選</DialogTitle>
         <DialogContent>
           <OpenTimePicker {...settings} onChange={handleOpenTimeChange} />
@@ -148,6 +157,9 @@ const SearchFilter = ({ onChange = () => {} }) => {
             </Button>
           </Box>
         </DialogActions>
+        <CloseContainer onClick={handleClose}>
+          <CloseIcon />
+        </CloseContainer>
       </Dialog>
     </>
   )
