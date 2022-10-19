@@ -5,7 +5,7 @@ const Container = styled.div`
   display: inline-flex;
   gap: 2rem;
   box-sizing: border-box;
-  border-bottom: 2px solid #ddd;
+  position: relative;
 `
 
 const WordButton = styled.button`
@@ -27,10 +27,19 @@ const WordButton = styled.button`
         position: absolute;
         left: 0;
         right: 0;
-        bottom: -2px;
+        bottom: 0;
         border-bottom: 2px solid #757575;
+        z-index: 1;
       }
     `}
+`
+
+const BottomLine = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 2px solid #ddd;
 `
 
 const Chooser = ({ onChange }) => {
@@ -55,6 +64,7 @@ const Chooser = ({ onChange }) => {
       >
         Google Map 評論
       </WordButton>
+      <BottomLine />
     </Container>
   )
 }
