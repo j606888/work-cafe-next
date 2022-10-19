@@ -2,13 +2,13 @@ import styled from "styled-components"
 import { devices } from "constant/styled-theme"
 
 const HEIGHT = {
-  normal: '48px',
-  iphoneSE: '36px'
+  normal: '40px',
+  iphoneSE: '32px'
 }
 
 export const Container = styled.div`
   text-align: center;
-  background-color: #a6a6a6;
+  background: linear-gradient(90deg, #94684A, #D7B997);
   height: ${HEIGHT.normal};
   display: flex;
   align-items: center;

@@ -4,9 +4,9 @@ import { devices } from 'constant/styled-theme'
 export const Container = styled.div`
   position: fixed;
   right: 0;
-  top: 128px;
+  top: 104px;
   width: calc(100% - 628px);
-  height: calc(100vh - 128px);
+  height: calc(100vh - 104px);
 
   .labels {
     background-color: white;
@@ -27,7 +27,7 @@ export const Container = styled.div`
     top: auto;
     bottom: 0;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 88px);
   }
 `
 

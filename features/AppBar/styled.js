@@ -21,7 +21,7 @@ export const Link = styled.a`
 `
 
 export const NavbarContainer = styled.div`
-  height: 80px;
+  height: 64px;
   position: relative;
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@ export const NavbarContainer = styled.div`
 
   @media ${devices.iphoneSE} {
     padding : 0 24px;
-    height: 64px;
+    height: 56px;
 
     h2 {
       font-size: 16px;
