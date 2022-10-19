@@ -1,5 +1,3 @@
-import SearchFilter from "features/SearchFilter"
-import StoreDetail from "features/StoreDetail"
 import StoreList from "features/StoreList"
 import useStoreStore from "stores/useStoreStore"
 import { useEffect } from "react"

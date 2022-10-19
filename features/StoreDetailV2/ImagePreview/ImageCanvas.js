@@ -56,6 +56,8 @@ const StoreName = styled.div`
   top: 0;
   padding: .8rem;
   text-align: center;
+  width: 320px;
+  box-sizing: border-box;
 `
 
 const ImageCanvas = ({ photos, open, onClose, name }) => {
