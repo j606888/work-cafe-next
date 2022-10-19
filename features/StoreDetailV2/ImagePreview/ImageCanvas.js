@@ -54,7 +54,7 @@ const StoreName = styled.div`
   position: sticky;
   left: 0;
   top: 0;
-  padding: .6rem;
+  padding: .8rem;
   text-align: center;
 `
 
@@ -84,11 +84,12 @@ const ImageCanvas = ({ photos, open, onClose, name }) => {
         </FullImage>
         <CloseIcon
           sx={{
-            color: "#fff",
+            color: "#999",
             position: "absolute",
             top: 12,
             right: 12,
             cursor: "pointer",
+            zIndex: 10,
           }}
           onClick={onClose}
         />

@@ -35,7 +35,6 @@ const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
   return (
     <Container>
       <Chooser onChange={handleActiveChange} />
-      <Divider sx={{ borderWidth: 1 }} />
       <NewReview placeId={placeId} name={name} onSave={handleSave} />
       {active === 'workCafe' && (
         <>
