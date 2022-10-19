@@ -38,3 +38,10 @@ export const Form = styled.form`
     font-size: 0.9rem;
   }
 `
+
+export const CloseButton = styled.div`
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  cursor: pointer;
+`

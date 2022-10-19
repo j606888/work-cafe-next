@@ -1,12 +1,14 @@
 import React, { useState } from "react"
-import { Button, Dialog, IconButton, Paper, TextField } from "@mui/material"
+import { Button, Dialog, IconButton, TextField } from "@mui/material"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import { signup } from "api/auth"
-import { Container, Form } from "./styled"
+import { Container, Form, CloseButton } from "./styled"
 import useUserStore from "stores/useUserStore"
+import { useMediaQuery } from "@mui/material"
+import CloseIcon from '@mui/icons-material/Close';
 
 const FormikTextField = ({ label, formik, type = "text" }) => {
   const showError = !!(formik.touched[label] && formik.errors[label])
@@ -44,7 +46,8 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 }
 
 const Signup = ({ open, onClose, onChangeMode }) => {
-  const login = useUserStore(state => state.login)
+  const fullScreen = useMediaQuery("(max-width:390px)")
+  const login = useUserStore((state) => state.login)
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -63,36 +66,33 @@ const Signup = ({ open, onClose, onChangeMode }) => {
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
       login(accessToken)
-      onClose()
+      onClose({  deep: true})
     },
   })
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullScreen={fullScreen}>
       <Container>
-        <Paper elevation={3}>
-          <Form onSubmit={formik.handleSubmit}>
-            <div className="headline">
-              <h2>註冊</h2>
-              <p>繼續使用 Work Cafe</p>
-            </div>
-            <div className="account">
-              <FormikTextField label="name" formik={formik} />
-              <FormikTextField label="email" formik={formik} />
-              <FormikTextField
-                label="password"
-                formik={formik}
-                type="password"
-              />
-              <Button variant="contained" type="submit" size="large">
-                註冊
-              </Button>
-            </div>
-            <p className="no-account">
-              已經有帳號了嗎？<Button onClick={onChangeMode}>登入</Button>
-            </p>
-          </Form>
-        </Paper>
+        <Form onSubmit={formik.handleSubmit}>
+          <div className="headline">
+            <h2>註冊</h2>
+            <p>繼續使用 Work Cafe</p>
+          </div>
+          <div className="account">
+            <FormikTextField label="name" formik={formik} />
+            <FormikTextField label="email" formik={formik} />
+            <FormikTextField label="password" formik={formik} type="password" />
+            <Button variant="contained" type="submit" size="large">
+              註冊
+            </Button>
+          </div>
+          <p className="no-account">
+            已經有帳號了嗎？<Button onClick={onChangeMode}>登入</Button>
+          </p>
+        </Form>
+        <CloseButton onClick={onClose}>
+          <CloseIcon />
+        </CloseButton>
       </Container>
     </Dialog>
   )
