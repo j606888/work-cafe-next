@@ -1,9 +1,3 @@
-// export const OPEN_TYPES = {
-//   NONE: 'NONE',
-//   OPEN_NOW: 'OPEN_NOW',
-//   OPEN_AT: 'OPEN_AT'
-// }
-
 function createLabel(label, value) {
   return { label, value }
 }
