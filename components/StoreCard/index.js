@@ -49,7 +49,6 @@ const MainInfo = styled.div`
 const SecondInfo = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   @media ${devices.iphoneSE} {
     width: 90%;
@@ -58,12 +57,12 @@ const SecondInfo = styled.div`
 `
 
 const OpenStatus = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   color: ${({ isOpen }) => (isOpen ? "green" : "#D92F25")};
 `
 
 const Address = styled.p`
-  color: #999;
+  color: #757575;
   margin: 0;
   font-size: 12px;
   max-width: 80%;
@@ -92,8 +91,7 @@ const GoodSpan = styled.div`
 const StoreCard = React.forwardRef(({
   placeId,
   name,
-  shortAddress,
-  rating,
+  vicinity,
   reviewsCount,
   isOpen,
   lat,
@@ -128,7 +126,7 @@ const StoreCard = React.forwardRef(({
       </MainInfo>
       <SecondInfo>
         <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
-        <Address>{shortAddress}</Address>
+        <Address>・{vicinity}</Address>
       </SecondInfo>
       <TagList tags={tags} />
     </Container>

@@ -45,9 +45,6 @@ const WelcomeMessage = () => {
       <h3>不只是咖啡廳，還要適合辦公的咖啡廳！</h3>
       <p>透過串連 Google Map，以及我們自定義的篩選。</p>
       <p>讓你快速找到理想的店家。</p>
-      {/* <ImageContainer>
-        <img src="human2.png" alt="human2" />
-      </ImageContainer> */}
     </Container>
   )
 }

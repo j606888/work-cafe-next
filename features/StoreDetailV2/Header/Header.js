@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { Menu, MenuItem } from "@mui/material"
-import NotCafeReport from "features/StoreDetail/NotCafeReport"
+import NotCafeReport from "features/StoreDetailV2/NotCafeReport"
 import {
   Container,
   BackButton,

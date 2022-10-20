@@ -1,8 +1,6 @@
 import React from "react"
 import { Container } from "./styled"
 import Link from "next/link"
-import { useEffect } from "react"
-import { useState } from "react"
 import UserMenu from "./UserMenu"
 import useUserStore from "stores/useUserStore"
 
