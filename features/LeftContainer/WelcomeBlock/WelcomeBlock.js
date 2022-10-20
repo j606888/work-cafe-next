@@ -3,7 +3,7 @@ import WhereToGo from "./WhereToGo"
 import Searchbar from "features/Searchbar"
 import { CircularProgress } from "@mui/material"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import WelcomeMessage from "features/WelcomeMessage"
+import WelcomeMessage from "features/LeftContainer/WelcomeMessage"
 import {
   Or,
   Upper,
