@@ -15,13 +15,12 @@ import useLocationParamsStore from "stores/useLocationParamsStore"
 import useMapStoreV2 from "stores/useMapStoreV2"
 import { useMediaQuery } from "@mui/material"
 import useUserStore from "stores/useUserStore"
+import useStoreSWR from "stores/useStoreSWR"
 
 const MapV2 = () => {
   const { isReady, mapSettings } = useInitMap()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } = useControlMap({ navigate: true })
   const searchHere = useLocationParamsStore((state) => state.searchHere)
-  const params = useLocationParamsStore((state) => state.params)
-  const stores = useStoreStore((state) => state.stores)
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const focusPlaceId = useStoreStore((state) => state.focusPlaceId)
@@ -36,10 +35,7 @@ const MapV2 = () => {
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
   const { data: bookmarkStores } = useSWR(isLogin ? `/user-bookmarks` : null)
-  const { data: storesLoading } = useSWR(
-    params.lat ? ["stores/location", { ...params }] : null
-  )
-  const loading = params.lat && !storesLoading
+  const { data: stores, isLoading } = useStoreSWR()
 
   function handleClickMarker(placeId) {
     if (fullScreen) {
@@ -80,7 +76,7 @@ const MapV2 = () => {
         <MyLocation onClick={handleFindMe} />
       </MyLocationContainer>
       <SearchHereContainer>
-        <SearchHere onClick={handleSearchHere} loading={loading} />
+        <SearchHere onClick={handleSearchHere} loading={isLoading} />
       </SearchHereContainer>
       <ShowLabelCheckbox onChange={handleToggle} />
       <GoogleMap
@@ -117,7 +113,7 @@ const MapV2 = () => {
             onClick={handleClickMarker}
           />
         ))}
-        {stores.length === 0 && store && (
+        {(!stores || stores?.length === 0 )&& store && (
           <StoreMarker
             key={store.placeId}
             store={store}

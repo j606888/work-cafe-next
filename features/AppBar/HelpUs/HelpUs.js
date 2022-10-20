@@ -1,12 +1,13 @@
 import { useMediaQuery } from "@mui/material"
 import { useState } from "react"
 import useStoreStore from "stores/useStoreStore"
+import useStoreSWR from "stores/useStoreSWR"
 import HelpUsModal from "./HelpUsModal"
 import { Container, HelpButton } from "./styled"
 
 const HelpUs = () => {
   const [open, setOpen] = useState(false)
-  const stores = useStoreStore(state => state.stores)
+  const { data: stores } = useStoreSWR()
   const placeId = useStoreStore(state => state.placeId)
   const fullScreen = useMediaQuery('(max-width:390px)');
   const hide = _calcHide(stores, placeId, fullScreen)

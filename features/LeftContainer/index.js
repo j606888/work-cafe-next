@@ -14,6 +14,7 @@ import { devices } from "constant/styled-theme"
 import WelcomeBlock from "./WelcomeBlock/WelcomeBlock"
 import ShortBlock from "./ShortBlock"
 import StoreDetailV2 from "features/StoreDetailV2"
+import useStoreSWR from "stores/useStoreSWR"
 
 const LeftContainer = () => {
   const { center, moveTo, updateWithPlaceId } = useControlMap({
@@ -30,13 +31,11 @@ const LeftContainer = () => {
       ],
       shallow
     )
-  const [setStores, placeId, setPlaceId] = useStoreStore(
-    (state) => [state.setStores, state.placeId, state.setPlaceId],
+  const [placeId, setPlaceId] = useStoreStore(
+    (state) => [state.placeId, state.setPlaceId],
     shallow
   )
-  const { data } = useSWR(
-    params.lat ? ["stores/location", { ...params }] : null
-  )
+  const { data } = useStoreSWR()
   const { findMe, loading } = useFindMe()
 
   useEffect(() => {
@@ -46,12 +45,11 @@ const LeftContainer = () => {
   }, [placeIdFromUrl, setPlaceId])
 
   useEffect(() => {
-    setStores(data || [])
     if (data && data.length > 0 && params.moveAfter) {
       const latLng = _calCenter(data)
       moveTo({ latLng })
     }
-  }, [data, setStores])
+  }, [data])
 
   function handleSearch(keyword) {
     setPlaceId(null)
