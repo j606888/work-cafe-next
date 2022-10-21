@@ -35,10 +35,10 @@ const AdvancedPicker = ({ wakeUp, reviewOver, onChange }) => {
           control={<Switch checked={wakeUp} onChange={wakeUpChange} />}
           label="只顯示有評論的店家"
         />
-        <FormControlLabel
+        {/* <FormControlLabel
           control={<Switch checked={reviewOver} onChange={reviewOverChange} disabled />}
           label={<ReviewOverLabel />}
-        />
+        /> */}
       </FormGroup>
     </>
   )
