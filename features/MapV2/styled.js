@@ -24,10 +24,10 @@ export const Container = styled.div`
   }
 
   @media ${devices.iphoneSE} {
-    top: auto;
+    top: 0;
     bottom: 0;
     width: 100%;
-    height: calc(100vh - 88px);
+    height: auto;
   }
 `
 
@@ -46,9 +46,9 @@ export const SearchHereContainer = styled.div`
   z-index: 2;
 
   @media ${devices.iphoneSE} {
-    top: 40%;
+    top: calc(56px + 72px + 1rem);
     left: 1rem;
-    transform: translateY(-50%);
-    z-index: 20;
+    transform: none;
+    z-index: 2000;
   }
 `
