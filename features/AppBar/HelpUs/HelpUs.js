@@ -10,7 +10,8 @@ const HelpUs = () => {
   const { data: stores } = useStoreSWR()
   const placeId = useStoreStore(state => state.placeId)
   const fullScreen = useMediaQuery('(max-width:390px)');
-  const hide = _calcHide(stores, placeId, fullScreen)
+  const { isLoading } = useStoreSWR()
+  const hide = _calcHide(stores, placeId, fullScreen, isLoading)
 
   const handleClose = () => {
     setOpen(false)
@@ -29,8 +30,8 @@ const HelpUs = () => {
   )
 }
 
-function _calcHide(stores, placeId, fullScreen) {
+function _calcHide(stores, placeId, fullScreen, isLoading) {
   if (!fullScreen) return false
-  return !!(placeId || (stores && stores.length > 0))
+  return !!(placeId || (stores && stores.length > 0) || isLoading)
 }
 export default HelpUs

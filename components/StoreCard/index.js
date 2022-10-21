@@ -88,7 +88,7 @@ const MainInfo = styled.div`
     align-items: flex-start;
 
     h3 {
-      max-width: 100%;
+      max-width: 95%;
     }
   }
 `
