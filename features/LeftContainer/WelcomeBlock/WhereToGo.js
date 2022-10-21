@@ -4,6 +4,7 @@ import { TypeAnimation } from "react-type-animation"
 import { devices } from "constant/styled-theme"
 
 const Container = styled.div`
+  color: #513622;
   .large {
     display: block;
   }

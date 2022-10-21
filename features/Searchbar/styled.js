@@ -22,6 +22,13 @@ export const SearchBox = styled.div`
   display: flex;
   align-items: center;
   gap: 9px;
+  color: #493425;
+
+  input {
+    ::placeholder {
+      color: #493425;
+    }
+  }
 
   @media ${devices.iphoneSE} {
     height: 44px;

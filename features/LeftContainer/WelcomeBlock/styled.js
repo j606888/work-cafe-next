@@ -15,7 +15,8 @@ export const Or = styled.p`
 `
 
 export const Upper = styled.div`
-  background-color: #f9f9f9;
+  background-color: #FCF9F6;
+  color: #513622;
   padding-bottom: 1rem;
   position: relative;
 `
@@ -35,7 +36,7 @@ export const SearchContainer = styled.div`
 
 export const HelloContainer = styled.div`
   padding: 56px 0 0 56px;
-  color: #757575;
+  color: #513622;
 
   p {
     font-size: 14px;
@@ -55,11 +56,10 @@ export const HelloContainer = styled.div`
 `
 
 export const SearchNearbyButton = styled.div`
-  color: #757575;
-  background-color: #f5f5f5;
-  border: 1px solid #757575;
+  color: #513622;
+  background-color: #F6EFE8;
+  border: 1px solid #704F39;
   border-radius: 8px;
-  font-size: 16px;
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -81,5 +81,10 @@ export const SearchNearbyButton = styled.div`
     font-size: 14px;
     white-space: nowrap;
     gap: 0.5rem;
+
+    span {
+      font-size: 12px;
+    }
+
   }
 `

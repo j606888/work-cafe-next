@@ -117,6 +117,7 @@ function _calCenter(data) {
 const Container = styled.div`
   width: 628px;
   position: relative;
+  background-color: #FCF9F6;
 
   @media ${devices.iphoneSE} {
     width: 100%;
