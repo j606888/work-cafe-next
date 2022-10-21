@@ -27,7 +27,7 @@ const TagListContainer = styled.div`
     margin: 8px 24px;
   }
 `
-const StoreDetailV2 = ({ placeId, onClose }) => {
+const StoreDetail = ({ placeId, onClose }) => {
   const { data: store, mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   function handleReviewSave() {
@@ -74,4 +74,4 @@ const StoreDetailV2 = ({ placeId, onClose }) => {
   )
 }
 
-export default StoreDetailV2
+export default StoreDetail

@@ -12,7 +12,7 @@ import useFindMe from "hooks/useFindMe"
 import { devices } from "constant/styled-theme"
 import WelcomeBlock from "./WelcomeBlock/WelcomeBlock"
 import ShortBlock from "./ShortBlock"
-import StoreDetailV2 from "features/StoreDetailV2"
+import StoreDetail from "features/StoreDetail"
 import useStoreSWR from "stores/useStoreSWR"
 
 const LeftContainer = () => {
@@ -93,7 +93,7 @@ const LeftContainer = () => {
       {data && data.length === 0 && <NoMatch />}
       {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
       {placeId && (
-        <StoreDetailV2
+        <StoreDetail
           placeId={placeId}
           key={placeId}
           canBack={!!data && data.length !== 0}
