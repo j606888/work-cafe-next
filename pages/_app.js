@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }) {
       <SWRConfig
         value={{
           fetcher,
+          errorRetryCount: 5,
         }}
       >
         <ThemeProvider theme={styledTheme}>

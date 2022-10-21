@@ -2,6 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 import { devices } from 'constant/styled-theme'
 
+const WelcomeMessage = () => {
+  return (
+    <Container>
+      <h3>不只是咖啡廳，還要適合辦公的咖啡廳！</h3>
+      <p>透過串連 Google Map，以及我們自定義的篩選。</p>
+      <p>讓你快速找到理想的店家。</p>
+    </Container>
+  )
+}
+
 const Container = styled.div`
   width: 80%;
   max-width: 560px;
@@ -29,24 +39,5 @@ const Container = styled.div`
     display: none;
   }
 `
-
-const ImageContainer = styled.div`
-  text-align: center;
-  margin: 3rem;
-
-  img {
-    width: 200px;
-  }
-`
-
-const WelcomeMessage = () => {
-  return (
-    <Container>
-      <h3>不只是咖啡廳，還要適合辦公的咖啡廳！</h3>
-      <p>透過串連 Google Map，以及我們自定義的篩選。</p>
-      <p>讓你快速找到理想的店家。</p>
-    </Container>
-  )
-}
 
 export default WelcomeMessage

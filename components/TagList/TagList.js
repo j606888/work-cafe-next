@@ -2,6 +2,18 @@ import React from "react"
 import styled from "styled-components"
 import { devices } from "constant/styled-theme"
 
+const TagList = ({ tags = [] }) => {
+  return (
+    <Container>
+      {tags.map((tag, index) => (
+        <Tag key={index}>
+          {tag.name} ({tag.count})
+        </Tag>
+      ))}
+    </Container>
+  )
+}
+
 const Container = styled.div`
   display: flex;
   gap: 8px;
@@ -10,12 +22,6 @@ const Container = styled.div`
 
   @media ${devices.iphoneSE} {
     display: none;
-    /* flex-wrap: nowrap;
-    overflow: hidden;
-
-    & > span {
-      white-space: nowrap;
-    } */
   }
 `
 
@@ -30,27 +36,5 @@ const Tag = styled.span`
   font-size: 12px;
 `
 
-const MOCK_TAGS = [
-  {
-    name: "有插座",
-    count: 3,
-  },
-  {
-    name: "無限時",
-    count: 3,
-  },
-]
-
-const TagList = ({ tags = MOCK_TAGS }) => {
-  return (
-    <Container>
-      {tags.map((tag, index) => (
-        <Tag key={index}>
-          {tag.name} ({tag.count})
-        </Tag>
-      ))}
-    </Container>
-  )
-}
 
 export default TagList

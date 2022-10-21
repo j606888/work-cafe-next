@@ -26,7 +26,7 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
   React.useEffect(() => {
     if (focusPlaceId && storesRef.current[focusPlaceId]) {
       storesRef.current[focusPlaceId].scrollIntoView(
-        { inline: 'start' }
+        { inline: 'center', block: 'center' }
       )
     }
   }, [focusPlaceId])

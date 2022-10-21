@@ -2,7 +2,6 @@ import StoreList from "features/StoreList"
 import useStoreStore from "stores/useStoreStore"
 import { useEffect } from "react"
 import styled from "styled-components"
-import useSWR from "swr"
 import NoMatch from "./NoMatch"
 import _ from "lodash"
 import useControlMap from "hooks/useControlMap"
@@ -12,18 +11,9 @@ import useInitMap from "hooks/useInitMap"
 import useFindMe from "hooks/useFindMe"
 import { devices } from "constant/styled-theme"
 import WelcomeBlock from "./WelcomeBlock/WelcomeBlock"
-import ShortBlock from "./ShortBlock/ShortBlock"
-import StoreDetailV2 from "features/StoreDetailV2"
-
-const Container = styled.div`
-  width: 628px;
-  position: relative;
-
-  @media ${devices.iphoneSE} {
-    width: 100%;
-    z-index: 5;
-  }
-`
+import ShortBlock from "./ShortBlock"
+import StoreDetail from "features/StoreDetail"
+import useStoreSWR from "stores/useStoreSWR"
 
 const LeftContainer = () => {
   const { center, moveTo, updateWithPlaceId } = useControlMap({
@@ -40,13 +30,11 @@ const LeftContainer = () => {
       ],
       shallow
     )
-  const [setStores, placeId, setPlaceId] = useStoreStore(
-    (state) => [state.setStores, state.placeId, state.setPlaceId],
+  const [placeId, setPlaceId] = useStoreStore(
+    (state) => [state.placeId, state.setPlaceId],
     shallow
   )
-  const { data } = useSWR(
-    params.lat ? ["stores/location", { ...params }] : null
-  )
+  const { data } = useStoreSWR()
   const { findMe, loading } = useFindMe()
 
   useEffect(() => {
@@ -56,12 +44,11 @@ const LeftContainer = () => {
   }, [placeIdFromUrl, setPlaceId])
 
   useEffect(() => {
-    setStores(data || [])
     if (data && data.length > 0 && params.moveAfter) {
       const latLng = _calCenter(data)
       moveTo({ latLng })
     }
-  }, [data, setStores])
+  }, [data])
 
   function handleSearch(keyword) {
     setPlaceId(null)
@@ -106,7 +93,7 @@ const LeftContainer = () => {
       {data && data.length === 0 && <NoMatch />}
       {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
       {placeId && (
-        <StoreDetailV2
+        <StoreDetail
           placeId={placeId}
           key={placeId}
           canBack={!!data && data.length !== 0}
@@ -126,5 +113,15 @@ function _calCenter(data) {
     lng: _.mean(lngs),
   }
 }
+
+const Container = styled.div`
+  width: 628px;
+  position: relative;
+
+  @media ${devices.iphoneSE} {
+    width: 100%;
+    z-index: 5;
+  }
+`
 
 export default LeftContainer

@@ -1,5 +1,5 @@
-import Login from "features/Login"
-import Signup from "features/Signup"
+import Login from "features/AccountMenu/Login"
+import Signup from "features/AccountMenu/Signup"
 
 const LoginForm = ({ mode, setMode, onClose }) => {
   return (
