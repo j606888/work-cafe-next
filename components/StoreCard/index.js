@@ -33,7 +33,7 @@ const StoreCard = React.forwardRef(({
       onMouseLeave={onMouseLeave}
       ref={ref}
     >
-      <ImageSlider images={images} />
+      <ImageSlider images={images} name={name} />
       <MainInfo>
         <h3>{name}</h3>
         <GoodSpan>

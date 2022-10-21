@@ -36,6 +36,11 @@ export const MyLocationContainer = styled.div`
   bottom: 7rem;
   right: 0.7rem;
   z-index: 2;
+
+  @media ${devices.iphoneSE} {
+    top: calc(56px + 72px + 1rem);
+    right: 1rem;
+  }
 `
 
 export const SearchHereContainer = styled.div`

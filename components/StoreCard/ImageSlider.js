@@ -10,7 +10,7 @@ import {
   Dot,
 } from "./styled"
 
-const ImageSlider = ({ images = [] }) => {
+const ImageSlider = ({ images = [], name }) => {
   const [current, setCurrent] = useState(0)
   const length = images.length
 
@@ -40,7 +40,7 @@ const ImageSlider = ({ images = [] }) => {
     return (
       <Container>
         <Slide active>
-          <Img src={images[0]} alt="store"  loading="lazy"/>
+          <Img src={images[0]} alt={name}  loading="lazy"/>
         </Slide>
       </Container>
     )
@@ -57,7 +57,7 @@ const ImageSlider = ({ images = [] }) => {
       {images.map((image, index) => {
         return (
           <Slide key={index} active={index === current}>
-            {index === current && <Img src={image} alt="store" loading="lazy"/>}
+            {index === current && <Img src={image} alt={name} loading="lazy"/>}
           </Slide>
         )
       })}

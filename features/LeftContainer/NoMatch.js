@@ -14,6 +14,7 @@ const NoMatch = () => {
 const Container = styled.div`
   text-align: center;
   color: #333;
+  background-color: #fff;
 
   h3 {
     font-size: 36px;
