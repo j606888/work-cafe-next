@@ -15,7 +15,7 @@ export const Container = styled.div`
 export const SearchBox = styled.div`
   box-sizing: border-box;
   background: #fff;
-  border: 1px solid #757575;
+  border: 1px solid #493425;
   border-radius: 12px;
   height: 52px;
   padding: 0 8px 0 1.2rem;
@@ -103,7 +103,7 @@ export const Option = styled.div`
 
 export const SearchButton = styled.div`
   ${({ noBg }) => noBg ? null : `
-    background-color:#757575;
+    background-color:#94684A;
   `}
   ${({ noBg }) => noBg ? `color: #757575;` : `
     color: #fff;

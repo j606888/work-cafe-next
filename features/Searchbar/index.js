@@ -46,7 +46,6 @@ const Searchbar = ({ onSearch = () => {} }) => {
   const [showOptions, setShowOptions] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const resultContainer = useRef(null)
-  const clear = useLocationParamsStore(state => state.clear)
   const placeId = useStoreStore(state => state.placeId)
 
   const { data } = useSWR(

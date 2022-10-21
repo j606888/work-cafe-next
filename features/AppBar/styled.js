@@ -27,14 +27,7 @@ export const NavbarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 56px;
-  background: #EDEDED;
-
-  h2 {
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    color: #757575;
-  }
+  background: #EADFD5;
 
   @media ${devices.iphoneSE} {
     padding : 0 24px;
@@ -121,7 +114,7 @@ export const HomeLink = styled.a`
   font-family: 'Noto Sans',sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: #757575;
+  color: #704F39;
   text-decoration: none;
 
   @media ${devices.iphoneSE} {

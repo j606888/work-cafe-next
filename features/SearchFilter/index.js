@@ -53,6 +53,10 @@ const SmallContainer = styled(Container)`
   @media ${devices.iphoneSE} {
     display: flex;
   }
+
+  svg {
+    color: #94684A;
+  }
 `
 
 const CloseContainer = styled.div`
