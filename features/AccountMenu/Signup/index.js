@@ -9,6 +9,7 @@ import { Container, Form, CloseButton } from "./styled"
 import useUserStore from "stores/useUserStore"
 import { useMediaQuery } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
+import { devices } from 'constant/styled-theme'
 
 const FormikTextField = ({ label, formik, type = "text" }) => {
   const showError = !!(formik.touched[label] && formik.errors[label])
@@ -46,7 +47,7 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 }
 
 const Signup = ({ open, onClose, onChangeMode }) => {
-  const fullScreen = useMediaQuery("(max-width:390px)")
+  const fullScreen = useMediaQuery(devices.iphoneSE)
   const login = useUserStore((state) => state.login)
   const formik = useFormik({
     initialValues: {

@@ -4,12 +4,13 @@ import useStoreStore from "stores/useStoreStore"
 import useStoreSWR from "stores/useStoreSWR"
 import HelpUsModal from "./HelpUsModal"
 import { Container, HelpButton } from "./styled"
+import { devices } from 'constant/styled-theme'
 
 const HelpUs = () => {
   const [open, setOpen] = useState(false)
   const { data: stores } = useStoreSWR()
   const placeId = useStoreStore(state => state.placeId)
-  const fullScreen = useMediaQuery('(max-width:390px)');
+  const fullScreen = useMediaQuery(devices.iphoneSE);
   const { isLoading } = useStoreSWR()
   const hide = _calcHide(stores, placeId, fullScreen, isLoading)
 

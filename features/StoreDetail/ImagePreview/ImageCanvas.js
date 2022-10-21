@@ -62,7 +62,7 @@ const StoreName = styled.div`
 
 const ImageCanvas = ({ photos, open, onClose, name }) => {
   const [imageIndex, setImageIndex] = useState(0)
-  const fullScreen = useMediaQuery("(max-width:390px)")
+  const fullScreen = useMediaQuery(devices.iphoneSE)
 
   return (
     <Dialog

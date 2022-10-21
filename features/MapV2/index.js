@@ -16,6 +16,7 @@ import useMapStoreV2 from "stores/useMapStoreV2"
 import { useMediaQuery } from "@mui/material"
 import useUserStore from "stores/useUserStore"
 import useStoreSWR from "stores/useStoreSWR"
+import { devices } from 'constant/styled-theme'
 import shallow from "zustand/shallow"
 
 const MapV2 = () => {
@@ -38,7 +39,7 @@ const MapV2 = () => {
   const myLocation = useMapStoreV2((state) => state.myLocation)
   const setMyLocation = useMapStoreV2((state) => state.setMyLocation)
   const map = useMapStoreV2((state) => state.map)
-  const fullScreen = useMediaQuery("(max-width:390px)")
+  const fullScreen = useMediaQuery(devices.iphoneSE)
   const isLogin = useUserStore((state) => state.isLogin)
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)

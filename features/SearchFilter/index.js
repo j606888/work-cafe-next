@@ -77,7 +77,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
   const setFilters = useFilterStore(state => state.setFilters)
   const [settingsMemo, setSettingsMemo] = useState(filters)
   const [settings, setSettings] = useState(filters)
-  const fullScreen = useMediaQuery("(max-width:390px)")
+  const fullScreen = useMediaQuery(devices.iphoneSE)
   const { data: tags } = useSWR("/tags")
   const badgeCount = useMemo(
     () => _calcBadgeCount(settingsMemo),

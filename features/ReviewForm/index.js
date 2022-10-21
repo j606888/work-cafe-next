@@ -13,6 +13,7 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 import LinearProgressWithLabel from "./LinearProgressWithLabel"
 import { sleep } from "utils/helper"
 import { useEffect } from "react"
+import { devices } from 'constant/styled-theme'
 
 const ReviewForm = ({
   placeId,
@@ -30,7 +31,7 @@ const ReviewForm = ({
   const [files, setFiles] = useState([])
   const [showSnackbar, setShowSnackbar] = useState(null)
   const { data: tags } = useSWR("/tags")
-  const fullScreen = useMediaQuery('(max-width:390px)');
+  const fullScreen = useMediaQuery(devices.iphoneSE);
   const [loading, setLoading] = useState(false)
   const [currentI, setCurrentI] = useState(0)
 

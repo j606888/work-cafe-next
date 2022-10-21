@@ -10,6 +10,7 @@ import { Container , CloseButton} from "./styled"
 import useUserStore from "stores/useUserStore"
 import { useMediaQuery } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
+import { devices } from 'constant/styled-theme'
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
@@ -50,7 +51,7 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 
 const Login = ({ open, onClose, onChangeMode }) => {
   const login = useUserStore((state) => state.login)
-  const fullScreen = useMediaQuery("(max-width:390px)")
+  const fullScreen = useMediaQuery(devices.iphoneSE)
 
   async function handleLogin(tokenResponse) {
     const { accessToken, refreshToken } = await googleLogin({
