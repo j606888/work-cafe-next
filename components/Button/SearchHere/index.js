@@ -1,7 +1,22 @@
 import React from "react"
 import styled from "styled-components"
 import SearchIcon from "@mui/icons-material/Search"
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress"
+
+const SearchHere = ({ loading = false, onClick = () => {} }) => {
+  const icon = loading ? (
+    <CircularProgress size={18} />
+  ) : (
+    <SearchIcon sx={{ color: "#1EA7FD", fontSize: "18px" }} />
+  )
+
+  return (
+    <Container onClick={onClick}>
+      {icon}
+      <span>搜尋這個區域</span>
+    </Container>
+  )
+}
 
 const Container = styled.div`
   display: inline-flex;
@@ -23,18 +38,5 @@ const Container = styled.div`
     font-weight: 500;
   }
 `
-
-const SearchHere = ({ loading = false, onClick = () => {} }) => {
-  return (
-    <Container onClick={() => onClick()}>
-      {loading ? (
-        <CircularProgress size={18}/>
-      ) : (
-        <SearchIcon sx={{ color: "#1EA7FD", fontSize: "18px" }} />
-      )}
-      <span>搜尋這個區域</span>
-    </Container>
-  )
-}
 
 export default SearchHere

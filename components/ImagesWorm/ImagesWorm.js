@@ -3,6 +3,17 @@ import React from "react"
 import styled from "styled-components"
 import { devices } from "constant/styled-theme"
 
+const ImagesWorm = ({ images = [] }) => {
+  const length = images.length
+
+  if (length === 0) return null
+  else if (length === 1) return <One images={images} />
+  else if (length === 2) return <Two images={images} />
+  else if (length === 3) return <Three images={images} />
+  else if (length === 4) return <Four images={images} />
+  else return <MoreThanFour images={images} />
+}
+
 const More = styled.div`
   position: absolute;
   top: 50%;
@@ -98,17 +109,6 @@ const MoreThanFour = ({ images }) => {
       </ImageListItem>
     </ImageList>
   )
-}
-
-const ImagesWorm = ({ images = [] }) => {
-  const length = images.length
-
-  if (length === 0) return null
-  else if (length === 1) return <One images={images} />
-  else if (length === 2) return <Two images={images} />
-  else if (length === 3) return <Three images={images} />
-  else if (length === 4) return <Four images={images} />
-  else return <MoreThanFour images={images} />
 }
 
 export default ImagesWorm

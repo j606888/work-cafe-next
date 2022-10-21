@@ -4,32 +4,6 @@ import StarIcon from "@mui/icons-material/Star"
 import StarHalfIcon from "@mui/icons-material/StarHalf"
 import StarOutlineIcon from "@mui/icons-material/StarOutline"
 
-const Container = styled.div`
-  display: inline-flex;
-  align-items: center;
-
-  span {
-    margin-right: 0.5rem;
-    color: #666;
-  }
-`
-
-const style = {
-  color: "#FABC05",
-  fontSize: 18,
-}
-
-function chooseStar(limit, rating) {
-  const current = rating - limit
-  if (current >= 0) {
-    return <StarIcon sx={style} />
-  } else if (current >= -0.5) {
-    return <StarHalfIcon sx={style} />
-  } else {
-    return <StarOutlineIcon sx={style} />
-  }
-}
-
 const RatingStars = ({ rating, userRatingsTotal, showRate = true }) => {
   return (
     <Container>
@@ -43,5 +17,31 @@ const RatingStars = ({ rating, userRatingsTotal, showRate = true }) => {
     </Container>
   )
 }
+
+function chooseStar(limit, rating) {
+  const current = rating - limit
+  if (current >= 0) {
+    return <StarIcon sx={style} />
+  } else if (current >= -0.5) {
+    return <StarHalfIcon sx={style} />
+  } else {
+    return <StarOutlineIcon sx={style} />
+  }
+}
+
+const style = {
+  color: "#FABC05",
+  fontSize: 18,
+}
+
+const Container = styled.div`
+  display: inline-flex;
+  align-items: center;
+
+  span {
+    margin-right: 0.5rem;
+    color: #666;
+  }
+`
 
 export default RatingStars

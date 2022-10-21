@@ -4,6 +4,53 @@ import ImageSlider from "./ImageSlider"
 import { devices } from "constant/styled-theme"
 import TagList from "components/TagList/TagList"
 
+const StoreCard = React.forwardRef(({
+  placeId,
+  name,
+  vicinity,
+  reviewsCount,
+  isOpen,
+  lat,
+  lng,
+  images = [],
+  tags = [],
+  onClick = () => {},
+  onMouseEnter = () => {},
+  onMouseLeave = () => {},
+}, ref) => {
+  function handleClick() {
+    onClick({ placeId, lat, lng })
+  }
+
+  function handleMouseEnter() {
+    onMouseEnter(placeId)
+  }
+
+  return (
+    <Container
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={onMouseLeave}
+      ref={ref}
+    >
+      <ImageSlider images={images} />
+      <MainInfo>
+        <h3>{name}</h3>
+        <GoodSpan>
+          <img src="/icon-good.svg" alt="icon-good" />
+          <span>&nbsp;&nbsp;{reviewsCount}</span>
+        </GoodSpan>
+      </MainInfo>
+      <SecondInfo>
+        <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
+        <Address>・{vicinity}</Address>
+      </SecondInfo>
+      <TagList tags={tags} />
+    </Container>
+  )
+})
+StoreCard.displayName = 'StoreCard'
+
 const Container = styled.div`
   width: 239px;
   background-color: #fff;
@@ -88,50 +135,5 @@ const GoodSpan = styled.div`
   }
 `
 
-const StoreCard = React.forwardRef(({
-  placeId,
-  name,
-  vicinity,
-  reviewsCount,
-  isOpen,
-  lat,
-  lng,
-  images = [],
-  tags = [],
-  onClick = () => {},
-  onMouseEnter = () => {},
-  onMouseLeave = () => {},
-}, ref) => {
-  function handleClick() {
-    onClick({ placeId, lat, lng })
-  }
-
-  function handleMouseEnter() {
-    onMouseEnter(placeId)
-  }
-  return (
-    <Container
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={onMouseLeave}
-      ref={ref}
-    >
-      <ImageSlider images={images} />
-      <MainInfo>
-        <h3>{name}</h3>
-        <GoodSpan>
-          <img src="/icon-good.svg" alt="icon-good" />
-          <span>&nbsp;&nbsp;{reviewsCount}</span>
-        </GoodSpan>
-      </MainInfo>
-      <SecondInfo>
-        <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
-        <Address>・{vicinity}</Address>
-      </SecondInfo>
-      <TagList tags={tags} />
-    </Container>
-  )
-})
-StoreCard.displayName = 'StoreCard'
 
 export default StoreCard
