@@ -56,7 +56,7 @@ const StoreName = styled.div`
   top: 0;
   padding: .8rem;
   text-align: center;
-  width: 320px;
+  width: 100%;
   box-sizing: border-box;
 `
 

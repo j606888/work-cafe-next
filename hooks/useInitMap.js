@@ -14,6 +14,7 @@ const DEFAULT_SETUP = {
   streetViewControl: false,
   mapId: process.env.NEXT_PUBLIC_MAP_ID,
   gestureHandling: "greedy",
+  keyboardShortcuts: false,
 }
 
 const useInitMap = () => {
