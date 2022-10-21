@@ -62,7 +62,7 @@ const Container = styled.div`
   }
 
   @media ${devices.iphoneSE} {
-    width: 154px;
+    width: 180px;
   }
 `
 
