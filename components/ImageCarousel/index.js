@@ -1,10 +1,10 @@
 import { useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import CarouselControls from "./CarouselControls"
 import CarouselIndicators from "./CarouselIndicators"
 import CarouselItem from "./CarouselItem"
 
-const ImageCarousel = ({ slides }) => {
+const ImageCarousel = ({ slides, width = 400, height = 300 }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
 
   const prev = () => {
@@ -22,7 +22,7 @@ const ImageCarousel = ({ slides }) => {
   }
 
   return (
-    <Container>
+    <Container width={width} height={height}>
       <CarouselInner currentSlide={currentSlide}>
         {slides.map((slide, index) => (
           <CarouselItem key={index} slide={slide} />
@@ -41,13 +41,20 @@ const ImageCarousel = ({ slides }) => {
 const Container = styled.div`
   margin: 0 auto;
   overflow: hidden;
-  max-width: 900px;
+  ${({ width, height }) => css`
+    width: ${width}px;
+    height: ${height}px;
+
+    & img {
+      height: ${height}px;
+    }
+  `}
   position: relative;
 `
 
 const CarouselInner = styled.div`
   white-space: nowrap;
-  transition: ease .6s;
+  transition: ease 0.6s;
   ${({ currentSlide }) => `
     transform: translateX(${-currentSlide * 100}%);
   `}
