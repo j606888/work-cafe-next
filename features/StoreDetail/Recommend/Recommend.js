@@ -9,7 +9,7 @@ const Container = styled.div`
   gap: 2.5rem;
   margin-top: 1rem;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     margin: 0 24px;
     gap: 1.2rem;
   }
@@ -24,7 +24,7 @@ const BlockContainer = styled.div`
     width: 42px;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     gap: 0.6rem;
     img {
       width: 32px;
@@ -35,7 +35,7 @@ const Number = styled.span`
   font-size: 32px;
   font-weight: 500;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     font-size: 24px;
   }
 `

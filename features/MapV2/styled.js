@@ -23,7 +23,7 @@ export const Container = styled.div`
     max-width: 240px;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     top: 0;
     bottom: 0;
     width: 100%;
@@ -37,7 +37,7 @@ export const MyLocationContainer = styled.div`
   right: 0.7rem;
   z-index: 2;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     top: calc(56px + 72px + 1rem);
     right: 1rem;
   }
@@ -50,7 +50,7 @@ export const SearchHereContainer = styled.div`
   transform: translateX(-50%);
   z-index: 2;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     top: calc(56px + 72px + 1rem);
     left: 1rem;
     transform: none;

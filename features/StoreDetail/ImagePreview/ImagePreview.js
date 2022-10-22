@@ -14,7 +14,7 @@ const Container = styled.div`
     "A C";
   position: relative;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: flex;
     gap: 8px;
     overflow-x: auto;
@@ -34,7 +34,7 @@ const Box = styled.div`
     object-fit: cover;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     ${({ hide }) => hide && `display: none;`}
     width: 90%;
     height: 240px;
@@ -89,7 +89,7 @@ const Button = styled.button`
   border: 1px solid #757575;
   cursor: pointer;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: none;
   }
 `

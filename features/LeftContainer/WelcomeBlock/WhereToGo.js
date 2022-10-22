@@ -13,7 +13,7 @@ const Container = styled.div`
     display: none;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     .large {
       display: none;
     }

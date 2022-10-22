@@ -15,7 +15,7 @@ export const Form = styled.form`
     margin: 0;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 100%;
   }
 `
@@ -28,7 +28,7 @@ export const Scroll = styled.div`
   max-height: calc(80vh - 130px);
   overflow: scroll;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     padding: 1rem;
     max-height: none;
     overflow: auto;

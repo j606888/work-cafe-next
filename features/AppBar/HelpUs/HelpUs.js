@@ -10,7 +10,7 @@ const HelpUs = () => {
   const [open, setOpen] = useState(false)
   const { data: stores } = useStoreSWR()
   const placeId = useStoreStore(state => state.placeId)
-  const fullScreen = useMediaQuery(devices.iphoneSE);
+  const fullScreen = useMediaQuery(devices.mobileXl);
   const { isLoading } = useStoreSWR()
   const hide = _calcHide(stores, placeId, fullScreen, isLoading)
 

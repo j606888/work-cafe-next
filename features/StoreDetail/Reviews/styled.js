@@ -6,7 +6,7 @@ export const Container = styled.div`
   color: #757575;
   font-family: "Noto Sans", sans-serif;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     margin: 0 24px;
   }
 `

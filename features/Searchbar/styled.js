@@ -5,7 +5,7 @@ export const Container = styled.div`
   position: relative;
   width: 100%;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     ${({ hide }) => hide && `
       display: none;
     `}
@@ -30,7 +30,7 @@ export const SearchBox = styled.div`
     }
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     height: 44px;
     padding-left: 16px;
   }
@@ -44,7 +44,7 @@ export const Input = styled.input`
   padding: 240x 20px;
   font-size: 16px;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     font-size: 14px;
   }
 `
@@ -123,7 +123,7 @@ export const SearchButton = styled.div`
   justify-content: center;
   cursor: pointer;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 28px;
     height: 28px;
 

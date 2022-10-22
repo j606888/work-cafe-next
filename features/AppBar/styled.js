@@ -29,7 +29,7 @@ export const NavbarContainer = styled.div`
   padding: 0 56px;
   background: #EADFD5;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     padding : 0 24px;
     height: 56px;
 
@@ -44,7 +44,7 @@ export const NavLinks = styled.div`
   gap: 1.3rem;
   align-items: center;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: ${({ show }) => show ? 'flex' : 'none'};
     position: absolute;
     top: 64px;
@@ -74,7 +74,7 @@ export const GreyLink = styled.a`
     text-decoration: underline;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     align-self: flex-start;
     padding: 1.5rem;
     margin-bottom: auto;
@@ -91,7 +91,7 @@ export const Button = styled.button`
   cursor: pointer;
   background-color: inherit;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 200px;
   }
 `
@@ -104,7 +104,7 @@ export const CtaButton = styled(Button)`
 export const IconContainer = styled.div`
   display: none;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: block;
   }
 `
@@ -117,7 +117,7 @@ export const HomeLink = styled.a`
   color: #704F39;
   text-decoration: none;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     font-size: 16px;
   }
 `

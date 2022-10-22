@@ -20,7 +20,7 @@ const Container = styled.div`
   margin-top: 8px;
   flex-wrap: wrap;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: none;
   }
 `

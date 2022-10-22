@@ -61,7 +61,7 @@ const Container = styled.div`
     font-size: 16px;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 180px;
   }
 `
@@ -83,7 +83,7 @@ const MainInfo = styled.div`
     white-space: nowrap;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     flex-direction: column;
     align-items: flex-start;
 
@@ -97,7 +97,7 @@ const SecondInfo = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 90%;
     white-space: nowrap;
   }
@@ -118,7 +118,7 @@ const Address = styled.p`
 `
 
 const GoodSpan = styled.div`
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     position: absolute;
     top: 9px;
     right: 9px;

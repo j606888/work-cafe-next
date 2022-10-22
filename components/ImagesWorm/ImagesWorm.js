@@ -22,7 +22,7 @@ const More = styled.div`
   font-size: 24px;
   color: #fff;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     font-size: 16px;
   }
 `

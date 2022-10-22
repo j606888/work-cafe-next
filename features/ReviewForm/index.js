@@ -31,7 +31,7 @@ const ReviewForm = ({
   const [files, setFiles] = useState([])
   const [showSnackbar, setShowSnackbar] = useState(null)
   const { data: tags } = useSWR("/tags")
-  const fullScreen = useMediaQuery(devices.iphoneSE);
+  const fullScreen = useMediaQuery(devices.mobileXl);
   const [loading, setLoading] = useState(false)
   const [currentI, setCurrentI] = useState(0)
 

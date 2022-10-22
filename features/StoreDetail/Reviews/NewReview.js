@@ -14,7 +14,7 @@ const Container = styled.div`
   align-items: center;
   margin: 28px 0;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     margin: 24px 0;
   }
 `
@@ -29,7 +29,7 @@ const FakeTextBox = styled.div`
   border-radius: 12px;
   cursor: pointer;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     height: 36px;
     font-size: 12px;
   }

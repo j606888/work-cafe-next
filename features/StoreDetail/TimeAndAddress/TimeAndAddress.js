@@ -7,7 +7,7 @@ const Container = styled.div`
   margin-left: 104px;
   margin-top: 12px;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     margin: 0 24px 12px;
   }
 `
@@ -23,7 +23,7 @@ const ListItem = styled.div`
     color: #757575;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     a {
       display: none;
     }

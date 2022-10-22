@@ -3,7 +3,7 @@ import { devices } from "constant/styled-theme"
 
 const HEIGHT = {
   normal: '40px',
-  iphoneSE: '32px'
+  mobileXl: '32px'
 }
 
 export const Container = styled.div`
@@ -16,8 +16,8 @@ export const Container = styled.div`
   font-size: 16px;
   color: #fff;
 
-  @media ${devices.iphoneSE} {
-    height: ${HEIGHT.iphoneSE};
+  @media ${devices.mobileXl} {
+    height: ${HEIGHT.mobileXl};
     font-size: 12px;
   }
 `
@@ -31,7 +31,7 @@ export const HelpButton = styled.button`
   cursor: pointer;
   color: #fff;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     font-size: 12px;
   }
 `

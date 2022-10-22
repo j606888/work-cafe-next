@@ -119,7 +119,7 @@ const Container = styled.div`
   position: relative;
   background-color: #FCF9F6;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 100%;
     z-index: 5;
   }

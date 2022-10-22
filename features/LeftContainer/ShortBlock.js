@@ -11,7 +11,7 @@ const Container = styled.div`
   gap: 2rem;
   background-color: #FCF9F6;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     gap: 12px;
     padding: 14px 23px;
   }
