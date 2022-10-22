@@ -3,53 +3,67 @@ import styled from "styled-components"
 import ImageSlider from "./ImageSlider"
 import { devices } from "constant/styled-theme"
 import TagList from "components/TagList/TagList"
+import ImageCarousel from "components/ImageCarousel"
 
-const StoreCard = React.forwardRef(({
-  placeId,
-  name,
-  vicinity,
-  reviewsCount,
-  isOpen,
-  lat,
-  lng,
-  images = [],
-  tags = [],
-  onClick = () => {},
-  onMouseEnter = () => {},
-  onMouseLeave = () => {},
-}, ref) => {
-  function handleClick() {
-    onClick({ placeId, lat, lng })
+const StoreCard = React.forwardRef(
+  (
+    {
+      placeId,
+      name,
+      vicinity,
+      reviewsCount,
+      isOpen,
+      lat,
+      lng,
+      images = [],
+      tags = [],
+      onClick = () => {},
+      onMouseEnter = () => {},
+      onMouseLeave = () => {},
+    },
+    ref
+  ) => {
+    function handleClick() {
+      onClick({ placeId, lat, lng })
+    }
+
+    function handleMouseEnter() {
+      onMouseEnter(placeId)
+    }
+
+    return (
+      <Container
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={onMouseLeave}
+        ref={ref}
+      >
+        <ImageCarousel
+          slides={images}
+          width={240}
+          height={240}
+          mWidth={180}
+          mHeight={154}
+        />
+        <MainInfo>
+          <h3>{name}</h3>
+          <GoodSpan>
+            <img src="/icon-good.svg" alt="icon-good" />
+            <span>&nbsp;&nbsp;{reviewsCount}</span>
+          </GoodSpan>
+        </MainInfo>
+        <SecondInfo>
+          <OpenStatus isOpen={isOpen}>
+            {isOpen ? "營業中" : "已打烊"}
+          </OpenStatus>
+          <Address>・{vicinity}</Address>
+        </SecondInfo>
+        <TagList tags={tags} />
+      </Container>
+    )
   }
-
-  function handleMouseEnter() {
-    onMouseEnter(placeId)
-  }
-
-  return (
-    <Container
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={onMouseLeave}
-      ref={ref}
-    >
-      <ImageSlider images={images} name={name} />
-      <MainInfo>
-        <h3>{name}</h3>
-        <GoodSpan>
-          <img src="/icon-good.svg" alt="icon-good" />
-          <span>&nbsp;&nbsp;{reviewsCount}</span>
-        </GoodSpan>
-      </MainInfo>
-      <SecondInfo>
-        <OpenStatus isOpen={isOpen}>{isOpen ? "營業中" : "已打烊"}</OpenStatus>
-        <Address>・{vicinity}</Address>
-      </SecondInfo>
-      <TagList tags={tags} />
-    </Container>
-  )
-})
-StoreCard.displayName = 'StoreCard'
+)
+StoreCard.displayName = "StoreCard"
 
 const Container = styled.div`
   width: 239px;
@@ -134,6 +148,5 @@ const GoodSpan = styled.div`
     }
   }
 `
-
 
 export default StoreCard
