@@ -35,7 +35,7 @@ const Container = styled.div`
     font-size: 12px;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: none;
   }
 `

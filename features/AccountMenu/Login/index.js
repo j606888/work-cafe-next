@@ -51,7 +51,7 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 
 const Login = ({ open, onClose, onChangeMode }) => {
   const login = useUserStore((state) => state.login)
-  const fullScreen = useMediaQuery(devices.iphoneSE)
+  const fullScreen = useMediaQuery(devices.mobileXl)
 
   async function handleLogin(tokenResponse) {
     const { accessToken, refreshToken } = await googleLogin({

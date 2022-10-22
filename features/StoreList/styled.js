@@ -11,7 +11,7 @@ export const Container = styled.div`
   justify-content: space-around;
   padding: 0 56px;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     flex-wrap: initial;
     justify-content: flex-start;
     width: 100%;
@@ -31,7 +31,7 @@ export const StoreCount = styled.p`
   color: #757575;
   margin-top: 0;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: none;
   }
 `

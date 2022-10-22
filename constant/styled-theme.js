@@ -3,16 +3,15 @@ const styledTheme = {
 }
 
 const sizes = {
-  // iphoneSE: '375px',
-  iphoneSE: '414px',
-  iphone13: '390px',
-  macBookPro14: '1440px',
+  mobileSm: '375px',
+  mobileMd: '390px',
+  mobileXl: '414px',
 }
 
 export const devices = {
-  iphoneSE: `(max-width: ${sizes.iphoneSE})`,
-  iphone13: `(max-width: ${sizes.iphone13})`,
-  macBookPro14: `(max-width: ${sizes.macBookPro14})`
+  mobileSm: `(max-width: ${sizes.mobileSm})`,
+  mobileMd: `(max-width: ${sizes.mobileMd})`,
+  mobileXl: `(max-width: ${sizes.mobileXl})`
 }
 
 export default styledTheme

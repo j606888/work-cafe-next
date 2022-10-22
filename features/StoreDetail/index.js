@@ -16,7 +16,7 @@ const Container = styled.div`
   padding-bottom: 1px;
   padding: 14px 0;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     min-height: 100vh;
   }
 `
@@ -24,7 +24,7 @@ const Container = styled.div`
 const TagListContainer = styled.div`
   margin-left: 104px;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     margin: 8px 24px;
   }
 `

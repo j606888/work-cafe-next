@@ -32,7 +32,7 @@ const Content = styled.div`
     white-space: pre-line;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     h6 {
       font-size: 14px;
     }

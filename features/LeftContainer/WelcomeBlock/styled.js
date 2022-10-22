@@ -7,7 +7,7 @@ export const Or = styled.p`
   font-size: 14px;
   padding: 0.5rem 0 1rem;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     font-size: 12px;
 
     padding: 0;
@@ -29,7 +29,7 @@ export const SearchContainer = styled.div`
   gap: 2rem;
   flex-wrap: wrap;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
   padding: 1rem 23px 0;
   }
 `
@@ -43,7 +43,7 @@ export const HelloContainer = styled.div`
     margin: 4px 0 8px;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     padding: 0;
     text-align: center;
 
@@ -76,7 +76,7 @@ export const SearchNearbyButton = styled.div`
     background-color: #fcfcfc;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     padding: 6px 12px 6px 6px;
     font-size: 14px;
     white-space: nowrap;

@@ -9,7 +9,7 @@ const DialogContainer = styled.div`
   display: flex;
   height: 80vh;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     height: 100vh;
   }
 `
@@ -25,7 +25,7 @@ const BoxBox = styled.div`
   background-color: #fff;
   cursor: pointer;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 100%;
     max-height: 100%;
     cursor: none;
@@ -39,7 +39,7 @@ const FullImage = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: none;
   }
 `
@@ -62,7 +62,7 @@ const StoreName = styled.div`
 
 const ImageCanvas = ({ photos, open, onClose, name }) => {
   const [imageIndex, setImageIndex] = useState(0)
-  const fullScreen = useMediaQuery(devices.iphoneSE)
+  const fullScreen = useMediaQuery(devices.mobileXl)
 
   return (
     <Dialog

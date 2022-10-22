@@ -83,7 +83,7 @@ const Header = ({
             </Button>
           )}
 
-          <ShareButton />
+          <ShareButton placeId={placeId} />
           <Button onClick={handleMoreClick}>
             <MoreVertIcon />
           </Button>

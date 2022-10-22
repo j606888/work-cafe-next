@@ -40,7 +40,7 @@ const Container = styled.div`
   &:hover {
     background-color: #f6f6f6;
   }
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: none;
   }
 `
@@ -50,7 +50,7 @@ const SmallContainer = styled(Container)`
   width: 44px;
   height: 44px;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     display: flex;
   }
 
@@ -81,7 +81,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
   const setFilters = useFilterStore(state => state.setFilters)
   const [settingsMemo, setSettingsMemo] = useState(filters)
   const [settings, setSettings] = useState(filters)
-  const fullScreen = useMediaQuery(devices.iphoneSE)
+  const fullScreen = useMediaQuery(devices.mobileXl)
   const { data: tags } = useSWR("/tags")
   const badgeCount = useMemo(
     () => _calcBadgeCount(settingsMemo),

@@ -24,7 +24,7 @@ export const ArrowContainer = styled.div`
     background-color: #fff;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 20px;
     height: 20px;
   }
@@ -51,7 +51,7 @@ export const Container = styled.div`
     opacity: 1;
   }
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 180px;
     height: 154px;
 
@@ -66,7 +66,7 @@ export const Img = styled.img`
   height: 240px;
   object-fit: cover;
 
-  @media ${devices.iphoneSE} {
+  @media ${devices.mobileXl} {
     width: 180px;
     height: 154px;
   }

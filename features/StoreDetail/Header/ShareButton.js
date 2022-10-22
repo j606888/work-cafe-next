@@ -4,12 +4,13 @@ import ShareIcon from '@mui/icons-material/Share';
 import copy from "copy-to-clipboard"
 import { Snackbar } from "@mui/material"
 
-const ShareButton = () => {
+const ShareButton = ({ placeId }) => {
   const [open, setOpen] = useState(false)
 
   function handleClick() {
-    const url = window.location.href
-    copy(url)
+    const origin = window.location.origin
+    const sharePath = `${origin}/stores/${placeId}`
+    copy(sharePath)
     setOpen(true)
   }
 

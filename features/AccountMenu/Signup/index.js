@@ -47,7 +47,7 @@ const FormikTextField = ({ label, formik, type = "text" }) => {
 }
 
 const Signup = ({ open, onClose, onChangeMode }) => {
-  const fullScreen = useMediaQuery(devices.iphoneSE)
+  const fullScreen = useMediaQuery(devices.mobileXl)
   const login = useUserStore((state) => state.login)
   const formik = useFormik({
     initialValues: {
