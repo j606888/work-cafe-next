@@ -1,39 +1,53 @@
 import { useState } from "react"
 import styled, { css } from "styled-components"
-import CarouselControls from "./CarouselControls"
+import CarouselControls, { Button } from "./CarouselControls"
 import CarouselIndicators from "./CarouselIndicators"
 import CarouselItem from "./CarouselItem"
+import { devices } from "constant/styled-theme"
 
-const ImageCarousel = ({ slides, width = 400, height = 300 }) => {
+const ImageCarousel = ({
+  slides,
+  width = 400,
+  height = 300,
+  mWidth = 180,
+  mHeight = 154,
+}) => {
   const [currentSlide, setCurrentSlide] = useState(0)
 
-  const prev = () => {
+  const prev = (e) => {
+    e.stopPropagation()
     const index = currentSlide > 0 ? currentSlide - 1 : slides.length - 1
     setCurrentSlide(index)
   }
 
-  const next = () => {
+  const next = (e) => {
+    e.stopPropagation()
     const index = currentSlide < slides.length - 1 ? currentSlide + 1 : 0
     setCurrentSlide(index)
   }
 
-  const switchIndex = (index) => {
+  const switchIndex = (e, index) => {
+    e.stopPropagation()
     setCurrentSlide(index)
   }
 
   return (
-    <Container width={width} height={height}>
+    <Container width={width} height={height} mWidth={mWidth} mHeight={mHeight}>
       <CarouselInner currentSlide={currentSlide}>
         {slides.map((slide, index) => (
           <CarouselItem key={index} slide={slide} />
         ))}
       </CarouselInner>
-      <CarouselControls prev={prev} next={next} />
-      <CarouselIndicators
-        slides={slides}
-        currentIndex={currentSlide}
-        switchIndex={switchIndex}
-      />
+      {slides.length > 1 && (
+        <>
+          <CarouselControls prev={prev} next={next} />
+          <CarouselIndicators
+            slides={slides}
+            currentIndex={currentSlide}
+            switchIndex={switchIndex}
+          />
+        </>
+      )}
     </Container>
   )
 }
@@ -41,6 +55,9 @@ const ImageCarousel = ({ slides, width = 400, height = 300 }) => {
 const Container = styled.div`
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+
   ${({ width, height }) => css`
     width: ${width}px;
     height: ${height}px;
@@ -49,7 +66,30 @@ const Container = styled.div`
       height: ${height}px;
     }
   `}
-  position: relative;
+
+  ${Button} {
+    opacity: 0;
+    transition: 200ms;
+  }
+
+  &:hover ${Button} {
+    opacity: 1;
+  }
+
+  @media ${devices.mobileXl} {
+    ${({ mWidth, mHeight }) => css`
+      width: ${mWidth}px;
+      height: ${mHeight}px;
+
+      & img {
+        height: ${mHeight}px;
+      }
+    `}
+
+    ${Button} {
+      opacity: 1;
+    }
+  }
 `
 
 const CarouselInner = styled.div`
