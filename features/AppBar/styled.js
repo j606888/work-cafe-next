@@ -28,15 +28,6 @@ export const NavbarContainer = styled.div`
   justify-content: space-between;
   padding: 0 56px;
   background: #EADFD5;
-
-  @media ${devices.mobileXl} {
-    padding : 0 24px;
-    height: 56px;
-
-    h2 {
-      font-size: 16px;
-    }
-  }
 `
 
 export const NavLinks = styled.div`
@@ -54,13 +45,6 @@ export const GreyLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
-
-  @media ${devices.mobileXl} {
-    align-self: flex-start;
-    padding: 1.5rem;
-    margin-bottom: auto;
-    margin-right: auto;
-  }
 `
 
 export const Button = styled.button`
@@ -71,10 +55,6 @@ export const Button = styled.button`
   color: #757575;
   cursor: pointer;
   background-color: inherit;
-
-  @media ${devices.mobileXl} {
-    width: 200px;
-  }
 `
 
 export const CtaButton = styled(Button)`
@@ -84,12 +64,7 @@ export const CtaButton = styled(Button)`
 
 export const IconContainer = styled.div`
   display: none;
-
-  @media ${devices.mobileXl} {
-    display: block;
-  }
 `
-
 
 export const HomeLink = styled.a`
   font-family: 'Noto Sans',sans-serif;
@@ -97,8 +72,4 @@ export const HomeLink = styled.a`
   font-weight: 700;
   color: #704F39;
   text-decoration: none;
-
-  @media ${devices.mobileXl} {
-    font-size: 16px;
-  }
 `
