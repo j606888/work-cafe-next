@@ -82,6 +82,7 @@ const LogoutButton = styled.button`
   transform: translateX(-50%);
   background: none;
   border: 1px solid #555;
+  color: #555;
   padding: 8px 16px;
   border-radius: 16px;
 `
