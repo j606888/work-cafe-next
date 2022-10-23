@@ -86,20 +86,24 @@ const LeftContainer = () => {
         onNearbySearch={handleNearbySearch}
       />
     )
-
-  return (
-    <Container>
-      {searchBlock}
-      {data && data.length === 0 && <NoMatch />}
-      {!placeId && <StoreList stores={data || []} onClick={handleClickStore} />}
-      {placeId && (
+  if (placeId) {
+    return (
+      <Container>
         <StoreDetail
           placeId={placeId}
           key={placeId}
           canBack={!!data && data.length !== 0}
           onClose={handleCloseStore}
         />
-      )}
+      </Container>
+    )
+  }
+
+  return (
+    <Container>
+      {searchBlock}
+      {data && data.length === 0 && <NoMatch />}
+      <StoreList stores={data || []} onClick={handleClickStore} />
     </Container>
   )
 }
@@ -117,7 +121,7 @@ function _calCenter(data) {
 const Container = styled.div`
   width: 628px;
   position: relative;
-  background-color: #FCF9F6;
+  background-color: #fcf9f6;
 
   @media ${devices.mobileXl} {
     width: 100%;
