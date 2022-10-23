@@ -26,7 +26,9 @@ export const Container = styled.div`
   @media ${devices.mobileXl} {
     top: 0;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
+    width: auto;
     height: auto;
   }
 `
