@@ -23,13 +23,13 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
     onClick({ placeId, lat, lng })
   }
 
-  // React.useEffect(() => {
-  //   if (focusPlaceId && storesRef.current[focusPlaceId]) {
-  //     storesRef.current[focusPlaceId].scrollIntoView(
-  //       { inline: 'center', block: 'center' }
-  //     )
-  //   }
-  // }, [focusPlaceId])
+  React.useEffect(() => {
+    if (focusPlaceId && storesRef.current[focusPlaceId]) {
+      storesRef.current[focusPlaceId].scrollIntoView(
+        { inline: 'center', block: 'center' }
+      )
+    }
+  }, [focusPlaceId])
 
   if (stores.length === 0) {
     return null

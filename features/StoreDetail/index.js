@@ -15,10 +15,6 @@ const Container = styled.div`
   background-color: #fff;
   padding-bottom: 1px;
   padding: 14px 0;
-
-  @media ${devices.mobileXl} {
-    min-height: 100vh;
-  }
 `
 
 const TagListContainer = styled.div`
