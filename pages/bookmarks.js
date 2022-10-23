@@ -1,6 +1,6 @@
 import AppBar from "features/AppBar";
 import BookmarksContainer from "features/BookmarksContainer";
-import MapV2 from "features/MapV2";
+import BookmarkMap from "features/BookmarksContainer/BookmarkMap";
 import Head from "next/head";
 
 const Bookmarks = () => {
@@ -11,7 +11,7 @@ const Bookmarks = () => {
       </Head>
       <AppBar />
       <BookmarksContainer />
-      <MapV2 navigate={false} />
+      <BookmarkMap />
     </>
   )
 }

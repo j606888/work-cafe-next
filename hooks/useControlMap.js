@@ -28,7 +28,7 @@ const useControlMap = ({ navigate=true }) => {
     _setLocalStorage("lastLocation", mapPath)
   }
 
-  function updateWithPlaceId(placeId) {
+  function updateWithPlaceId(placeId, navigate=true) {
     if (!map) return
 
     const zoom = map.zoom
@@ -36,8 +36,10 @@ const useControlMap = ({ navigate=true }) => {
     setCenter({ lat, lng })
 
     const mapPath = _mapPath(lat, lng, zoom, placeId)
-    _navigateTo(`/${mapPath}`)
-    _setLocalStorage("lastLocation", mapPath)
+    if (navigate) {
+      _navigateTo(`/${mapPath}`)
+      _setLocalStorage("lastLocation", mapPath)
+    }
   }
 
   function moveTo({ latLng, zoom = 15}) {
