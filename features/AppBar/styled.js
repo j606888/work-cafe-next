@@ -43,25 +43,6 @@ export const NavLinks = styled.div`
   display: flex;
   gap: 1.3rem;
   align-items: center;
-
-  @media ${devices.mobileXl} {
-    display: ${({ show }) => show ? 'flex' : 'none'};
-    position: absolute;
-    top: 64px;
-    left: 0;
-    width: 100%;
-    ${({ vh }) => vh ? css`
-      height: calc(${vh * 100}px - 64px - 36px);
-    ` : css`
-      height: calc(100vh - 64px - 36px);
-    `}
-    background-color: #FFFFFF;
-    flex-direction: column;
-
-    button:last-child {
-      margin-bottom: 3rem;
-    }
-  }
 `
 
 export const GreyLink = styled.a`

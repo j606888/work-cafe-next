@@ -41,14 +41,8 @@ const OpenCloseIcon = ({ onClick, show = false }) => {
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false)
   const [mode, setMode] = useLoginModeStore((state) => [state.mode, state.setMode], shallow)
-  const [vh, setVh] = useState(null)
   const [isLogin, setIsLogin] = useState(false)
   const user = useUserStore(state => state.user)
-
-  useEffect(() => {
-    const height = window.innerHeight
-    setVh(height / 100)
-  }, [])
 
   useEffect(() => {
     setIsLogin(!!user)
@@ -70,7 +64,7 @@ const Navbar = () => {
       <NavbarContainer>
         <HomeLink href="/">Work Cafe | Taiwan</HomeLink>
         <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
-        <NavLinks show={showNav} vh={vh}>
+        <NavLinks show={showNav}>
           <TutorialLink />
           {isLogin ? (
             <AccountMenu />
