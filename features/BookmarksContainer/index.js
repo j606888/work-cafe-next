@@ -13,14 +13,7 @@ const BookmarksContainer = () => {
 
   function handleClickStore({ placeId, lat, lng }) {
     setPlaceId(placeId)
-    console.log(placeId)
-    // updateWithPlaceId(placeId)
-    // moveTo({ latLng: { lat, lng } })
   }
-
-  useEffect(() => {
-    console.log(placeId);
-  }, [placeId])
 
   if (placeId) {
     return (
@@ -34,11 +27,10 @@ const BookmarksContainer = () => {
       </Container>
     )
   }
-  console.log('-');
 
   return (
     <Container>
-      <H2>你的珍藏</H2>
+      <H2>我的珍藏</H2>
       <StoreList stores={data || []} onClick={handleClickStore} />
     </Container>
   )
@@ -52,6 +44,7 @@ const Container = styled.div`
   @media ${devices.mobileXl} {
     width: 100%;
     z-index: 5;
+    background: none;
   }
 `
 
@@ -60,6 +53,13 @@ const H2 = styled.div`
   font-size: 24px;
   font-weight: 500;
   padding: 12px;
+
+  @media ${devices.mobileXl} {
+    display: inline-block;
+    font-size: 14px;
+    background-color: #6D4C41;
+    color: #fff;
+  }
 `
 
 export default BookmarksContainer
