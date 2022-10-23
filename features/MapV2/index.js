@@ -19,10 +19,10 @@ import useStoreSWR from "stores/useStoreSWR"
 import { devices } from 'constant/styled-theme'
 import shallow from "zustand/shallow"
 
-const MapV2 = () => {
+const MapV2 = ({ navigate = true}) => {
   const { isReady, mapSettings } = useInitMap()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } =
-    useControlMap({ navigate: true })
+    useControlMap({ navigate })
   const searchHere = useLocationParamsStore((state) => state.searchHere)
   const [setPlaceId, placeId, focusPlaceId, setFocusPlaceId, bouncePlaceId] =
     useStoreStore(
