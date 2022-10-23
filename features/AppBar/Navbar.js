@@ -76,8 +76,8 @@ const Navbar = () => {
             <AccountMenu />
           ) : (
             <>
-              <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
               <Button onClick={() => setMode("login")}>登入</Button>
+              <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
             </>
           )}
         </NavLinks>
