@@ -5,6 +5,7 @@ import SettingsIcon from "@mui/icons-material/Settings"
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { Container, Header, Body, Button } from "./styled"
 import useUserStore from "stores/useUserStore";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 const LoginMenu = ({ avatar_url, email, name, role, onLogout = () => {} }) => {
   const logout = useUserStore(state => state.logout)
@@ -33,12 +34,12 @@ const LoginMenu = ({ avatar_url, email, name, role, onLogout = () => {} }) => {
             </a>
           </Link>
         )}
-        {/* <Link href="/admin/dashboard">
+        <Link href="/bookmarks">
           <a className="link">
-            <SettingsIcon />
-            設定
+            <BookmarkIcon />
+            你的收藏
           </a>
-        </Link> */}
+        </Link>
         <Button onClick={handleLogout}>登出</Button>
       </Body>
     </Container>

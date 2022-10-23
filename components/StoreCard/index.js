@@ -69,6 +69,7 @@ const Container = styled.div`
   width: 239px;
   background-color: #fff;
   position: relative;
+  cursor: pointer;
 
   h3 {
     margin: 0;

@@ -94,7 +94,7 @@ const Container = styled.div`
 
 const CarouselInner = styled.div`
   white-space: nowrap;
-  transition: transform 0.8s ease;
+  transition: transform 0.6s ease;
   ${({ currentSlide }) => `
     transform: translateX(${-currentSlide * 100}%);
   `}

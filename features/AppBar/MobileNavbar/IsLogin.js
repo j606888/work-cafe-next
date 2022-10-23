@@ -29,6 +29,17 @@ const IsLogin = () => {
           </Tab>
           <Divider />
           <Tab>
+            <Link href="/">
+              <GreyLink>搜尋店家</GreyLink>
+            </Link>
+          </Tab>
+          <Tab>
+            <Link href="/bookmarks">
+              <GreyLink>你的收藏</GreyLink>
+            </Link>
+          </Tab>
+          <Divider />
+          <Tab>
             <Link
               href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
               passHref
