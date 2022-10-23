@@ -7,6 +7,7 @@ import { devices } from "constant/styled-theme"
 import useSWR from "swr"
 import WorkCafeReviews from "./WorkCafeReviews/WorkCafeReviews"
 import ReviewApi from "api/review"
+import useUserStore from "stores/useUserStore"
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +38,8 @@ const FakeTextBox = styled.div`
 
 const NewReview = ({ placeId, name, onSave }) => {
   const [open, setOpen] = useState(false)
-  const { data: myReview, mutate } = useSWR(`/stores/${placeId}/reviews/me`)
+  const user = useUserStore(state => state.user)
+  const { data: myReview, mutate } = useSWR(user ? `/stores/${placeId}/reviews/me` : null)
 
   async function handleSave() {
     setOpen(false)
