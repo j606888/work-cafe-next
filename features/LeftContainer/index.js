@@ -72,6 +72,18 @@ const LeftContainer = () => {
     searchHere(latLng)
   }
 
+  if (placeId) {
+    return (
+      <Container>
+        <StoreDetail
+          placeId={placeId}
+          canBack={!!data && data.length !== 0}
+          onClose={handleCloseStore}
+        />
+      </Container>
+    )
+  }
+
   const searchBlock =
     data || placeId || Object.keys(params) != 0 ? (
       <ShortBlock
@@ -86,18 +98,6 @@ const LeftContainer = () => {
         onNearbySearch={handleNearbySearch}
       />
     )
-  if (placeId) {
-    return (
-      <Container>
-        <StoreDetail
-          placeId={placeId}
-          key={placeId}
-          canBack={!!data && data.length !== 0}
-          onClose={handleCloseStore}
-        />
-      </Container>
-    )
-  }
 
   return (
     <Container>
