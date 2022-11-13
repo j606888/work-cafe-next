@@ -23,7 +23,7 @@ const HelpUsModal = ({ open, onClose }) => {
         </DialogContentText>
         <br />
         <DialogContentText>
-          <b>回報不是咖啡廳：</b>
+          <b>回報不適合工作：</b>
           <br />
           有些店家根本不適合出現在這邊（例如：連鎖手搖飲、無內用空間或是純餐廳）。點擊店家資訊中的回報按鈕，我們會定期去將這些回報的店家移除
         </DialogContentText>

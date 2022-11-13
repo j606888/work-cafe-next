@@ -12,6 +12,7 @@ import {
 } from "./styled"
 import ShareButton from "./ShareButton"
 import BookmarkIcon from "@mui/icons-material/Bookmark"
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
 import useLoginModeStore from "stores/useLoginModeStore"
@@ -78,7 +79,7 @@ const Header = ({
             </Button>
           ) : (
             <Button onClick={handleAddBookmark}>
-              <BookmarkIcon />
+              <BookmarkBorderIcon />
               <span>收藏</span>
             </Button>
           )}
@@ -90,7 +91,7 @@ const Header = ({
         </ButtonGroup>
       </Container>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={() => setOpenNotCafe(true)}>回報不是咖啡廳</MenuItem>
+        <MenuItem onClick={() => setOpenNotCafe(true)}>回報不適合工作</MenuItem>
       </Menu>
       <NotCafeReport
         placeId={placeId}
