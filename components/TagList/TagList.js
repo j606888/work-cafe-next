@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
 
 const TagList = ({ tags = [] }) => {
   return (
@@ -19,10 +18,6 @@ const Container = styled.div`
   gap: 8px;
   margin-top: 8px;
   flex-wrap: wrap;
-
-  @media ${devices.mobileXl} {
-    display: none;
-  }
 `
 
 const Tag = styled.span`

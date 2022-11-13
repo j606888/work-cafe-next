@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import ImageSlider from "./ImageSlider"
 import { devices } from "constant/styled-theme"
 import TagList from "components/TagList/TagList"
 import ImageCarousel from "components/ImageCarousel"
+import { useMediaQuery } from "@mui/material"
 
 const StoreCard = React.forwardRef(
   (
@@ -23,6 +23,8 @@ const StoreCard = React.forwardRef(
     },
     ref
   ) => {
+    const fullScreen = useMediaQuery(devices.mobileXl)
+
     function handleClick() {
       onClick({ placeId, lat, lng })
     }
@@ -58,7 +60,7 @@ const StoreCard = React.forwardRef(
           </OpenStatus>
           <Address>・{vicinity}</Address>
         </SecondInfo>
-        <TagList tags={tags} />
+        {!fullScreen && <TagList tags={tags} />}
       </Container>
     )
   }

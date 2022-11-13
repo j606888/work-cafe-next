@@ -12,7 +12,7 @@ import {
 } from "./styled"
 import ShareButton from "./ShareButton"
 import BookmarkIcon from "@mui/icons-material/Bookmark"
-import MapIcon from "@mui/icons-material/Map"
+import NavigationIcon from '@mui/icons-material/Navigation';
 import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
 import useLoginModeStore from "stores/useLoginModeStore"
 import useUserStore from "stores/useUserStore"
@@ -69,7 +69,7 @@ const Header = ({
         <h3>{name}</h3>
         <ButtonGroup>
           <MobileGoogleUrl href={url} target="_blank" rel="noreferrer">
-            <MapIcon />
+            <NavigationIcon />
           </MobileGoogleUrl>
           {isBookmark ? (
             <Button onClick={handleRemoveBookmark} active>
