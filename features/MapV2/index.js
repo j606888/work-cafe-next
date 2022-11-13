@@ -74,7 +74,7 @@ const MapV2 = ({ navigate = true}) => {
   }
 
   // Weird iOS bug, if map exist, will scroll to top
-  if (fullScreen && placeId) return null
+  // if (fullScreen && placeId) return null
   if (!isReady) return <Skeleton />
 
   return (
