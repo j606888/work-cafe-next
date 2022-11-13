@@ -17,7 +17,7 @@ const MobileNavbar = () => {
   }, [user])
 
   function handleClose() {
-    setOpenTab(false)
+    // setOpenTab(false)
   }
 
   return (

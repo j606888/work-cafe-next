@@ -1,7 +1,6 @@
 import { Avatar, Divider } from "@mui/material"
 import Link from "next/link"
 import React from "react"
-import SettingsIcon from "@mui/icons-material/Settings"
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { Container, Header, Body, Button } from "./styled"
 import useUserStore from "stores/useUserStore";
