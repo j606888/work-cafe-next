@@ -8,12 +8,15 @@ import { Container, LeaveFirstReview } from './styled'
 import useSWR from "swr"
 import Skeleton from "components/Skeleton"
 import GoogleReviewCard from "./GoogleReviewCard"
+import useUserStore from "stores/useUserStore"
 
 const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
   const [active, setActive] = useState("workCafe")
+  const user = useUserStore(state => state.user)
   const { data: reviews, mutate: reviewsMutate } = useSWR(
     `/stores/${placeId}/reviews`
   )
+  const { data: myReview, mutate } = useSWR(user ? `/stores/${placeId}/reviews/me` : null)
 
   function handleActiveChange(newActive) {
     setActive(newActive)
@@ -43,7 +46,7 @@ const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
               {...review}
             />
           ))}
-          {reviews.reviews.length === 0 && (
+          {reviews.reviews.length === 0 && !myReview && (
             <LeaveFirstReview>
               <h3>還沒有人給過評論</h3>
               <p>不如你就當第一個吧！</p>

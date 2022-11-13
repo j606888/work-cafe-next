@@ -37,8 +37,8 @@ const ReviewForm = ({
 
   useEffect(() => {
     if (myReview?.primaryTags) {
-      const tagIds = tags.filter(tag => myReview.primaryTags.includes(tag.name))
-        .map(tag => tag.id)
+      const tagIds = tags?.filter(tag => myReview.primaryTags.includes(tag.name))
+        .map(tag => tag.id) || []
       setData(cur => ({ ...cur, tagIds }))
     }
   }, [tags, myReview])
