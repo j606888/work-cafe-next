@@ -19,9 +19,9 @@ const Container = styled.div`
 `
 
 const OpenTypes = {
-  'NONE': '不限時間',
+  'NONE': '不指定時間',
   'OPEN_NOW': '營業中',
-  'OPEN_AT': '營業時間'  
+  'OPEN_AT': '營業時間'
 }
 
 const weeks = {
@@ -35,7 +35,7 @@ const weeks = {
 }
 
 const hours = {
-  '99': '不限時間',
+  '99': '不指定時間',
   '0': '深夜',
   '1': '凌晨 1:00',
   '2': '凌晨 2:00',

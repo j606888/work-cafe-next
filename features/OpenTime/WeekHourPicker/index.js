@@ -17,7 +17,7 @@ const OPEN_WEEKS = [
 ]
 
 const OPEN_HOURS = [
-  // createLabel("不限時間", 99),
+  // createLabel("不指定時間", 99),
   createLabel("深夜", 0),
   createLabel("凌晨 1:00", 1),
   createLabel("凌晨 2:00", 2),
@@ -113,7 +113,7 @@ const WeekHourPicker = ({
         <div>
           <CustomRadio
             value={'99'}
-            text={'不限時間'}
+            text={'不指定時間'}
             width="140px"
             checked={+hour === 99}
             onClick={handleHourChange}

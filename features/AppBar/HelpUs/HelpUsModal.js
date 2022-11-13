@@ -6,6 +6,17 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material"
+import RateReviewIcon from "@mui/icons-material/RateReview"
+import ReportIcon from "@mui/icons-material/Report"
+import BugReportIcon from "@mui/icons-material/BugReport"
+import styled from "styled-components"
+
+const Item = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 4px;
+`
 
 const HelpUsModal = ({ open, onClose }) => {
   return (
@@ -17,22 +28,27 @@ const HelpUsModal = ({ open, onClose }) => {
         </DialogContentText>
         <br />
         <DialogContentText>
-          <b>填寫評論：</b>
-          <br />
+          <Item>
+            <RateReviewIcon />
+            <b>填寫評論：</b>
+          </Item>
           無需登入，透過搜尋匡直接找尋你已知的口袋名單，並且給予評論。這會是最大的幫助！
         </DialogContentText>
         <br />
         <DialogContentText>
-          <b>回報不是咖啡廳：</b>
-          <br />
+          <Item>
+            <ReportIcon />
+            <b>回報不適合工作：</b>
+          </Item>
           有些店家根本不適合出現在這邊（例如：連鎖手搖飲、無內用空間或是純餐廳）。點擊店家資訊中的回報按鈕，我們會定期去將這些回報的店家移除
         </DialogContentText>
         <br />
         <DialogContentText>
-          <b>回報問題或建議：</b>
-          <br />
-          如果使用中有發現任何 Bug,
-          或是你覺得有什麼很酷的點子都歡迎填寫
+          <Item>
+            <BugReportIcon />
+            <b>回報問題或建議：</b>
+          </Item>
+          如果使用中有發現任何 Bug, 或是你覺得有什麼很酷的點子都歡迎填寫
           <a
             href="https://forms.gle/Y5XjmzsRW7pG7Wbu8"
             target="_blank"

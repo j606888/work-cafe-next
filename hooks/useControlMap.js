@@ -3,12 +3,12 @@ import shallow from "zustand/shallow"
 import Router from "next/router"
 import useStoreStore from "stores/useStoreStore"
 
-const useControlMap = ({ navigate=true }) => {
+const useControlMap = ({ navigate = true }) => {
   const [map, setMap, center, setCenter] = useMapStoreV2(
     (state) => [state.map, state.setMap, state.center, state.setCenter],
     shallow
   )
-  const placeId = useStoreStore(state => state.placeId)
+  const placeId = useStoreStore((state) => state.placeId)
 
   function handleLoad(loadedMap) {
     setMap(loadedMap)
@@ -28,7 +28,7 @@ const useControlMap = ({ navigate=true }) => {
     _setLocalStorage("lastLocation", mapPath)
   }
 
-  function updateWithPlaceId(placeId, navigate=true) {
+  function updateWithPlaceId(placeId, navigate = true) {
     if (!map) return
 
     const zoom = map.zoom
@@ -42,15 +42,14 @@ const useControlMap = ({ navigate=true }) => {
     }
   }
 
-  function moveTo({ latLng, zoom = 15}) {
+  function moveTo({ latLng, zoom = 15 }) {
     if (!map) return
 
     map.setZoom(zoom)
     map.panTo(latLng)
   }
 
-
-  return  { handleLoad, handleIdle, moveTo, center, updateWithPlaceId }
+  return { handleLoad, handleIdle, moveTo, center, updateWithPlaceId }
 }
 
 function _mapPath(lat, lng, zoom, placeId) {
@@ -59,8 +58,14 @@ function _mapPath(lat, lng, zoom, placeId) {
     .join("/")
 }
 
-function _navigateTo(path) {
-  Router.push(path)
+function _navigateTo(pathname) {
+  Router.push(
+    {
+      pathname,
+    },
+    undefined,
+    { shallow: true }
+  )
 }
 
 function _setLocalStorage(key, value) {

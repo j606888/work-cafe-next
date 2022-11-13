@@ -1,17 +1,20 @@
 import StoreList from "features/StoreList"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { devices } from "constant/styled-theme"
 import useSWR from "swr"
 import StoreDetail from "features/StoreDetail"
 import useStoreStore from "stores/useStoreStore"
+import shallow from "zustand/shallow"
 
 const BookmarksContainer = () => {
-  const placeId = useStoreStore(state => state.placeId)
-  const setPlaceId = useStoreStore(state => state.setPlaceId)
+  const [placeId, setPlaceId] = useStoreStore(
+    (state) => [state.placeId, state.setPlaceId],
+    shallow
+  )
   const { data } = useSWR("/user-bookmarks")
 
-  function handleClickStore({ placeId, lat, lng }) {
+  function handleClickStore({ placeId }) {
     setPlaceId(placeId)
   }
 
@@ -57,7 +60,7 @@ const H2 = styled.div`
   @media ${devices.mobileXl} {
     display: inline-block;
     font-size: 14px;
-    background-color: #6D4C41;
+    background-color: #6d4c41;
     color: #fff;
   }
 `

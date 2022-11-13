@@ -68,7 +68,6 @@ const NewReview = ({ placeId, name, onSave }) => {
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
-            <Divider />
           </div>
         ) : (
           <>

@@ -3,7 +3,7 @@ function createLabel(label, value) {
 }
 
 export const OPEN_TYPES = [
-  createLabel("不限時間", 'NONE'),
+  createLabel("不指定時間", 'NONE'),
   createLabel("營業中", 'OPEN_NOW'),
   createLabel("指定時間", 'OPEN_AT'),
 ]
@@ -19,7 +19,7 @@ export const OPEN_WEEKS = [
 ]
 
 export const OPEN_HOURS = [
-  createLabel("不限時間", 99),
+  createLabel("不指定時間", 99),
   createLabel("上午 0:00", 0),
   createLabel("上午 1:00", 1),
   createLabel("上午 2:00", 2),

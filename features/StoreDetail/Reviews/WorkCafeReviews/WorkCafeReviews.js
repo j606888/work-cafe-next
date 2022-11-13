@@ -1,10 +1,10 @@
-import { Avatar, IconButton, Menu, MenuItem } from "@mui/material"
+import { Avatar, Divider, IconButton, Menu, MenuItem } from "@mui/material"
 import React from "react"
 import ImagesWorm from "components/ImagesWorm/ImagesWorm"
-import { Container, Content, EditBoxContainer } from './styled'
 import { useState } from "react"
 import { MoreVert } from "@mui/icons-material"
-
+import styled from "styled-components"
+import { devices } from "constant/styled-theme"
 
 const EditBox = ({ onDelete, onEdit }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -49,8 +49,8 @@ const WorkCafeReviews = ({
   onEdit = () => {},
 }) => {
   return (
-    <>
-      <Container>
+    <Container>
+      <UserInfo>
         <Avatar alt={userName} src={userAvatarUrl} />
         <Content>
           <h6>{userName}</h6>
@@ -58,9 +58,10 @@ const WorkCafeReviews = ({
           <p>{description}</p>
         </Content>
         {editable && <EditBox id={id} onDelete={onDelete} onEdit={onEdit} />}
-      </Container>
+      </UserInfo>
       <ImagesWorm images={photos} />
-    </>
+      <Divider />
+    </Container>
   )
 }
 
@@ -74,4 +75,59 @@ function _dateString(timestamp) {
 
   return `${year}年${month}月${date}日・${isWeekend}`
 }
+
+const Container = styled.div`
+  margin-bottom: 1rem;
+`
+
+const UserInfo = styled.div`
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+`
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  h6 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  span {
+    font-size: 12px;
+  }
+
+  p {
+    font-size: 14px;
+    white-space: pre-line;
+  }
+
+  @media ${devices.mobileXl} {
+    h6 {
+      font-size: 14px;
+    }
+
+    span {
+      font-size: 10px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+
+    max-width: calc(100% - 40px);
+  }
+`
+
+const EditBoxContainer = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+`
+
 export default WorkCafeReviews
