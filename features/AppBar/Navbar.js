@@ -16,6 +16,7 @@ import AccountMenu from "features/AccountMenu"
 import useLoginModeStore from "stores/useLoginModeStore"
 import shallow from "zustand/shallow"
 import useUserStore from "stores/useUserStore"
+import styled from "styled-components"
 
 const TutorialLink = () => {
   return (
@@ -62,23 +63,61 @@ const Navbar = () => {
   return (
     <>
       <NavbarContainer>
-        <HomeLink href="/">Work Cafe | Taiwan</HomeLink>
-        <OpenCloseIcon onClick={toggleShowNav} show={showNav} />
-        <NavLinks show={showNav}>
-          <TutorialLink />
-          {isLogin ? (
-            <AccountMenu />
-          ) : (
-            <>
+        <Links>
+          <HomeLink href="/">Work Cafe | Taiwan</HomeLink>
+          <Links2>
+            <Link
+              href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
+              passHref
+            >什麼是Work Cafe？</Link>
+            <Link
+              href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
+              passHref
+            >使用教學</Link>
+          </Links2>
+        </Links>
+
+        {/* <OpenCloseIcon onClick={toggleShowNav} show={showNav} /> */}
+        {/* <NavLinks show={showNav}> */}
+          {/* <TutorialLink /> */}
+          {/* {isLogin ? ( */}
+            {/* <AccountMenu /> */}
+          {/* ) : ( */}
+            <ButtonGroup>
               <Button onClick={() => setMode("login")}>登入</Button>
               <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
-            </>
-          )}
-        </NavLinks>
+            </ButtonGroup>
+          {/* )} */}
+        {/* </NavLinks> */}
       </NavbarContainer>
       <LoginForm mode={mode} setMode={setMode} onClose={handleClose} />
     </>
   )
 }
 
+const Links = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 36px;
+
+`
+
+const Links2 = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 36px;
+
+  a {
+    color: #42403F;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Noto Sans';
+    text-decoration: none;
+  }
+`
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 24px;
+`
 export default Navbar

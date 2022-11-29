@@ -21,13 +21,13 @@ export const Link = styled.a`
 `
 
 export const NavbarContainer = styled.div`
-  height: 64px;
+  height: 80px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 56px;
-  background: #EADFD5;
+  padding: 0 60px;
+  background: #ffffff;
 `
 
 export const NavLinks = styled.div`
@@ -48,18 +48,20 @@ export const GreyLink = styled.a`
 `
 
 export const Button = styled.button`
-  font-size: 20px;
+  font-size: 16px;
+  width: 68px;
+  height: 44px;
   border-radius: 12px;
-  padding: 8px 20px;
-  border: 1px solid #757575;
-  color: #757575;
+  
+  border: 1px solid #222120;
+  color: #222120;
   cursor: pointer;
   background-color: inherit;
 `
 
 export const CtaButton = styled(Button)`
   color: #FFFFFF;
-  background-color: #757575;
+  background-color: #222120;
 `
 
 export const IconContainer = styled.div`
@@ -68,8 +70,9 @@ export const IconContainer = styled.div`
 
 export const HomeLink = styled.a`
   font-family: 'Noto Sans',sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  color: #704F39;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 27px;
+  color: #222120;
   text-decoration: none;
 `
