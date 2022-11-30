@@ -4,8 +4,8 @@ import { devices } from 'constant/styled-theme'
 export const Container = styled.div`
   position: fixed;
   right: 0;
-  top: 104px;
-  width: calc(100% - 628px);
+  top: 120px;
+  width: 100%;
   height: calc(100vh - 104px);
 
   .labels {

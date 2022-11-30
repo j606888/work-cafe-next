@@ -66,7 +66,7 @@ const MapV2 = ({ navigate = true}) => {
   }
 
   function handleOnIdle() {
-    handleIdle()
+    // handleIdle()
     const shouldShow = map?.zoom >= 16
     if (fullScreen) {
       setShowLabel(shouldShow)
