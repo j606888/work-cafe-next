@@ -1,3 +1,4 @@
+import LandingSearch from "components/LandingSearch";
 import AppBar from "features/AppBar";
 import LeftContainer from "features/LeftContainer";
 import MapV2 from "features/MapV2";
@@ -10,7 +11,8 @@ export default function MapPage() {
         <title>Work Cafe 222</title>
       </Head>
       <AppBar />
-      <MapV2 />
+      <LandingSearch />
+      {/* <MapV2 /> */}
     </>
   )
 }

@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 
-const CityOption = ({ name, storeCount }) => {
+const CityOption = ({ name, storeCount, onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <img src="/location_28.svg" alt="location_28" />
       <span>{name}</span>
       <StoreCount>
@@ -14,20 +14,20 @@ const CityOption = ({ name, storeCount }) => {
   )
 }
 
-const StoreOption = ({ name }) => {
+const StoreOption = ({ name, onClick }) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <img src="/cafe.svg" alt="cafe" />
       <span>{name}</span>
     </Container>
   )
 }
 
-const Option = ({ type, name, storeCount }) => {
-  return type === "city" ? (
-    <CityOption name={name} storeCount={storeCount} />
+const Option = ({ type, name, count, onClick }) => {
+  return type === "store" ? (
+    <StoreOption name={name} onClick={onClick}/>
   ) : (
-    <StoreOption name={name} />
+    <CityOption name={name} storeCount={count} onClick={onClick}/>
   )
 }
 

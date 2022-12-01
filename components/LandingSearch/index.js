@@ -4,13 +4,17 @@ import NearbySearch from './NearbySearch'
 import Searchbar from './Searchbar'
 
 const LandingSearch = () => {
+  const handleSearch = (keyword) => {
+    console.log(keyword);
+  }
+
   return (
     <Container>
       <Content>
         <WelcomeMessage>嗨! 今天想去哪辦公呢？</WelcomeMessage>
         <p>Work Cafe 幫你快速篩選 適合辦公的咖啡店</p>
       </Content>
-      <Searchbar />
+      <Searchbar onSearch={handleSearch} />
       <NearbySearch />
     </Container>
   )
