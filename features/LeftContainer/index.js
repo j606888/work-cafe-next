@@ -84,24 +84,13 @@ const LeftContainer = () => {
     )
   }
 
-  const searchBlock =
-    data || placeId || Object.keys(params) != 0 ? (
+  return (
+    <Container>
       <ShortBlock
         onSearch={handleSearch}
         onFilterChange={handleFilterChange}
         showFilter={!placeId}
       />
-    ) : (
-      <WelcomeBlock
-        loading={loading}
-        onSearch={handleSearch}
-        onNearbySearch={handleNearbySearch}
-      />
-    )
-
-  return (
-    <Container>
-      {searchBlock}
       {data && data.length === 0 && <NoMatch />}
       <StoreList stores={data || []} onClick={handleClickStore} />
     </Container>
@@ -121,7 +110,7 @@ function _calCenter(data) {
 const Container = styled.div`
   width: 628px;
   position: relative;
-  background-color: #fcf9f6;
+  background-color: #FFFFFF;
 
   @media ${devices.mobileXl} {
     width: 100%;

@@ -29,12 +29,12 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 52px;
-  padding: 0 18px;
+  height: 60px;
+  width: 142px;
   background-color: #fff;
   color: #493425;
-  border: 1px solid #493425;
-  border-radius: 12px;
+  border: 1px solid #E8E6E4;
+  border-radius: 20px;
   cursor: pointer;
 
   &:hover {
@@ -129,6 +129,7 @@ const SearchFilter = ({ onChange = () => {} }) => {
     <>
       <Badge badgeContent={badgeCount} color="primary">
         <Container onClick={() => setOpen(true)}>
+          <img src="/filter.svg" alt="filter.svg" />
           篩選條件
         </Container>
         <SmallContainer onClick={() => setOpen(true)}>

@@ -28,6 +28,7 @@ export const NavbarContainer = styled.div`
   justify-content: space-between;
   padding: 0 60px;
   background: #ffffff;
+  border-bottom: 1px solid #E8E6E4;
 `
 
 export const NavLinks = styled.div`

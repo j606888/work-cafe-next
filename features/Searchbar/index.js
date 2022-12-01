@@ -135,6 +135,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
   return (
     <Container onBlur={handleBlue} hide={!!placeId}>
       <SearchBox hasResult={hasResult}>
+        <img src="search-btn-outline.svg" alt="search-btn-outline.svg" />
         <Input
           value={keyword}
           onChange={handleChange}
@@ -154,9 +155,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
             </Tooltip>
           </>
         )}
-        <SearchButton onClick={handleSearch}>
-          <SearchIcon />
-        </SearchButton>
+        
       </SearchBox>
       <Options hasResult={hasResult}>
         {options.map((option, index) => (

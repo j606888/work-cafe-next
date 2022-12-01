@@ -12,7 +12,7 @@ export default function MapPage() {
       </Head>
       <AppBar />
       <LandingSearch />
-      {/* <MapV2 /> */}
+      <MapV2 />
     </>
   )
 }

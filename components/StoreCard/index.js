@@ -42,8 +42,8 @@ const StoreCard = React.forwardRef(
       >
         <ImageCarousel
           slides={images}
-          width={240}
-          height={240}
+          width={276}
+          height={276}
           mWidth={180}
           mHeight={154}
         />
@@ -68,7 +68,7 @@ const StoreCard = React.forwardRef(
 StoreCard.displayName = "StoreCard"
 
 const Container = styled.div`
-  width: 239px;
+  width: 276px;
   background-color: #fff;
   position: relative;
   cursor: pointer;

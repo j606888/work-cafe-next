@@ -21,6 +21,10 @@ const LandingSearch = () => {
 }
 
 const Container = styled.div`
+  z-index: 5;
+  position: absolute;
+  left: 28px;
+  top: 146px;
   box-sizing: border-box;
   width: 628px;
   display: flex;

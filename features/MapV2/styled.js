@@ -5,7 +5,7 @@ export const Container = styled.div`
   position: fixed;
   right: 0;
   top: 120px;
-  width: 100%;
+  width: calc(100% - 628px);
   height: calc(100vh - 104px);
 
   .labels {

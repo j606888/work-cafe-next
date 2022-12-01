@@ -6,10 +6,10 @@ import { devices } from "constant/styled-theme"
 import useStoreStore from 'stores/useStoreStore'
 
 const Container = styled.div`
-  padding: 41px 56px;
+  padding: 32px 28px;
   display: flex;
-  gap: 2rem;
-  background-color: #FCF9F6;
+  gap: 18px;
+  background-color: #FFFFFF;
 
   @media ${devices.mobileXl} {
     gap: 12px;
