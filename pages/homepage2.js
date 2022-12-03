@@ -1,4 +1,4 @@
-import LandingSearch from "components/LandingSearch";
+import LandingSearch from "features/LandingSearch";
 import AppBar from "features/AppBar";
 import LeftContainer from "features/LeftContainer";
 import MapV2 from "features/MapV2";
@@ -12,6 +12,7 @@ export default function MapPage() {
       </Head>
       <AppBar />
       <LandingSearch />
+      <LeftContainer />
       <MapV2 />
     </>
   )

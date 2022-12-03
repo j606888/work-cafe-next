@@ -5,10 +5,10 @@ import { isEmpty } from "lodash"
 const REGEX = /@(?<lat>\d+(\.\d+)?),(?<lng>\d+(\.\d+)?),(?<zoom>\d+)z/
 const DEFAULT_SETUP = {
   center: {
-    lat: 23.546162,
-    lng: 120.640213,
+    lat: 23.685859,
+    lng: 119.006545,
   },
-  zoom: 8,
+  zoom: 7.5,
   fullscreenControl: false,
   mapTypeControl: false,
   streetViewControl: false,

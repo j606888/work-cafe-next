@@ -9,18 +9,20 @@ import useStoreStore from "stores/useStoreStore"
 import { useState } from "react"
 import useSWR from "swr"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
-import { Container, MyLocationContainer, SearchHereContainer } from "./styled"
+import styled from "styled-components"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import useMapStoreV2 from "stores/useMapStoreV2"
 import { useMediaQuery } from "@mui/material"
 import useUserStore from "stores/useUserStore"
+import useMapControl from "stores/useMapControl"
 import useStoreSWR from "stores/useStoreSWR"
 import { devices } from 'constant/styled-theme'
 import shallow from "zustand/shallow"
 
 const MapV2 = ({ navigate = true}) => {
   const { isReady, mapSettings } = useInitMap()
+  const { width } = useMapControl()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } =
     useControlMap({ navigate })
   const searchHere = useLocationParamsStore((state) => state.searchHere)
@@ -66,7 +68,7 @@ const MapV2 = ({ navigate = true}) => {
   }
 
   function handleOnIdle() {
-    // handleIdle()
+    handleIdle()
     const shouldShow = map?.zoom >= 16
     if (fullScreen) {
       setShowLabel(shouldShow)
@@ -78,14 +80,14 @@ const MapV2 = ({ navigate = true}) => {
   if (!isReady) return <Skeleton />
 
   return (
-    <Container>
-      <MyLocationContainer>
+    <Container width={width}>
+      {/* <MyLocationContainer>
         <MyLocation onClick={handleFindMe} />
-      </MyLocationContainer>
-      <SearchHereContainer>
+      </MyLocationContainer> */}
+      {/* <SearchHereContainer>
         <SearchHere onClick={handleSearchHere} loading={isLoading} />
-      </SearchHereContainer>
-      <ShowLabelCheckbox onChange={(checked) => setShowLabel(checked)} />
+      </SearchHereContainer> */}
+      {/* <ShowLabelCheckbox onChange={(checked) => setShowLabel(checked)} /> */}
       <GoogleMap
         onLoad={handleLoad}
         onIdle={handleOnIdle}
@@ -136,3 +138,64 @@ const MapV2 = ({ navigate = true}) => {
 }
 
 export default MapV2
+
+const Container = styled.div`
+  position: fixed;
+  right: 0;
+  top: 120px;
+  /* width: calc(100% - 628px); */
+  /* width: 100%; */
+  width: ${({ width }) => width };
+  height: calc(100vh - 104px);
+
+  .labels {
+    background-color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 12px;
+    padding: 4px 8px;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 2.3rem;
+    left: 0.8rem;
+    overflow: hidden;
+    max-width: 240px;
+  }
+
+  @media ${devices.mobileXl} {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+  }
+`
+
+const MyLocationContainer = styled.div`
+  position: absolute;
+  bottom: 7rem;
+  right: 0.7rem;
+  z-index: 2;
+
+  @media ${devices.mobileXl} {
+    top: calc(56px + 72px + 1rem);
+    right: 1rem;
+  }
+`
+
+const SearchHereContainer = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 1rem;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  @media ${devices.mobileXl} {
+    top: calc(56px + 72px + 1rem);
+    left: 1rem;
+    transform: none;
+    z-index: 2000;
+  }
+`
