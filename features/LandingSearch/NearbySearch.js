@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const NearbySearch = () => {
+const NearbySearch = ({ onClick }) => {
   return (
     <Container>
       <Content>
         <h3>正在找尋附近的咖啡店？</h3>
         <p>須許可此網頁存取你的GPS定位</p>
       </Content>
-      <SearchBtn>搜尋附近</SearchBtn>
+      <SearchBtn onClick={onClick}>搜尋附近</SearchBtn>
     </Container>
   )
 }
