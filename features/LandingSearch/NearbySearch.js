@@ -1,14 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
+import useMapControl, { WIDTH } from "stores/useMapControl"
+import useLocationParamsStore from "stores/useLocationParamsStore"
+import useControlMap from 'hooks/useControlMap'
 
-const NearbySearch = ({ onClick }) => {
+const NearbySearch = () => {
+  const { setWidth } = useMapControl()
+  const { searchHere } = useLocationParamsStore()
+  const { map } = useControlMap()
+
+  const handleClick = () => {
+    setWidth(WIDTH.withInfoBox)
+
+    const params = map.center.toJSON()
+    searchHere(params)
+  }
   return (
     <Container>
       <Content>
         <h3>正在找尋附近的咖啡店？</h3>
         <p>須許可此網頁存取你的GPS定位</p>
       </Content>
-      <SearchBtn onClick={onClick}>搜尋附近</SearchBtn>
+      <SearchBtn onClick={handleClick}>搜尋附近</SearchBtn>
     </Container>
   )
 }
