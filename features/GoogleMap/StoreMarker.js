@@ -35,14 +35,21 @@ const StoreMarker = ({
 export default StoreMarker
 
 function _iconColor({ isFocus, wakeUp, isBookmark }) {
-  if (isFocus) return "/pins/blue-pin.svg"
-  if (isBookmark) return "/pins/pink-pin.svg"
-  if (wakeUp) return "/pins/red-pin.svg"
-  return "/pins/grey-pin.svg"
+  if (isFocus) return "/pins/target-pin.svg"
+  if (isBookmark) return "/pins/like-pin.svg"
+  if (wakeUp) return "/pins/black-pin.svg"
+  return "/pins/black-pin.svg"
 }
 
 function _label({ showLabel, store, isFocus }) {
-  if (showLabel || isFocus) {
+  if (isFocus) {
+    return {
+      text: store.name,
+      fontSize: "12px",
+      className: "labels-focus",
+    }
+  }
+  if (showLabel) {
     return {
       text: store.name,
       fontSize: "12px",

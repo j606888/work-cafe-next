@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { devices } from "constant/styled-theme"
 import TagList from "components/TagList/TagList"
 import ImageCarousel from "components/ImageCarousel"
+import NiceBadge from "components/NiceBadge"
 import { useMediaQuery } from "@mui/material"
 
 const StoreCard = React.forwardRef(
@@ -47,12 +48,9 @@ const StoreCard = React.forwardRef(
           mWidth={180}
           mHeight={154}
         />
+        <AbNiceBadge number={reviewsCount} />
         <MainInfo>
           <h3>{name}</h3>
-          <GoodSpan>
-            <img src="/icon-good.svg" alt="icon-good" />
-            <span>&nbsp;&nbsp;{reviewsCount}</span>
-          </GoodSpan>
         </MainInfo>
         <SecondInfo>
           <OpenStatus isOpen={isOpen}>
@@ -67,6 +65,11 @@ const StoreCard = React.forwardRef(
 )
 StoreCard.displayName = "StoreCard"
 
+const AbNiceBadge = styled(NiceBadge)`
+  position: absolute;
+  left: 16px;
+  top: 16px;
+`
 const Container = styled.div`
   width: 276px;
   background-color: #fff;
@@ -95,7 +98,8 @@ const MainInfo = styled.div`
   }
 
   h3 {
-    max-width: 70%;
+    max-width: 100%;
+    text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -130,6 +134,7 @@ const Address = styled.p`
   margin: 0;
   font-size: 12px;
   max-width: 80%;
+  text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `

@@ -17,18 +17,24 @@ const Container = styled.div`
   display: flex;
   gap: 8px;
   margin-top: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
 `
 
 const Tag = styled.span`
-  height: 28px;
+  /* flex: 1; */
+  flex-shrink: 0;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  border: 1px solid #757575;
+  padding: 6px 12px;
+  border: 1px solid #AFAAA3;
   border-radius: 12px;
-  color: #757575;
+  background-color: #F8F8F8;
+  color: #42403F;
   font-size: 12px;
+  font-weight: 400;
+  font-family: 'Noto Sans', sans-serif;
 `
 
 
