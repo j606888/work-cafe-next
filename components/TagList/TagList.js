@@ -1,10 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 
-const TagList = ({ tags = [], withCount = true }) => {
+const TagList = ({ tags = [], withCount = true, className }) => {
   if (withCount) {
     return (
-      <Container>
+      <Container className={className}>
         {tags.map((tag, index) => (
           <Tag key={index}>
             {tag.name} ({tag.count})

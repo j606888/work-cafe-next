@@ -58,7 +58,7 @@ const StoreCard = React.forwardRef(
           </OpenStatus>
           <Address>・{vicinity}</Address>
         </SecondInfo>
-        {!fullScreen && <TagList tags={tags} />}
+        {!fullScreen && <CustomTagList tags={tags} />}
       </Container>
     )
   }
@@ -73,6 +73,7 @@ const AbNiceBadge = styled(NiceBadge)`
 const Container = styled.div`
   width: 276px;
   background-color: #fff;
+  margin-bottom: 12px;
   position: relative;
   cursor: pointer;
 
@@ -139,22 +140,8 @@ const Address = styled.p`
   white-space: nowrap;
 `
 
-const GoodSpan = styled.div`
-  @media ${devices.mobileXl} {
-    position: absolute;
-    top: 9px;
-    right: 9px;
-    z-index: 10;
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 4px 10px;
-
-    font-size: 12px;
-
-    img {
-      width: 14px;
-    }
-  }
+const CustomTagList = styled(TagList)`
+  margin-top: 12px;
 `
 
 export default StoreCard

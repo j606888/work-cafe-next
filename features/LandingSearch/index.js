@@ -4,22 +4,21 @@ import NearbySearch from "./NearbySearch"
 import Searchbar from "./Searchbar"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 import useControlMap from "hooks/useControlMap"
-import { instance } from "api"
 import useLocationParamsStore from "stores/useLocationParamsStore"
-
 
 const LandingSearch = () => {
   const { setWidth, width } = useMapControl()
+  const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
   const { map } = useControlMap()
   const { searchHere } = useLocationParamsStore()
   const handleSearch = (keyword) => {
-    console.log(keyword)
+    setWidth(WIDTH.withInfoBox)
+    const latLng = map.center.toJSON()
+    keywordSearch({ ...latLng, keyword, limit: 30 })
   }
 
   const handleNearbySearch = async () => {
-    const newWidth =
-      width === WIDTH.fullWidth ? WIDTH.withInfoBox : WIDTH.fullWidth
-    setWidth(newWidth)
+    setWidth(WIDTH.withInfoBox)
 
     const params = map.center.toJSON()
     searchHere(params)

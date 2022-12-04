@@ -18,7 +18,7 @@ export const SearchBox = styled.div`
   border: 1px solid #AFAAA3;
   border-radius: 20px;
   height: 60px;
-  padding: 0 12px 0 12px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   gap: 9px;
