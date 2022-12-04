@@ -8,12 +8,12 @@ const HEIGHT = {
 
 export const Container = styled.div`
   text-align: center;
-  background: linear-gradient(90deg, #94684A, #D7B997);
+  background: #222120;
   height: ${HEIGHT.normal};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
 
   @media ${devices.mobileXl} {

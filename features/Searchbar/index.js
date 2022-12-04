@@ -1,20 +1,16 @@
 import React, { useState, useMemo } from "react"
 import {
-  Menu as MenuIcon,
-  Search as SearchIcon,
   Place as PlaceIcon,
   Circle as CircleIcon,
   Store as StoreIcon,
-  Clear as ClearIcon,
 } from "@mui/icons-material"
-import { Divider, Tooltip } from "@mui/material"
+import { Tooltip } from "@mui/material"
 import useSWR from "swr"
 import { fetcher } from "api"
-import { Container, SearchBox, Input, Options, Option, SearchButton } from "./styled"
+import { Container, SearchBox, Input, Options, Option } from "./styled"
 import { useEffect } from "react"
 import { useRef } from "react"
 import useKeyword from "stores/useKeyword"
-import useLocationParamsStore from "stores/useLocationParamsStore"
 import useStoreStore from "stores/useStoreStore"
 
 const CityOption = ({ type, name, count, address }) => {
@@ -135,6 +131,7 @@ const Searchbar = ({ onSearch = () => {} }) => {
   return (
     <Container onBlur={handleBlue} hide={!!placeId}>
       <SearchBox hasResult={hasResult}>
+        <img src="/search-btn-outline.svg" alt="search-btn-outline" />
         <Input
           value={keyword}
           onChange={handleChange}
@@ -148,15 +145,10 @@ const Searchbar = ({ onSearch = () => {} }) => {
         {keyword && (
           <>
             <Tooltip title="清除" onClick={handleClear}>
-              <SearchButton noBg>
-                <ClearIcon />
-              </SearchButton>
+              <img src="/cancel-filled.svg" alt="cancel-filled" />
             </Tooltip>
           </>
         )}
-        <SearchButton onClick={handleSearch}>
-          <SearchIcon />
-        </SearchButton>
       </SearchBox>
       <Options hasResult={hasResult}>
         {options.map((option, index) => (

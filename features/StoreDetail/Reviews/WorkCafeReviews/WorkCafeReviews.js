@@ -5,6 +5,7 @@ import { useState } from "react"
 import { MoreVert } from "@mui/icons-material"
 import styled from "styled-components"
 import { devices } from "constant/styled-theme"
+import TagList from "components/TagList/TagList"
 
 const EditBox = ({ onDelete, onEdit }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -37,30 +38,45 @@ const EditBox = ({ onDelete, onEdit }) => {
   )
 }
 
+
+const ICON_MAP = {
+  yes: '/thumb-up.svg',
+  no: '/thumb-down.svg'
+}
+
 const WorkCafeReviews = ({
   id,
   userName,
   userAvatarUrl,
   createdAt,
   description,
-  photos=[],
+  photos = [],
   editable,
+  recommend,
+  primaryTags=[],
   onDelete = () => {},
   onEdit = () => {},
 }) => {
   return (
     <Container>
       <UserInfo>
-        <Avatar alt={userName} src={userAvatarUrl} />
+        {userName ? (
+          <img src="/guest.svg" alt="guest" />
+        ) : (
+          <Avatar alt={userName} src={userAvatarUrl} />
+        )}
         <Content>
           <h6>{userName}</h6>
           <span>{_dateString(createdAt)}</span>
+          <TagDiv>
+            <img src={ICON_MAP[recommend]} alt={recommend} width={36} height={36}/>
+            <TagList tags={primaryTags} withCount={false} />
+          </TagDiv>
           <p>{description}</p>
+          <ImagesWorm images={photos} />
         </Content>
         {editable && <EditBox id={id} onDelete={onDelete} onEdit={onEdit} />}
       </UserInfo>
-      <ImagesWorm images={photos} />
-      <Divider />
     </Container>
   )
 }
@@ -77,7 +93,14 @@ function _dateString(timestamp) {
 }
 
 const Container = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+`
+
+const TagDiv = styled.div`
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 `
 
 const UserInfo = styled.div`
@@ -96,15 +119,19 @@ const Content = styled.div`
     font-size: 16px;
     font-weight: 500;
     margin: 0;
+    color: #222120;
   }
 
   span {
     font-size: 12px;
+    color: #222120;
   }
 
   p {
     font-size: 14px;
     white-space: pre-line;
+    color: #42403F;
+    margin-bottom: 0;
   }
 
   @media ${devices.mobileXl} {

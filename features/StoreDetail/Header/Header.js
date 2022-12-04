@@ -1,26 +1,14 @@
 import React, { useState } from "react"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { Menu, MenuItem } from "@mui/material"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
-import {
-  Container,
-  BackButton,
-  ButtonGroup,
-  Button,
-  MobileGoogleUrl,
-} from "./styled"
-import ShareButton from "./ShareButton"
-import BookmarkIcon from "@mui/icons-material/Bookmark"
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import NavigationIcon from '@mui/icons-material/Navigation';
+import styled, { css } from "styled-components"
+import { devices } from "constant/styled-theme"
 import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
 import useLoginModeStore from "stores/useLoginModeStore"
 import useUserStore from "stores/useUserStore"
 import useSWR from "swr"
 
 const Header = ({
-  name,
   placeId,
   url,
   isBookmark,
@@ -29,9 +17,9 @@ const Header = ({
 }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
-  const setMode = useLoginModeStore(state => state.setMode)
+  const setMode = useLoginModeStore((state) => state.setMode)
   const open = Boolean(anchorEl)
-  const isLogin = useUserStore(state => state.isLogin)
+  const isLogin = useUserStore((state) => state.isLogin)
   const { mutate } = useSWR(isLogin ? `/user-bookmarks` : null)
 
   function handleMoreClick(e) {
@@ -47,7 +35,7 @@ const Header = ({
       onBookmarkUpdate()
       mutate()
     } else {
-      setMode('login')
+      setMode("login")
     }
   }
 
@@ -57,7 +45,7 @@ const Header = ({
       onBookmarkUpdate()
       mutate()
     } else {
-      setMode('login')
+      setMode("login")
     }
   }
 
@@ -65,14 +53,23 @@ const Header = ({
     <>
       <Container>
         <BackButton onClick={onClick}>
-          <ArrowBackIcon />
+          <img src="/back-btn.svg" alt="back-btn" />
+          <span>搜尋結果</span>
         </BackButton>
-        <h3>{name}</h3>
         <ButtonGroup>
-          <MobileGoogleUrl href={url} target="_blank" rel="noreferrer">
-            <NavigationIcon />
-          </MobileGoogleUrl>
-          {isBookmark ? (
+          <UrlButton href={url} target="_blank">
+            <img src="/navigate.svg" alt="navigate" />
+            <span>導航</span>
+          </UrlButton>
+          <Button onClick={handleAddBookmark}>
+            <img src="/like.svg" alt="like" />
+            <span>收藏</span>
+          </Button>
+          <Button>
+            <img src="/share.svg" alt="share" />
+            <span>分享</span>
+          </Button>
+          {/* {isBookmark ? (
             <Button onClick={handleRemoveBookmark} active>
               <BookmarkIcon />
               <span>已收藏</span>
@@ -82,12 +79,10 @@ const Header = ({
               <BookmarkBorderIcon />
               <span>收藏</span>
             </Button>
-          )}
-
-          <ShareButton placeId={placeId} />
-          <Button onClick={handleMoreClick}>
-            <MoreVertIcon />
-          </Button>
+          )} */}
+          <MoreButton onClick={handleMoreClick}>
+            <img src="/more.svg" alt="more" />
+          </MoreButton>
         </ButtonGroup>
       </Container>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
@@ -103,3 +98,108 @@ const Header = ({
 }
 
 export default Header
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 36px 28px 0;
+  position: relative;
+
+  h3 {
+    margin: 0 auto 0 1rem;
+    font-size: 24px;
+    color: #757575;
+    max-width: 50%;
+  }
+
+  @media ${devices.mobileXl} {
+    margin: 0 24px;
+    flex-direction: column;
+    gap: 12px;
+
+    h3 {
+      font-size: 20px;
+      margin: 0;
+      max-width: 90%;
+    }
+  }
+`
+
+const BackButton = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  span {
+    color: #222120;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "Noto Sans", sans-serif;
+  }
+`
+
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+
+  @media ${devices.mobileXl} {
+    position: absolute;
+    top: 0;
+    right: 0;
+    gap: 0;
+  }
+`
+
+const MoreButton = styled.div`
+  box-sizing: border-box;
+  border: 1px solid #e8e6e4;
+  border-radius: 12px;
+  height: 44px;
+  width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`
+
+const Button = styled.button`
+  width: 88px;
+  height: 44px;
+  align-items: center;
+  border: 1px solid #e8e6e4;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  text-decoration: none;
+  color: #222120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ${({ active }) =>
+    active &&
+    css`
+      border-color: #ef5350;
+      color: #ef5350;
+
+      svg {
+        color: #ef5350;
+      }
+    `}
+
+  @media ${devices.mobileXl} {
+    /* border-radius: 50%; */
+    border: none;
+
+    span {
+      display: none;
+    }
+  }
+`
+
+const UrlButton = Button.withComponent("a")

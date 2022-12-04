@@ -1,4 +1,3 @@
-import { Avatar, Divider } from "@mui/material"
 import ReviewForm from "features/ReviewForm"
 import React from "react"
 import { useState } from "react"
@@ -21,14 +20,19 @@ const Container = styled.div`
 `
 
 const FakeTextBox = styled.div`
-  border: 1px solid #757575;
-  height: 40px;
+  border: 1px solid #AFAAA3;
+  height: 44px;
   display: flex;
   align-items: center;
   width: 100%;
   padding: 0 12px;
   border-radius: 12px;
   cursor: pointer;
+  color: #42403F;
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-size: 14px;
+  line-height: 19px;
 
   @media ${devices.mobileXl} {
     height: 36px;
@@ -71,7 +75,7 @@ const NewReview = ({ placeId, name, onSave }) => {
           </div>
         ) : (
           <>
-            <Avatar />
+            <img src="/guest.svg" alt="guest" />
             <FakeTextBox onClick={() => setOpen(true)}>
               留下我的評論（這裡適合辦公嗎？）
             </FakeTextBox>

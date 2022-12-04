@@ -4,8 +4,8 @@ import { devices } from "constant/styled-theme"
 import ImageCanvas from "./ImageCanvas"
 
 const Container = styled.div`
-  margin: 2rem 56px;
-  height: 240px;
+  margin: 24px 28px;
+  height: 360px;
   display: grid;
   grid-gap: 8px;
   grid-template-columns: 5fr 2fr;

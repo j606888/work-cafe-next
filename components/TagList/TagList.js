@@ -1,35 +1,49 @@
 import React from "react"
 import styled from "styled-components"
 
-const TagList = ({ tags = [] }) => {
-  return (
-    <Container>
-      {tags.map((tag, index) => (
-        <Tag key={index}>
-          {tag.name} ({tag.count})
-        </Tag>
-      ))}
-    </Container>
-  )
+const TagList = ({ tags = [], withCount = true, className }) => {
+  if (withCount) {
+    return (
+      <Container className={className}>
+        {tags.map((tag, index) => (
+          <Tag key={index}>
+            {tag.name} ({tag.count})
+          </Tag>
+        ))}
+      </Container>
+    )
+  } else {
+    return (
+      <Container>
+        {tags.map((tag, index) => (
+          <Tag key={index}>{tag}</Tag>
+        ))}
+      </Container>
+    )
+  }
 }
 
 const Container = styled.div`
   display: flex;
   gap: 8px;
-  margin-top: 8px;
-  flex-wrap: wrap;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow: hidden;
 `
 
 const Tag = styled.span`
-  height: 28px;
+  flex-shrink: 0;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  padding: 0 8px;
-  border: 1px solid #757575;
+  padding: 6px 12px;
+  border: 1px solid #afaaa3;
   border-radius: 12px;
-  color: #757575;
+  background-color: #f8f8f8;
+  color: #42403f;
   font-size: 12px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
 `
-
 
 export default TagList

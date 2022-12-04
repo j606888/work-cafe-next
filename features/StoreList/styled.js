@@ -6,10 +6,10 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  gap: 36px;
+  gap: 16px;
   align-items: flex-start;
   justify-content: space-around;
-  padding: 0 56px;
+  padding: 0 28px;
 
   @media ${devices.mobileXl} {
     flex-wrap: initial;
@@ -26,9 +26,11 @@ export const Container = styled.div`
 `
 
 export const StoreCount = styled.p`
-  padding: 0 56px;
+  padding: 0 45px;
   font-size: 16px;
-  color: #757575;
+  font-weight: 400;
+  font-family: 'Noto Sans', sans-serif;
+  color: #222120;
   margin-top: 0;
 
   @media ${devices.mobileXl} {

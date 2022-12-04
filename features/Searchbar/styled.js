@@ -15,10 +15,10 @@ export const Container = styled.div`
 export const SearchBox = styled.div`
   box-sizing: border-box;
   background: #fff;
-  border: 1px solid #493425;
-  border-radius: 12px;
-  height: 52px;
-  padding: 0 8px 0 1.2rem;
+  border: 1px solid #AFAAA3;
+  border-radius: 20px;
+  height: 60px;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   gap: 9px;

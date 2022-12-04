@@ -10,7 +10,6 @@ import shallow from "zustand/shallow"
 import useInitMap from "hooks/useInitMap"
 import useFindMe from "hooks/useFindMe"
 import { devices } from "constant/styled-theme"
-import WelcomeBlock from "./WelcomeBlock/WelcomeBlock"
 import ShortBlock from "./ShortBlock"
 import StoreDetail from "features/StoreDetail"
 import useStoreSWR from "stores/useStoreSWR"
@@ -84,24 +83,13 @@ const LeftContainer = () => {
     )
   }
 
-  const searchBlock =
-    data || placeId || Object.keys(params) != 0 ? (
+  return (
+    <Container>
       <ShortBlock
         onSearch={handleSearch}
         onFilterChange={handleFilterChange}
         showFilter={!placeId}
       />
-    ) : (
-      <WelcomeBlock
-        loading={loading}
-        onSearch={handleSearch}
-        onNearbySearch={handleNearbySearch}
-      />
-    )
-
-  return (
-    <Container>
-      {searchBlock}
       {data && data.length === 0 && <NoMatch />}
       <StoreList stores={data || []} onClick={handleClickStore} />
     </Container>
@@ -121,7 +109,7 @@ function _calCenter(data) {
 const Container = styled.div`
   width: 628px;
   position: relative;
-  background-color: #fcf9f6;
+  background-color: #FFFFFF;
 
   @media ${devices.mobileXl} {
     width: 100%;
