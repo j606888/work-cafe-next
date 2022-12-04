@@ -59,7 +59,6 @@ function _closePeriod(closeTime) {
 export default OpenTime
 
 const Container = styled.div`
-  padding-top: 24px;
   padding-left: 41px;
 
   @media ${devices.mobileXl} {

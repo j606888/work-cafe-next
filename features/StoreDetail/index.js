@@ -30,9 +30,11 @@ const StoreDetail = ({ placeId, onClose }) => {
       />
       <ImagePreview photos={store.photos} name={store.name} />
       <H3>{store.name}</H3>
-      <TagListContainer>
-        <TagList tags={store.tags} />
-      </TagListContainer>
+      {store.tags.length > 0 && (
+        <TagListContainer>
+          <TagList tags={store.tags} />
+        </TagListContainer>
+      )}
       <OpenTime
         isOpenNow={store.isOpenNow}
         openingHours={store.openingHours}
@@ -71,11 +73,10 @@ export default StoreDetail
 const Container = styled.div`
   background-color: #fff;
   padding-bottom: 1px;
-  padding: 14px 0;
 `
 
 const TagListContainer = styled.div`
-  padding: 0 41px;
+  padding: 0 41px 12px;
 
   @media ${devices.mobileXl} {
     margin: 8px 24px;

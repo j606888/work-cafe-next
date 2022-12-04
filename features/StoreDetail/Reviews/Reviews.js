@@ -38,9 +38,9 @@ const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
   return (
     <Container>
       <Chooser onChange={handleActiveChange} />
-      <NewReview placeId={placeId} name={name} onSave={handleSave} />
       {active === 'workCafe' && (
         <>
+          <NewReview placeId={placeId} name={name} onSave={handleSave} />
           {reviews.reviews.map(review => (
             <WorkCafeReviews key={review.id}
               {...review}
