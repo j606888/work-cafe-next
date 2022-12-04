@@ -1,20 +1,16 @@
 import React, { useState } from "react"
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
-import BedtimeIcon from '@mui/icons-material/Bedtime';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import { Container, ToggleButton, OpenHours, DayBox } from "./styled"
+import styled from "styled-components"
+import { devices } from "constant/styled-theme"
 
 const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
   const displayText = isOpenNow ? "營業中" : "休息中"
   const closeText =
     !open && closeTime && `・ 結束營業時間 ${_closePeriod(closeTime)}`
-  const icon = open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
-  const leftIcon = isOpenNow ? <WbSunnyIcon /> : <BedtimeIcon />
+  const icon = open ? <img src="/up-btn.svg" alt="up-btn" /> : <img src="/down-btn.svg" alt="down-btn" />
 
   return (
     <ToggleButton onClick={onClick}>
-      {leftIcon}
+      <img src="/clock.svg" alt="clock" />
       <span>{displayText}</span>
       <span>{closeText}</span>
       {icon}
@@ -61,3 +57,52 @@ function _closePeriod(closeTime) {
 }
 
 export default OpenTime
+
+const Container = styled.div`
+  padding-top: 24px;
+  padding-left: 41px;
+
+  @media ${devices.mobileXl} {
+    margin: 0 24px 12px;
+  }
+`
+
+const ToggleButton = styled.div`
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 0;
+  font-size: 14px;
+  color: #222120;
+  cursor: pointer;
+  align-items: center;
+
+  a {
+    color: #222120;
+  }
+
+  @media ${devices.mobileXl} {
+    a {
+      display: none;
+    }
+  }
+`
+
+const OpenHours = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #222120;
+`
+
+const DayBox = styled.div`
+  display: flex;
+  align-items: flex-start;
+  margin-left: 32px;
+  gap: 1rem;
+  margin-bottom: 12px;
+
+  .period {
+    display: flex;
+    flex-direction: column;
+  }
+`
