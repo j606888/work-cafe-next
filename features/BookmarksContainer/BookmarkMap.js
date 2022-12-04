@@ -1,6 +1,5 @@
 import Skeleton from "components/Skeleton"
 import GoogleMap from "features/GoogleMap"
-import { MyLocationContainer } from "features/MapV2/styled"
 import MyLocation from "features/MyLocation"
 import useControlMap from "hooks/useControlMap"
 import useInitMap from "hooks/useInitMap"
@@ -42,9 +41,9 @@ const BookmarkMap = () => {
 
   return (
     <Container>
-      <MyLocationContainer>
+      {/* <MyLocationContainer> */}
         <MyLocation onClick={handleFindMe} />
-      </MyLocationContainer>
+      {/* </MyLocationContainer> */}
       <GoogleMap onLoad={handleLoad} mapSettings={mapSettings}>
         {bookmarkStores?.map((store) => (
           <StoreMarker
