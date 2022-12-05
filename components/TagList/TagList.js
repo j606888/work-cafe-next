@@ -43,7 +43,6 @@ const Tag = styled.span`
   color: #42403f;
   font-size: 12px;
   font-weight: 400;
-  font-family: "Noto Sans", sans-serif;
 `
 
 export default TagList

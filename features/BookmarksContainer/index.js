@@ -52,7 +52,6 @@ const Container = styled.div`
 `
 
 const H2 = styled.div`
-  font-family: "Noto Sans", sans-serif;
   font-size: 24px;
   font-weight: 500;
   padding: 12px;

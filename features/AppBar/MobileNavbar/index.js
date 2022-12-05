@@ -41,7 +41,6 @@ const Container = styled.div`
 `
 
 const HomeLink = styled.a`
-  font-family: "Noto Sans", sans-serif;
   font-size: 16px;
   font-weight: 700;
   color: #704f39;

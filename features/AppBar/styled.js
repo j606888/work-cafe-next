@@ -53,7 +53,6 @@ export const Button = styled.button`
   width: 68px;
   height: 44px;
   border-radius: 12px;
-  
   border: 1px solid #222120;
   color: #222120;
   cursor: pointer;
@@ -70,7 +69,6 @@ export const IconContainer = styled.div`
 `
 
 export const HomeLink = styled.a`
-  font-family: 'Noto Sans',sans-serif;
   font-size: 20px;
   font-weight: 900;
   line-height: 27px;

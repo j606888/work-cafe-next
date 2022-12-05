@@ -46,7 +46,6 @@ const Content = styled.div`
 
   h3 {
     color: #222120;
-    font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -55,7 +54,6 @@ const Content = styled.div`
   }
 
   p {
-    font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 300;
     font-size: 14px;
