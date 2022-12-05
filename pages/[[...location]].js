@@ -4,11 +4,10 @@ import MapV2 from "features/MapV2"
 import LandingSearch from "features/LandingSearch"
 import Head from "next/head"
 import useMapControl, { WIDTH } from "stores/useMapControl"
+import useStoreStore from "stores/useStoreStore"
+import StoreDetail from "features/StoreDetail"
 
 export default function MapPage() {
-  const { width } = useMapControl()
-  const isLanding = width === WIDTH.fullWidth
-
   return (
     <>
       <Head>
@@ -16,7 +15,17 @@ export default function MapPage() {
       </Head>
       <AppBar />
       <MapV2 />
-      {isLanding ? <LandingSearch /> : <LeftContainer />}
+      <DisplayComponent />
     </>
   )
+}
+
+const DisplayComponent = () => {
+  const placeId = useStoreStore(state => state.placeId)
+  const { width } = useMapControl()
+  const isLanding = width === WIDTH.fullWidth
+
+  if (placeId) return <StoreDetail />
+  if (isLanding) return <LandingSearch />
+  return <LeftContainer />
 }

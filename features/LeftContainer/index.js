@@ -8,10 +8,8 @@ import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import shallow from "zustand/shallow"
 import useInitMap from "hooks/useInitMap"
-import useFindMe from "hooks/useFindMe"
 import { devices } from "constant/styled-theme"
 import ShortBlock from "./ShortBlock"
-import StoreDetail from "features/StoreDetail"
 import useStoreSWR from "stores/useStoreSWR"
 
 const LeftContainer = () => {
@@ -19,7 +17,7 @@ const LeftContainer = () => {
     navigate: true,
   })
   const { placeIdFromUrl } = useInitMap()
-  const [params, keywordSearch, updateSettings, searchHere] =
+  const [params, keywordSearch, updateSettings] =
     useLocationParamsStore(
       (state) => [
         state.params,
@@ -34,7 +32,6 @@ const LeftContainer = () => {
     shallow
   )
   const { data } = useStoreSWR()
-  const { findMe, loading } = useFindMe()
 
   useEffect(() => {
     if (placeIdFromUrl) {
@@ -58,29 +55,8 @@ const LeftContainer = () => {
     updateWithPlaceId(placeId)
     moveTo({ latLng: { lat, lng } })
   }
-  function handleCloseStore() {
-    setPlaceId(null)
-    updateWithPlaceId()
-  }
   function handleFilterChange(settings) {
     updateSettings(settings)
-  }
-  async function handleNearbySearch() {
-    const latLng = await findMe()
-    moveTo({ latLng })
-    searchHere(latLng)
-  }
-
-  if (placeId) {
-    return (
-      <Container>
-        <StoreDetail
-          placeId={placeId}
-          canBack={!!data && data.length !== 0}
-          onClose={handleCloseStore}
-        />
-      </Container>
-    )
   }
 
   return (

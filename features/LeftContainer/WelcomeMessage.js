@@ -17,7 +17,6 @@ const Container = styled.div`
   max-width: 560px;
   margin: 6rem auto;
   text-align: left;
-  font-family: 'Noto Sans', sans-serif;
   color: #757575;
 
   h3 {
