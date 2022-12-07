@@ -1,20 +1,40 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useRef } from "react"
+import styled from "styled-components"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 import useLocationParamsStore from "stores/useLocationParamsStore"
-import useControlMap from 'hooks/useControlMap'
+import useControlMap from "hooks/useControlMap"
 
 const NearbySearch = () => {
   const { setWidth } = useMapControl()
   const { searchHere } = useLocationParamsStore()
   const { map } = useControlMap()
+  const myPositionRef = useRef(null)
 
-  const handleClick = () => {
-    setWidth(WIDTH.withInfoBox)
-
-    const params = map.center.toJSON()
-    searchHere(params)
+  const handleClick = async () => {
+    try {
+      if (!myPositionRef.current) {
+        myPositionRef.current = await getCurrentPosition()
+      }
+      setWidth(WIDTH.withInfoBox)
+      map.panTo(myPositionRef.current)
+      map.setZoom(15)
+      searchHere(myPositionRef.current)
+    } catch (err) {
+      handleError(err)
+    }
   }
+
+  useEffect(() => {
+    const getPosition = async () => {
+      const already = await alreadyGranted()
+      if (!already) return
+
+      const latLng = await getCurrentPosition()
+      myPositionRef.current = latLng
+    }
+    getPosition()
+  }, [])
+
   return (
     <Container>
       <Content>
@@ -26,6 +46,30 @@ const NearbySearch = () => {
   )
 }
 
+async function alreadyGranted() {
+  const permission = await navigator.permissions.query({ name: "geolocation" })
+  return permission.state === "granted"
+}
+
+async function getCurrentPosition() {
+  const position = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  })
+  const latLng = {
+    lat: position.coords.latitude,
+    lng: position.coords.longitude,
+  }
+  return latLng
+}
+
+function handleError(err) {
+  if (err instanceof GeolocationPositionError) {
+    console.log("You might block the Geolocation, Please open it and try again")
+  } else {
+    console.log(err)
+  }
+}
+
 const Container = styled.div`
   margin-top: 43px;
   box-sizing: border-box;
@@ -33,7 +77,7 @@ const Container = styled.div`
   width: 100%;
   height: 112px;
   padding: 30px;
-  background-color: #FFF7EE;
+  background-color: #fff7ee;
   border-radius: 28px;
   align-items: center;
   justify-content: space-between;
