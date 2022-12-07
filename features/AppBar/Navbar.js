@@ -111,7 +111,6 @@ const Links2 = styled.div`
     color: #42403F;
     font-size: 18px;
     font-weight: 500;
-    font-family: 'Noto Sans';
     text-decoration: none;
   }
 `

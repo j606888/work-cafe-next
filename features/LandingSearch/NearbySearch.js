@@ -1,16 +1,73 @@
-import React from 'react'
-import styled from 'styled-components'
+import React, { useEffect, useRef } from "react"
+import styled from "styled-components"
+import useMapControl, { WIDTH } from "stores/useMapControl"
+import useLocationParamsStore from "stores/useLocationParamsStore"
+import useControlMap from "hooks/useControlMap"
 
-const NearbySearch = ({ onClick }) => {
+const NearbySearch = () => {
+  const { setWidth } = useMapControl()
+  const { searchHere } = useLocationParamsStore()
+  const { map } = useControlMap()
+  const myPositionRef = useRef(null)
+
+  const handleClick = async () => {
+    try {
+      if (!myPositionRef.current) {
+        myPositionRef.current = await getCurrentPosition()
+      }
+      setWidth(WIDTH.withInfoBox)
+      map.panTo(myPositionRef.current)
+      map.setZoom(15)
+      searchHere(myPositionRef.current)
+    } catch (err) {
+      handleError(err)
+    }
+  }
+
+  useEffect(() => {
+    const getPosition = async () => {
+      const already = await alreadyGranted()
+      if (!already) return
+
+      const latLng = await getCurrentPosition()
+      myPositionRef.current = latLng
+    }
+    getPosition()
+  }, [])
+
   return (
     <Container>
       <Content>
         <h3>正在找尋附近的咖啡店？</h3>
         <p>須許可此網頁存取你的GPS定位</p>
       </Content>
-      <SearchBtn onClick={onClick}>搜尋附近</SearchBtn>
+      <SearchBtn onClick={handleClick}>搜尋附近</SearchBtn>
     </Container>
   )
+}
+
+async function alreadyGranted() {
+  const permission = await navigator.permissions.query({ name: "geolocation" })
+  return permission.state === "granted"
+}
+
+async function getCurrentPosition() {
+  const position = await new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  })
+  const latLng = {
+    lat: position.coords.latitude,
+    lng: position.coords.longitude,
+  }
+  return latLng
+}
+
+function handleError(err) {
+  if (err instanceof GeolocationPositionError) {
+    console.log("You might block the Geolocation, Please open it and try again")
+  } else {
+    console.log(err)
+  }
 }
 
 const Container = styled.div`
@@ -20,7 +77,7 @@ const Container = styled.div`
   width: 100%;
   height: 112px;
   padding: 30px;
-  background-color: #FFF7EE;
+  background-color: #fff7ee;
   border-radius: 28px;
   align-items: center;
   justify-content: space-between;
@@ -33,7 +90,6 @@ const Content = styled.div`
 
   h3 {
     color: #222120;
-    font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -42,7 +98,6 @@ const Content = styled.div`
   }
 
   p {
-    font-family: 'Noto Sans';
     font-style: normal;
     font-weight: 300;
     font-size: 14px;

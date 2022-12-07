@@ -79,7 +79,6 @@ const Number = styled.span`
 `
 
 const Text = styled.span`
-  font-family: 'Noto Sans';
   font-style: normal;
   font-size: 14px;
   line-height: 24px;

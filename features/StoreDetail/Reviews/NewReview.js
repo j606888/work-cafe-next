@@ -29,7 +29,6 @@ const FakeTextBox = styled.div`
   border-radius: 12px;
   cursor: pointer;
   color: #42403F;
-  font-family: 'Noto Sans';
   font-style: normal;
   font-size: 14px;
   line-height: 19px;

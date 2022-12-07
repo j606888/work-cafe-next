@@ -1,4 +1,5 @@
 import create from "zustand"
+import useMapControl, { WIDTH } from "stores/useMapControl"
 
 const useLocationParamsStore = create((set, get) => ({
   params: {},
@@ -11,6 +12,7 @@ const useLocationParamsStore = create((set, get) => ({
     const params = get().params
     const newParams = { ...params, ...settings, moveAfter: true }
     set({ params: newParams })
+    useMapControl.getState().setWidth(WIDTH.withInfoBox)
   },
   updateSettings: (settings) => {
     const { keyword, lat, lng } = get().params

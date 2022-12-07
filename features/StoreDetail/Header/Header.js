@@ -135,7 +135,6 @@ const BackButton = styled.div`
     color: #222120;
     font-size: 16px;
     font-weight: 400;
-    font-family: "Noto Sans", sans-serif;
   }
 `
 

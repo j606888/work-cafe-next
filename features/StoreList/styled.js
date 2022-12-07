@@ -29,7 +29,6 @@ export const StoreCount = styled.p`
   padding: 0 45px;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Noto Sans', sans-serif;
   color: #222120;
   margin-top: 0;
 

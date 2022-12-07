@@ -2,38 +2,16 @@ import React from "react"
 import styled from "styled-components"
 import NearbySearch from "./NearbySearch"
 import Searchbar from "./Searchbar"
-import useMapControl, { WIDTH } from "stores/useMapControl"
-import useControlMap from "hooks/useControlMap"
-import useLocationParamsStore from "stores/useLocationParamsStore"
 
 const LandingSearch = () => {
-  const { setWidth, width } = useMapControl()
-  const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
-  const { map } = useControlMap()
-  const { searchHere } = useLocationParamsStore()
-  const handleSearch = (keyword) => {
-    setWidth(WIDTH.withInfoBox)
-    const latLng = map.center.toJSON()
-    keywordSearch({ ...latLng, keyword, limit: 30 })
-  }
-
-  const handleNearbySearch = async () => {
-    setWidth(WIDTH.withInfoBox)
-
-    const params = map.center.toJSON()
-    searchHere(params)
-  }
-
-  if (width === WIDTH.withInfoBox) return null
-
   return (
     <Container>
       <Content>
         <WelcomeMessage>嗨! 今天想去哪辦公呢？</WelcomeMessage>
         <p>Work Cafe 幫你快速篩選 適合辦公的咖啡店</p>
       </Content>
-      <Searchbar onSearch={handleSearch} />
-      <NearbySearch onClick={handleNearbySearch} />
+      <Searchbar />
+      <NearbySearch />
     </Container>
   )
 }
@@ -55,7 +33,6 @@ const Container = styled.div`
   p {
     color: #222120;
     line-height: 19px;
-    font-family: "Noto Sans", sans-serif;
     font-size: 14px;
     font-weight: 400;
     margin: 0;
@@ -73,7 +50,6 @@ const Content = styled.div`
 const WelcomeMessage = styled.h3`
   margin: 0;
   color: #222120;
-  font-family: "Noto Sans", sans-serif;
   font-weight: 700;
   font-size: 28px;
   line-height: 38px;

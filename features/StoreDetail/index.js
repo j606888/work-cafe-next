@@ -9,12 +9,27 @@ import ImagePreview from "./ImagePreview/ImagePreview"
 import { devices } from "constant/styled-theme"
 import Reviews from "./Reviews/Reviews"
 import OpenTime from "./OpenTime/OpenTime"
+import useStoreStore from "stores/useStoreStore"
+import shallow from "zustand/shallow"
+import useControlMap from "hooks/useControlMap"
 
-const StoreDetail = ({ placeId, onClose }) => {
+const StoreDetail = () => {
+  const [placeId, setPlaceId] = useStoreStore(
+    (state) => [state.placeId, state.setPlaceId],
+    shallow
+  )
+  const { updateWithPlaceId } = useControlMap({
+    navigate: false,
+  })
   const { data: store, mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   function handleReviewSave() {
     mutateStore()
+  }
+
+  const handleClose = () => {
+    setPlaceId(null)
+    updateWithPlaceId()
   }
 
   if (!store) return <Skeleton />
@@ -22,7 +37,7 @@ const StoreDetail = ({ placeId, onClose }) => {
   return (
     <Container>
       <Header
-        onClick={onClose}
+        onClick={handleClose}
         placeId={store.placeId}
         isBookmark={store.isBookmark}
         url={store.url}
@@ -71,7 +86,9 @@ function parseDomain(url) {
 export default StoreDetail
 
 const Container = styled.div`
-  background-color: #fff;
+  width: 628px;
+  position: relative;
+  background-color: #FFFFFF;
   padding-bottom: 1px;
 `
 
@@ -84,7 +101,6 @@ const TagListContainer = styled.div`
 `
 
 const H3 = styled.h3`
-  font-family: 'Noto Sans';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -101,7 +117,6 @@ const ListItem = styled.div`
   gap: 8px;
 
   span, a {
-    font-family: 'Noto Sans';
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;

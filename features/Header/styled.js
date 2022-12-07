@@ -7,7 +7,6 @@ export const Container = styled.div`
   background-color: #eee;
   height: 56px;
   padding: 0 1rem;
-  font-family: 'Noto Sans', sans-serif;
   z-index: 1201;
   position: relative;
 
