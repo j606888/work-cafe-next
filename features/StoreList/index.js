@@ -25,9 +25,10 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
 
   React.useEffect(() => {
     if (focusPlaceId && storesRef.current[focusPlaceId]) {
-      storesRef.current[focusPlaceId].scrollIntoView(
-        { inline: 'center', block: 'center' }
-      )
+      storesRef.current[focusPlaceId].scrollIntoView({
+        inline: "center",
+        block: "center",
+      })
     }
   }, [focusPlaceId])
 
@@ -37,11 +38,11 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
 
   return (
     <>
-      <StoreCount>{stores.length} 間咖啡店</StoreCount>
+      <StoreCount>{stores.totalStores} 間咖啡店</StoreCount>
       <Container>
-        {stores.map((store, i) => (
+        {stores?.stores?.map((store, i) => (
           <StoreCard
-            ref={el => storesRef.current[store.placeId] = el}
+            ref={(el) => (storesRef.current[store.placeId] = el)}
             key={store.placeId}
             images={store.photos}
             shortAddress={store.address}

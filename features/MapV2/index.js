@@ -17,10 +17,10 @@ import { useMediaQuery } from "@mui/material"
 import useUserStore from "stores/useUserStore"
 import useMapControl from "stores/useMapControl"
 import useStoreSWR from "stores/useStoreSWR"
-import { devices } from 'constant/styled-theme'
+import { devices } from "constant/styled-theme"
 import shallow from "zustand/shallow"
 
-const MapV2 = ({ navigate = true}) => {
+const MapV2 = ({ navigate = true }) => {
   const { isReady, mapSettings } = useInitMap()
   const { width } = useMapControl()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } =
@@ -102,7 +102,7 @@ const MapV2 = ({ navigate = true}) => {
             }}
           />
         )}
-        {stores?.map((store) => (
+        {stores?.stores?.map((store) => (
           <StoreMarker
             key={store.placeId}
             store={store}
@@ -124,7 +124,7 @@ const MapV2 = ({ navigate = true}) => {
             onClick={handleClickMarker}
           />
         ))}
-        {(!stores || stores?.length === 0) && store && (
+        {(!stores || stores.stores?.length === 0) && store && (
           <StoreMarker
             key={store.placeId}
             store={store}
@@ -145,7 +145,7 @@ const Container = styled.div`
   top: 120px;
   /* width: calc(100% - 628px); */
   /* width: 100%; */
-  width: ${({ width }) => width };
+  width: ${({ width }) => width};
   height: calc(100vh - 104px);
 
   .labels {
@@ -164,7 +164,7 @@ const Container = styled.div`
   .labels-focus {
     background-color: white;
     border-radius: 28px;
-    border: 2px solid #FFA233;
+    border: 2px solid #ffa233;
     color: #222120;
     font-size: 14px;
     font-weight: 700;
