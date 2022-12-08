@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components"
 
-const CityOption = ({ name, storeCount, onClick }) => {
+const CityOption = ({ name, storeCount, onClick, focus }) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} focus={focus}>
       <img src="/location_28.svg" alt="location_28" />
       <span>{name}</span>
       <StoreCount>
@@ -14,20 +14,25 @@ const CityOption = ({ name, storeCount, onClick }) => {
   )
 }
 
-const StoreOption = ({ name, onClick }) => {
+const StoreOption = ({ name, onClick, focus }) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} focus={focus}>
       <img src="/cafe.svg" alt="cafe" />
       <span>{name}</span>
     </Container>
   )
 }
 
-const Option = ({ type, name, count, onClick }) => {
+const Option = ({ type, name, count, onClick, focus }) => {
   return type === "store" ? (
-    <StoreOption name={name} onClick={onClick}/>
+    <StoreOption name={name} onClick={onClick} focus={focus} />
   ) : (
-    <CityOption name={name} storeCount={count} onClick={onClick}/>
+    <CityOption
+      name={name}
+      storeCount={count}
+      onClick={onClick}
+      focus={focus}
+    />
   )
 }
 
@@ -41,6 +46,7 @@ const Container = styled.div`
   align-items: center;
   gap: 8px;
   font-size: 14px;
+  ${({ focus }) => focus && `background-color: #f2f2f2;`}
 
   &:hover {
     background-color: #f2f2f2;

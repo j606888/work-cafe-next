@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
 import Option from "./Option"
@@ -9,6 +9,10 @@ const Searchbar = () => {
   const { searchHints, hints, keyword } = useHintSearch()
   const [showOptions, setShowOptions] = useState(false)
   const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
+  const [isOnComposition, setIsOnComposition] = useState(false)
+  const [focusedIndex, setFocusedIndex] = useState(-1)
+  const resultContainer = useRef(null)
+
   const { map } = useControlMap()
 
   const handleSearch = (keyword) => {
@@ -21,29 +25,74 @@ const Searchbar = () => {
     setShowOptions(true)
   }
 
+  function handleComposition(e) {
+    setIsOnComposition(e.type !== "compositionend")
+  }
+
   const handleOptionClick = ({ type, name, address }) => {
     setShowOptions(false)
 
-    if (type === 'district') {
-      searchHints(address + name)
-      handleSearch(address + name)
-    } else {
-      searchHints(name)
-      handleSearch(address)
+    const keyword = type === "district" ? address + name : name
+    searchHints(keyword)
+    handleSearch(keyword)
+  }
+
+  function handleKeyDown(e) {
+    if (isOnComposition) return
+    setShowOptions(true)
+
+    const { key } = e
+    const nextIndexCount = _calcIndexCount({
+      key,
+      focusedIndex,
+      options: hints,
+    })
+    if (Number.isInteger(nextIndexCount)) {
+      setFocusedIndex(nextIndexCount)
+      e.preventDefault()
+    }
+
+    if (!isOnComposition && e.key === "Enter") {
+      const answer = hints[focusedIndex]
+      const name = answer?.name || keyword
+      if (answer?.type === "district") {
+        searchHints(answer.address + answer.name)
+        handleSearch(answer.address + answer.name)
+      } else {
+        searchHints(name)
+        handleSearch(name)
+      }
+      setShowOptions(false)
     }
   }
 
   return (
     <Wrapper>
       <Container>
-        <Input placeholder="輸入縣市、地區或店名" value={keyword} onChange={onChange} />
-        <SearchIcon src="/search-btn.svg" alt="search-btn" onClick={handleSearch} />
+        <Input
+          placeholder="輸入縣市、地區或店名"
+          value={keyword}
+          onChange={onChange}
+          onCompositionStart={handleComposition}
+          onCompositionUpdate={handleComposition}
+          onCompositionEnd={handleComposition}
+          onKeyDown={handleKeyDown}
+        />
+        <SearchIcon
+          src="/search-btn.svg"
+          alt="search-btn"
+          onClick={handleSearch}
+        />
       </Container>
       {showOptions && hints?.length > 0 && (
         <Options>
-          {hints.map((result) => (
-            <Option key={`${result.name}${result.placeId}`} {...result} 
+          {hints.map((result, index) => (
+            <Option
+              key={`${result.name}${result.placeId}`}
+              {...result}
               onClick={() => handleOptionClick(result)}
+              ref={index === focusedIndex ? resultContainer : null}
+              focus={index === focusedIndex}
             />
           ))}
         </Options>
@@ -64,8 +113,19 @@ const useHintSearch = () => {
   return {
     searchHints,
     hints,
-    keyword
+    keyword,
   }
+}
+
+function _calcIndexCount({ key, focusedIndex, options }) {
+  if (key === "ArrowUp") {
+    return (focusedIndex + options?.length - 1) % options?.length
+  }
+  if (key === "ArrowDown") {
+    return (focusedIndex + 1) % options?.length
+  }
+
+  return null
 }
 
 const SearchIcon = styled.img`
