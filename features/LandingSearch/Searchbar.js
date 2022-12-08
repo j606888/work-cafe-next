@@ -4,14 +4,15 @@ import useSWR from "swr"
 import Option from "./Option"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
+import useKeyword from "stores/useKeyword"
 
 const Searchbar = () => {
+  const setKeyword = useKeyword((state) => state.setKeyword)
   const { searchHints, hints, keyword } = useHintSearch()
   const [showOptions, setShowOptions] = useState(false)
   const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
   const [isOnComposition, setIsOnComposition] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
-  const resultContainer = useRef(null)
 
   const { map } = useControlMap()
 
@@ -35,6 +36,7 @@ const Searchbar = () => {
     const keyword = type === "district" ? address + name : name
     searchHints(keyword)
     handleSearch(keyword)
+    setKeyword(keyword)
   }
 
   function handleKeyDown(e) {
@@ -42,27 +44,32 @@ const Searchbar = () => {
     setShowOptions(true)
 
     const { key } = e
-    const nextIndexCount = _calcIndexCount({
-      key,
-      focusedIndex,
-      options: hints,
-    })
-    if (Number.isInteger(nextIndexCount)) {
-      setFocusedIndex(nextIndexCount)
-      e.preventDefault()
-    }
-
-    if (!isOnComposition && e.key === "Enter") {
-      const answer = hints[focusedIndex]
-      const name = answer?.name || keyword
-      if (answer?.type === "district") {
-        searchHints(answer.address + answer.name)
-        handleSearch(answer.address + answer.name)
-      } else {
-        searchHints(name)
-        handleSearch(name)
-      }
-      setShowOptions(false)
+    let nextIndexCount
+    switch (key) {
+      case "ArrowUp":
+        nextIndexCount = (focusedIndex + hints?.length - 1) % hints?.length
+        if (Number.isInteger(nextIndexCount)) setFocusedIndex(nextIndexCount)
+        e.preventDefault()
+        break
+      case "ArrowDown":
+        nextIndexCount = (focusedIndex + 1) % hints?.length
+        if (Number.isInteger(nextIndexCount)) setFocusedIndex(nextIndexCount)
+        e.preventDefault()
+        break
+      case "Enter":
+        const answer = hints[focusedIndex]
+        const name = answer?.name || keyword
+        if (answer?.type === "district") {
+          searchHints(answer.address + answer.name)
+          handleSearch(answer.address + answer.name)
+          setKeyword(answer.address + answer.name)
+        } else {
+          searchHints(name)
+          handleSearch(name)
+          setKeyword(name)
+        }
+        setShowOptions(false)
+        break
     }
   }
 
@@ -91,7 +98,6 @@ const Searchbar = () => {
               key={`${result.name}${result.placeId}`}
               {...result}
               onClick={() => handleOptionClick(result)}
-              ref={index === focusedIndex ? resultContainer : null}
               focus={index === focusedIndex}
             />
           ))}
@@ -115,17 +121,6 @@ const useHintSearch = () => {
     hints,
     keyword,
   }
-}
-
-function _calcIndexCount({ key, focusedIndex, options }) {
-  if (key === "ArrowUp") {
-    return (focusedIndex + options?.length - 1) % options?.length
-  }
-  if (key === "ArrowDown") {
-    return (focusedIndex + 1) % options?.length
-  }
-
-  return null
 }
 
 const SearchIcon = styled.img`
