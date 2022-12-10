@@ -106,13 +106,14 @@ const Container = styled.div`
   box-sizing: border-box;
   display: flex;
   width: 100%;
-  height: 60px;
+  height: 52px;
   padding: 10px;
   border: 1px solid #afaaa3;
   border-radius: 20px;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+  background-color: #ffffff;
 `
 
 export default Searchbar

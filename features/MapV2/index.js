@@ -195,8 +195,7 @@ const MyLocationContainer = styled(MyLocation)`
   z-index: 2;
 
   @media ${devices.mobileXl} {
-    top: calc(56px + 72px + 1rem);
-    right: 1rem;
+    display: none;
   }
 `
 
@@ -208,9 +207,6 @@ const SearchHereContainer = styled(SearchHere)`
   z-index: 2;
 
   @media ${devices.mobileXl} {
-    top: calc(56px + 72px + 1rem);
-    left: 1rem;
-    transform: none;
-    z-index: 2000;
+    display: none;
   }
 `

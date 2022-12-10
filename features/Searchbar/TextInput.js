@@ -12,8 +12,8 @@ const TextInput = ({ keyword, onChange, onKeyDown }) => {
     if (isOnComposition) return
     if (["ArrowUp", "ArrowDown", "Enter"].includes(e.key)) {
       onKeyDown(e.key)
+      e.preventDefault()
     }
-    e.preventDefault()
   }
 
   return (
