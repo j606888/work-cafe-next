@@ -6,6 +6,7 @@ import StoreMarker from "features/GoogleMap/StoreMarker"
 import MyLocation from "features/MyLocation"
 import useInitMap from "hooks/useInitMap"
 import useStoreStore from "stores/useStoreStore"
+import useMapControl, { WIDTH } from "stores/useMapControl"
 import { useState } from "react"
 import useSWR from "swr"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
@@ -15,7 +16,6 @@ import useLocationParamsStore from "stores/useLocationParamsStore"
 import useMapStoreV2 from "stores/useMapStoreV2"
 import { useMediaQuery } from "@mui/material"
 import useUserStore from "stores/useUserStore"
-import useMapControl from "stores/useMapControl"
 import useStoreSWR from "stores/useStoreSWR"
 import { devices } from "constant/styled-theme"
 import shallow from "zustand/shallow"
@@ -81,13 +81,13 @@ const MapV2 = ({ navigate = true }) => {
 
   return (
     <Container width={width}>
-      {/* <MyLocationContainer>
-        <MyLocation onClick={handleFindMe} />
-      </MyLocationContainer> */}
-      {/* <SearchHereContainer>
-        <SearchHere onClick={handleSearchHere} loading={isLoading} />
-      </SearchHereContainer> */}
-      {/* <ShowLabelCheckbox onChange={(checked) => setShowLabel(checked)} /> */}
+      {width === WIDTH.withInfoBox && (
+        <>
+          <MyLocationContainer onClick={handleFindMe} />
+          <SearchHereContainer onClick={handleSearchHere} loading={isLoading} />
+          <ShowLabelCheckbox onChange={(checked) => setShowLabel(checked)} />
+        </>
+      )}
       <GoogleMap
         onLoad={handleLoad}
         onIdle={handleOnIdle}
@@ -188,7 +188,7 @@ const Container = styled.div`
   }
 `
 
-const MyLocationContainer = styled.div`
+const MyLocationContainer = styled(MyLocation)`
   position: absolute;
   bottom: 7rem;
   right: 0.7rem;
@@ -200,10 +200,10 @@ const MyLocationContainer = styled.div`
   }
 `
 
-const SearchHereContainer = styled.div`
+const SearchHereContainer = styled(SearchHere)`
   position: absolute;
   left: 50%;
-  top: 1rem;
+  top: 32px;
   transform: translateX(-50%);
   z-index: 2;
 

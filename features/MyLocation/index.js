@@ -14,7 +14,7 @@ async function getCurrentPosition() {
   let result = {
     success: false,
     latLng: {},
-    failedReason: ""
+    failedReason: "",
   }
 
   if (!navigator.geolocation) {
@@ -37,7 +37,7 @@ async function getCurrentPosition() {
   return result
 }
 
-const MyLocation = ({ onClick = () => {} }) => {
+const MyLocation = ({ className, onClick = () => {} }) => {
   const [location, setLocation] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [userClick, setUserClick] = useState(false)
@@ -76,6 +76,7 @@ const MyLocation = ({ onClick = () => {} }) => {
 
   return (
     <Container
+      className={className}
       onClick={handleClick}
       isLoading={isLoading}
       hasLocation={!!location}
