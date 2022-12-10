@@ -1,19 +1,20 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import useSWR from "swr"
-import Option from "./Option"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import useKeyword from "stores/useKeyword"
+import TextInput from "./TextInput"
+import OptionList from "./OptionList"
+import useFocusIndex from "./useFocusIndex"
+import useHintSearch from "./useHintSearch"
+import SvgButton from "components/SvgButton"
 
 const Searchbar = ({ type = "landing" }) => {
+  const [showOptions, setShowOptions] = useState(false)
   const setKeyword = useKeyword((state) => state.setKeyword)
   const { searchHints, hints, keyword } = useHintSearch()
-  const [showOptions, setShowOptions] = useState(false)
+  const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
   const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
-  const [isOnComposition, setIsOnComposition] = useState(false)
-  const [focusedIndex, setFocusedIndex] = useState(-1)
-
   const { map } = useControlMap()
 
   const handleSearch = (keyword) => {
@@ -27,68 +28,45 @@ const Searchbar = ({ type = "landing" }) => {
     setShowOptions(false)
   }
 
-  const onChange = (e) => {
-    searchHints(e.target.value)
+  const onChange = (value) => {
+    searchHints(value)
     setShowOptions(true)
   }
 
-  function handleComposition(e) {
-    setIsOnComposition(e.type !== "compositionend")
-  }
-
-  const handleOptionClick = ({ type, name, address }) => {
+  const handleOptionClick = (name) => {
     setShowOptions(false)
 
-    const keyword = type === "district" ? address + name : name
-    searchHints(keyword)
-    handleSearch(keyword)
-    setKeyword(keyword)
+    searchHints(name)
+    handleSearch(name)
+    setKeyword(name)
   }
 
-  function handleKeyDown(e) {
-    if (isOnComposition) return
+  function handleKeyDown(key) {
     setShowOptions(true)
 
-    const { key } = e
-    let nextIndexCount
-    switch (key) {
-      case "ArrowUp":
-        nextIndexCount = (focusedIndex + hints?.length - 1) % hints?.length
-        if (Number.isInteger(nextIndexCount)) setFocusedIndex(nextIndexCount)
-        e.preventDefault()
-        break
-      case "ArrowDown":
-        nextIndexCount = (focusedIndex + 1) % hints?.length
-        if (Number.isInteger(nextIndexCount)) setFocusedIndex(nextIndexCount)
-        e.preventDefault()
-        break
-      case "Enter":
-        const answer = hints[focusedIndex]
-        const name = answer?.name || keyword
-        if (answer?.type === "district") {
-          searchHints(answer.address + answer.name)
-          handleSearch(answer.address + answer.name)
-          setKeyword(answer.address + answer.name)
-        } else {
-          searchHints(name)
-          handleSearch(name)
-          setKeyword(name)
-        }
-        setShowOptions(false)
-        break
+    if (key === "ArrowUp") onArrowUp(hints?.length)
+    if (key === "ArrowDown") onArrowDown(hints?.length)
+    if (key === "Enter") {
+      const answer = hints[focusedIndex]
+      const name = answer?.name || keyword
+      if (answer?.type === "district") {
+        searchHints(answer.address + answer.name)
+        handleSearch(answer.address + answer.name)
+        setKeyword(answer.address + answer.name)
+      } else {
+        searchHints(name)
+        handleSearch(name)
+        setKeyword(name)
+      }
+      setShowOptions(false)
     }
   }
 
-  const inputBox = (
-    <Input
-      placeholder="輸入縣市、地區或店名"
-      value={keyword}
+  const textInput = (
+    <TextInput
+      keyword={keyword}
       onChange={onChange}
-      onCompositionStart={handleComposition}
-      onCompositionUpdate={handleComposition}
-      onCompositionEnd={handleComposition}
       onKeyDown={handleKeyDown}
-      marginLeft={type === "landing" ? "12px" : "0px"}
     />
   )
 
@@ -97,81 +75,27 @@ const Searchbar = ({ type = "landing" }) => {
       <Container>
         {type === "storeList" && (
           <>
-            <ClickIcon
-              src="/search-btn-outline.svg"
-              alt="search-btn"
-              onClick={handleSearch}
-            />
-            {inputBox}
-            <ClickIcon
-              src="/cancel-filled.svg"
-              alt="cancel-btn"
-              onClick={handleCancel}
-              width={28}
-              height={28}
-            />
+            <SvgButton path="search-btn-outline" onClick={handleSearch} />
+            {textInput}
+            <SvgButton path="cancel-filled" onClick={handleCancel} />
           </>
         )}
-
         {type === "landing" && (
           <>
-            {inputBox}
-            <ClickIcon
-              src="/search-btn.svg"
-              alt="search-btn"
-              onClick={handleSearch}
-            />
+            {textInput}
+            <SvgButton path="search-btn" onClick={handleCancel} />
           </>
         )}
       </Container>
-      {showOptions && hints?.length > 0 && (
-        <Options>
-          {hints.map((result, index) => (
-            <Option
-              key={`${result.name}${result.placeId}`}
-              result={result}
-              onClick={() => handleOptionClick(result)}
-              focus={index === focusedIndex}
-            />
-          ))}
-        </Options>
-      )}
+      <OptionList
+        show={showOptions}
+        hints={hints}
+        focusedIndex={focusedIndex}
+        onClick={handleOptionClick}
+      />
     </Wrapper>
   )
 }
-
-const useHintSearch = () => {
-  const [keyword, setKeyword] = useState("")
-  const { data } = useSWR(
-    keyword.length > 0 ? ["/stores/hint", { keyword }] : null
-  )
-  const hints = data?.results
-
-  const searchHints = (q) => setKeyword(q)
-
-  return {
-    searchHints,
-    hints,
-    keyword,
-  }
-}
-
-const ClickIcon = styled.img`
-  cursor: pointer;
-`
-
-const Options = styled.div`
-  box-sizing: border-box;
-  position: absolute;
-  top: 68px;
-  width: 100%;
-  border: 1px solid #afaaa3;
-  border-radius: 20px;
-  background-color: #ffffff;
-  z-index: 1;
-  padding: 12px 0;
-  overflow: hidden;
-`
 
 const Wrapper = styled.div`
   position: relative;
@@ -189,15 +113,6 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-`
-
-const Input = styled.input`
-  font-size: 16px;
-  width: 100%;
-  border: none;
-
-  ${({ marginLeft }) => marginLeft && `margin-left: ${marginLeft};`}
-  outline: none;
 `
 
 export default Searchbar
