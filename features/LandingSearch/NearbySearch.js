@@ -134,9 +134,10 @@ const SearchBtn = styled.button`
   line-height: 25px;
 
   @media ${devices.mobileXl} {
-    width: 104px;
-    height: 44px;
-
+    width: auto;
+    height: auto;
+    padding: 12px 20px;
+    font-size: 16px;
     margin-top: 30px;
   }
 `
