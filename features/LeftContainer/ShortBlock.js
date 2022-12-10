@@ -1,4 +1,4 @@
-import Searchbar from "features/LandingSearch/Searchbar"
+import Searchbar from "features/Searchbar"
 import SearchFilter from "features/SearchFilter"
 import React from "react"
 import styled from "styled-components"

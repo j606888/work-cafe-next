@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import NearbySearch from "./NearbySearch"
-import Searchbar from "./Searchbar"
+import Searchbar from "../Searchbar"
 import { devices } from "constant/styled-theme"
 
 const LandingSearch = () => {
