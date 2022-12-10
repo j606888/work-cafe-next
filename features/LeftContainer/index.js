@@ -17,16 +17,15 @@ const LeftContainer = () => {
     navigate: true,
   })
   const { placeIdFromUrl } = useInitMap()
-  const [params, keywordSearch, updateSettings] =
-    useLocationParamsStore(
-      (state) => [
-        state.params,
-        state.keywordSearch,
-        state.updateSettings,
-        state.searchHere,
-      ],
-      shallow
-    )
+  const [params, keywordSearch, updateSettings] = useLocationParamsStore(
+    (state) => [
+      state.params,
+      state.keywordSearch,
+      state.updateSettings,
+      state.searchHere,
+    ],
+    shallow
+  )
   const [placeId, setPlaceId] = useStoreStore(
     (state) => [state.placeId, state.setPlaceId],
     shallow
@@ -85,11 +84,12 @@ function _calCenter(data) {
 const Container = styled.div`
   width: 628px;
   position: relative;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   @media ${devices.mobileXl} {
     width: 100%;
     z-index: 5;
+    background-color: transparent;
   }
 `
 

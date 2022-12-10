@@ -4,6 +4,7 @@ import CarouselControls, { Button } from "./CarouselControls"
 import CarouselIndicators from "./CarouselIndicators"
 import CarouselItem from "./CarouselItem"
 import { devices } from "constant/styled-theme"
+import { useMediaQuery } from "@mui/material"
 
 const ImageCarousel = ({
   slides,
@@ -13,6 +14,7 @@ const ImageCarousel = ({
   mHeight = 154,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
+  const fullScreen = useMediaQuery(devices.mobileXl)
 
   const prev = (e) => {
     e.stopPropagation()
@@ -38,7 +40,7 @@ const ImageCarousel = ({
           <CarouselItem key={index} slide={slide} />
         ))}
       </CarouselInner>
-      {slides.length > 1 && (
+      {slides.length > 1 && !fullScreen && (
         <>
           <CarouselControls prev={prev} next={next} />
           <CarouselIndicators

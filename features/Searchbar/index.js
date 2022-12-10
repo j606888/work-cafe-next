@@ -1,184 +1,119 @@
-import React, { useState, useMemo } from "react"
-import {
-  Place as PlaceIcon,
-  Circle as CircleIcon,
-  Store as StoreIcon,
-} from "@mui/icons-material"
-import { Tooltip } from "@mui/material"
-import useSWR from "swr"
-import { fetcher } from "api"
-import { Container, SearchBox, Input, Options, Option } from "./styled"
-import { useEffect } from "react"
-import { useRef } from "react"
+import React, { useState } from "react"
+import styled from "styled-components"
+import useControlMap from "hooks/useControlMap"
+import useLocationParamsStore from "stores/useLocationParamsStore"
 import useKeyword from "stores/useKeyword"
-import useStoreStore from "stores/useStoreStore"
+import TextInput from "./TextInput"
+import OptionList from "./OptionList"
+import useFocusIndex from "./useFocusIndex"
+import useHintSearch from "./useHintSearch"
+import SvgButton from "components/SvgButton"
 
-const CityOption = ({ type, name, count, address }) => {
-  return type === "store" ? (
-    <>
-      <StoreIcon />
-      <div className="hidden">
-        <span>{name}</span>
-        <span className="address">{address}</span>
-      </div>
-    </>
-  ) : (
-    <>
-      <PlaceIcon />
-      <div className="city-name">
-        <span>{name}</span>
-        <span className="address">{address}</span>
-      </div>
-      <CircleIcon />
-      <span className="city-count">{count}</span>
-    </>
-  )
-}
-
-const Searchbar = ({ onSearch = () => {} }) => {
-  const keyword = useKeyword(state => state.keyword)
-  const setKeyword = useKeyword(state => state.setKeyword)
-  const [isOnComposition, setIsOnComposition] = useState(false)
+const Searchbar = ({ type = "landing" }) => {
   const [showOptions, setShowOptions] = useState(false)
-  const [focusedIndex, setFocusedIndex] = useState(-1)
-  const resultContainer = useRef(null)
-  const placeId = useStoreStore(state => state.placeId)
+  const setKeyword = useKeyword((state) => state.setKeyword)
+  const { searchHints, hints, keyword } = useHintSearch()
+  const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
+  const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
+  const { map } = useControlMap()
 
-  const { data } = useSWR(
-    keyword.length > 0 ? ["/stores/hint", { keyword }] : null,
-    fetcher
-  )
-  const options = useMemo(() => {
-    return data?.results || []
-  }, [data])
-  const hasResult = showOptions && options.length > 0
-
-  function handleOptionClick({ type, name, address }) {
-    if (type === 'district') {
-      setKeyword(address + name)
-      onSearch(address + name)
-    } else {
-      setKeyword(name)
-      onSearch(name)
-    }
-    setShowOptions(false)
+  const handleSearch = (keyword) => {
+    const latLng = map.center.toJSON()
+    keywordSearch({ ...latLng, keyword, limit: 30 })
   }
 
-  function handleSearch() {
-    setShowOptions(false)
-    onSearch(keyword)
-  }
-
-  function handleClear() {
-    setShowOptions(false)
+  const handleCancel = () => {
     setKeyword("")
-    onSearch("")
-    // clear()
+    searchHints("")
+    setShowOptions(false)
   }
 
-  function handleChange(e) {
-    setKeyword(e.target.value)
+  const onChange = (value) => {
+    searchHints(value)
+    setShowOptions(true)
   }
 
-  function handleComposition(e) {
-    if (e.type === "compositionend") {
-      setIsOnComposition(false)
-    } else {
-      setIsOnComposition(true)
-    }
+  const handleOptionClick = (name) => {
+    setShowOptions(false)
+
+    searchHints(name)
+    handleSearch(name)
+    setKeyword(name)
   }
 
-  function handleBlue() {
-    setTimeout(() => {
-      setShowOptions(false)
-      setFocusedIndex(-1)
-    }, [100])
-  }
-
-  function handleKeyDown(e) {
-    if (isOnComposition) return
+  function handleKeyDown(key) {
     setShowOptions(true)
 
-    const { key } = e
-    const nextIndexCount = _calcIndexCount({ key, focusedIndex, options })
-    if (Number.isInteger(nextIndexCount)) {
-      setFocusedIndex(nextIndexCount)
-      e.preventDefault()
-    }
-
-    if (!isOnComposition && e.key === "Enter") {
-      const answer = options[focusedIndex]
+    if (key === "ArrowUp") onArrowUp(hints?.length)
+    if (key === "ArrowDown") onArrowDown(hints?.length)
+    if (key === "Enter") {
+      const answer = hints[focusedIndex]
       const name = answer?.name || keyword
-      if (answer?.type === 'district') {
+      if (answer?.type === "district") {
+        searchHints(answer.address + answer.name)
+        handleSearch(answer.address + answer.name)
         setKeyword(answer.address + answer.name)
-        onSearch(answer.address + answer.name)
       } else {
+        searchHints(name)
+        handleSearch(name)
         setKeyword(name)
-        onSearch(name)
       }
       setShowOptions(false)
     }
   }
 
-  useEffect(() => {
-    if (!resultContainer.current) return
-
-    resultContainer.current.scrollIntoView({
-      block: "center",
-    })
-  }, [focusedIndex])
+  const textInput = (
+    <TextInput
+      keyword={keyword}
+      onChange={onChange}
+      onKeyDown={handleKeyDown}
+    />
+  )
 
   return (
-    <Container onBlur={handleBlue} hide={!!placeId}>
-      <SearchBox hasResult={hasResult}>
-        <img src="/search-btn-outline.svg" alt="search-btn-outline" />
-        <Input
-          value={keyword}
-          onChange={handleChange}
-          onClick={() => setShowOptions(true)}
-          onKeyDown={handleKeyDown}
-          placeholder="搜尋縣市、地區或店名"
-          onCompositionStart={handleComposition}
-          onCompositionUpdate={handleComposition}
-          onCompositionEnd={handleComposition}
-        />
-        {keyword && (
+    <Wrapper>
+      <Container>
+        {type === "storeList" && (
           <>
-            <Tooltip title="清除" onClick={handleClear}>
-              <img src="/cancel-filled.svg" alt="cancel-filled" />
-            </Tooltip>
+            <SvgButton path="search-btn-outline" onClick={handleSearch} />
+            {textInput}
+            <SvgButton path="cancel-filled" onClick={handleCancel} />
           </>
         )}
-      </SearchBox>
-      <Options hasResult={hasResult}>
-        {options.map((option, index) => (
-          <Option
-            key={_optionKey(option)}
-            onClick={() => handleOptionClick(option)}
-            ref={index === focusedIndex ? resultContainer : null}
-            focus={index === focusedIndex}
-          >
-            <CityOption {...option} />
-          </Option>
-        ))}
-      </Options>
-    </Container>
+        {type === "landing" && (
+          <>
+            {textInput}
+            <SvgButton path="search-btn" onClick={handleCancel} />
+          </>
+        )}
+      </Container>
+      <OptionList
+        show={showOptions}
+        hints={hints}
+        focusedIndex={focusedIndex}
+        onClick={handleOptionClick}
+      />
+    </Wrapper>
   )
 }
 
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+
+const Container = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  height: 52px;
+  padding: 10px;
+  border: 1px solid #afaaa3;
+  border-radius: 20px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+`
+
 export default Searchbar
-
-function _optionKey({ name, count, placeId }) {
-  return `${name}${count}${placeId}`
-}
-
-function _calcIndexCount({ key, focusedIndex, options }) {
-  if (key === "ArrowUp") {
-    return (focusedIndex + options.length - 1) % options.length
-  }
-  if (key === "ArrowDown") {
-    return (focusedIndex + 1) % options.length
-  }
-
-  return null
-}

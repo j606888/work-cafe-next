@@ -1,38 +1,41 @@
 import React from "react"
 import styled from "styled-components"
 
-const CityOption = ({ name, storeCount, onClick, focus }) => {
+const Option = ({ result, onClick, focus }) => {
+  const inner =
+    result.type === "store" ? (
+      <StoreOption {...result} />
+    ) : (
+      <CityOption {...result} />
+    )
+
   return (
     <Container onClick={onClick} focus={focus}>
+      {inner}
+    </Container>
+  )
+}
+
+const CityOption = ({ name, storeCount }) => {
+  return (
+    <>
       <img src="/location_28.svg" alt="location_28" />
       <span>{name}</span>
       <StoreCount>
         <img src="/cafe.svg" alt="cafe" />
         <span>{storeCount}</span>
       </StoreCount>
-    </Container>
+    </>
   )
 }
 
-const StoreOption = ({ name, onClick, focus }) => {
+const StoreOption = ({ name, address }) => {
   return (
-    <Container onClick={onClick} focus={focus}>
+    <>
       <img src="/cafe.svg" alt="cafe" />
       <span>{name}</span>
-    </Container>
-  )
-}
-
-const Option = ({ type, name, count, onClick, focus }) => {
-  return type === "store" ? (
-    <StoreOption name={name} onClick={onClick} focus={focus} />
-  ) : (
-    <CityOption
-      name={name}
-      storeCount={count}
-      onClick={onClick}
-      focus={focus}
-    />
+      <AddressSpan>{address}</AddressSpan>
+    </>
   )
 }
 
@@ -48,10 +51,19 @@ const Container = styled.div`
   font-size: 14px;
   ${({ focus }) => focus && `background-color: #f2f2f2;`}
 
+  span {
+    white-space: pre;
+  }
+
   &:hover {
     background-color: #f2f2f2;
     cursor: pointer;
   }
+`
+
+const AddressSpan = styled.span`
+  color: #afaaa3;
+  font-size: 12px;
 `
 
 const StoreCount = styled.div`

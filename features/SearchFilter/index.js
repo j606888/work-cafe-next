@@ -20,8 +20,9 @@ import TagsPicker from "./TagsPicker"
 import AdvancedPicker from "./AdvancedPicker"
 import { devices } from "constant/styled-theme"
 import useFilterStore from "stores/useFilterStore"
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close"
 import { useMediaQuery } from "@mui/material"
+import SvgButton from "components/SvgButton"
 
 const Container = styled.div`
   position: relative;
@@ -29,11 +30,11 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px;
+  height: 52px;
   width: 142px;
   background-color: #fff;
   color: #493425;
-  border: 1px solid #E8E6E4;
+  border: 1px solid #e8e6e4;
   border-radius: 20px;
   cursor: pointer;
 
@@ -47,15 +48,15 @@ const Container = styled.div`
 
 const SmallContainer = styled(Container)`
   display: none;
-  width: 44px;
-  height: 44px;
+  width: 52px;
+  height: 52px;
 
   @media ${devices.mobileXl} {
     display: flex;
   }
 
   svg {
-    color: #94684A;
+    color: #94684a;
   }
 `
 
@@ -77,8 +78,8 @@ const INIT_FILTERS = {
 
 const SearchFilter = ({ onChange = () => {} }) => {
   const [open, setOpen] = useState(false)
-  const filters = useFilterStore(state => state.filters)
-  const setFilters = useFilterStore(state => state.setFilters)
+  const filters = useFilterStore((state) => state.filters)
+  const setFilters = useFilterStore((state) => state.setFilters)
   const [settingsMemo, setSettingsMemo] = useState(filters)
   const [settings, setSettings] = useState(filters)
   const fullScreen = useMediaQuery(devices.mobileXl)
@@ -133,10 +134,16 @@ const SearchFilter = ({ onChange = () => {} }) => {
           篩選條件
         </Container>
         <SmallContainer onClick={() => setOpen(true)}>
-          <FilterAltIcon />
+          <SvgButton path="filter" />
         </SmallContainer>
       </Badge>
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth fullScreen={fullScreen}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="sm"
+        fullWidth
+        fullScreen={fullScreen}
+      >
         <DialogTitle>篩選</DialogTitle>
         <DialogContent>
           <OpenTimePicker {...settings} onChange={handleOpenTimeChange} />
