@@ -1,6 +1,7 @@
 import { FormControlLabel, Switch } from "@mui/material"
 import React, { useState } from "react"
 import styled from "styled-components"
+import { devices } from "constant/styled-theme"
 
 const ShowLabelCheckbox = ({ onChange = () => {} }) => {
   const [checked, setChecked] = useState(true)
@@ -34,6 +35,10 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media ${devices.mobileXl} {
+    display: none;
+  }
 `
 
 const Span = styled.span`

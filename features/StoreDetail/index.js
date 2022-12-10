@@ -57,11 +57,15 @@ const StoreDetail = () => {
       />
       <ListItem>
         <img src="/location.svg" alt="location" />
-        <a href={store.url} target="_blank" rel="noreferrer">{store.address}</a>
+        <a href={store.url} target="_blank" rel="noreferrer">
+          {store.address}
+        </a>
       </ListItem>
       <ListItem>
         <img src="/global.svg" alt="global" />
-        <a href={store.website} target="_blank" rel="noreferrer">{parseDomain(store.website)}</a>
+        <a href={store.website} target="_blank" rel="noreferrer">
+          {parseDomain(store.website)}
+        </a>
       </ListItem>
       <ListItem>
         <img src="/phone.svg" alt="phone" />
@@ -79,7 +83,7 @@ const StoreDetail = () => {
 }
 
 function parseDomain(url) {
-  const domain = (new URL(url)).hostname.replace('www.','');
+  const domain = new URL(url).hostname.replace("www.", "")
   return domain
 }
 
@@ -88,8 +92,12 @@ export default StoreDetail
 const Container = styled.div`
   width: 628px;
   position: relative;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding-bottom: 1px;
+
+  @media ${devices.mobileXl} {
+    width: 100%;
+  }
 `
 
 const TagListContainer = styled.div`
@@ -116,7 +124,8 @@ const ListItem = styled.div`
   padding: 3px 41px;
   gap: 8px;
 
-  span, a {
+  span,
+  a {
     font-weight: 400;
     font-size: 14px;
     line-height: 19px;
