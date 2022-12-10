@@ -1,15 +1,15 @@
-import Searchbar from 'features/Searchbar'
-import SearchFilter from 'features/SearchFilter'
-import React from 'react'
-import styled from 'styled-components'
+import Searchbar from "features/LandingSearch/Searchbar"
+import SearchFilter from "features/SearchFilter"
+import React from "react"
+import styled from "styled-components"
 import { devices } from "constant/styled-theme"
-import useStoreStore from 'stores/useStoreStore'
+import useStoreStore from "stores/useStoreStore"
 
 const Container = styled.div`
   padding: 32px 28px;
   display: flex;
   gap: 18px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   @media ${devices.mobileXl} {
     gap: 12px;
@@ -17,16 +17,14 @@ const Container = styled.div`
   }
 `
 
-const ShortBlock = ({ onSearch, onFilterChange, showFilter = true }) => {
-  const placeId = useStoreStore(state => state.placeId)
+const ShortBlock = ({ onFilterChange, showFilter = true }) => {
+  const placeId = useStoreStore((state) => state.placeId)
   if (placeId) return null
 
   return (
     <Container>
-      <Searchbar onSearch={onSearch} />
-      {showFilter && (
-        <SearchFilter onChange={onFilterChange} />
-      )}
+      <Searchbar type="storeList" />
+      {showFilter && <SearchFilter onChange={onFilterChange} />}
     </Container>
   )
 }

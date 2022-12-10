@@ -3,6 +3,7 @@ import styled from "styled-components"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 import useLocationParamsStore from "stores/useLocationParamsStore"
 import useControlMap from "hooks/useControlMap"
+import { devices } from "constant/styled-theme"
 
 const NearbySearch = () => {
   const { setWidth } = useMapControl()
@@ -81,6 +82,13 @@ const Container = styled.div`
   border-radius: 28px;
   align-items: center;
   justify-content: space-between;
+
+  @media ${devices.mobileXl} {
+    display: block;
+    text-align: center;
+    height: auto;
+    box-sizing: border-box;
+  }
 `
 
 const Content = styled.div`
@@ -106,6 +114,12 @@ const Content = styled.div`
     align-items: center;
     color: #222120;
   }
+
+  @media ${devices.mobileXl} {
+    p {
+      display: block;
+    }
+  }
 `
 
 const SearchBtn = styled.button`
@@ -118,6 +132,13 @@ const SearchBtn = styled.button`
   color: #ffffff;
   font-size: 18px;
   line-height: 25px;
+
+  @media ${devices.mobileXl} {
+    width: 104px;
+    height: 44px;
+
+    margin-top: 30px;
+  }
 `
 
 export default NearbySearch
