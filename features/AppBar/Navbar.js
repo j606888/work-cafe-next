@@ -1,9 +1,6 @@
-import Link from "next/link"
 import React, { useEffect, useState } from "react"
 import {
   NavbarContainer,
-  NavLinks,
-  GreyLink,
   Button,
   CtaButton,
   IconContainer,
@@ -17,19 +14,6 @@ import useLoginModeStore from "stores/useLoginModeStore"
 import shallow from "zustand/shallow"
 import useUserStore from "stores/useUserStore"
 import styled from "styled-components"
-
-const TutorialLink = () => {
-  return (
-    <Link
-      href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
-      passHref
-    >
-      <GreyLink target="_blank" rel="noreferrer">
-        教學文件
-      </GreyLink>
-    </Link>
-  )
-}
 
 const OpenCloseIcon = ({ onClick, show = false }) => {
   return (
@@ -69,18 +53,20 @@ const Navbar = () => {
         <Links>
           <HomeLink href="/">Work Cafe | Taiwan</HomeLink>
           <Links2>
-            <Link
+            <a
               href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
-              passHref
+              target="_blank"
+              rel="noreferrer"
             >
               什麼是Work Cafe？
-            </Link>
-            <Link
-              href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
-              passHref
+            </a>
+            <a
+              href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/shi-yong-jiao-xue/di-yi-ci-shi-yong"
+              target="_blank"
+              rel="noreferrer"
             >
               使用教學
-            </Link>
+            </a>
           </Links2>
         </Links>
 

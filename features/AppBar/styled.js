@@ -31,23 +31,6 @@ export const NavbarContainer = styled.div`
   border-bottom: 1px solid #e8e6e4;
 `
 
-export const NavLinks = styled.div`
-  display: flex;
-  gap: 1.3rem;
-  align-items: center;
-`
-
-export const GreyLink = styled.a`
-  color: #757575;
-  font-size: 20px;
-  margin-right: 1rem;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
 export const Button = styled.button`
   font-size: 16px;
   width: 68px;
