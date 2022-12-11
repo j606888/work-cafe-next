@@ -8,13 +8,7 @@ import useLoginModeStore from "stores/useLoginModeStore"
 import useUserStore from "stores/useUserStore"
 import useSWR from "swr"
 
-const Header = ({
-  placeId,
-  url,
-  isBookmark,
-  onClick,
-  onBookmarkUpdate,
-}) => {
+const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
   const setMode = useLoginModeStore((state) => state.setMode)
@@ -113,9 +107,7 @@ const Container = styled.div`
   }
 
   @media ${devices.mobileXl} {
-    margin: 0 24px;
-    flex-direction: column;
-    gap: 12px;
+    margin: 12px 24px;
 
     h3 {
       font-size: 20px;
@@ -136,6 +128,13 @@ const BackButton = styled.div`
     font-size: 16px;
     font-weight: 400;
   }
+
+  @media ${devices.mobileXl} {
+    margin-right: auto;
+    span {
+      display: none;
+    }
+  }
 `
 
 const ButtonGroup = styled.div`
@@ -145,9 +144,6 @@ const ButtonGroup = styled.div`
   margin-left: auto;
 
   @media ${devices.mobileXl} {
-    position: absolute;
-    top: 0;
-    right: 0;
     gap: 0;
   }
 `
@@ -162,6 +158,10 @@ const MoreButton = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  @media ${devices.mobileXl} {
+    border: none;
+  }
 `
 
 const Button = styled.button`
@@ -192,8 +192,9 @@ const Button = styled.button`
     `}
 
   @media ${devices.mobileXl} {
-    /* border-radius: 50%; */
     border: none;
+    width: auto;
+    height: auto;
 
     span {
       display: none;

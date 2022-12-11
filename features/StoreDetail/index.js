@@ -106,6 +106,7 @@ const Container = styled.div`
 
   @media ${devices.mobileXl} {
     width: 100%;
+    padding: 1px 0;
   }
 `
 
@@ -113,7 +114,7 @@ const TagListContainer = styled.div`
   padding: 0 41px 12px;
 
   @media ${devices.mobileXl} {
-    margin: 8px 24px;
+    padding: 0 24px;
   }
 `
 
@@ -123,8 +124,12 @@ const H3 = styled.h3`
   font-size: 24px;
   line-height: 33px;
   color: #222120;
-
   padding: 0 48px 0 41px;
+
+  @media ${devices.mobileXl} {
+    padding: 0 24px;
+    margin-bottom: 12px;
+  }
 `
 
 const ListItem = styled.div`
@@ -140,5 +145,9 @@ const ListItem = styled.div`
     line-height: 19px;
     color: #222120;
     text-overflow: ellipsis;
+  }
+
+  @media ${devices.mobileXl} {
+    padding: 3px 24px;
   }
 `

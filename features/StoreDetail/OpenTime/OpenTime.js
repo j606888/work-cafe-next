@@ -6,7 +6,11 @@ const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
   const displayText = isOpenNow ? "營業中" : "休息中"
   const closeText =
     !open && closeTime && `・ 結束營業時間 ${_closePeriod(closeTime)}`
-  const icon = open ? <img src="/up-btn.svg" alt="up-btn" /> : <img src="/down-btn.svg" alt="down-btn" />
+  const icon = open ? (
+    <img src="/up-btn.svg" alt="up-btn" />
+  ) : (
+    <img src="/down-btn.svg" alt="down-btn" />
+  )
 
   return (
     <ToggleButton onClick={onClick}>
@@ -62,7 +66,8 @@ const Container = styled.div`
   padding-left: 41px;
 
   @media ${devices.mobileXl} {
-    margin: 0 24px 12px;
+    margin: 0 24px;
+    padding-left: 0;
   }
 `
 

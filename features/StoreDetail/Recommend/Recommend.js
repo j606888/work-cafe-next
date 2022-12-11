@@ -26,7 +26,6 @@ const Recommend = ({ good = 6, bad = 1 }) => {
 
 export default Recommend
 
-
 const Container = styled.div`
   margin-left: 41px;
   margin-bottom: 40px;
@@ -35,20 +34,22 @@ const Container = styled.div`
   display: flex;
   gap: 2.5rem;
   margin-top: 1rem;
-  background-color: #FFF7EE;
+  background-color: #fff7ee;
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
   padding: 0 30px;
 
   @media ${devices.mobileXl} {
-    margin: 0 24px;
+    margin: 16px 24px;
     gap: 1.2rem;
+    padding: 0 16px;
+    height: 60px;
   }
 `
 
 const Divider = styled.div`
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   height: 64px;
   width: 2px;
 `
@@ -74,7 +75,7 @@ const Number = styled.span`
   font-weight: 500;
 
   @media ${devices.mobileXl} {
-    font-size: 24px;
+    font-size: 20px;
   }
 `
 
@@ -83,4 +84,8 @@ const Text = styled.span`
   font-size: 14px;
   line-height: 24px;
   color: #222120;
+
+  @media ${devices.mobileXl} {
+    font-size: 12px;
+  }
 `

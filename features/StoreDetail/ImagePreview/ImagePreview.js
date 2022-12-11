@@ -19,6 +19,8 @@ const Container = styled.div`
     gap: 8px;
     overflow-x: auto;
     margin: 1rem 28px 1rem 28px;
+    height: auto;
+    margin: 0 auto;
   }
 `
 
