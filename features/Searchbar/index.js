@@ -67,6 +67,7 @@ const Searchbar = ({ type = "landing" }) => {
       keyword={keyword}
       onChange={onChange}
       onKeyDown={handleKeyDown}
+      onBlur={() => setShowOptions(false)}
     />
   )
 

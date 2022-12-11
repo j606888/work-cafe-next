@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 
-const TextInput = ({ keyword, onChange, onKeyDown }) => {
+const TextInput = ({ keyword, onChange, onKeyDown, onBlur }) => {
   const [isOnComposition, setIsOnComposition] = useState(false)
 
   function handleComposition(e) {
@@ -21,6 +21,7 @@ const TextInput = ({ keyword, onChange, onKeyDown }) => {
       placeholder="輸入縣市、地區或店名"
       value={keyword}
       onChange={(e) => onChange(e.target.value)}
+      onBlur={onBlur}
       onCompositionStart={handleComposition}
       onCompositionUpdate={handleComposition}
       onCompositionEnd={handleComposition}
