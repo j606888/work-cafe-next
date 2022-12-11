@@ -32,7 +32,7 @@ const BookmarkMap = () => {
     if (fullScreen) {
       setFocusPlaceId(placeId)
     } else {
-      setPlaceId(placeId)
+      // setPlaceId(placeId)
       updateWithPlaceId(placeId, false)
     }
   }
@@ -42,7 +42,7 @@ const BookmarkMap = () => {
   return (
     <Container>
       {/* <MyLocationContainer> */}
-        <MyLocation onClick={handleFindMe} />
+      <MyLocation onClick={handleFindMe} />
       {/* </MyLocationContainer> */}
       <GoogleMap onLoad={handleLoad} mapSettings={mapSettings}>
         {bookmarkStores?.map((store) => (

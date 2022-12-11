@@ -15,7 +15,7 @@ const BookmarksContainer = () => {
   const { data } = useSWR("/user-bookmarks")
 
   function handleClickStore({ placeId }) {
-    setPlaceId(placeId)
+    // setPlaceId(placeId)
   }
 
   if (placeId) {
@@ -25,7 +25,7 @@ const BookmarksContainer = () => {
           canBack
           key={placeId}
           placeId={placeId}
-          onClose={() => setPlaceId(null)}
+          // onClose={() => setPlaceId(null)}
         />
       </Container>
     )
