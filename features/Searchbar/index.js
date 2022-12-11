@@ -32,7 +32,6 @@ const Searchbar = ({ type = "landing" }) => {
 
   const handleOptionClick = (name) => {
     setShowOptions(false)
-
     searchHints(name)
     handleSearch(name)
   }
@@ -56,31 +55,17 @@ const Searchbar = ({ type = "landing" }) => {
     }
   }
 
-  const textInput = (
-    <TextInput
-      keyword={keyword}
-      onChange={onChange}
-      onKeyDown={handleKeyDown}
-      onBlur={() => setShowOptions(false)}
-    />
-  )
-
   return (
     <Wrapper>
       <Container>
-        {type === "storeList" && (
-          <>
-            <SvgButton path="search-btn-outline" onClick={handleSearch} />
-            {textInput}
-            <SvgButton path="cancel-filled" onClick={handleCancel} />
-          </>
-        )}
-        {type === "landing" && (
-          <>
-            {textInput}
-            <SvgButton path="search-btn" onClick={handleCancel} />
-          </>
-        )}
+        <SearchBox type={type} onSearch={handleSearch} onCancel={handleCancel}>
+          <TextInput
+            keyword={keyword}
+            onChange={onChange}
+            onKeyDown={handleKeyDown}
+            onBlur={() => setShowOptions(false)}
+          />
+        </SearchBox>
       </Container>
       <OptionList
         show={showOptions}
@@ -90,6 +75,25 @@ const Searchbar = ({ type = "landing" }) => {
       />
     </Wrapper>
   )
+}
+
+const SearchBox = ({ type, children, onSearch, onCancel }) => {
+  if (type === "storeList")
+    return (
+      <>
+        <SvgButton path="search-btn-outline" onClick={onSearch} />
+        {children}
+        <SvgButton path="cancel-filled" onClick={onCancel} />
+      </>
+    )
+  if (type === "landing")
+    return (
+      <>
+        &nbsp;
+        {children}
+        <SvgButton path="search-btn" onClick={onSearch} />
+      </>
+    )
 }
 
 const Wrapper = styled.div`
