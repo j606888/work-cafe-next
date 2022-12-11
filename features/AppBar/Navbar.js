@@ -41,9 +41,12 @@ const OpenCloseIcon = ({ onClick, show = false }) => {
 
 const Navbar = () => {
   const [showNav, setShowNav] = useState(false)
-  const [mode, setMode] = useLoginModeStore((state) => [state.mode, state.setMode], shallow)
+  const [mode, setMode] = useLoginModeStore(
+    (state) => [state.mode, state.setMode],
+    shallow
+  )
   const [isLogin, setIsLogin] = useState(false)
-  const user = useUserStore(state => state.user)
+  const user = useUserStore((state) => state.user)
 
   useEffect(() => {
     setIsLogin(!!user)
@@ -69,25 +72,29 @@ const Navbar = () => {
             <Link
               href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
               passHref
-            >什麼是Work Cafe？</Link>
+            >
+              什麼是Work Cafe？
+            </Link>
             <Link
               href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
               passHref
-            >使用教學</Link>
+            >
+              使用教學
+            </Link>
           </Links2>
         </Links>
 
         {/* <OpenCloseIcon onClick={toggleShowNav} show={showNav} /> */}
         {/* <NavLinks show={showNav}> */}
-          {/* <TutorialLink /> */}
-          {/* {isLogin ? ( */}
-            {/* <AccountMenu /> */}
-          {/* ) : ( */}
-            <ButtonGroup>
-              <Button onClick={() => setMode("login")}>登入</Button>
-              <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
-            </ButtonGroup>
-          {/* )} */}
+        {/* <TutorialLink /> */}
+        {/* {isLogin ? ( */}
+        {/* <AccountMenu /> */}
+        {/* ) : ( */}
+        <ButtonGroup>
+          <Button onClick={() => setMode("login")}>登入</Button>
+          <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
+        </ButtonGroup>
+        {/* )} */}
         {/* </NavLinks> */}
       </NavbarContainer>
       <LoginForm mode={mode} setMode={setMode} onClose={handleClose} />
@@ -99,7 +106,6 @@ const Links = styled.div`
   display: flex;
   align-items: center;
   gap: 36px;
-
 `
 
 const Links2 = styled.div`
@@ -108,7 +114,7 @@ const Links2 = styled.div`
   gap: 36px;
 
   a {
-    color: #42403F;
+    color: #42403f;
     font-size: 18px;
     font-weight: 500;
     text-decoration: none;

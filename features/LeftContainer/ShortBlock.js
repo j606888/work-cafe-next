@@ -22,6 +22,9 @@ const Container = styled.div`
   display: flex;
   gap: 18px;
   background-color: #ffffff;
+  position: sticky;
+  top: 120px;
+  z-index: 10;
 
   @media ${devices.mobileXl} {
     background-color: transparent;
