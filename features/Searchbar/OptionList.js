@@ -29,7 +29,7 @@ const OptionList = ({ show, hints, focusedIndex, onClick }) => {
 const Container = styled.div`
   box-sizing: border-box;
   position: absolute;
-  top: 68px;
+  top: 56px;
   width: 100%;
   border: 1px solid #afaaa3;
   border-radius: 20px;
