@@ -2,8 +2,9 @@ import * as React from "react"
 import { Container, StoreCount } from "./styled"
 import useStoreStore from "stores/useStoreStore"
 import StoreCard from "components/StoreCard"
+import NoMatch from "features/LeftContainer/NoMatch"
 
-export default function StoreList({ stores = [], onClick = () => {} }) {
+export default function StoreList({ stores, expand, onClick = () => {} }) {
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const focusPlaceId = useStoreStore((state) => state.focusPlaceId)
@@ -32,14 +33,13 @@ export default function StoreList({ stores = [], onClick = () => {} }) {
     }
   }, [focusPlaceId])
 
-  if (stores.length === 0) {
-    return null
-  }
+  if (!stores) return null
+  if (stores.totalStores === 0) return <NoMatch />
 
   return (
     <>
       <StoreCount>{stores.totalStores} 間咖啡店</StoreCount>
-      <Container>
+      <Container expand={expand}>
         {stores?.stores?.map((store, i) => (
           <StoreCard
             ref={(el) => (storesRef.current[store.placeId] = el)}

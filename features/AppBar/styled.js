@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { devices } from 'constant/styled-theme'
+import { devices } from "constant/styled-theme"
 
 export const Container = styled.div`
   position: sticky;
@@ -28,24 +28,7 @@ export const NavbarContainer = styled.div`
   justify-content: space-between;
   padding: 0 60px;
   background: #ffffff;
-  border-bottom: 1px solid #E8E6E4;
-`
-
-export const NavLinks = styled.div`
-  display: flex;
-  gap: 1.3rem;
-  align-items: center;
-`
-
-export const GreyLink = styled.a`
-  color: #757575;
-  font-size: 20px;
-  margin-right: 1rem;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  border-bottom: 1px solid #e8e6e4;
 `
 
 export const Button = styled.button`
@@ -60,7 +43,7 @@ export const Button = styled.button`
 `
 
 export const CtaButton = styled(Button)`
-  color: #FFFFFF;
+  color: #ffffff;
   background-color: #222120;
 `
 

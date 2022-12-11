@@ -1,18 +1,18 @@
 import useSWR from "swr"
 import useLocationParamsStore from "./useLocationParamsStore"
+import { isEmpty } from "lodash"
 
 const useStoreSWR = () => {
   const params = useLocationParamsStore((state) => state.params)
-  const isStarted = !!params.lat
-  const { data, mutate } = useSWR(
-    isStarted ? ["stores/location", { ...params }] : null
-  )
+  const queryString = new URLSearchParams(params).toString()
+  const shouldFetch = !isEmpty(params)
+  const path = `stores/location?${queryString}`
+
+  const { data, isLoading } = useSWR(shouldFetch ? path : null)
 
   return {
     data,
-    isStarted,
-    mutate,
-    isLoading: isStarted && !data,
+    isLoading,
   }
 }
 

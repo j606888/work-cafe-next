@@ -1,8 +1,7 @@
 import StoreList from "features/StoreList"
 import useStoreStore from "stores/useStoreStore"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
-import NoMatch from "./NoMatch"
 import _ from "lodash"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
@@ -11,8 +10,10 @@ import useInitMap from "hooks/useInitMap"
 import { devices } from "constant/styled-theme"
 import ShortBlock from "./ShortBlock"
 import useStoreSWR from "stores/useStoreSWR"
+import SvgButton from "components/SvgButton"
 
 const LeftContainer = () => {
+  const [expand, setExpand] = useState(false)
   const { center, moveTo, updateWithPlaceId } = useControlMap({
     navigate: true,
   })
@@ -59,14 +60,20 @@ const LeftContainer = () => {
   }
 
   return (
-    <Container>
+    <Container expand={expand}>
       <ShortBlock
         onSearch={handleSearch}
         onFilterChange={handleFilterChange}
         showFilter={!placeId}
+        expand={expand}
+        onMapOpen={() => setExpand(false)}
       />
-      {data && data.length === 0 && <NoMatch />}
-      <StoreList stores={data || []} onClick={handleClickStore} />
+      <StoreList stores={data} onClick={handleClickStore} expand={expand} />
+      {!expand && (
+        <ExpandButton onClick={() => setExpand(true)}>
+          <SvgButton path="expand-btn" />
+        </ExpandButton>
+      )}
     </Container>
   )
 }
@@ -82,7 +89,7 @@ function _calCenter(data) {
 }
 
 const Container = styled.div`
-  width: 628px;
+  width: ${({ expand }) => (expand ? "100%" : "628px")};
   position: relative;
   background-color: #ffffff;
 
@@ -90,6 +97,34 @@ const Container = styled.div`
     width: 100%;
     z-index: 5;
     background-color: transparent;
+  }
+`
+
+const ExpandButton = styled.div`
+  width: 32px;
+  height: 60px;
+  background-color: #ffffff;
+  z-index: 15;
+  position: fixed;
+  bottom: calc((100vh - 120px) / 2);
+  left: 628px;
+  transform: translateY(50%);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: #f5f5f5;
+  }
+
+  @media ${devices.mobileXl} {
+    left: 50%;
+    bottom: 217px;
+    transform: translateX(-50%) rotate(-90deg);
+    z-index: -1;
   }
 `
 

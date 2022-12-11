@@ -61,12 +61,14 @@ const StoreDetail = () => {
           {store.address}
         </a>
       </ListItem>
-      <ListItem>
-        <img src="/global.svg" alt="global" />
-        <a href={store.website} target="_blank" rel="noreferrer">
-          {parseDomain(store.website)}
-        </a>
-      </ListItem>
+      {store.website && (
+        <ListItem>
+          <img src="/global.svg" alt="global" />
+          <a href={store.website} target="_blank" rel="noreferrer">
+            {parseDomain(store.website)}
+          </a>
+        </ListItem>
+      )}
       <ListItem>
         <img src="/phone.svg" alt="phone" />
         <span>{store.phone}</span>

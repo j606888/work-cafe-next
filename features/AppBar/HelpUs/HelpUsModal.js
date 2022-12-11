@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -16,6 +15,23 @@ const Item = styled.div`
   gap: 4px;
   align-items: center;
   margin-bottom: 4px;
+`
+
+const Link = styled.a`
+  color: #ffa233;
+`
+
+const Button = styled.button`
+  background-color: #ffa233;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffd9ab;
+  }
 `
 
 const HelpUsModal = ({ open, onClose }) => {
@@ -49,13 +65,13 @@ const HelpUsModal = ({ open, onClose }) => {
             <b>回報問題或建議：</b>
           </Item>
           如果使用中有發現任何 Bug, 或是你覺得有什麼很酷的點子都歡迎填寫
-          <a
+          <Link
             href="https://forms.gle/Y5XjmzsRW7pG7Wbu8"
             target="_blank"
             rel="noreferrer"
           >
             表單
-          </a>
+          </Link>
           來回報
         </DialogContentText>
         <DialogActions>

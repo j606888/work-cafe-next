@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
-import useKeyword from "stores/useKeyword"
 import TextInput from "./TextInput"
 import OptionList from "./OptionList"
 import useFocusIndex from "./useFocusIndex"
@@ -11,7 +10,6 @@ import SvgButton from "components/SvgButton"
 
 const Searchbar = ({ type = "landing" }) => {
   const [showOptions, setShowOptions] = useState(false)
-  const setKeyword = useKeyword((state) => state.setKeyword)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
   const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
@@ -23,7 +21,6 @@ const Searchbar = ({ type = "landing" }) => {
   }
 
   const handleCancel = () => {
-    setKeyword("")
     searchHints("")
     setShowOptions(false)
   }
@@ -35,10 +32,8 @@ const Searchbar = ({ type = "landing" }) => {
 
   const handleOptionClick = (name) => {
     setShowOptions(false)
-
     searchHints(name)
     handleSearch(name)
-    setKeyword(name)
   }
 
   function handleKeyDown(key) {
@@ -46,46 +41,31 @@ const Searchbar = ({ type = "landing" }) => {
 
     if (key === "ArrowUp") onArrowUp(hints?.length)
     if (key === "ArrowDown") onArrowDown(hints?.length)
-    if (key === "Enter") {
+    if (key === "Enter" && !!hints) {
       const answer = hints[focusedIndex]
       const name = answer?.name || keyword
       if (answer?.type === "district") {
         searchHints(answer.address + answer.name)
         handleSearch(answer.address + answer.name)
-        setKeyword(answer.address + answer.name)
       } else {
         searchHints(name)
         handleSearch(name)
-        setKeyword(name)
       }
       setShowOptions(false)
     }
   }
 
-  const textInput = (
-    <TextInput
-      keyword={keyword}
-      onChange={onChange}
-      onKeyDown={handleKeyDown}
-    />
-  )
-
   return (
     <Wrapper>
       <Container>
-        {type === "storeList" && (
-          <>
-            <SvgButton path="search-btn-outline" onClick={handleSearch} />
-            {textInput}
-            <SvgButton path="cancel-filled" onClick={handleCancel} />
-          </>
-        )}
-        {type === "landing" && (
-          <>
-            {textInput}
-            <SvgButton path="search-btn" onClick={handleCancel} />
-          </>
-        )}
+        <SearchBox type={type} onSearch={handleSearch} onCancel={handleCancel}>
+          <TextInput
+            keyword={keyword}
+            onChange={onChange}
+            onKeyDown={handleKeyDown}
+            onBlur={() => setShowOptions(false)}
+          />
+        </SearchBox>
       </Container>
       <OptionList
         show={showOptions}
@@ -95,6 +75,25 @@ const Searchbar = ({ type = "landing" }) => {
       />
     </Wrapper>
   )
+}
+
+const SearchBox = ({ type, children, onSearch, onCancel }) => {
+  if (type === "storeList")
+    return (
+      <>
+        <SvgButton path="search-btn-outline" onClick={onSearch} />
+        {children}
+        <SvgButton path="cancel-filled" onClick={onCancel} />
+      </>
+    )
+  if (type === "landing")
+    return (
+      <>
+        &nbsp;
+        {children}
+        <SvgButton path="search-btn" onClick={onSearch} />
+      </>
+    )
 }
 
 const Wrapper = styled.div`
