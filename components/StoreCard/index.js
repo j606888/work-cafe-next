@@ -45,7 +45,7 @@ const StoreCard = React.forwardRef(
           slides={images}
           width={276}
           height={276}
-          mWidth={180}
+          mWidth={154}
           mHeight={154}
         />
         <AbNiceBadge number={reviewsCount} />
@@ -83,7 +83,7 @@ const Container = styled.div`
   }
 
   @media ${devices.mobileXl} {
-    width: 180px;
+    width: 154px;
   }
 `
 

@@ -16,7 +16,7 @@ const ShortBlock = ({
   if (placeId) return null
 
   return (
-    <Container>
+    <Container expand={expand}>
       <SearchTool>
         <Searchbar type="storeList" />
         {showFilter && <SearchFilter onChange={onFilterChange} />}
@@ -71,6 +71,13 @@ const Container = styled.div`
     background-color: transparent;
     gap: 12px;
     padding: 14px 23px;
+
+    ${({ expand }) =>
+      expand &&
+      `
+      background-color: #ffffff;
+      top: 56px;
+    `}
   }
 `
 

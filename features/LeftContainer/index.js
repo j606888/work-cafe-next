@@ -68,7 +68,7 @@ const LeftContainer = () => {
         expand={expand}
         onMapOpen={() => setExpand(false)}
       />
-      <StoreList stores={data} onClick={handleClickStore} />
+      <StoreList stores={data} onClick={handleClickStore} expand={expand} />
       {!expand && (
         <ExpandButton onClick={() => setExpand(true)}>
           <SvgButton path="expand-btn" />
@@ -107,16 +107,24 @@ const ExpandButton = styled.div`
   z-index: 15;
   position: fixed;
   bottom: calc((100vh - 120px) / 2);
-  transform: translateY(50%);
   left: 628px;
+  transform: translateY(50%);
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
 
   &:hover {
     background: #f5f5f5;
+  }
+
+  @media ${devices.mobileXl} {
+    left: 50%;
+    bottom: 217px;
+    transform: translateX(-50%) rotate(-90deg);
+    z-index: -1;
   }
 `
 
