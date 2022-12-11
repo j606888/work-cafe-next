@@ -2,6 +2,10 @@ import React from "react"
 import styled from "styled-components"
 
 const Option = ({ result, onClick, focus }) => {
+  function onMouseDown(e) {
+    // Prevent TextInput trigger "onBlur" first, https://stackoverflow.com/a/57630197
+    e.preventDefault()
+  }
   const inner =
     result.type === "store" ? (
       <StoreOption {...result} />
@@ -10,7 +14,7 @@ const Option = ({ result, onClick, focus }) => {
     )
 
   return (
-    <Container onClick={onClick} focus={focus}>
+    <Container onClick={onClick} onMouseDown={onMouseDown} focus={focus}>
       {inner}
     </Container>
   )

@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
-import useKeyword from "stores/useKeyword"
 import TextInput from "./TextInput"
 import OptionList from "./OptionList"
 import useFocusIndex from "./useFocusIndex"
@@ -11,7 +10,6 @@ import SvgButton from "components/SvgButton"
 
 const Searchbar = ({ type = "landing" }) => {
   const [showOptions, setShowOptions] = useState(false)
-  const setKeyword = useKeyword((state) => state.setKeyword)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
   const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
@@ -23,7 +21,6 @@ const Searchbar = ({ type = "landing" }) => {
   }
 
   const handleCancel = () => {
-    setKeyword("")
     searchHints("")
     setShowOptions(false)
   }
@@ -38,7 +35,6 @@ const Searchbar = ({ type = "landing" }) => {
 
     searchHints(name)
     handleSearch(name)
-    setKeyword(name)
   }
 
   function handleKeyDown(key) {
@@ -52,11 +48,9 @@ const Searchbar = ({ type = "landing" }) => {
       if (answer?.type === "district") {
         searchHints(answer.address + answer.name)
         handleSearch(answer.address + answer.name)
-        setKeyword(answer.address + answer.name)
       } else {
         searchHints(name)
         handleSearch(name)
-        setKeyword(name)
       }
       setShowOptions(false)
     }
