@@ -16,14 +16,14 @@ const Option = ({ result, onClick, focus }) => {
   )
 }
 
-const CityOption = ({ name, storeCount }) => {
+const CityOption = ({ name, count }) => {
   return (
     <>
       <img src="/location_28.svg" alt="location_28" />
       <span>{name}</span>
       <StoreCount>
         <img src="/cafe.svg" alt="cafe" />
-        <span>{storeCount}</span>
+        <span>{count}</span>
       </StoreCount>
     </>
   )
