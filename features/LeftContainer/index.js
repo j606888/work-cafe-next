@@ -33,11 +33,11 @@ const LeftContainer = () => {
   )
   const { data } = useStoreSWR()
 
-  useEffect(() => {
-    if (placeIdFromUrl) {
-      setPlaceId(placeIdFromUrl)
-    }
-  }, [placeIdFromUrl, setPlaceId])
+  // useEffect(() => {
+  //   if (placeIdFromUrl) {
+  //     setPlaceId(placeIdFromUrl)
+  //   }
+  // }, [placeIdFromUrl])
 
   useEffect(() => {
     if (data && data.length > 0 && params.moveAfter) {

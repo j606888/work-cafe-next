@@ -11,16 +11,19 @@ import Reviews from "./Reviews/Reviews"
 import OpenTime from "./OpenTime/OpenTime"
 import useStoreStore from "stores/useStoreStore"
 import shallow from "zustand/shallow"
-import useControlMap from "hooks/useControlMap"
+import useStoreSWR from "stores/useStoreSWR"
+import useMapControl, { WIDTH } from "stores/useMapControl"
+import useHintSearch from "features/Searchbar/useHintSearch"
 
 const StoreDetail = () => {
   const [placeId, setPlaceId] = useStoreStore(
     (state) => [state.placeId, state.setPlaceId],
     shallow
   )
-  const { updateWithPlaceId } = useControlMap({
-    navigate: false,
-  })
+  const setWidth = useMapControl((state) => state.setWidth)
+  const { searchHints } = useHintSearch()
+
+  const { data: stores } = useStoreSWR()
   const { data: store, mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   function handleReviewSave() {
@@ -29,7 +32,11 @@ const StoreDetail = () => {
 
   const handleClose = () => {
     setPlaceId(null)
-    updateWithPlaceId()
+
+    if (!stores) {
+      searchHints("")
+      setWidth(WIDTH.fullWidth)
+    }
   }
 
   if (!store) return <Skeleton />
