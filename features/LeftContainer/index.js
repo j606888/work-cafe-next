@@ -2,7 +2,6 @@ import StoreList from "features/StoreList"
 import useStoreStore from "stores/useStoreStore"
 import { useEffect } from "react"
 import styled from "styled-components"
-import NoMatch from "./NoMatch"
 import _ from "lodash"
 import useControlMap from "hooks/useControlMap"
 import useLocationParamsStore from "stores/useLocationParamsStore"
@@ -65,8 +64,7 @@ const LeftContainer = () => {
         onFilterChange={handleFilterChange}
         showFilter={!placeId}
       />
-      {data && data.length === 0 && <NoMatch />}
-      <StoreList stores={data || []} onClick={handleClickStore} />
+      <StoreList stores={data} onClick={handleClickStore} />
     </Container>
   )
 }

@@ -46,7 +46,7 @@ const Searchbar = ({ type = "landing" }) => {
 
     if (key === "ArrowUp") onArrowUp(hints?.length)
     if (key === "ArrowDown") onArrowDown(hints?.length)
-    if (key === "Enter") {
+    if (key === "Enter" && !!hints) {
       const answer = hints[focusedIndex]
       const name = answer?.name || keyword
       if (answer?.type === "district") {

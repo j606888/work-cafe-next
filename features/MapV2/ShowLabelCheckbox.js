@@ -24,7 +24,7 @@ const ShowLabelCheckbox = ({ onChange = () => {} }) => {
 const Container = styled.div`
   position: absolute;
   right: 28px;
-  top: 28px;
+  top: 32px;
   padding-left: 0.7rem;
   border: 1px solid #e8e6e4;
   border-radius: 20px;
