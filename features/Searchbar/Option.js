@@ -1,25 +1,6 @@
 import React from "react"
 import styled from "styled-components"
 
-const Option = ({ result, onClick, focus }) => {
-  function onMouseDown(e) {
-    // Prevent TextInput trigger "onBlur" first, https://stackoverflow.com/a/57630197
-    e.preventDefault()
-  }
-  const inner =
-    result.type === "store" ? (
-      <StoreOption {...result} />
-    ) : (
-      <CityOption {...result} />
-    )
-
-  return (
-    <Container onClick={onClick} onMouseDown={onMouseDown} focus={focus}>
-      {inner}
-    </Container>
-  )
-}
-
 const CityOption = ({ name, count }) => {
   return (
     <>
@@ -40,6 +21,37 @@ const StoreOption = ({ name, address }) => {
       <span>{name}</span>
       <AddressSpan>{address}</AddressSpan>
     </>
+  )
+}
+
+const DistrictOption = ({ name, address }) => {
+  return (
+    <>
+      <img src="/location_28.svg" alt="location_28" />
+      <span>{name}</span>
+      <AddressSpan>{address}</AddressSpan>
+    </>
+  )
+}
+
+const Inners = {
+  store: StoreOption,
+  district: DistrictOption,
+  city: CityOption,
+}
+
+const Option = ({ result, onClick, focus }) => {
+  function onMouseDown(e) {
+    // Prevent TextInput trigger "onBlur" first, https://stackoverflow.com/a/57630197
+    e.preventDefault()
+  }
+
+  const Inner = Inners[result.type]
+
+  return (
+    <Container onClick={onClick} onMouseDown={onMouseDown} focus={focus}>
+      <Inner {...result} />
+    </Container>
   )
 }
 
