@@ -47,7 +47,7 @@ const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
     <>
       <Container>
         <BackButton onClick={onClick}>
-          <img src="/back-btn.svg" alt="back-btn" />
+          <img src="/arrow-left.svg" alt="arrow-left" />
           <span>搜尋結果</span>
         </BackButton>
         <ButtonGroup>

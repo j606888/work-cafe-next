@@ -1,67 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { devices } from "constant/styled-theme"
-import { Dialog } from "@mui/material"
-import CloseIcon from "@mui/icons-material/Close"
+import { Dialog, ImageList, ImageListItem } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
-
-const DialogContainer = styled.div`
-  display: flex;
-  height: 80vh;
-
-  @media ${devices.mobileXl} {
-    height: 100vh;
-  }
-`
-
-const Slider = styled.div`
-  min-height: 100%;
-  overflow: auto;
-  background: #333;
-`
-
-const BoxBox = styled.div`
-  width: 320px;
-  background-color: #fff;
-  cursor: pointer;
-
-  @media ${devices.mobileXl} {
-    width: 100%;
-    max-height: 100%;
-    cursor: none;
-  }
-`
-
-const FullImage = styled.div`
-  background-color: #000;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media ${devices.mobileXl} {
-    display: none;
-  }
-`
-
-const Img = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-`
-
-const StoreName = styled.div`
-  background-color: #fff;
-  position: sticky;
-  left: 0;
-  top: 0;
-  padding: .8rem;
-  text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-`
+import SvgButton from "components/SvgButton"
 
 const ImageCanvas = ({ photos, open, onClose, name }) => {
-  const [imageIndex, setImageIndex] = useState(0)
   const fullScreen = useMediaQuery(devices.mobileXl)
 
   return (
@@ -72,32 +16,124 @@ const ImageCanvas = ({ photos, open, onClose, name }) => {
       maxWidth="lg"
       fullScreen={fullScreen}
     >
+      <Header>
+        <h3>{name}</h3>
+        <MobileBackButton path="arrow-left" onClick={onClose} />
+        <ButtonGroup>
+          <Button>
+            <img src="/like.svg" alt="like" />
+            <span>收藏</span>
+          </Button>
+          <Button>
+            <img src="/share.svg" alt="share" />
+            <span>分享</span>
+          </Button>
+          <SvgButton path="cancel" onClick={onClose} />
+        </ButtonGroup>
+      </Header>
       <DialogContainer>
-        <Slider>
-          <StoreName>{name}</StoreName>
-          {photos.map((photo, index) => (
-            <BoxBox key={index} onClick={() => setImageIndex(index)}>
-              <Img src={photo} alt="slide" />
-            </BoxBox>
+        <ImageList
+          variant="masonry"
+          cols={fullScreen ? 1 : 2}
+          gap={8}
+          sx={{ marginTop: 0 }}
+        >
+          {photos.map((item) => (
+            <ImageListItem key={item}>
+              <img src={item} alt={item} loading="lazy" />
+            </ImageListItem>
           ))}
-        </Slider>
-        <FullImage>
-          <Img src={photos[imageIndex]} alt="fake_image" />
-        </FullImage>
-        <CloseIcon
-          sx={{
-            color: "#999",
-            position: "absolute",
-            top: 12,
-            right: 12,
-            cursor: "pointer",
-            zIndex: 10,
-          }}
-          onClick={onClose}
-        />
+        </ImageList>
       </DialogContainer>
     </Dialog>
   )
 }
 
+const MobileBackButton = styled(SvgButton)`
+  display: none;
+
+  @media ${devices.mobileXl} {
+    display: block;
+  }
+`
+
+const Header = styled.div`
+  height: 72px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 72px;
+  padding-right: 22px;
+  border-bottom: 1px solid #e8e6e4;
+
+  h3 {
+    font-weight: 700;
+    font-size: 20px;
+    color: #222120;
+    max-width: 815px;
+  }
+
+  @media ${devices.mobileXl} {
+    padding: 0 16px;
+    min-height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+
+    h3 {
+      display: none;
+    }
+  }
+`
+
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  @media ${devices.mobileXl} {
+    & > :last-child {
+      display: none;
+    }
+
+    gap: 0;
+  }
+`
+
+const DialogContainer = styled.div`
+  padding: 0 72px;
+
+  @media ${devices.mobileXl} {
+    padding: 0;
+  }
+`
+
+const Button = styled.button`
+  width: 88px;
+  height: 44px;
+  align-items: center;
+  border: 1px solid #e8e6e4;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  text-decoration: none;
+  color: #222120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media ${devices.mobileXl} {
+    border: none;
+    width: auto;
+    height: auto;
+
+    span {
+      display: none;
+    }
+  }
+`
 export default ImageCanvas
