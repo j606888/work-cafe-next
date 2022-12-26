@@ -3,13 +3,102 @@ import RatingStars from "components/RatingStars"
 import React from "react"
 import styled from "styled-components"
 import { devices } from "constant/styled-theme"
+import { useState } from "react"
+import { useRef } from "react"
+import { useEffect } from "react"
 
+const GoogleReviewCard = ({
+  authorName,
+  rating,
+  relativeTimeDescription,
+  text,
+}) => {
+  const [showMore, setShowMore] = useState(true)
+  const [showButton, setShowButton] = useState(false)
+  const pElement = useRef(null)
+
+  const toggleShowMore = () => {
+    setShowMore(!showMore)
+  }
+
+  useEffect(() => {
+    if (pElement.current.offsetHeight > 55) {
+      setShowButton(true)
+    }
+    setShowMore(false)
+  }, [])
+
+  return (
+    <>
+      <Container>
+        <Avatar>{authorName[0]}</Avatar>
+        <Content>
+          <h6>{authorName}</h6>
+          <CreatedAtSpan>{relativeTimeDescription}</CreatedAtSpan>
+          <RatingStars rating={rating} showRate={false} />
+          <P showMore={showMore} ref={pElement}>
+            {text}
+          </P>
+          {showButton && (
+            <ShowMoreButton onClick={toggleShowMore}>
+              {showMore ? (
+                <>
+                  <span>顯示更少</span>
+                  <img src="/arrows/up-small.svg" alt="down-arrow" />
+                </>
+              ) : (
+                <>
+                  <span>顯示更多</span>
+                  <img src="/arrows/down-small.svg" alt="down-arrow" />
+                </>
+              )}
+            </ShowMoreButton>
+          )}
+        </Content>
+      </Container>
+    </>
+  )
+}
 
 const Container = styled.div`
   display: flex;
   gap: 1rem;
   align-items: flex-start;
   margin: 2rem 0;
+`
+
+const ShowMoreButton = styled.div`
+  cursor: pointer;
+  color: #42403f;
+  text-decoration-line: underline;
+  font-size: 14px;
+  display: flex;
+  gap: 4px;
+`
+
+const P = styled.p`
+  font-size: 14px;
+  line-height: 1.3em;
+  white-space: pre-line;
+  overflow: hidden;
+  max-height: ${({ showMore }) => (showMore ? "none" : "3.9em")};
+  text-overflow: ellipsis;
+
+  @media ${devices.mobileXl} {
+    font-size: 12px;
+  }
+`
+
+const CreatedAtSpan = styled.span`
+  span {
+    font-size: 12px;
+    color: #222120;
+    margin-bottom: 8px;
+  }
+
+  @media ${devices.mobileXl} {
+    font-size: 10px;
+  }
 `
 
 const Content = styled.div`
@@ -21,15 +110,7 @@ const Content = styled.div`
     font-size: 16px;
     font-weight: 500;
     margin: 0;
-  }
-
-  span {
-    font-size: 12px;
-  }
-
-  p {
-    font-size: 14px;
-    white-space: pre-line;
+    color: #222120;
   }
 
   @media ${devices.mobileXl} {
@@ -37,45 +118,8 @@ const Content = styled.div`
       font-size: 14px;
     }
 
-    span {
-      font-size: 10px;
-    }
-
-    p {
-      font-size: 12px;
-    }
-
     max-width: calc(100% - 40px);
   }
 `
-
-const Main = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`
-const GoogleReviewCard = ({
-  authorName,
-  authorUrl,
-  rating,
-  relativeTimeDescription,
-  text,
-}) => {
-  return (
-    <>
-      <Container>
-        <Avatar>{authorName[0]}</Avatar>
-        <Content>
-          <Main>
-            <h6>{authorName}</h6>
-            <RatingStars rating={rating} showRate={false} />
-          </Main>
-          <span>{relativeTimeDescription}</span>
-          <p>{text}</p>
-        </Content>
-      </Container>
-    </>
-  )
-}
 
 export default GoogleReviewCard
