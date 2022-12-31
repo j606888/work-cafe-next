@@ -6,6 +6,7 @@ import Head from "next/head"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 import useStoreStore from "stores/useStoreStore"
 import StoreDetail from "features/StoreDetail"
+import { useEffect } from "react"
 
 export default function MapPage() {
   return (
@@ -21,11 +22,15 @@ export default function MapPage() {
 }
 
 const DisplayComponent = () => {
-  const placeId = useStoreStore(state => state.placeId)
+  const placeId = useStoreStore((state) => state.placeId)
   const { width } = useMapControl()
   const isLanding = width === WIDTH.fullWidth
 
-  if (placeId) return <StoreDetail />
+  useEffect(() => {
+    if (placeId) window.scrollTo({ top: 0 })
+  }, [placeId])
+
+  if (placeId) return <StoreDetail key={placeId} />
   if (isLanding) return <LandingSearch />
   return <LeftContainer />
 }

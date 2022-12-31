@@ -102,19 +102,22 @@ const MapV2 = ({ navigate = true }) => {
             }}
           />
         )}
-        {stores?.stores?.map((store) => (
-          <StoreMarker
-            key={store.placeId}
-            store={store}
-            isBookmark={store.bookmark}
-            showLabel={showLabel}
-            isFocus={
-              store.placeId === placeId || store.placeId === focusPlaceId
-            }
-            isBounce={store.placeId === bouncePlaceId}
-            onClick={handleClickMarker}
-          />
-        ))}
+        {stores?.stores?.map((store) => {
+          const isFocus =
+            store.placeId === placeId ||
+            (fullScreen && store.placeId === focusPlaceId)
+          return (
+            <StoreMarker
+              key={store.placeId}
+              store={store}
+              isBookmark={store.bookmark}
+              showLabel={showLabel}
+              isFocus={isFocus}
+              isBounce={store.placeId === bouncePlaceId}
+              onClick={handleClickMarker}
+            />
+          )
+        })}
         {bookmarkStores?.map((store) => (
           <StoreMarker
             key={store.placeId}
