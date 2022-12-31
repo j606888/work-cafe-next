@@ -39,7 +39,12 @@ const StoreDetail = () => {
     }
   }
 
-  if (!store) return <Skeleton />
+  if (!store)
+    return (
+      <Container>
+        <Skeleton />
+      </Container>
+    )
 
   return (
     <Container>

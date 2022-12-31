@@ -114,11 +114,6 @@ const ExpandButton = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    background: #f5f5f5;
-  }
 
   @media ${devices.mobileXl} {
     left: 50%;

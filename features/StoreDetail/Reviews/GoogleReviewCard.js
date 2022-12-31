@@ -90,11 +90,9 @@ const P = styled.p`
 `
 
 const CreatedAtSpan = styled.span`
-  span {
-    font-size: 12px;
-    color: #222120;
-    margin-bottom: 8px;
-  }
+  font-size: 12px;
+  color: #222120;
+  margin-bottom: 8px;
 
   @media ${devices.mobileXl} {
     font-size: 10px;
