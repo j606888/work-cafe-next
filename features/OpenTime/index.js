@@ -5,7 +5,7 @@ import RadioLabel from "features/OpenTime/Menu/RadioLabel"
 import { Box } from "@mui/system"
 import WeekHourPicker from "./WeekHourPicker"
 import OpenButton from "./OpenButton"
-import { OPEN_TYPES } from "constant/openTime"
+import { OPEN_TYPES } from "constants/openTime"
 
 const INITIAL_STATE = {
   openType: OPEN_TYPES.NONE,
@@ -19,14 +19,14 @@ function reducer(state, action) {
       if (action.payload === OPEN_TYPES.OPEN_AT) {
         return {
           openType: action.payload,
-          openWeek: '0',
-          openHour: '99'
+          openWeek: "0",
+          openHour: "99",
         }
       } else {
         return {
           openType: action.payload,
           openWeek: null,
-          openHour: null
+          openHour: null,
         }
       }
     case "CHANGE_WEEK":

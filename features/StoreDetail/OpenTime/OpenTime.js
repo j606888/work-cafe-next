@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
   const displayText = isOpenNow ? "營業中" : "休息中"

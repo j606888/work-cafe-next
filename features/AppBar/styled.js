@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 export const Container = styled.div`
   position: sticky;

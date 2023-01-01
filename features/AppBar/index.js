@@ -3,7 +3,7 @@ import { Container } from "./styled"
 import Navbar from "./Navbar"
 import HelpUs from "./HelpUs/HelpUs"
 import { useMediaQuery } from "@mui/material"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import MobileNavbar from "./MobileNavbar"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 

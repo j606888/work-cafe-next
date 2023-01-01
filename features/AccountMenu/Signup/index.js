@@ -8,8 +8,8 @@ import { signup } from "api/auth"
 import { Container, Form, CloseButton } from "./styled"
 import useUserStore from "stores/useUserStore"
 import { useMediaQuery } from "@mui/material"
-import CloseIcon from '@mui/icons-material/Close';
-import { devices } from 'constant/styled-theme'
+import CloseIcon from "@mui/icons-material/Close"
+import { devices } from "constants/styled-theme"
 
 const FormikTextField = ({ label, formik, type = "text" }) => {
   const showError = !!(formik.touched[label] && formik.errors[label])
@@ -67,7 +67,7 @@ const Signup = ({ open, onClose, onChangeMode }) => {
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
       login(accessToken)
-      onClose({  deep: true})
+      onClose({ deep: true })
     },
   })
 

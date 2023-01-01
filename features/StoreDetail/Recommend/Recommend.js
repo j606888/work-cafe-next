@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 const Recommend = ({ good = 6, bad = 1 }) => {
   return (

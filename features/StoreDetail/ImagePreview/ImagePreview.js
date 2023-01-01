@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import ImageCanvas from "./ImageCanvas"
 
 const Container = styled.div`

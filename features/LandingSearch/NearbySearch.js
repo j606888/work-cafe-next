@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 import useControlMap from "hooks/useControlMap"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import useSearchStores from "hooks/useSearchStores"
 
 const NearbySearch = () => {

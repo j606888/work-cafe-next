@@ -1,7 +1,7 @@
 import { FormControlLabel, Switch } from "@mui/material"
 import React, { useState } from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 const ShowLabelCheckbox = ({ onChange = () => {} }) => {
   const [checked, setChecked] = useState(true)

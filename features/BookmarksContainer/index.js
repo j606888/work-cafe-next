@@ -1,7 +1,7 @@
 import StoreList from "features/StoreList"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import useSWR from "swr"
 import StoreDetail from "features/StoreDetail"
 import useStoreStore from "stores/useStoreStore"

@@ -3,7 +3,7 @@ import { useState } from "react"
 import useStoreStore from "stores/useStoreStore"
 import useStoreSWR from "stores/useStoreSWR"
 import HelpUsModal from "./HelpUsModal"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import styled from "styled-components"
 
 const HEIGHT = {

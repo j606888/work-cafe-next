@@ -17,12 +17,12 @@ import useMapStoreV2 from "stores/useMapStoreV2"
 import { useMediaQuery } from "@mui/material"
 import useUserStore from "stores/useUserStore"
 import useStoreSWR from "stores/useStoreSWR"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import shallow from "zustand/shallow"
 import useSearchStores from "hooks/useSearchStores"
 
 const StoreMap = ({ navigate = true }) => {
-  const { isReady, mapSettings } = useInitMap()
+  const { mapSettings } = useInitMap()
   const { width } = useMapControl()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } =
     useControlMap({ navigate })
@@ -79,7 +79,7 @@ const StoreMap = ({ navigate = true }) => {
 
   // Weird iOS bug, if map exist, will scroll to top
   // if (fullScreen && placeId) return null
-  if (!isReady) return <Skeleton />
+  // if (!isReady) return <Skeleton />
 
   return (
     <Container width={width}>

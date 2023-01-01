@@ -1,7 +1,7 @@
 import SearchFilter from "features/SearchFilter"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import useStoreStore from "stores/useStoreStore"
 import Searchbar from "features/Searchbar"
 import SvgButton from "components/SvgButton"

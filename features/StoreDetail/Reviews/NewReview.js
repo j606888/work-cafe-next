@@ -2,7 +2,7 @@ import ReviewForm from "features/ReviewForm"
 import React from "react"
 import { useState } from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import useSWR from "swr"
 import WorkCafeReviews from "./WorkCafeReviews/WorkCafeReviews"
 import ReviewApi from "api/review"
@@ -20,7 +20,7 @@ const Container = styled.div`
 `
 
 const FakeTextBox = styled.div`
-  border: 1px solid #AFAAA3;
+  border: 1px solid #afaaa3;
   height: 44px;
   display: flex;
   align-items: center;
@@ -28,7 +28,7 @@ const FakeTextBox = styled.div`
   padding: 0 12px;
   border-radius: 12px;
   cursor: pointer;
-  color: #42403F;
+  color: #42403f;
   font-style: normal;
   font-size: 14px;
   line-height: 19px;
@@ -41,8 +41,10 @@ const FakeTextBox = styled.div`
 
 const NewReview = ({ placeId, name, onSave }) => {
   const [open, setOpen] = useState(false)
-  const user = useUserStore(state => state.user)
-  const { data: myReview, mutate } = useSWR(user ? `/stores/${placeId}/reviews/me` : null)
+  const user = useUserStore((state) => state.user)
+  const { data: myReview, mutate } = useSWR(
+    user ? `/stores/${placeId}/reviews/me` : null
+  )
 
   async function handleSave() {
     setOpen(false)
@@ -82,7 +84,7 @@ const NewReview = ({ placeId, name, onSave }) => {
         )}
       </Container>
       <ReviewForm
-        key={myReview?.id || 'review-form'}
+        key={myReview?.id || "review-form"}
         myReview={myReview}
         placeId={placeId}
         open={open}

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 export const Form = styled.form`
   background-color: #fff;
@@ -10,7 +10,7 @@ export const Form = styled.form`
   h3 {
     padding: 1rem;
     text-align: center;
-    background-color: #1B72E8;
+    background-color: #1b72e8;
     color: #fff;
     margin: 0;
   }
@@ -24,7 +24,7 @@ export const Scroll = styled.div`
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: .8rem;
+  gap: 0.8rem;
   max-height: calc(80vh - 130px);
   overflow: scroll;
 
