@@ -68,7 +68,7 @@ const LeftContainer = () => {
         expand={expand}
         onMapOpen={() => setExpand(false)}
       />
-      <StoreList stores={data} onClick={handleClickStore} expand={expand} />
+      <StoreList onClick={handleClickStore} expand={expand} />
       {!expand && (
         <ExpandButton onClick={() => setExpand(true)}>
           <SvgButton path="expand-btn" />

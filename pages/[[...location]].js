@@ -1,6 +1,6 @@
 import AppBar from "features/AppBar"
 import LeftContainer from "features/LeftContainer"
-import MapV2 from "features/MapV2"
+import StoreMap from "features/StoreMap"
 import LandingSearch from "features/LandingSearch"
 import Head from "next/head"
 import useMapControl, { WIDTH } from "stores/useMapControl"
@@ -15,7 +15,7 @@ export default function MapPage() {
         <title>Work Cafe</title>
       </Head>
       <AppBar />
-      <MapV2 />
+      <StoreMap />
       <DisplayComponent />
     </>
   )

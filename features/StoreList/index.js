@@ -3,8 +3,10 @@ import { Container, StoreCount } from "./styled"
 import useStoreStore from "stores/useStoreStore"
 import StoreCard from "components/StoreCard"
 import NoMatch from "features/LeftContainer/NoMatch"
+import useSearchStores from "hooks/useSearchStores"
 
-export default function StoreList({ stores, expand, onClick = () => {} }) {
+export default function StoreList({ expand, onClick = () => {} }) {
+  const { data: stores } = useSearchStores()
   const setPlaceId = useStoreStore((state) => state.setPlaceId)
   const placeId = useStoreStore((state) => state.placeId)
   const focusPlaceId = useStoreStore((state) => state.focusPlaceId)

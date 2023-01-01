@@ -19,8 +19,9 @@ import useUserStore from "stores/useUserStore"
 import useStoreSWR from "stores/useStoreSWR"
 import { devices } from "constant/styled-theme"
 import shallow from "zustand/shallow"
+import useSearchStores from "hooks/useSearchStores"
 
-const MapV2 = ({ navigate = true }) => {
+const StoreMap = ({ navigate = true }) => {
   const { isReady, mapSettings } = useInitMap()
   const { width } = useMapControl()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } =
@@ -47,6 +48,7 @@ const MapV2 = ({ navigate = true }) => {
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
   const { data: bookmarkStores } = useSWR(isLogin ? `/user-bookmarks` : null)
   const { data: stores, isLoading } = useStoreSWR()
+  const { data: storesData } = useSearchStores()
 
   function handleClickMarker(placeId) {
     if (fullScreen) {
@@ -102,10 +104,12 @@ const MapV2 = ({ navigate = true }) => {
             }}
           />
         )}
-        {stores?.stores?.map((store) => {
+        {storesData?.stores?.map((store) => {
           const isFocus =
             store.placeId === placeId ||
+            store.placeId === bouncePlaceId ||
             (fullScreen && store.placeId === focusPlaceId)
+
           return (
             <StoreMarker
               key={store.placeId}
@@ -140,7 +144,7 @@ const MapV2 = ({ navigate = true }) => {
   )
 }
 
-export default MapV2
+export default StoreMap
 
 const Container = styled.div`
   position: fixed;

@@ -1,25 +1,25 @@
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import useMapControl, { WIDTH } from "stores/useMapControl"
-import useLocationParamsStore from "stores/useLocationParamsStore"
 import useControlMap from "hooks/useControlMap"
 import { devices } from "constant/styled-theme"
+import useSearchStores from "hooks/useSearchStores"
 
 const NearbySearch = () => {
   const { setWidth } = useMapControl()
-  const { searchHere } = useLocationParamsStore()
   const { map } = useControlMap()
   const myPositionRef = useRef(null)
+  const { search } = useSearchStores()
 
   const handleClick = async () => {
     try {
       if (!myPositionRef.current) {
-        myPositionRef.current = await getCurrentPosition()
+        myPositionRef.current = await _getCurrentPosition()
       }
-      setWidth(WIDTH.withInfoBox)
       map.panTo(myPositionRef.current)
       map.setZoom(15)
-      searchHere(myPositionRef.current)
+      search(myPositionRef.current)
+      setWidth(WIDTH.withInfoBox)
     } catch (err) {
       handleError(err)
     }
@@ -30,7 +30,7 @@ const NearbySearch = () => {
       const already = await alreadyGranted()
       if (!already) return
 
-      const latLng = await getCurrentPosition()
+      const latLng = await _getCurrentPosition()
       myPositionRef.current = latLng
     }
     getPosition()
@@ -52,7 +52,7 @@ async function alreadyGranted() {
   return permission.state === "granted"
 }
 
-async function getCurrentPosition() {
+async function _getCurrentPosition() {
   const position = await new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject)
   })

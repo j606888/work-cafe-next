@@ -7,17 +7,23 @@ import OptionList from "./OptionList"
 import useFocusIndex from "./useFocusIndex"
 import useHintSearch from "./useHintSearch"
 import SvgButton from "components/SvgButton"
+import useSearchStores from "hooks/useSearchStores"
+import useMapControl, { WIDTH } from "stores/useMapControl"
 
 const Searchbar = ({ type = "landing" }) => {
+  const { setWidth } = useMapControl()
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
   const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
+  const { search } = useSearchStores()
   const { map } = useControlMap()
 
   const handleSearch = (keyword) => {
     const latLng = map.center.toJSON()
-    keywordSearch({ ...latLng, keyword, limit: 30 })
+    search({ ...latLng, keyword, limit: 30 })
+    // keywordSearch()
+    setWidth(WIDTH.withInfoBox)
   }
 
   const handleCancel = () => {
@@ -106,7 +112,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: 52px;
-  padding: 10px;
+  padding: 0 8px 0 10px;
   border: 1px solid #afaaa3;
   border-radius: 20px;
   justify-content: space-between;
