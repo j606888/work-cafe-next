@@ -3,22 +3,27 @@ import styled from "styled-components"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 import useControlMap from "hooks/useControlMap"
 import { devices } from "constants/styled-theme"
-import useSearchStores from "hooks/useSearchStores"
+import { useRouter } from "next/router"
+import usePanelTypeStore from "stores/usePanelTypeStore"
 
 const NearbySearch = () => {
   const { setWidth } = useMapControl()
   const { map } = useControlMap()
   const myPositionRef = useRef(null)
-  const { search } = useSearchStores()
+  const router = useRouter()
+  const setPanelType = usePanelTypeStore(state => state.setPanelType)
 
   const handleClick = async () => {
     try {
+      setPanelType('STORE_LIST')
       if (!myPositionRef.current) {
         myPositionRef.current = await _getCurrentPosition()
       }
       map.panTo(myPositionRef.current)
       map.setZoom(15)
-      search(myPositionRef.current)
+      router.push({
+        query: myPositionRef.current,
+      })
       setWidth(WIDTH.withInfoBox)
     } catch (err) {
       handleError(err)
