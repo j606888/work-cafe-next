@@ -1,10 +1,9 @@
 import styled, { css } from "styled-components"
-import { devices } from "constants/styled-theme"
 
 export const Container = styled.div`
-  position: sticky;
+  /* position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 10; */
 `
 
 export const Link = styled.a`

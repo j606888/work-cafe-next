@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
-import useMapControl, { WIDTH } from "stores/useMapControl"
 import useControlMap from "hooks/useControlMap"
 import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
 import usePanelTypeStore from "stores/usePanelTypeStore"
 
 const NearbySearch = () => {
-  const { setWidth } = useMapControl()
   const { map } = useControlMap()
   const myPositionRef = useRef(null)
   const router = useRouter()
@@ -15,16 +13,16 @@ const NearbySearch = () => {
 
   const handleClick = async () => {
     try {
-      setPanelType('STORE_LIST')
       if (!myPositionRef.current) {
         myPositionRef.current = await _getCurrentPosition()
       }
       map.panTo(myPositionRef.current)
       map.setZoom(15)
+      map.panBy(-324, 0)
       router.push({
         query: myPositionRef.current,
       })
-      setWidth(WIDTH.withInfoBox)
+      setPanelType("STORE_LIST")
     } catch (err) {
       handleError(err)
     }

@@ -1,7 +1,4 @@
-import { useMediaQuery } from "@mui/material"
 import { useState } from "react"
-import useStoreStore from "stores/useStoreStore"
-import useStoreSWR from "stores/useStoreSWR"
 import HelpUsModal from "./HelpUsModal"
 import { devices } from "constants/styled-theme"
 import styled from "styled-components"
@@ -13,17 +10,6 @@ const HEIGHT = {
 
 const HelpUs = () => {
   const [open, setOpen] = useState(false)
-  const { data: stores } = useStoreSWR()
-  const placeId = useStoreStore((state) => state.placeId)
-  const fullScreen = useMediaQuery(devices.mobileXl)
-  const { isLoading } = useStoreSWR()
-  const hide = _calcHide(stores, placeId, fullScreen, isLoading)
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  if (hide) return null
 
   return (
     <>
@@ -31,14 +17,9 @@ const HelpUs = () => {
         <span>我們需要你的幫助，讓這個網站更好用！</span>
         <HelpButton onClick={() => setOpen(true)}>怎麼幫？</HelpButton>
       </Container>
-      <HelpUsModal open={open} onClose={handleClose} />
+      <HelpUsModal open={open} onClose={() => setOpen(false)} />
     </>
   )
-}
-
-function _calcHide(stores, placeId, fullScreen, isLoading) {
-  if (!fullScreen) return false
-  return !!(placeId || (stores && stores.length > 0) || isLoading)
 }
 
 const Container = styled.div`

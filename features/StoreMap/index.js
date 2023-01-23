@@ -1,12 +1,10 @@
 import { Marker } from "@react-google-maps/api"
 import SearchHere from "components/Button/SearchHere"
-import Skeleton from "components/Skeleton"
 import GoogleMap from "features/GoogleMap"
 import StoreMarker from "features/GoogleMap/StoreMarker"
 import MyLocation from "features/MyLocation"
 import useInitMap from "hooks/useInitMap"
 import useStoreStore from "stores/useStoreStore"
-import useMapControl, { WIDTH } from "stores/useMapControl"
 import { useState } from "react"
 import useSWR from "swr"
 import ShowLabelCheckbox from "./ShowLabelCheckbox"
@@ -16,14 +14,14 @@ import useLocationParamsStore from "stores/useLocationParamsStore"
 import useMapStoreV2 from "stores/useMapStoreV2"
 import { useMediaQuery } from "@mui/material"
 import useUserStore from "stores/useUserStore"
-import useStoreSWR from "stores/useStoreSWR"
 import { devices } from "constants/styled-theme"
 import shallow from "zustand/shallow"
 import useSearchStores from "hooks/useSearchStores"
+import usePanelTypeStore from "stores/usePanelTypeStore"
 
 const StoreMap = ({ navigate = true }) => {
+  const panelType = usePanelTypeStore(state => state.panelType)
   const { mapSettings } = useInitMap()
-  const { width } = useMapControl()
   const { handleLoad, handleIdle, moveTo, center, updateWithPlaceId } =
     useControlMap({ navigate })
   const searchHere = useLocationParamsStore((state) => state.searchHere)
@@ -47,8 +45,7 @@ const StoreMap = ({ navigate = true }) => {
 
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
   const { data: bookmarkStores } = useSWR(isLogin ? `/user-bookmarks` : null)
-  const { data: stores, isLoading } = useStoreSWR()
-  const { data: storesData } = useSearchStores()
+  const { data: storesData, isLoading } = useSearchStores()
 
   function handleClickMarker(placeId) {
     if (fullScreen) {
@@ -82,8 +79,8 @@ const StoreMap = ({ navigate = true }) => {
   // if (!isReady) return <Skeleton />
 
   return (
-    <Container width={width}>
-      {width === WIDTH.withInfoBox && (
+    <Container>
+      {panelType !== "INIT" && (
         <>
           <MyLocationContainer onClick={handleFindMe} />
           <SearchHereContainer onClick={handleSearchHere} loading={isLoading} />
@@ -131,7 +128,7 @@ const StoreMap = ({ navigate = true }) => {
             onClick={handleClickMarker}
           />
         ))}
-        {(!stores || stores.stores?.length === 0) && store && (
+        {(!storesData || storesData.stores?.length === 0) && store && (
           <StoreMarker
             key={store.placeId}
             store={store}
@@ -150,9 +147,7 @@ const Container = styled.div`
   position: fixed;
   right: 0;
   top: 120px;
-  /* width: calc(100% - 628px); */
-  /* width: 100%; */
-  width: ${({ width }) => width};
+  width: 100%;
   height: calc(100vh - 104px);
 
   .labels {

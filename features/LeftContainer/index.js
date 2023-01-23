@@ -9,10 +9,10 @@ import shallow from "zustand/shallow"
 import useInitMap from "hooks/useInitMap"
 import { devices } from "constants/styled-theme"
 import ShortBlock from "./ShortBlock"
-import useStoreSWR from "stores/useStoreSWR"
 import SvgButton from "components/SvgButton"
 
 const LeftContainer = () => {
+  const { map } = useControlMap()
   const [expand, setExpand] = useState(false)
   const { center, moveTo, updateWithPlaceId } = useControlMap({
     navigate: true,
@@ -31,7 +31,6 @@ const LeftContainer = () => {
     (state) => [state.placeId, state.setPlaceId],
     shallow
   )
-  const { data } = useStoreSWR()
 
   // useEffect(() => {
   //   if (placeIdFromUrl) {
@@ -39,16 +38,17 @@ const LeftContainer = () => {
   //   }
   // }, [placeIdFromUrl])
 
-  useEffect(() => {
-    if (data && data.length > 0 && params.moveAfter) {
-      const latLng = _calCenter(data)
-      moveTo({ latLng })
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data && data.length > 0 && params.moveAfter) {
+  //     const latLng = _calCenter(data)
+  //     moveTo({ latLng })
+  //   }
+  // }, [data])
 
   function handleSearch(keyword) {
+    console.log(map)
     setPlaceId(null)
-    keywordSearch({ ...center, keyword, limit: 30 })
+    // keywordSearch({ ...center, keyword, limit: 30 })
   }
   function handleClickStore({ placeId, lat, lng }) {
     setPlaceId(placeId)

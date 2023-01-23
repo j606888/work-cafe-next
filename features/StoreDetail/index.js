@@ -11,9 +11,9 @@ import Reviews from "./Reviews/Reviews"
 import OpenTime from "./OpenTime/OpenTime"
 import useStoreStore from "stores/useStoreStore"
 import shallow from "zustand/shallow"
-import useStoreSWR from "stores/useStoreSWR"
 import useMapControl, { WIDTH } from "stores/useMapControl"
 import useHintSearch from "features/Searchbar/useHintSearch"
+import useSearchStores from "hooks/useSearchStores"
 
 const StoreDetail = () => {
   const [placeId, setPlaceId] = useStoreStore(
@@ -23,7 +23,7 @@ const StoreDetail = () => {
   const setWidth = useMapControl((state) => state.setWidth)
   const { searchHints } = useHintSearch()
 
-  const { data: stores } = useStoreSWR()
+  const { data: stores } = useSearchStores()
   const { data: store, mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   function handleReviewSave() {

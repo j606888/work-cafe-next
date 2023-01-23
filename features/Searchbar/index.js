@@ -1,28 +1,28 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import useControlMap from "hooks/useControlMap"
-import useLocationParamsStore from "stores/useLocationParamsStore"
 import TextInput from "./TextInput"
 import OptionList from "./OptionList"
 import useFocusIndex from "./useFocusIndex"
 import useHintSearch from "./useHintSearch"
 import SvgButton from "components/SvgButton"
-import useSearchStores from "hooks/useSearchStores"
 import useMapControl, { WIDTH } from "stores/useMapControl"
+import { useRouter } from "next/router"
 
 const Searchbar = ({ type = "landing" }) => {
+  const router = useRouter()
   const { setWidth } = useMapControl()
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
-  const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
-  const { search } = useSearchStores()
   const { map } = useControlMap()
 
-  const handleSearch = (keyword) => {
-    const latLng = map.center.toJSON()
-    search({ ...latLng, keyword, limit: 30 })
-    // keywordSearch()
+  const handleSearch = (k) => {
+    router.push({
+      lat: map.center.lat(),
+      lng: map.center.lng(),
+      keyword: k,
+    })
     setWidth(WIDTH.withInfoBox)
   }
 
@@ -40,6 +40,10 @@ const Searchbar = ({ type = "landing" }) => {
     setShowOptions(false)
     searchHints(name)
     handleSearch(name)
+  }
+
+  const handleIconSearch = () => {
+    handleSearch(keyword)
   }
 
   function handleKeyDown(key) {
@@ -64,7 +68,11 @@ const Searchbar = ({ type = "landing" }) => {
   return (
     <Wrapper>
       <Container>
-        <SearchBox type={type} onSearch={handleSearch} onCancel={handleCancel}>
+        <SearchBox
+          type={type}
+          onSearch={handleIconSearch}
+          onCancel={handleCancel}
+        >
           <TextInput
             keyword={keyword}
             onChange={onChange}
