@@ -1,28 +1,38 @@
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
-import useControlMap from "hooks/useControlMap"
 import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
-import usePanelTypeStore from "stores/usePanelTypeStore"
+import store from "stores/store"
 
 const NearbySearch = () => {
-  const { map } = useControlMap()
+  const { map, setPanelType, myLocation, setMyLocation } = store((state) => ({
+    map: state.map,
+    setPanelType: state.setPanelType,
+    myLocation: state.myLocation,
+    setMyLocation: state.setMyLocation,
+  }))
   const myPositionRef = useRef(null)
   const router = useRouter()
-  const setPanelType = usePanelTypeStore(state => state.setPanelType)
 
   const handleClick = async () => {
     try {
-      if (!myPositionRef.current) {
-        myPositionRef.current = await _getCurrentPosition()
+      let location
+      if (myLocation) {
+        location = myLocation
+      } else {
+        location = await _getCurrentPosition()
       }
-      map.panTo(myPositionRef.current)
+      setMyLocation(location)
+      map.panTo(location)
       map.setZoom(15)
-      map.panBy(-324, 0)
-      router.push({
-        query: myPositionRef.current,
-      })
+      // When Desktop
+      // map.panBy(-324, 0)
+      const lat = map.center.lat().toFixed(6)
+      const lng = map.center.lng().toFixed(6)
+      const zoom = map.zoom
+      router.push(`@${lat},${lng},${zoom}z`, undefined, { shallow: true })
       setPanelType("STORE_LIST")
+
     } catch (err) {
       handleError(err)
     }
