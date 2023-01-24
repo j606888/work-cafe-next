@@ -1,29 +1,29 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import useControlMap from "hooks/useControlMap"
 import TextInput from "./TextInput"
 import OptionList from "./OptionList"
 import useFocusIndex from "./useFocusIndex"
 import useHintSearch from "./useHintSearch"
 import SvgButton from "components/SvgButton"
-import useMapControl, { WIDTH } from "stores/useMapControl"
 import { useRouter } from "next/router"
+import store from "stores/store"
 
 const Searchbar = ({ type = "landing" }) => {
   const router = useRouter()
-  const { setWidth } = useMapControl()
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
-  const { map } = useControlMap()
+  const { map, setPanelType } = store((state) => ({
+    map: state.map,
+    setPanelType: state.setPanelType,
+  }))
 
   const handleSearch = (k) => {
-    router.push({
-      lat: map.center.lat(),
-      lng: map.center.lng(),
-      keyword: k,
-    })
-    setWidth(WIDTH.withInfoBox)
+    const lat = map.center.lat().toFixed(6)
+    const lng = map.center.lng().toFixed(6)
+    const zoom = map.zoom
+    router.push(`search/${k}/@${lat},${lng},${zoom}z`, undefined, { shallow: true })
+    setPanelType("STORE_LIST")
   }
 
   const handleCancel = () => {

@@ -66,7 +66,11 @@ const GoogleMap = ({ children }) => {
     const lat = map.center.lat().toFixed(6)
     const lng = map.center.lng().toFixed(6)
     const zoom = map.zoom
-    router.push(`@${lat},${lng},${zoom}z`, undefined, { shallow: true })
+
+    const path = window.location.pathname
+    const originPart = path.split('@')[0]
+
+    router.push(`${originPart}@${lat},${lng},${zoom}z`, undefined, { shallow: true })
   }
 
   function onClick() {}

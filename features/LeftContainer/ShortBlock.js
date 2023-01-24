@@ -64,7 +64,7 @@ const Container = styled.div`
   padding: 32px 28px;
   background-color: #ffffff;
   position: sticky;
-  top: 120px;
+  top: 0;
   z-index: 10;
 
   @media ${devices.mobileXl} {

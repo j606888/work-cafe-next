@@ -1,32 +1,19 @@
 import StoreList from "features/StoreList"
 import useStoreStore from "stores/useStoreStore"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
 import _ from "lodash"
-import useControlMap from "hooks/useControlMap"
-import useLocationParamsStore from "stores/useLocationParamsStore"
 import shallow from "zustand/shallow"
-import useInitMap from "hooks/useInitMap"
 import { devices } from "constants/styled-theme"
 import ShortBlock from "./ShortBlock"
 import SvgButton from "components/SvgButton"
+import store from "stores/store"
 
 const LeftContainer = () => {
-  const { map } = useControlMap()
+  const { map } = store((state) => ({
+    map: state.map,
+  }))
   const [expand, setExpand] = useState(false)
-  const { center, moveTo, updateWithPlaceId } = useControlMap({
-    navigate: true,
-  })
-  const { placeIdFromUrl } = useInitMap()
-  const [params, keywordSearch, updateSettings] = useLocationParamsStore(
-    (state) => [
-      state.params,
-      state.keywordSearch,
-      state.updateSettings,
-      state.searchHere,
-    ],
-    shallow
-  )
   const [placeId, setPlaceId] = useStoreStore(
     (state) => [state.placeId, state.setPlaceId],
     shallow
@@ -90,7 +77,12 @@ function _calCenter(data) {
 
 const Container = styled.div`
   width: ${({ expand }) => (expand ? "100%" : "628px")};
-  position: relative;
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: scroll;
   background-color: #ffffff;
 
   @media ${devices.mobileXl} {

@@ -1,14 +1,20 @@
 import useSWR from "swr"
-import { useRouter } from "next/router"
 
 const useSearchStores = () => {
-  const router = useRouter()
-  const queryString = new URLSearchParams(router.query).toString()
+  const path = window.location.pathname
+  const match = path.match(/@([\d.-]+),([\d.-]+),([\d]+)z/)
+  let lat
+  let lng
+
+  if (match) {
+    lat = +match[1]
+    lng = +match[2]
+  }
 
   const { data } = useSWR(
-    !!queryString ? `/stores/location?${queryString}` : null
+    !!lat ? `/stores/location?lat=${lat}&lng=${lng}` : null
   )
-  const isLoading = !!queryString && !data
+  const isLoading = !!lat && !data
 
   return { data, isLoading }
 }
