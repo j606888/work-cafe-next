@@ -57,17 +57,6 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const label = css`
-  font-size: 14px;
-  font-weight: 700;
-  color: #222120;
-  box-sizing: border-box;
-  position: absolute;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 240px;
-`
-
 const MapArea = styled.div`
   position: relative;
   // If using 100vh, when stores exist will overflow.
@@ -76,16 +65,37 @@ const MapArea = styled.div`
   display: flex;
   flex-wrap: nowrap;
 
-  .labels-right {
-    ${label}
+  .labels {
+    font-size: 14px;
+    font-weight: 700;
+    color: #222120;
+    box-sizing: border-box;
+    position: absolute;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 240px;
+  }
+
+  .right {
     bottom: 2.9rem;
     left: 0.9rem;
   }
 
-  .labels-left {
-    ${label}
+  .left {
     bottom: 2.9rem;
     right: 1rem;
+  }
+
+  .top {
+    bottom: 4.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .bottom {
+    top: 3.8rem;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .labels-focus {

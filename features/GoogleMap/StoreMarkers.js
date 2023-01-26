@@ -34,6 +34,7 @@ const StoreMarkers = () => {
   if (!stores || !map) return null
 
   const mapLng = map.center.lng()
+  const mapLat = map.center.lat()
 
   return (
     <>
@@ -41,6 +42,7 @@ const StoreMarkers = () => {
         return (
           <StoreMarker
             mapLng={mapLng}
+            mapLat={mapLat}
             key={store.placeId}
             store={store}
             showLabel={showLabel}
