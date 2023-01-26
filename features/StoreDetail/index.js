@@ -43,11 +43,9 @@ const StoreDetail = () => {
     const zoom = map.zoom
 
     if (keyword) {
-      router.push(`search/${keyword}/@${lat},${lng},${zoom}z`, undefined, {
-        shallow: true,
-      })
+      router.push(`search/${keyword}/@${lat},${lng},${zoom}z`)
     } else {
-      router.push(`@${lat},${lng},${zoom}z`, undefined, { shallow: true })
+      router.push(`@${lat},${lng},${zoom}z`)
     }
 
     if (!stores) {

@@ -27,20 +27,12 @@ const store = create((set) => ({
       ...state,
       keyword,
     })),
-  // setMapCenter: (center) => set(state =>({
-  //   ...state,
-  //   map: {
-  //     ...state.map,
-  //     center
-  //   }
-  // })),
-  // setMapZoom: (zoom) => set(state =>({
-  //   ...state,
-  //   map: {
-  //     ...state.map,
-  //     zoom
-  //   }
-  // }))
+  showLabel: true,
+  setShowLabel: (showLabel) =>
+    set((state) => ({
+      ...state,
+      showLabel,
+    })),
 }))
 
 export default store

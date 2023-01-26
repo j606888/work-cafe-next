@@ -1,19 +1,22 @@
 import { FormControlLabel, Switch } from "@mui/material"
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
+import store from "stores/store"
 
-const ShowLabelCheckbox = ({ onChange = () => {} }) => {
-  const [checked, setChecked] = useState(true)
-  const handleChange = (event) => {
-    setChecked(event.target.checked)
-    onChange(event.target.checked)
+const ShowLabelCheckbox = () => {
+  const { showLabel, setShowLabel } = store((state) => ({
+    showLabel: state.showLabel,
+    setShowLabel: state.setShowLabel,
+  }))
+  const handleChange = () => {
+    setShowLabel(!showLabel)
   }
   return (
     <Container>
       <FormControlLabel
         control={
-          <Switch checked={checked} onChange={handleChange} color="warning" />
+          <Switch checked={showLabel} onChange={handleChange} color="warning" />
         }
         label={<Span>店名</Span>}
       />

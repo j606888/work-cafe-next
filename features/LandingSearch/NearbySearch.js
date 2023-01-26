@@ -29,7 +29,7 @@ const NearbySearch = () => {
       const lat = map.center.lat().toFixed(6)
       const lng = map.center.lng().toFixed(6)
       const zoom = map.zoom
-      router.push(`@${lat},${lng},${zoom}z`, undefined, { shallow: true })
+      router.push(`@${lat},${lng},${zoom}z`)
       setPanelType("STORE_LIST")
     } catch (err) {
       handleError(err)

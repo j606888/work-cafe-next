@@ -23,7 +23,7 @@ const Searchbar = ({ type = "landing" }) => {
     const lat = map.center.lat().toFixed(6)
     const lng = map.center.lng().toFixed(6)
     const zoom = map.zoom
-    router.push(`search/${k}/@${lat},${lng},${zoom}z`, undefined, { shallow: true })
+    router.push(`search/${k}/@${lat},${lng},${zoom}z`)
     setKeyword(k)
     setPanelType("STORE_LIST")
   }
