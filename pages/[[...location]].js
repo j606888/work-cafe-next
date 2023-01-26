@@ -20,14 +20,13 @@ export default function MapPage() {
       </Head>
       <Container>
         <AppBar />
-        {/* TODO, Should replace StoreMap */}
         <MapArea>
+          {panelType === "INIT" && <LandingSearch />}
+          {panelType === "STORE_LIST" && <LeftContainer />}
           <GoogleMap>
             <StoreMarkers />
             <MyLocationMarker />
           </GoogleMap>
-          {panelType === "INIT" && <LandingSearch />}
-          {panelType === "STORE_LIST" && <LeftContainer />}
         </MapArea>
       </Container>
     </>
@@ -42,6 +41,8 @@ const Container = styled.div`
 
 const MapArea = styled.div`
   position: relative;
-  height: 100%;
+  height: calc(100vh - 120px); // If using 100vh, when stores exist will overflow.
   width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
 `

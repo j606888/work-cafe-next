@@ -69,7 +69,6 @@ const GoogleMap = ({ children }) => {
 
     const path = window.location.pathname
     const originPart = path.split('@')[0]
-
     router.push(`${originPart}@${lat},${lng},${zoom}z`, undefined, { shallow: true })
   }
 

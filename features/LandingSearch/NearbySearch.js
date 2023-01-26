@@ -25,14 +25,12 @@ const NearbySearch = () => {
       setMyLocation(location)
       map.panTo(location)
       map.setZoom(15)
-      // When Desktop
-      // map.panBy(-324, 0)
+
       const lat = map.center.lat().toFixed(6)
       const lng = map.center.lng().toFixed(6)
       const zoom = map.zoom
       router.push(`@${lat},${lng},${zoom}z`, undefined, { shallow: true })
       setPanelType("STORE_LIST")
-
     } catch (err) {
       handleError(err)
     }

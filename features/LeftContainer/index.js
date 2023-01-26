@@ -77,13 +77,11 @@ function _calCenter(data) {
 
 const Container = styled.div`
   width: ${({ expand }) => (expand ? "100%" : "628px")};
-  position: absolute;
-  z-index: 5;
-  top: 0;
-  left: 0;
-  height: 100%;
   overflow: scroll;
   background-color: #ffffff;
+  position: relative;
+  flex-shrink: 0;
+  height: 100%;
 
   @media ${devices.mobileXl} {
     width: 100%;

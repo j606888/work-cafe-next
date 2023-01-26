@@ -3,18 +3,21 @@ import useSWR from "swr"
 const useSearchStores = () => {
   const path = window.location.pathname
   const match = path.match(/@([\d.-]+),([\d.-]+),([\d]+)z/)
-  let lat
-  let lng
+  const params = {}
 
-  if (match) {
-    lat = +match[1]
-    lng = +match[2]
+  if (path.includes('/search/')) {
+    const m = path.match(/search\/(.*)\/@/)
+    params.keyword = m[1]
   }
 
-  const { data } = useSWR(
-    !!lat ? `/stores/location?lat=${lat}&lng=${lng}` : null
-  )
-  const isLoading = !!lat && !data
+  if (match) {
+    params.lat = +match[1]
+    params.lng = +match[2]
+  }
+
+  const queryString = new URLSearchParams(params).toString()
+  const { data } = useSWR(!!params.lat ? `/stores/location?${queryString}` : null)
+  const isLoading = !!params.lat && !data
 
   return { data, isLoading }
 }
