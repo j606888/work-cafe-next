@@ -1,7 +1,6 @@
 import StoreList from "features/StoreList"
 import { useState } from "react"
 import styled from "styled-components"
-import _ from "lodash"
 import { devices } from "constants/styled-theme"
 import ShortBlock from "./ShortBlock"
 import SvgButton from "components/SvgButton"
@@ -18,34 +17,23 @@ const LeftContainer = () => {
   }))
   const [expand, setExpand] = useState(false)
 
-  // useEffect(() => {
-  //   if (placeIdFromUrl) {
-  //     setPlaceId(placeIdFromUrl)
-  //   }
-  // }, [placeIdFromUrl])
-
-  // useEffect(() => {
-  //   if (data && data.length > 0 && params.moveAfter) {
-  //     const latLng = _calCenter(data)
-  //     moveTo({ latLng })
-  //   }
-  // }, [data])
-
   function handleSearch(keyword) {
     console.log(map)
     setPlaceId(null)
-    // keywordSearch({ ...center, keyword, limit: 30 })
   }
-  function handleClickStore({ placeId, lat, lng }) {
+
+  function handleClickStore({ placeId }) {
+    const lat = map.center.lat().toFixed(6)
+    const lng = map.center.lng().toFixed(6)
+    const zoom = map.zoom
+
     setPlaceId(placeId)
     setPanelType("STORE_DETAIL")
-    router.push(`place/${placeId}/@${lat},${lng},15z`, undefined, {
+    router.push(`place/${placeId}/@${lat},${lng},${zoom}z`, undefined, {
       shallow: true,
     })
-
-    map.setZoom(15)
-    map.panTo({ lat, lng })
   }
+
   function handleFilterChange(settings) {
     updateSettings(settings)
   }
@@ -67,16 +55,6 @@ const LeftContainer = () => {
       )}
     </Container>
   )
-}
-
-function _calCenter(data) {
-  const lats = data.map(({ lat }) => lat)
-  const lngs = data.map(({ lng }) => lng)
-
-  return {
-    lat: _.mean(lats),
-    lng: _.mean(lngs),
-  }
 }
 
 const Container = styled.div`
