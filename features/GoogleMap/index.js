@@ -32,12 +32,15 @@ const GoogleMap = ({ children }) => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
     mapIds: [process.env.NEXT_PUBLIC_MAP_ID],
   })
-  const { map, setMap, setPanelType, setPlaceId } = store((state) => ({
-    map: state.map,
-    setMap: state.setMap,
-    setPanelType: state.setPanelType,
-    setPlaceId: state.setPlaceId,
-  }))
+  const { map, setMap, setPanelType, setPlaceId, setSearchCenter } = store(
+    (state) => ({
+      map: state.map,
+      setMap: state.setMap,
+      setPanelType: state.setPanelType,
+      setPlaceId: state.setPlaceId,
+      setSearchCenter: state.setSearchCenter,
+    })
+  )
 
   useEffect(() => {
     const path = window.location.pathname
@@ -53,6 +56,7 @@ const GoogleMap = ({ children }) => {
 
         return cur
       })
+      setSearchCenter({ lat: +match[1], lng: +match[2] })
 
       if (path.includes("/search/")) {
         setPanelType("STORE_LIST")
@@ -63,7 +67,6 @@ const GoogleMap = ({ children }) => {
         setPlaceId(placeId)
         setPanelType("STORE_DETAIL")
       }
-
     } else {
       console.log("parsed failed")
     }
@@ -81,8 +84,10 @@ const GoogleMap = ({ children }) => {
     const zoom = map.zoom
 
     const path = window.location.pathname
-    const originPart = path.split('@')[0]
-    router.push(`${originPart}@${lat},${lng},${zoom}z`, undefined, { shallow: true })
+    const originPart = path.split("@")[0]
+    router.push(`${originPart}@${lat},${lng},${zoom}z`, undefined, {
+      shallow: true,
+    })
   }
 
   function onClick() {}

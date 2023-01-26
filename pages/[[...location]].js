@@ -5,10 +5,12 @@ import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import LandingSearch from "features/LandingSearch"
 import LeftContainer from "features/LeftContainer"
 import StoreDetail from "features/StoreDetail"
-import ShowLabelCheckbox from "features/StoreMap/ShowLabelCheckbox"
+import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import Head from "next/head"
 import store from "stores/store"
 import styled, { css } from "styled-components"
+import SearchHere from "components/Button/SearchHere"
+import { devices } from "constants/styled-theme"
 
 export default function MapPage() {
   const { panelType } = store((state) => ({
@@ -23,14 +25,14 @@ export default function MapPage() {
       <Container>
         <AppBar />
         <MapArea>
-          <ShowLabelCheckbox />
+          {panelType !== "INIT" && <ShowLabelCheckbox />}
           {panelType === "INIT" && <LandingSearch />}
           {panelType === "STORE_LIST" && <LeftContainer />}
           {panelType === "STORE_DETAIL" && <StoreDetail />}
-          {/* {panelType === 'STORE_DETAIL'&& <StoreDetail key={placeId} />} */}
           <GoogleMap>
             {panelType !== "INIT" && <StoreMarkers />}
             <MyLocationMarker />
+            <SearchHereButton panelType={panelType} />
           </GoogleMap>
         </MapArea>
       </Container>
@@ -38,6 +40,17 @@ export default function MapPage() {
   )
 }
 
+const SearchHereButton = styled(SearchHere)`
+  position: absolute;
+  left: ${({ panelType }) => panelType === "INIT" ? "calc(50% + 312px)" : "50%"};
+  top: 32px;
+  transform: translateX(-50%);
+  z-index: 2;
+
+  @media ${devices.mobileXl} {
+    display: none;
+  }
+`
 const Container = styled.div`
   height: 100vh;
   display: flex;

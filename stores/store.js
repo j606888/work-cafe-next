@@ -33,6 +33,12 @@ const store = create((set) => ({
       ...state,
       showLabel,
     })),
+  searchCenter: { lat: null, lng: null },
+  setSearchCenter: (searchCenter) =>
+    set((state) => ({
+      ...state,
+      searchCenter,
+    })),
 }))
 
 export default store

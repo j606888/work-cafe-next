@@ -5,11 +5,12 @@ import { useRouter } from "next/router"
 import store from "stores/store"
 
 const NearbySearch = () => {
-  const { map, setPanelType, myLocation, setMyLocation } = store((state) => ({
+  const { map, setPanelType, myLocation, setMyLocation, setSearchCenter } = store((state) => ({
     map: state.map,
     setPanelType: state.setPanelType,
     myLocation: state.myLocation,
     setMyLocation: state.setMyLocation,
+    setSearchCenter: state.setSearchCenter,
   }))
   const myPositionRef = useRef(null)
   const router = useRouter()
@@ -23,6 +24,7 @@ const NearbySearch = () => {
         location = await _getCurrentPosition()
       }
       setMyLocation(location)
+      setSearchCenter(location)
       map.panTo(location)
       map.setZoom(15)
 

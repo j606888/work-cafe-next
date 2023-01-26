@@ -1,8 +1,11 @@
+import store from "stores/store"
 import useSWR from "swr"
 
 const useSearchStores = () => {
+  const { searchCenter } = store((state) => ({
+    searchCenter: state.searchCenter,
+  }))
   const path = window.location.pathname
-  const match = path.match(/@([\d.-]+),([\d.-]+),([\d]+)z/)
   const params = {}
 
   if (path.includes('/search/')) {
@@ -10,9 +13,9 @@ const useSearchStores = () => {
     params.keyword = m[1]
   }
 
-  if (match) {
-    params.lat = +match[1]
-    params.lng = +match[2]
+  if (searchCenter.lat) {
+    params.lat = searchCenter.lat
+    params.lng = searchCenter.lng
   }
 
   const queryString = new URLSearchParams(params).toString()

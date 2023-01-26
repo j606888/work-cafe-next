@@ -123,6 +123,8 @@ const Container = styled.div`
   position: relative;
   background-color: #ffffff;
   padding-bottom: 1px;
+  height: 100%;
+  overflow: scroll;
 
   @media ${devices.mobileXl} {
     width: 100%;
