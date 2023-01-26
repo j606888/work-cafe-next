@@ -3,7 +3,7 @@ import LeftContainer from "features/LeftContainer"
 import StoreMap from "features/StoreMap"
 import LandingSearch from "features/LandingSearch"
 import Head from "next/head"
-import useStoreStore from "stores/useStoreStore"
+import store from "stores/store"
 import StoreDetail from "features/StoreDetail"
 import { useEffect } from "react"
 import usePanelTypeStore from "stores/usePanelTypeStore"
@@ -23,7 +23,9 @@ export default function MapPage() {
 
 const DisplayComponent = () => {
   const panelType = usePanelTypeStore((state) => state.panelType)
-  const placeId = useStoreStore((state) => state.placeId)
+  const { placeId } = store((state) => ({
+    placeId: state.placeId,
+  }))
 
   useEffect(() => {
     if (placeId) window.scrollTo({ top: 0 })

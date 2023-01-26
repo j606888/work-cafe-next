@@ -13,9 +13,10 @@ const Searchbar = ({ type = "landing" }) => {
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
-  const { map, setPanelType } = store((state) => ({
+  const { map, setPanelType, setKeyword } = store((state) => ({
     map: state.map,
     setPanelType: state.setPanelType,
+    setKeyword: state.setKeyword,
   }))
 
   const handleSearch = (k) => {
@@ -23,6 +24,7 @@ const Searchbar = ({ type = "landing" }) => {
     const lng = map.center.lng().toFixed(6)
     const zoom = map.zoom
     router.push(`search/${k}/@${lat},${lng},${zoom}z`, undefined, { shallow: true })
+    setKeyword(k)
     setPanelType("STORE_LIST")
   }
 

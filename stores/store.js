@@ -10,10 +10,23 @@ const store = create((set) => ({
       panelType,
     })),
   myLocation: null,
-  setMyLocation: (myLocation) => set((state) => ({
-    ...state,
-    myLocation,
-  }))
+  setMyLocation: (myLocation) =>
+    set((state) => ({
+      ...state,
+      myLocation,
+    })),
+  placeId: null,
+  setPlaceId: (placeId) =>
+    set((state) => ({
+      ...state,
+      placeId,
+    })),
+  keyword: null,
+  setKeyword: (keyword) =>
+    set((state) => ({
+      ...state,
+      keyword,
+    })),
   // setMapCenter: (center) => set(state =>({
   //   ...state,
   //   map: {

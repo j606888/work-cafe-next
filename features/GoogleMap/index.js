@@ -32,9 +32,11 @@ const GoogleMap = ({ children }) => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
     mapIds: [process.env.NEXT_PUBLIC_MAP_ID],
   })
-  const { map, setMap } = store(state => ({
+  const { map, setMap, setPanelType, setPlaceId } = store((state) => ({
     map: state.map,
-    setMap: state.setMap
+    setMap: state.setMap,
+    setPanelType: state.setPanelType,
+    setPlaceId: state.setPlaceId,
   }))
 
   useEffect(() => {
@@ -51,6 +53,17 @@ const GoogleMap = ({ children }) => {
 
         return cur
       })
+
+      if (path.includes("/search/")) {
+        setPanelType("STORE_LIST")
+      }
+
+      if (path.includes("/place/")) {
+        const placeId = path.match(/place\/(.*)\/@/)[1]
+        setPlaceId(placeId)
+        setPanelType("STORE_DETAIL")
+      }
+
     } else {
       console.log("parsed failed")
     }

@@ -1,23 +1,22 @@
 import StoreList from "features/StoreList"
-import useStoreStore from "stores/useStoreStore"
 import { useState } from "react"
 import styled from "styled-components"
 import _ from "lodash"
-import shallow from "zustand/shallow"
 import { devices } from "constants/styled-theme"
 import ShortBlock from "./ShortBlock"
 import SvgButton from "components/SvgButton"
 import store from "stores/store"
+import { useRouter } from "next/router"
 
 const LeftContainer = () => {
-  const { map } = store((state) => ({
+  const router = useRouter()
+  const { map, placeId, setPlaceId, setPanelType } = store((state) => ({
     map: state.map,
+    placeId: state.placeId,
+    setPlaceId: state.setPlaceId,
+    setPanelType: state.setPanelType,
   }))
   const [expand, setExpand] = useState(false)
-  const [placeId, setPlaceId] = useStoreStore(
-    (state) => [state.placeId, state.setPlaceId],
-    shallow
-  )
 
   // useEffect(() => {
   //   if (placeIdFromUrl) {
@@ -39,8 +38,13 @@ const LeftContainer = () => {
   }
   function handleClickStore({ placeId, lat, lng }) {
     setPlaceId(placeId)
-    updateWithPlaceId(placeId)
-    moveTo({ latLng: { lat, lng } })
+    setPanelType("STORE_DETAIL")
+    router.push(`place/${placeId}/@${lat},${lng},15z`, undefined, {
+      shallow: true,
+    })
+
+    map.setZoom(15)
+    map.panTo({ lat, lng })
   }
   function handleFilterChange(settings) {
     updateSettings(settings)

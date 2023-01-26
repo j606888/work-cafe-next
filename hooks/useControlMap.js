@@ -1,14 +1,16 @@
 import useMapStoreV2 from "stores/useMapStoreV2"
 import shallow from "zustand/shallow"
 import Router from "next/router"
-import useStoreStore from "stores/useStoreStore"
+import store from "stores/store"
 
 const useControlMap = () => {
   const [map, setMap, center, setCenter] = useMapStoreV2(
     (state) => [state.map, state.setMap, state.center, state.setCenter],
     shallow
   )
-  const placeId = useStoreStore((state) => state.placeId)
+  const { placeId } = store((state) => ({
+    placeId: state.placeId
+  }))
 
   function handleLoad(loadedMap) {
     setMap(loadedMap)

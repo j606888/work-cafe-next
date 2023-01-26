@@ -4,6 +4,7 @@ import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import LandingSearch from "features/LandingSearch"
 import LeftContainer from "features/LeftContainer"
+import StoreDetail from "features/StoreDetail"
 import Head from "next/head"
 import store from "stores/store"
 import styled from "styled-components"
@@ -23,6 +24,8 @@ export default function MapPage() {
         <MapArea>
           {panelType === "INIT" && <LandingSearch />}
           {panelType === "STORE_LIST" && <LeftContainer />}
+          {panelType === "STORE_DETAIL" && <StoreDetail />}
+          {/* {panelType === 'STORE_DETAIL'&& <StoreDetail key={placeId} />} */}
           <GoogleMap>
             <StoreMarkers />
             <MyLocationMarker />

@@ -12,9 +12,6 @@ const ShortBlock = ({
   expand = false,
   onMapOpen,
 }) => {
-  const placeId = useStoreStore((state) => state.placeId)
-  if (placeId) return null
-
   return (
     <Container expand={expand}>
       <SearchTool>
