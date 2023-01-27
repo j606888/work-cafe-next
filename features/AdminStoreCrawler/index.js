@@ -1,17 +1,13 @@
-import React, { useRef, useState, useReducer } from "react"
-import useSWR from "swr"
+import React, { useRef, useReducer } from "react"
 import styled from "styled-components"
 import MyLocation from "features/MyLocation"
 import ControlPanel from "./ControlPanel"
 import SearchDialog from "./SearchDialog"
 import Circle from "./Circle"
 import { createCrawlRecord } from "api/map-crawlers"
-import useInitMap from "hooks/useInitMap"
 import GoogleMap from "features/GoogleMap"
 import { Marker } from "@react-google-maps/api"
-import { laggy } from "utils/laggy"
-import { fetcher } from "api"
-import useControlMap from "hooks/useControlMap"
+
 const Container = styled.div`
   position: relative;
   height: calc(100vh - 64px);
@@ -53,21 +49,18 @@ const reducer = (state, action) => {
 }
 
 const AdminStoreCrawler = () => {
-  const { isReady, mapSettings } = useInitMap()
-  const { handleLoad, handleIdle, center } = useControlMap({ navigate: false })
-
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
   const tempRef = useRef(null)
-  const { data: mapCrawlers } = useSWR(
-    ["/admin/map-crawlers", { ...center, limit: 50 }],
-    fetcher,
-    { use: [laggy] }
-  )
+  // const { data: mapCrawlers } = useSWR(
+  //   ["/admin/map-crawlers", { ...center, limit: 50 }],
+  //   fetcher,
+  //   { use: [laggy] }
+  // )
 
   const handleFindMe = ({ lat, lng }) => {
     const center = { lat, lng }
     map.setZoom(15)
-    map.panTo(center)
+    // map.panTo(center)
   }
 
   const handleSearch = async () => {
@@ -105,8 +98,6 @@ const AdminStoreCrawler = () => {
         <MyLocation onClick={handleFindMe} />
       </MyLocationContainer>
       <GoogleMap
-        onIdle={handleIdle}
-        onLoad={handleLoad}
         onClick={handleClick}
         mapSettings={mapSettings}
         style={{
