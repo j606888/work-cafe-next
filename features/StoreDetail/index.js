@@ -97,7 +97,7 @@ const StoreDetail = () => {
       )}
       <ListItem>
         <img src="/phone.svg" alt="phone" />
-        <span>{store.phone}</span>
+        <a href={`tel:${store.phone}`}>{store.phone}</a>
       </ListItem>
       <Recommend good={store.recommendYes} bad={store.recommendNo} />
       <Reviews

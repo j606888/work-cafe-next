@@ -7,6 +7,7 @@ import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
 import useLoginModeStore from "stores/useLoginModeStore"
 import useUserStore from "stores/useUserStore"
 import useSWR from "swr"
+import ShareButton from './ShareButton'
 
 const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -59,10 +60,7 @@ const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
             <img src="/like.svg" alt="like" />
             <span>收藏</span>
           </Button>
-          <Button>
-            <img src="/share.svg" alt="share" />
-            <span>分享</span>
-          </Button>
+          <ShareButton />
           {/* {isBookmark ? (
             <Button onClick={handleRemoveBookmark} active>
               <BookmarkIcon />
