@@ -6,7 +6,7 @@ import useFocusIndex from "./useFocusIndex"
 import useHintSearch from "./useHintSearch"
 import SvgButton from "components/SvgButton"
 import { useRouter } from "next/router"
-import store from "stores/store"
+import store, { PANEL_TYPES } from "stores/store"
 
 const Searchbar = ({ type = "landing" }) => {
   const router = useRouter()
@@ -25,7 +25,7 @@ const Searchbar = ({ type = "landing" }) => {
     const zoom = map.zoom
     router.push(`search/${k}/@${lat},${lng},${zoom}z`)
     setKeyword(k)
-    setPanelType("STORE_LIST")
+    setPanelType(PANEL_TYPES.STORE_LIST)
   }
 
   const handleCancel = () => {

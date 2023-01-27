@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
-import store from "stores/store"
+import store, { PANEL_TYPES } from "stores/store"
 
 const NearbySearch = () => {
   const { map, setPanelType, myLocation, setMyLocation, setSearchCenter } = store((state) => ({
@@ -32,7 +32,7 @@ const NearbySearch = () => {
       const lng = map.center.lng().toFixed(6)
       const zoom = map.zoom
       router.push(`@${lat},${lng},${zoom}z`)
-      setPanelType("STORE_LIST")
+      setPanelType(PANEL_TYPES.STORE_LIST)
     } catch (err) {
       handleError(err)
     }

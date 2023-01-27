@@ -11,7 +11,7 @@ import Reviews from "./Reviews/Reviews"
 import OpenTime from "./OpenTime/OpenTime"
 import useHintSearch from "features/Searchbar/useHintSearch"
 import useSearchStores from "hooks/useSearchStores"
-import storeStore from "stores/store"
+import storeStore, { PANEL_TYPES } from "stores/store"
 import { useRouter } from "next/router"
 
 const StoreDetail = () => {
@@ -36,7 +36,7 @@ const StoreDetail = () => {
 
   const handleClose = () => {
     setPlaceId(null)
-    setPanelType("STORE_LIST")
+    setPanelType(PANEL_TYPES.STORE_LIST)
 
     const lat = map.center.lat().toFixed(6)
     const lng = map.center.lng().toFixed(6)

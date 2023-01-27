@@ -1,7 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 import CircularProgress from "@mui/material/CircularProgress"
-import store from "stores/store"
+import store, { PANEL_TYPES } from "stores/store"
+import { mapCenter } from "utils/map-helper"
 
 const SearchHere = ({ className }) => {
   const { map, setSearchCenter, setPanelType } = store((state) => ({
@@ -12,11 +13,9 @@ const SearchHere = ({ className }) => {
   const isLoading = false
 
   function onClick() {
-    setSearchCenter({
-      lat: map.center.lat().toFixed(6),
-      lng: map.center.lng().toFixed(6),
-    })
-    setPanelType("STORE_LIST")
+    const { lat, lng } = mapCenter(map)
+    setSearchCenter({ lat, lng })
+    setPanelType(PANEL_TYPES.STORE_LIST)
   }
 
   const icon = isLoading ? (

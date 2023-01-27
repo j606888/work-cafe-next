@@ -7,8 +7,8 @@ import LeftContainer from "features/LeftContainer"
 import StoreDetail from "features/StoreDetail"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import Head from "next/head"
-import store from "stores/store"
-import styled, { css } from "styled-components"
+import store, { PANEL_TYPES } from "stores/store"
+import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
 import { devices } from "constants/styled-theme"
 
@@ -25,12 +25,12 @@ export default function MapPage() {
       <Container>
         <AppBar />
         <MapArea>
-          {panelType !== "INIT" && <ShowLabelCheckbox />}
-          {panelType === "INIT" && <LandingSearch />}
-          {panelType === "STORE_LIST" && <LeftContainer />}
-          {panelType === "STORE_DETAIL" && <StoreDetail />}
+          {panelType !== PANEL_TYPES.INIT && <ShowLabelCheckbox />}
+          {panelType === PANEL_TYPES.INIT && <LandingSearch />}
+          {panelType === PANEL_TYPES.STORE_LIST && <LeftContainer />}
+          {panelType === PANEL_TYPES.STORE_DETAIL && <StoreDetail />}
           <GoogleMap>
-            {panelType !== "INIT" && <StoreMarkers />}
+            {panelType !== PANEL_TYPES.INIT && <StoreMarkers />}
             <MyLocationMarker />
             <SearchHereButton panelType={panelType} />
           </GoogleMap>
@@ -42,7 +42,7 @@ export default function MapPage() {
 
 const SearchHereButton = styled(SearchHere)`
   position: absolute;
-  left: ${({ panelType }) => panelType === "INIT" ? "calc(50% + 312px)" : "50%"};
+  left: ${({ panelType }) => panelType === PANEL_TYPES.INIT ? "calc(50% + 312px)" : "50%"};
   top: 32px;
   transform: translateX(-50%);
   z-index: 2;

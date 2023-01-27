@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
-import store from "stores/store"
+import store, { PANEL_TYPES } from "stores/store"
 import {
   GoogleMap as ReactGoogleMap,
   useJsApiLoader,
@@ -59,13 +59,13 @@ const GoogleMap = ({ children }) => {
       setSearchCenter({ lat: +match[1], lng: +match[2] })
 
       if (path.includes("/search/")) {
-        setPanelType("STORE_LIST")
+        setPanelType(PANEL_TYPES.STORE_LIST)
       }
 
       if (path.includes("/place/")) {
         const placeId = path.match(/place\/(.*)\/@/)[1]
         setPlaceId(placeId)
-        setPanelType("STORE_DETAIL")
+        setPanelType(PANEL_TYPES.STORE_DETAIL)
       }
     } else {
       console.log("parsed failed")

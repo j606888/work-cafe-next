@@ -3,7 +3,7 @@ import { devices } from "constants/styled-theme"
 import useSearchStores from "hooks/useSearchStores"
 import { useRouter } from "next/router"
 import React from "react"
-import store from "stores/store"
+import store, { PANEL_TYPES } from "stores/store"
 import StoreMarker from "./StoreMarker"
 
 const StoreMarkers = () => {
@@ -26,7 +26,7 @@ const StoreMarkers = () => {
       const zoom = map.zoom
 
       setPlaceId(placeId)
-      setPanelType("STORE_DETAIL")
+      setPanelType(PANEL_TYPES.STORE_DETAIL)
       router.push(`place/${placeId}/@${lat},${lng},${zoom}z`)
     }
   }
