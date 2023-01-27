@@ -1,26 +1,28 @@
 import * as React from "react"
 import { Container, StoreCount } from "./styled"
-import useStoreStore from "stores/useStoreStore"
 import StoreCard from "components/StoreCard"
 import NoMatch from "features/LeftContainer/NoMatch"
+import useSearchStores from "hooks/useSearchStores"
+import store from "stores/store"
 
-export default function StoreList({ stores, expand, onClick = () => {} }) {
-  const setPlaceId = useStoreStore((state) => state.setPlaceId)
-  const placeId = useStoreStore((state) => state.placeId)
-  const focusPlaceId = useStoreStore((state) => state.focusPlaceId)
-  const setFocusPlaceId = useStoreStore((state) => state.setFocusPlaceId)
-  const setBouncePlaceId = useStoreStore((state) => state.setBouncePlaceId)
+export default function StoreList({ expand, onClick = () => {} }) {
+  const { data: stores } = useSearchStores()
+  const { placeId, setPlaceId, focusPlaceId } = store((state) => ({
+    placeId: state.placeId,
+    setPlaceId: state.setPlaceId,
+    focusPlaceId: state.focusPlaceId,
+  }))
   const storesRef = React.useRef({})
 
   const handleMouseEnter = (placeId) => {
-    setBouncePlaceId(placeId)
+    // setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
-    setBouncePlaceId(null)
+    // setBouncePlaceId(null)
   }
   const handleClick = ({ placeId, lat, lng }) => {
     setPlaceId(placeId)
-    setFocusPlaceId(placeId)
+    // setFocusPlaceId(placeId)
     onClick({ placeId, lat, lng })
   }
 

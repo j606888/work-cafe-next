@@ -1,8 +1,7 @@
 import SearchFilter from "features/SearchFilter"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
-import useStoreStore from "stores/useStoreStore"
+import { devices } from "constants/styled-theme"
 import Searchbar from "features/Searchbar"
 import SvgButton from "components/SvgButton"
 
@@ -12,9 +11,6 @@ const ShortBlock = ({
   expand = false,
   onMapOpen,
 }) => {
-  const placeId = useStoreStore((state) => state.placeId)
-  if (placeId) return null
-
   return (
     <Container expand={expand}>
       <SearchTool>
@@ -64,7 +60,7 @@ const Container = styled.div`
   padding: 32px 28px;
   background-color: #ffffff;
   position: sticky;
-  top: 120px;
+  top: 0;
   z-index: 10;
 
   @media ${devices.mobileXl} {
@@ -76,7 +72,7 @@ const Container = styled.div`
       expand &&
       `
       background-color: #ffffff;
-      top: 56px;
+      // top: 56px;
     `}
   }
 `

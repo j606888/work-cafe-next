@@ -3,14 +3,16 @@ import { Container } from "./styled"
 import Navbar from "./Navbar"
 import HelpUs from "./HelpUs/HelpUs"
 import { useMediaQuery } from "@mui/material"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import MobileNavbar from "./MobileNavbar"
-import useMapControl, { WIDTH } from "stores/useMapControl"
+import store, { PANEL_TYPES } from "stores/store"
 
 const AppBar = () => {
+  const { panelType } = store((state) => ({
+    panelType: state.panelType,
+  }))
   const fullScreen = useMediaQuery(devices.mobileXl)
-  const { width } = useMapControl()
-  const isLanding = width === WIDTH.fullWidth
+  const isLanding = panelType === PANEL_TYPES.INIT
   const showHelpUs = !fullScreen || isLanding
 
   return (

@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 const CarouselControls = ({ prev, next }) => {
   return (

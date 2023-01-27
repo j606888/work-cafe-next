@@ -8,12 +8,16 @@ import {
   Select,
 } from "@mui/material"
 import styled from "styled-components"
-import { OPEN_TYPES, OPEN_WEEKS, OPEN_HOURS } from "constant/openTime"
+import { OPEN_TYPES, OPEN_WEEKS, OPEN_HOURS } from "constants/openTime"
 
-const Container = styled.div`
-`
+const Container = styled.div``
 
-const OpenTimePicker = ({ openType, openWeek, openHour, onChange = () => {} }) => {
+const OpenTimePicker = ({
+  openType,
+  openWeek,
+  openHour,
+  onChange = () => {},
+}) => {
   const handleChange = (event) => {
     const newOpenType = event.target.value
     onChange({ openType: newOpenType, openWeek, openHour })

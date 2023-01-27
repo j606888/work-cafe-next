@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material"
 import RatingStars from "components/RatingStars"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import { useState } from "react"
 import { useRef } from "react"
 import { useEffect } from "react"
@@ -90,11 +90,9 @@ const P = styled.p`
 `
 
 const CreatedAtSpan = styled.span`
-  span {
-    font-size: 12px;
-    color: #222120;
-    margin-bottom: 8px;
-  }
+  font-size: 12px;
+  color: #222120;
+  margin-bottom: 8px;
 
   @media ${devices.mobileXl} {
     font-size: 10px;

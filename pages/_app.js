@@ -2,7 +2,7 @@ import "../styles/globals.css"
 import { SWRConfig } from "swr"
 import { fetcher } from "api"
 import { ThemeProvider } from "styled-components"
-import styledTheme from "constant/styled-theme"
+import styledTheme from "constants/styled-theme"
 import Head from "next/head"
 
 function MyApp({ Component, pageProps }) {

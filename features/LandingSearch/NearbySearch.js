@@ -1,25 +1,38 @@
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
-import useMapControl, { WIDTH } from "stores/useMapControl"
-import useLocationParamsStore from "stores/useLocationParamsStore"
-import useControlMap from "hooks/useControlMap"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
+import { useRouter } from "next/router"
+import store, { PANEL_TYPES } from "stores/store"
 
 const NearbySearch = () => {
-  const { setWidth } = useMapControl()
-  const { searchHere } = useLocationParamsStore()
-  const { map } = useControlMap()
+  const { map, setPanelType, myLocation, setMyLocation, setSearchCenter } = store((state) => ({
+    map: state.map,
+    setPanelType: state.setPanelType,
+    myLocation: state.myLocation,
+    setMyLocation: state.setMyLocation,
+    setSearchCenter: state.setSearchCenter,
+  }))
   const myPositionRef = useRef(null)
+  const router = useRouter()
 
   const handleClick = async () => {
     try {
-      if (!myPositionRef.current) {
-        myPositionRef.current = await getCurrentPosition()
+      let location
+      if (myLocation) {
+        location = myLocation
+      } else {
+        location = await _getCurrentPosition()
       }
-      setWidth(WIDTH.withInfoBox)
-      map.panTo(myPositionRef.current)
+      setMyLocation(location)
+      setSearchCenter(location)
+      map.panTo(location)
       map.setZoom(15)
-      searchHere(myPositionRef.current)
+
+      const lat = map.center.lat().toFixed(6)
+      const lng = map.center.lng().toFixed(6)
+      const zoom = map.zoom
+      router.push(`@${lat},${lng},${zoom}z`)
+      setPanelType(PANEL_TYPES.STORE_LIST)
     } catch (err) {
       handleError(err)
     }
@@ -30,7 +43,7 @@ const NearbySearch = () => {
       const already = await alreadyGranted()
       if (!already) return
 
-      const latLng = await getCurrentPosition()
+      const latLng = await _getCurrentPosition()
       myPositionRef.current = latLng
     }
     getPosition()
@@ -52,7 +65,7 @@ async function alreadyGranted() {
   return permission.state === "granted"
 }
 
-async function getCurrentPosition() {
+async function _getCurrentPosition() {
   const position = await new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject)
   })

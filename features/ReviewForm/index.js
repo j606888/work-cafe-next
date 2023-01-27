@@ -13,7 +13,7 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 import LinearProgressWithLabel from "./LinearProgressWithLabel"
 import { sleep } from "utils/helper"
 import { useEffect } from "react"
-import { devices } from 'constant/styled-theme'
+import { devices } from "constants/styled-theme"
 
 const ReviewForm = ({
   placeId,
@@ -31,15 +31,17 @@ const ReviewForm = ({
   const [files, setFiles] = useState([])
   const [showSnackbar, setShowSnackbar] = useState(null)
   const { data: tags } = useSWR("/tags")
-  const fullScreen = useMediaQuery(devices.mobileXl);
+  const fullScreen = useMediaQuery(devices.mobileXl)
   const [loading, setLoading] = useState(false)
   const [currentI, setCurrentI] = useState(0)
 
   useEffect(() => {
     if (myReview?.primaryTags) {
-      const tagIds = tags?.filter(tag => myReview.primaryTags.includes(tag.name))
-        .map(tag => tag.id) || []
-      setData(cur => ({ ...cur, tagIds }))
+      const tagIds =
+        tags
+          ?.filter((tag) => myReview.primaryTags.includes(tag.name))
+          .map((tag) => tag.id) || []
+      setData((cur) => ({ ...cur, tagIds }))
     }
   }, [tags, myReview])
 
@@ -55,7 +57,7 @@ const ReviewForm = ({
       await axios.put(url, file, config)
       const link = url.split("?")[0]
       await StorePhotoApi.createStorePhoto({ placeId, url: link, reviewId })
-      setCurrentI(cur => cur + pic)
+      setCurrentI((cur) => cur + pic)
     }
   }
 
@@ -108,7 +110,12 @@ const ReviewForm = ({
 
   return (
     <>
-      <Dialog open={!!open} onClose={handleClose} maxWidth="xl"fullScreen={fullScreen}>
+      <Dialog
+        open={!!open}
+        onClose={handleClose}
+        maxWidth="xl"
+        fullScreen={fullScreen}
+      >
         <Form>
           <h3>{name}</h3>
           <Scroll>

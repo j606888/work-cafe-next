@@ -1,7 +1,7 @@
 import { ImageList, ImageListItem } from "@mui/material"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 const ImagesWorm = ({ images = [] }) => {
   const length = images.length
@@ -104,7 +104,12 @@ const MoreThanFour = ({ images }) => {
         <img src={images[2]} alt="hey" loading="lazy" />
       </ImageListItem>
       <ImageListItem cols={2} rows={2}>
-        <img src={images[3]} alt="hey" loading="lazy" style={{ filter: 'brightness(50%)'}} />
+        <img
+          src={images[3]}
+          alt="hey"
+          loading="lazy"
+          style={{ filter: "brightness(50%)" }}
+        />
         <More>還有 {leftCount} 張</More>
       </ImageListItem>
     </ImageList>

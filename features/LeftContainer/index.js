@@ -1,60 +1,38 @@
 import StoreList from "features/StoreList"
-import useStoreStore from "stores/useStoreStore"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
-import _ from "lodash"
-import useControlMap from "hooks/useControlMap"
-import useLocationParamsStore from "stores/useLocationParamsStore"
-import shallow from "zustand/shallow"
-import useInitMap from "hooks/useInitMap"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import ShortBlock from "./ShortBlock"
-import useStoreSWR from "stores/useStoreSWR"
 import SvgButton from "components/SvgButton"
+import store from "stores/store"
+import { useRouter } from "next/router"
 
 const LeftContainer = () => {
+  const router = useRouter()
+  const { map, placeId, setPlaceId, setPanelType } = store((state) => ({
+    map: state.map,
+    placeId: state.placeId,
+    setPlaceId: state.setPlaceId,
+    setPanelType: state.setPanelType,
+  }))
   const [expand, setExpand] = useState(false)
-  const { center, moveTo, updateWithPlaceId } = useControlMap({
-    navigate: true,
-  })
-  const { placeIdFromUrl } = useInitMap()
-  const [params, keywordSearch, updateSettings] = useLocationParamsStore(
-    (state) => [
-      state.params,
-      state.keywordSearch,
-      state.updateSettings,
-      state.searchHere,
-    ],
-    shallow
-  )
-  const [placeId, setPlaceId] = useStoreStore(
-    (state) => [state.placeId, state.setPlaceId],
-    shallow
-  )
-  const { data } = useStoreSWR()
-
-  // useEffect(() => {
-  //   if (placeIdFromUrl) {
-  //     setPlaceId(placeIdFromUrl)
-  //   }
-  // }, [placeIdFromUrl])
-
-  useEffect(() => {
-    if (data && data.length > 0 && params.moveAfter) {
-      const latLng = _calCenter(data)
-      moveTo({ latLng })
-    }
-  }, [data])
 
   function handleSearch(keyword) {
     setPlaceId(null)
-    keywordSearch({ ...center, keyword, limit: 30 })
   }
-  function handleClickStore({ placeId, lat, lng }) {
+
+  function handleClickStore({ placeId }) {
+    const lat = map.center.lat().toFixed(6)
+    const lng = map.center.lng().toFixed(6)
+    const zoom = map.zoom
+
     setPlaceId(placeId)
-    updateWithPlaceId(placeId)
-    moveTo({ latLng: { lat, lng } })
+    setPanelType("STORE_DETAIL")
+    router.push(`place/${placeId}/@${lat},${lng},${zoom}z`, undefined, {
+      shallow: true,
+    })
   }
+
   function handleFilterChange(settings) {
     updateSettings(settings)
   }
@@ -68,7 +46,7 @@ const LeftContainer = () => {
         expand={expand}
         onMapOpen={() => setExpand(false)}
       />
-      <StoreList stores={data} onClick={handleClickStore} expand={expand} />
+      <StoreList onClick={handleClickStore} expand={expand} />
       {!expand && (
         <ExpandButton onClick={() => setExpand(true)}>
           <SvgButton path="expand-btn" />
@@ -78,25 +56,20 @@ const LeftContainer = () => {
   )
 }
 
-function _calCenter(data) {
-  const lats = data.map(({ lat }) => lat)
-  const lngs = data.map(({ lng }) => lng)
-
-  return {
-    lat: _.mean(lats),
-    lng: _.mean(lngs),
-  }
-}
-
 const Container = styled.div`
   width: ${({ expand }) => (expand ? "100%" : "628px")};
+  overflow: scroll;
   position: relative;
-  background-color: #ffffff;
+  flex-shrink: 0;
+  height: 100%;
 
   @media ${devices.mobileXl} {
     width: 100%;
     z-index: 5;
     background-color: transparent;
+    position: absolute;
+    height: ${({ expand }) => (expand ? "100%" : "auto")};
+    overflow: visible;
   }
 `
 
@@ -114,11 +87,6 @@ const ExpandButton = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    background: #f5f5f5;
-  }
 
   @media ${devices.mobileXl} {
     left: 50%;

@@ -6,11 +6,11 @@ import * as Yup from "yup"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import { googleLogin, login as apiLogin } from "api/auth"
-import { Container , CloseButton} from "./styled"
+import { Container, CloseButton } from "./styled"
 import useUserStore from "stores/useUserStore"
 import { useMediaQuery } from "@mui/material"
-import CloseIcon from '@mui/icons-material/Close';
-import { devices } from 'constant/styled-theme'
+import CloseIcon from "@mui/icons-material/Close"
+import { devices } from "constants/styled-theme"
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 

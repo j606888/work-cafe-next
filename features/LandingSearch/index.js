@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import NearbySearch from "./NearbySearch"
 import Searchbar from "../Searchbar"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 
 const LandingSearch = () => {
   return (
@@ -21,7 +21,7 @@ const Container = styled.div`
   z-index: 5;
   position: absolute;
   left: 28px;
-  top: 146px;
+  top: 28px;
   box-sizing: border-box;
   width: 628px;
   display: flex;
@@ -40,13 +40,14 @@ const Container = styled.div`
   }
 
   @media ${devices.mobileXl} {
-    position: relative;
-    width: 100%;
-    top: auto;
-    left: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     border-radius: 0;
     padding: 52px 24px 0;
-    min-height: 100vh;
+    width: 100%;
   }
 `
 

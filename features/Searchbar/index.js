@@ -1,23 +1,31 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import useControlMap from "hooks/useControlMap"
-import useLocationParamsStore from "stores/useLocationParamsStore"
 import TextInput from "./TextInput"
 import OptionList from "./OptionList"
 import useFocusIndex from "./useFocusIndex"
 import useHintSearch from "./useHintSearch"
 import SvgButton from "components/SvgButton"
+import { useRouter } from "next/router"
+import store, { PANEL_TYPES } from "stores/store"
 
 const Searchbar = ({ type = "landing" }) => {
+  const router = useRouter()
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
-  const keywordSearch = useLocationParamsStore((state) => state.keywordSearch)
-  const { map } = useControlMap()
+  const { map, setPanelType, setKeyword } = store((state) => ({
+    map: state.map,
+    setPanelType: state.setPanelType,
+    setKeyword: state.setKeyword,
+  }))
 
-  const handleSearch = (keyword) => {
-    const latLng = map.center.toJSON()
-    keywordSearch({ ...latLng, keyword, limit: 30 })
+  const handleSearch = (k) => {
+    const lat = map.center.lat().toFixed(6)
+    const lng = map.center.lng().toFixed(6)
+    const zoom = map.zoom
+    router.push(`search/${k}/@${lat},${lng},${zoom}z`)
+    setKeyword(k)
+    setPanelType(PANEL_TYPES.STORE_LIST)
   }
 
   const handleCancel = () => {
@@ -34,6 +42,10 @@ const Searchbar = ({ type = "landing" }) => {
     setShowOptions(false)
     searchHints(name)
     handleSearch(name)
+  }
+
+  const handleIconSearch = () => {
+    handleSearch(keyword)
   }
 
   function handleKeyDown(key) {
@@ -58,7 +70,11 @@ const Searchbar = ({ type = "landing" }) => {
   return (
     <Wrapper>
       <Container>
-        <SearchBox type={type} onSearch={handleSearch} onCancel={handleCancel}>
+        <SearchBox
+          type={type}
+          onSearch={handleIconSearch}
+          onCancel={handleCancel}
+        >
           <TextInput
             keyword={keyword}
             onChange={onChange}
@@ -106,7 +122,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: 52px;
-  padding: 10px;
+  padding: 0 8px 0 10px;
   border: 1px solid #afaaa3;
   border-radius: 20px;
   justify-content: space-between;

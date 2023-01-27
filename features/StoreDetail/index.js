@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
 import Skeleton from "components/Skeleton"
@@ -6,24 +6,28 @@ import Header from "./Header/Header"
 import TagList from "../../components/TagList/TagList"
 import Recommend from "./Recommend/Recommend"
 import ImagePreview from "./ImagePreview/ImagePreview"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import Reviews from "./Reviews/Reviews"
 import OpenTime from "./OpenTime/OpenTime"
-import useStoreStore from "stores/useStoreStore"
-import shallow from "zustand/shallow"
-import useStoreSWR from "stores/useStoreSWR"
-import useMapControl, { WIDTH } from "stores/useMapControl"
 import useHintSearch from "features/Searchbar/useHintSearch"
+import useSearchStores from "hooks/useSearchStores"
+import storeStore, { PANEL_TYPES } from "stores/store"
+import { useRouter } from "next/router"
 
 const StoreDetail = () => {
-  const [placeId, setPlaceId] = useStoreStore(
-    (state) => [state.placeId, state.setPlaceId],
-    shallow
+  const router = useRouter()
+  const { map, placeId, keyword, setPlaceId, setPanelType } = storeStore(
+    (state) => ({
+      map: state.map,
+      placeId: state.placeId,
+      keyword: state.keyword,
+      setPlaceId: state.setPlaceId,
+      setPanelType: state.setPanelType,
+    })
   )
-  const setWidth = useMapControl((state) => state.setWidth)
   const { searchHints } = useHintSearch()
 
-  const { data: stores } = useStoreSWR()
+  const { data: stores } = useSearchStores()
   const { data: store, mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   function handleReviewSave() {
@@ -32,14 +36,29 @@ const StoreDetail = () => {
 
   const handleClose = () => {
     setPlaceId(null)
+    setPanelType(PANEL_TYPES.STORE_LIST)
+
+    const lat = map.center.lat().toFixed(6)
+    const lng = map.center.lng().toFixed(6)
+    const zoom = map.zoom
+
+    if (keyword) {
+      router.push(`search/${keyword}/@${lat},${lng},${zoom}z`)
+    } else {
+      router.push(`@${lat},${lng},${zoom}z`)
+    }
 
     if (!stores) {
       searchHints("")
-      setWidth(WIDTH.fullWidth)
     }
   }
 
-  if (!store) return <Skeleton />
+  if (!store)
+    return (
+      <Container>
+        <Skeleton />
+      </Container>
+    )
 
   return (
     <Container>
@@ -99,10 +118,13 @@ function parseDomain(url) {
 export default StoreDetail
 
 const Container = styled.div`
+  flex-shrink: 0;
   width: 628px;
   position: relative;
   background-color: #ffffff;
   padding-bottom: 1px;
+  height: 100%;
+  overflow: scroll;
 
   @media ${devices.mobileXl} {
     width: 100%;

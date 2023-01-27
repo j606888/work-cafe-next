@@ -1,9 +1,24 @@
 import React from "react"
 import styled from "styled-components"
 import CircularProgress from "@mui/material/CircularProgress"
+import store, { PANEL_TYPES } from "stores/store"
+import { mapCenter } from "utils/map-helper"
 
-const SearchHere = ({ className, loading = false, onClick = () => {} }) => {
-  const icon = loading ? (
+const SearchHere = ({ className }) => {
+  const { map, setSearchCenter, setPanelType } = store((state) => ({
+    map: state.map,
+    setSearchCenter: state.setSearchCenter,
+    setPanelType: state.setPanelType,
+  }))
+  const isLoading = false
+
+  function onClick() {
+    const { lat, lng } = mapCenter(map)
+    setSearchCenter({ lat, lng })
+    setPanelType(PANEL_TYPES.STORE_LIST)
+  }
+
+  const icon = isLoading ? (
     <CircularProgress size={18} />
   ) : (
     <img src="/search-btn-outline.svg" alt="search-btn" />

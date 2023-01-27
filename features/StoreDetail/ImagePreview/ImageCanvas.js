@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import { Dialog, ImageList, ImageListItem } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import SvgButton from "components/SvgButton"

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { OPEN_TYPES, OPEN_WEEKS, OPEN_HOURS } from "constant/openTime"
+import { OPEN_TYPES, OPEN_WEEKS, OPEN_HOURS } from "constants/openTime"
 import AccessTimeIcon from "@mui/icons-material/AccessTime"
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"
 import DoneIcon from "@mui/icons-material/Done"
@@ -15,7 +15,7 @@ const Container = styled.div`
   font-size: 14px;
   gap: 4px;
   cursor: pointer;
-  box-shadow: 0 0 2px 1px rgba(0,0,0,0.2);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
 
   &:hover {
     background-color: #f2f2f2;

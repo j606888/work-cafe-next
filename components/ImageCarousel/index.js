@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 import CarouselControls, { Button } from "./CarouselControls"
 import CarouselIndicators from "./CarouselIndicators"
 import CarouselItem from "./CarouselItem"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import { useMediaQuery } from "@mui/material"
 
 const ImageCarousel = ({

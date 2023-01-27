@@ -4,7 +4,7 @@ import ImagesWorm from "components/ImagesWorm/ImagesWorm"
 import { useState } from "react"
 import { MoreVert } from "@mui/icons-material"
 import styled from "styled-components"
-import { devices } from "constant/styled-theme"
+import { devices } from "constants/styled-theme"
 import TagList from "components/TagList/TagList"
 
 const EditBox = ({ onDelete, onEdit }) => {
@@ -38,10 +38,9 @@ const EditBox = ({ onDelete, onEdit }) => {
   )
 }
 
-
 const ICON_MAP = {
-  yes: '/thumb-up.svg',
-  no: '/thumb-down.svg'
+  yes: "/thumb-up.svg",
+  no: "/thumb-down.svg",
 }
 
 const WorkCafeReviews = ({
@@ -53,7 +52,7 @@ const WorkCafeReviews = ({
   photos = [],
   editable,
   recommend,
-  primaryTags=[],
+  primaryTags = [],
   onDelete = () => {},
   onEdit = () => {},
 }) => {
@@ -69,7 +68,12 @@ const WorkCafeReviews = ({
           <h6>{userName}</h6>
           <span>{_dateString(createdAt)}</span>
           <TagDiv>
-            <img src={ICON_MAP[recommend]} alt={recommend} width={36} height={36}/>
+            <img
+              src={ICON_MAP[recommend]}
+              alt={recommend}
+              width={36}
+              height={36}
+            />
             <TagList tags={primaryTags} withCount={false} />
           </TagDiv>
           <p>{description}</p>
@@ -130,7 +134,7 @@ const Content = styled.div`
   p {
     font-size: 14px;
     white-space: pre-line;
-    color: #42403F;
+    color: #42403f;
     margin-bottom: 0;
   }
 
