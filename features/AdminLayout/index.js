@@ -23,7 +23,7 @@ const lists = [
   },
   {
     text: "Crawl Store",
-    url: "/admin/crawls",
+    url: "/admin/crawls/@23.685859,119.006545,8z",
     icon: <BugReportIcon />,
   },
   {

@@ -72,15 +72,14 @@ const Navbar = () => {
 
         {/* <OpenCloseIcon onClick={toggleShowNav} show={showNav} /> */}
         {/* <NavLinks show={showNav}> */}
-        {/* <TutorialLink /> */}
-        {/* {isLogin ? ( */}
-        {/* <AccountMenu /> */}
-        {/* ) : ( */}
-        <ButtonGroup>
-          <Button onClick={() => setMode("login")}>登入</Button>
-          <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
-        </ButtonGroup>
-        {/* )} */}
+        {isLogin ? (
+          <AccountMenu />
+        ) : (
+          <ButtonGroup>
+            <Button onClick={() => setMode("login")}>登入</Button>
+            <CtaButton onClick={() => setMode("signup")}>註冊</CtaButton>
+          </ButtonGroup>
+        )}
         {/* </NavLinks> */}
       </NavbarContainer>
       <LoginForm mode={mode} setMode={setMode} onClose={handleClose} />

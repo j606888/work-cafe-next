@@ -26,7 +26,7 @@ const DEFAULT_SETUP = {
   disableDefaultUI: true,
 }
 
-const GoogleMap = ({ children }) => {
+const GoogleMap = ({ onClick, children }) => {
   const router = useRouter()
   const [mapOptions, setMapOptions] = useState(DEFAULT_SETUP)
   const { isLoaded } = useJsApiLoader({
@@ -90,8 +90,6 @@ const GoogleMap = ({ children }) => {
       shallow: true,
     })
   }
-
-  function onClick() {}
 
   if (!isLoaded) return <div>Loading...</div>
 

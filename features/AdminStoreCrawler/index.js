@@ -1,24 +1,15 @@
 import React, { useRef, useReducer } from "react"
 import styled from "styled-components"
-import MyLocation from "features/MyLocation"
 import ControlPanel from "./ControlPanel"
 import SearchDialog from "./SearchDialog"
 import Circle from "./Circle"
 import { createCrawlRecord } from "api/map-crawlers"
 import GoogleMap from "features/GoogleMap"
 import { Marker } from "@react-google-maps/api"
-
-const Container = styled.div`
-  position: relative;
-  height: calc(100vh - 64px);
-  z-index: -2;
-`
-
-const MyLocationContainer = styled.div`
-  position: absolute;
-  right: 0.5rem;
-  bottom: 7rem;
-`
+import useSWR from "swr"
+import { mapCenter } from "utils/map-helper"
+import store from "stores/store"
+import { laggy } from "utils/laggy"
 
 const INITIAL_STATE = {
   showArea: true,
@@ -49,19 +40,16 @@ const reducer = (state, action) => {
 }
 
 const AdminStoreCrawler = () => {
+  const { map } = store((state) => ({
+    map: state.map,
+  }))
+  const { lat, lng } = mapCenter(map)
   const [controls, dispatch] = useReducer(reducer, INITIAL_STATE)
   const tempRef = useRef(null)
-  // const { data: mapCrawlers } = useSWR(
-  //   ["/admin/map-crawlers", { ...center, limit: 50 }],
-  //   fetcher,
-  //   { use: [laggy] }
-  // )
-
-  const handleFindMe = ({ lat, lng }) => {
-    const center = { lat, lng }
-    map.setZoom(15)
-    // map.panTo(center)
-  }
+  const { data: mapCrawlers } = useSWR(
+    ["/admin/map-crawlers", { lat, lng, limit: 50 }],
+    { use: [laggy] }
+  )
 
   const handleSearch = async () => {
     const crawlRecord = {
@@ -76,8 +64,6 @@ const AdminStoreCrawler = () => {
     tempRef.current = latLng.toJSON()
     dispatch({ type: "TOGGLE_MODAL" })
   }
-
-  if (!isReady) return <div>NotReady</div>
 
   return (
     <Container>
@@ -94,17 +80,7 @@ const AdminStoreCrawler = () => {
         handleClose={() => dispatch({ type: "TOGGLE_MODAL" })}
         handleSearch={handleSearch}
       />
-      <MyLocationContainer>
-        <MyLocation onClick={handleFindMe} />
-      </MyLocationContainer>
-      <GoogleMap
-        onClick={handleClick}
-        mapSettings={mapSettings}
-        style={{
-          width: "100%",
-          height: "90vh",
-        }}
-      >
+      <GoogleMap onClick={handleClick}>
         {controls.showModal && tempRef.current && (
           <Circle
             mapCrawler={{ ...tempRef.current, radius: controls.searchRadius }}
@@ -131,5 +107,17 @@ const AdminStoreCrawler = () => {
     </Container>
   )
 }
+
+const Container = styled.div`
+  position: relative;
+  height: calc(100vh - 64px);
+  z-index: -2;
+`
+
+const MyLocationContainer = styled.div`
+  position: absolute;
+  right: 0.5rem;
+  bottom: 7rem;
+`
 
 export default AdminStoreCrawler
