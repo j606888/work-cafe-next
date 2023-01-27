@@ -23,6 +23,7 @@ const DEFAULT_SETUP = {
   mapId: process.env.NEXT_PUBLIC_MAP_ID,
   gestureHandling: "greedy",
   keyboardShortcuts: false,
+  disableDefaultUI: true,
 }
 
 const GoogleMap = ({ children }) => {

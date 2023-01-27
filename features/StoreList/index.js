@@ -7,9 +7,10 @@ import store from "stores/store"
 
 export default function StoreList({ expand, onClick = () => {} }) {
   const { data: stores } = useSearchStores()
-  const { placeId, setPlaceId } = store((state) => ({
+  const { placeId, setPlaceId, focusPlaceId } = store((state) => ({
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
+    focusPlaceId: state.focusPlaceId,
   }))
   const storesRef = React.useRef({})
 
@@ -25,14 +26,14 @@ export default function StoreList({ expand, onClick = () => {} }) {
     onClick({ placeId, lat, lng })
   }
 
-  // React.useEffect(() => {
-  //   if (focusPlaceId && storesRef.current[focusPlaceId]) {
-  //     storesRef.current[focusPlaceId].scrollIntoView({
-  //       inline: "center",
-  //       block: "center",
-  //     })
-  //   }
-  // }, [focusPlaceId])
+  React.useEffect(() => {
+    if (focusPlaceId && storesRef.current[focusPlaceId]) {
+      storesRef.current[focusPlaceId].scrollIntoView({
+        inline: "center",
+        block: "center",
+      })
+    }
+  }, [focusPlaceId])
 
   if (!stores) return null
   if (stores.totalStores === 0) return <NoMatch />

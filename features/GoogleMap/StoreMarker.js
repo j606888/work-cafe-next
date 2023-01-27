@@ -58,11 +58,12 @@ function _label({ showLabel, store, isFocus, angle }) {
     }
   }
   if (showLabel) {
-    let className
-    if (angle <= 45 || angle > 315) className = 'right'
-    else if (angle > 45 && angle <= 135) className = 'top'
-    else if (angle > 135 && angle <= 225) className = 'left'
-    else if (angle > 225 && angle <= 315) className = 'bottom'
+    // let className
+    // if (angle <= 45 || angle > 315) className = 'right'
+    // else if (angle > 45 && angle <= 135) className = 'top'
+    // else if (angle > 135 && angle <= 225) className = 'left'
+    // else if (angle > 225 && angle <= 315) className = 'bottom'
+    const className = 'right'
 
     return {
       text: store.name,

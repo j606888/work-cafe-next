@@ -72,7 +72,7 @@ const Container = styled.div`
       expand &&
       `
       background-color: #ffffff;
-      top: 56px;
+      // top: 56px;
     `}
   }
 `

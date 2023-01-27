@@ -27,6 +27,12 @@ const store = create((set) => ({
       ...state,
       placeId,
     })),
+  focusPlaceId: null,
+  setFocusPlaceId: (focusPlaceId) =>
+    set((state) => ({
+      ...state,
+      focusPlaceId,
+    })),
   keyword: null,
   setKeyword: (keyword) =>
     set((state) => ({

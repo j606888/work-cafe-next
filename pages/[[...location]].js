@@ -24,7 +24,7 @@ export default function MapPage() {
       </Head>
       <Container>
         <AppBar />
-        <MapArea>
+        <MapArea panelType={panelType}>
           {panelType !== PANEL_TYPES.INIT && <ShowLabelCheckbox />}
           {panelType === PANEL_TYPES.INIT && <LandingSearch />}
           {panelType === PANEL_TYPES.STORE_LIST && <LeftContainer />}
@@ -55,6 +55,14 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+
+  @media ${devices.mobileXl} {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 `
 
 const MapArea = styled.div`
@@ -113,5 +121,12 @@ const MapArea = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 240px;
+  }
+
+  @media ${devices.mobileXl} {
+    /* height: ${({ panelType }) =>
+       panelType === PANEL_TYPES.STORE_LIST ? "calc(100% - 40px - 240px)" : "calc(100% - 56px)"}; */
+    height: 100%;
+    overflow: scroll;
   }
 `

@@ -18,7 +18,6 @@ const LeftContainer = () => {
   const [expand, setExpand] = useState(false)
 
   function handleSearch(keyword) {
-    console.log(map)
     setPlaceId(null)
   }
 
@@ -60,7 +59,6 @@ const LeftContainer = () => {
 const Container = styled.div`
   width: ${({ expand }) => (expand ? "100%" : "628px")};
   overflow: scroll;
-  background-color: #ffffff;
   position: relative;
   flex-shrink: 0;
   height: 100%;
@@ -69,6 +67,9 @@ const Container = styled.div`
     width: 100%;
     z-index: 5;
     background-color: transparent;
+    position: absolute;
+    height: ${({ expand }) => (expand ? "100%" : "auto")};
+    overflow: visible;
   }
 `
 

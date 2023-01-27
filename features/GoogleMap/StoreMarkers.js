@@ -9,17 +9,21 @@ import StoreMarker from "./StoreMarker"
 const StoreMarkers = () => {
   const router = useRouter()
   const { data: stores } = useSearchStores()
-  const { placeId, setPlaceId, setPanelType, map, showLabel } = store((state) => ({
-    placeId: state.placeId,
-    setPlaceId: state.setPlaceId,
-    setPanelType: state.setPanelType,
-    map: state.map,
-    showLabel: state.showLabel,
-  }))
+  const { placeId, setPlaceId, focusPlaceId, setFocusPlaceId, setPanelType, map, showLabel } =
+    store((state) => ({
+      placeId: state.placeId,
+      setPlaceId: state.setPlaceId,
+      setFocusPlaceId: state.setFocusPlaceId,
+      focusPlaceId: state.focusPlaceId,
+      setPanelType: state.setPanelType,
+      map: state.map,
+      showLabel: state.showLabel,
+    }))
   const fullScreen = useMediaQuery(devices.mobileXl)
-
+  const showLabel2 = (!fullScreen && showLabel) || map?.zoom >= 15
   function handleClickMarker(placeId) {
     if (fullScreen) {
+      setFocusPlaceId(placeId)
     } else {
       const lat = map.center.lat().toFixed(6)
       const lng = map.center.lng().toFixed(6)
@@ -45,8 +49,10 @@ const StoreMarkers = () => {
             mapLat={mapLat}
             key={store.placeId}
             store={store}
-            showLabel={showLabel}
-            isFocus={store.placeId === placeId}
+            showLabel={showLabel2}
+            isFocus={
+              store.placeId === placeId || store.placeId === focusPlaceId
+            }
             // isBookmark={store.bookmark}
             // isBounce={store.placeId === bouncePlaceId}
             onClick={handleClickMarker}
