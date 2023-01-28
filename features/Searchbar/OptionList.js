@@ -16,7 +16,7 @@ const OptionList = ({ show, hints, focusedIndex, onClick }) => {
     <Container>
       {hints.map((result, index) => (
         <Option
-          key={`${result.name}${result.placeId}`}
+          key={_key(result)}
           result={result}
           onClick={() => handleClick(result)}
           focus={index === focusedIndex}
@@ -24,6 +24,11 @@ const OptionList = ({ show, hints, focusedIndex, onClick }) => {
       ))}
     </Container>
   )
+}
+
+function _key(result) {
+  const { name, placeId, address } = result
+  return `${name}.${placeId}.${address}`
 }
 
 const Container = styled.div`

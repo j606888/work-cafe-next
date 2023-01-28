@@ -33,12 +33,12 @@ const LoginMenu = ({ avatar_url, email, name, role, onLogout = () => {} }) => {
             </a>
           </Link>
         )}
-        <Link href="/bookmarks">
-          <a className="link">
+        {/* <Link href="/bookmarks">
+          <a className="link" >
             <BookmarkIcon />
             你的收藏
           </a>
-        </Link>
+        </Link> */}
         <Button onClick={handleLogout}>登出</Button>
       </Body>
     </Container>

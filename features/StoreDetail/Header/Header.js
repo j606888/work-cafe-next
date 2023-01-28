@@ -56,10 +56,18 @@ const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
             <img src="/navigate.svg" alt="navigate" />
             <span>導航</span>
           </UrlButton>
-          <Button onClick={handleAddBookmark}>
-            <img src="/like.svg" alt="like" />
-            <span>收藏</span>
-          </Button>
+          {isBookmark ? (
+            <Button onClick={handleRemoveBookmark}>
+              <img src="/like.svg" alt="like" />
+              <span>已收藏</span>
+            </Button>
+          ) : (
+            <Button onClick={handleAddBookmark}>
+              <img src="/like.svg" alt="like" />
+              <span>收藏</span>
+            </Button>
+          )}
+
           <ShareButton />
           {/* {isBookmark ? (
             <Button onClick={handleRemoveBookmark} active>

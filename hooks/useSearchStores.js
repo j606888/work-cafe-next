@@ -2,15 +2,14 @@ import store from "stores/store"
 import useSWR from "swr"
 
 const useSearchStores = () => {
-  const { searchCenter } = store((state) => ({
+  const { searchCenter, keyword } = store((state) => ({
     searchCenter: state.searchCenter,
+    keyword: state.keyword,
   }))
-  const path = window.location.pathname
   const params = {}
 
-  if (path.includes('/search/')) {
-    const m = path.match(/search\/(.*)\/@/)
-    params.keyword = m[1]
+  if (keyword) {
+    params.keyword = keyword
   }
 
   if (searchCenter.lat) {
