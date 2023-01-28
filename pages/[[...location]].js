@@ -126,7 +126,7 @@ const MapArea = styled.div`
   @media ${devices.mobileXl} {
     /* height: ${({ panelType }) =>
        panelType === PANEL_TYPES.STORE_LIST ? "calc(100% - 40px - 240px)" : "calc(100% - 56px)"}; */
-    height: 100%;
+    height: calc(100% - 56px);
     overflow: scroll;
   }
 `
