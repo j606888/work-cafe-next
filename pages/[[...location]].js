@@ -4,18 +4,29 @@ import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import LandingSearch from "features/LandingSearch"
 import LeftContainer from "features/LeftContainer"
-import StoreDetail from "features/StoreDetail"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import Head from "next/head"
 import store, { PANEL_TYPES } from "stores/store"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
 import { devices } from "constants/styled-theme"
+import { useEffect } from "react"
+import { useMediaQuery } from "@mui/material"
+import { useRouter } from "next/router"
 
 export default function MapPage() {
   const { panelType } = store((state) => ({
     panelType: state.panelType,
   }))
+  const router = useRouter()
+
+  const isFullScreen = useMediaQuery(devices.mobileXl)
+
+  useEffect(() => {
+    if (router.isReady && isFullScreen) {
+      router.push("/m")
+    }
+  }, [isFullScreen, router])
 
   return (
     <>
@@ -28,7 +39,6 @@ export default function MapPage() {
           {panelType !== PANEL_TYPES.INIT && <ShowLabelCheckbox />}
           {panelType === PANEL_TYPES.INIT && <LandingSearch />}
           {panelType === PANEL_TYPES.STORE_LIST && <LeftContainer />}
-          {panelType === PANEL_TYPES.STORE_DETAIL && <StoreDetail />}
           <GoogleMap>
             {panelType !== PANEL_TYPES.INIT && <StoreMarkers />}
             <MyLocationMarker />
@@ -42,7 +52,8 @@ export default function MapPage() {
 
 const SearchHereButton = styled(SearchHere)`
   position: absolute;
-  left: ${({ panelType }) => panelType === PANEL_TYPES.INIT ? "calc(50% + 312px)" : "50%"};
+  left: ${({ panelType }) =>
+    panelType === PANEL_TYPES.INIT ? "calc(50% + 312px)" : "50%"};
   top: 32px;
   transform: translateX(-50%);
   z-index: 2;
@@ -125,8 +136,9 @@ const MapArea = styled.div`
 
   @media ${devices.mobileXl} {
     /* height: ${({ panelType }) =>
-       panelType === PANEL_TYPES.STORE_LIST ? "calc(100% - 40px - 240px)" : "calc(100% - 56px)"}; */
+      panelType === PANEL_TYPES.STORE_LIST
+        ? "calc(100% - 40px - 240px)"
+        : "calc(100% - 56px)"}; */
     height: calc(100% - 56px);
-    overflow: scroll;
   }
 `

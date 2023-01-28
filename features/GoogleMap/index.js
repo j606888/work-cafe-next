@@ -84,9 +84,13 @@ const GoogleMap = ({ onClick, children }) => {
     const lng = map.center.lng().toFixed(6)
     const zoom = map.zoom
 
-    const path = window.location.pathname
-    const originPart = path.split("@")[0]
-    router.push(`${originPart}@${lat},${lng},${zoom}z`, undefined, {
+    const { pathname, search } = window.location
+    let originPart = pathname.split("@")[0]
+    if (originPart.slice(-1) !== "/") {
+      originPart = `${originPart}/`
+    }
+
+    router.push(`${originPart}@${lat},${lng},${zoom}z${search}`, undefined, {
       shallow: true,
     })
   }

@@ -40,14 +40,13 @@ const Container = styled.div`
   }
 
   @media ${devices.mobileXl} {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    position: relative;
     border-radius: 0;
     padding: 52px 24px 0;
     width: 100%;
+    left: auto;
+    top: auto;
+    box-shadow: none;
   }
 `
 
