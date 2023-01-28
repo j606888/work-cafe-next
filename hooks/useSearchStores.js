@@ -2,13 +2,16 @@ import store from "stores/store"
 import useSWR from "swr"
 
 const useSearchStores = () => {
-  const { searchCenter, keyword } = store((state) => ({
-    searchCenter: state.searchCenter,
-    keyword: state.keyword,
+  const { searchCenter } = store((state) => ({
+    searchCenter: state.searchCenter
   }))
   const params = {}
 
-  if (keyword) {
+  if (
+    typeof window !== "undefined" &&
+    window.location.href.includes("keyword")
+  ) {
+    const keyword = window.location.search.replace("?keyword=", "")
     params.keyword = keyword
   }
 

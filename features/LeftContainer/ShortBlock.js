@@ -67,6 +67,9 @@ const Container = styled.div`
     background-color: transparent;
     gap: 12px;
     padding: 14px 23px;
+    position: absolute;
+    left: 0;
+    top: 0;
 
     ${({ expand }) =>
       expand &&

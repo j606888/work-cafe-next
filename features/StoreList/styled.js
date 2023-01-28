@@ -12,9 +12,6 @@ const mobileStyle = {
     justify-content: flex-start;
     width: 100%;
     overflow-x: scroll;
-    position: fixed;
-    left: 0;
-    bottom: 0;
     padding: 12px 12px;
     gap: 10px;
     background-color: #ffffff;
@@ -29,6 +26,7 @@ export const Container = styled.div`
   align-items: flex-start;
   justify-content: space-around;
   padding: 0 28px;
+  flex-shrink: 0;
 
   @media ${devices.mobileXl} {
     ${({ expand }) => (expand ? mobileStyle.expand : mobileStyle.unExpand)}

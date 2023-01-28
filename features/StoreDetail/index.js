@@ -37,9 +37,9 @@ const StoreDetail = ({ store }) => {
     const { lat, lng, zoom } = mapCenter(map)
 
     if (keyword) {
-      router.push(`search/${keyword}/@${lat},${lng},${zoom}z`)
+      router.push(`/m/@${lat},${lng},${zoom}z?keyword=${keyword}`)
     } else {
-      router.replace(`/@${lat},${lng},${zoom}z`)
+      router.replace(`/m/@${lat},${lng},${zoom}z`)
     }
 
     if (!stores) {

@@ -4,12 +4,16 @@ import StoreCard from "components/StoreCard"
 import NoMatch from "features/LeftContainer/NoMatch"
 import useSearchStores from "hooks/useSearchStores"
 import store from "stores/store"
+import { useRouter } from "next/router"
 
-export default function StoreList({ expand, onClick = () => {} }) {
+export default function StoreList({ expand }) {
+  const router = useRouter()
   const { data: stores } = useSearchStores()
-  const { placeId, setPlaceId, focusPlaceId } = store((state) => ({
+  const { map, placeId, setPlaceId, setPanelType, focusPlaceId } = store((state) => ({
+    map: state.map,
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
+    setPanelType: state.setPanelType,
     focusPlaceId: state.focusPlaceId,
   }))
   const storesRef = React.useRef({})
@@ -24,6 +28,18 @@ export default function StoreList({ expand, onClick = () => {} }) {
     setPlaceId(placeId)
     // setFocusPlaceId(placeId)
     onClick({ placeId, lat, lng })
+  }
+
+  function onClick({ placeId }) {
+    const lat = map.center.lat().toFixed(6)
+    const lng = map.center.lng().toFixed(6)
+    const zoom = map.zoom
+    const location = `@${lat},${lng},${zoom}z`
+
+    // setPlaceId(placeId)
+    // setPanelType("STORE_DETAIL")
+
+    router.push(`/place/${placeId}/${location}`)
   }
 
   React.useEffect(() => {

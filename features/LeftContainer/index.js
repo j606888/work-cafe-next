@@ -21,18 +21,6 @@ const LeftContainer = () => {
     setPlaceId(null)
   }
 
-  function handleClickStore({ placeId }) {
-    const lat = map.center.lat().toFixed(6)
-    const lng = map.center.lng().toFixed(6)
-    const zoom = map.zoom
-
-    setPlaceId(placeId)
-    setPanelType("STORE_DETAIL")
-    router.push(`place/${placeId}/@${lat},${lng},${zoom}z`, undefined, {
-      shallow: true,
-    })
-  }
-
   function handleFilterChange(settings) {
     updateSettings(settings)
   }
@@ -46,7 +34,7 @@ const LeftContainer = () => {
         expand={expand}
         onMapOpen={() => setExpand(false)}
       />
-      <StoreList onClick={handleClickStore} expand={expand} />
+      <StoreList expand={expand} />
       {!expand && (
         <ExpandButton onClick={() => setExpand(true)}>
           <SvgButton path="expand-btn" />

@@ -21,13 +21,11 @@ const Searchbar = ({ type = "landing" }) => {
   }))
 
   const handleSearch = (k) => {
-    const lat = map.center.lat().toFixed(6)
-    const lng = map.center.lng().toFixed(6)
-    const zoom = map.zoom
-    router.push(`search/${k}/@${lat},${lng},${zoom}z`)
+    const url = new URL(window.location.href)
+    const path = url.pathname
+    router.push(`${path}?keyword=${k}`)
+
     setKeyword(k)
-    setSearchCenter({ lat, lng })
-    setPanelType(PANEL_TYPES.STORE_LIST)
   }
 
   const handleCancel = () => {
