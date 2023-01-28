@@ -22,10 +22,8 @@ const Searchbar = ({ type = "landing" }) => {
   }))
 
   const handleSearch = (k) => {
-    const { lat, lng } = mapCenter(map)
-    const url = new URL(window.location.href)
-    const path = url.pathname
-    router.push(`${path}?keyword=${k}`)
+    const { lat, lng, zoom } = mapCenter(map)
+    router.push(`/m/@${lat},${lng},${zoom}z?keyword=${k}`)
 
     setKeyword(k)
     setSearchCenter({ lat, lng })

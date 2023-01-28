@@ -23,16 +23,9 @@ const NearbySearch = () => {
       } else {
         location = await _getCurrentPosition()
       }
+      router.push(`/m/@${location.lat},${location.lng},15z`)
       setMyLocation(location)
       setSearchCenter(location)
-      map.panTo(location)
-      map.setZoom(15)
-
-      const lat = map.center.lat().toFixed(6)
-      const lng = map.center.lng().toFixed(6)
-      const zoom = map.zoom
-      router.push(`@${lat},${lng},${zoom}z`)
-      setPanelType(PANEL_TYPES.STORE_LIST)
     } catch (err) {
       handleError(err)
     }
