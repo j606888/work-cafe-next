@@ -8,24 +8,23 @@ import styled from "styled-components"
 import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import GoogleMap from "features/GoogleMap"
 import SearchHere from "components/Button/SearchHere"
-import camelcaseKeys from "camelcase-keys"
+import { useRouter } from "next/router"
+import useSWR from "swr"
+import Skeleton from "components/Skeleton"
 
-const API_HOST = process.env.NEXT_PUBLIC_API_HOST
+function useStore() {
+  const router = useRouter()
+  const placeId = router.query.placeId
+  const { data } = useSWR(placeId ? `/stores/${placeId}` : null)
 
-function camelcase(store) {
-  return camelcaseKeys(store, { deep: true })
+  return data
 }
 
-export async function getServerSideProps({ params }) {
-  const placeId = params.placeId
-  const res = await fetch(`${API_HOST}/stores/${placeId}`)
-  const store = await res.json()
-
-  return { props: { store: camelcase(store) } }
-}
-
-export default function PlacePage({ store }) {
+export default function PlacePage() {
+  const store = useStore()
   const fullScreen = useMediaQuery(devices.mobileXl)
+
+  if (!store) return <Skeleton />
 
   if (fullScreen) {
     return (
