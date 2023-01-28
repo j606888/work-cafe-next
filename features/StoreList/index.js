@@ -9,11 +9,12 @@ import { useRouter } from "next/router"
 export default function StoreList({ expand }) {
   const router = useRouter()
   const { data: stores } = useSearchStores()
-  const { map, placeId, setPlaceId, focusPlaceId } = store((state) => ({
+  const { map, placeId, setPlaceId, focusPlaceId, setFocusPlaceId } = store((state) => ({
     map: state.map,
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
     focusPlaceId: state.focusPlaceId,
+    setFocusPlaceId: state.setFocusPlaceId,
   }))
   const storesRef = React.useRef({})
 
@@ -35,7 +36,7 @@ export default function StoreList({ expand }) {
     const zoom = map.zoom
     const location = `@${lat},${lng},${zoom}z`
 
-    // setPlaceId(placeId)
+    setFocusPlaceId(placeId)
     // setPanelType("STORE_DETAIL")
 
     router.push(`/place/${placeId}/${location}`)

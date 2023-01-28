@@ -16,11 +16,12 @@ import { mapCenter } from "utils/map-helper"
 
 const StoreDetail = ({ store }) => {
   const router = useRouter()
-  const { map, keyword, setPanelType } = storeStore(
+  const { map, keyword, setPanelType, setPlaceId } = storeStore(
     (state) => ({
       map: state.map,
       keyword: state.keyword,
       setPanelType: state.setPanelType,
+      setPlaceId: state.setPlaceId,
     })
   )
   const { searchHints } = useHintSearch()
@@ -33,6 +34,7 @@ const StoreDetail = ({ store }) => {
 
   const handleClose = () => {
     setPanelType(PANEL_TYPES.STORE_LIST)
+    setPlaceId(null)
 
     const { lat, lng, zoom } = mapCenter(map)
 
