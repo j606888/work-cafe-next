@@ -4,20 +4,10 @@ import LandingSearch from "features/LandingSearch"
 import Head from "next/head"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
-import { devices } from "constants/styled-theme"
-import { useEffect } from "react"
-import { useMediaQuery } from "@mui/material"
-import { useRouter } from "next/router"
+import useRWD from "hooks/useRWD"
 
 export default function MapPage() {
-  const router = useRouter()
-  const isFullScreen = useMediaQuery(devices.mobileXl)
-
-  useEffect(() => {
-    if (router.isReady && isFullScreen) {
-      router.push("/m")
-    }
-  }, [isFullScreen, router])
+  useRWD({ redirect: true })
 
   return (
     <>

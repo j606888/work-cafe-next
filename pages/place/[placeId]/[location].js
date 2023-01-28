@@ -22,7 +22,7 @@ function useStore() {
 
 export default function PlacePage() {
   const store = useStore()
-  const { isFullScreen } = useRWD(false)
+  const { isFullScreen } = useRWD()
 
   if (isFullScreen) {
     if (!store) return <Skeleton />
