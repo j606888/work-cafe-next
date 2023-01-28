@@ -1,6 +1,5 @@
-import React, { useEffect } from "react"
+import React from "react"
 import styled from "styled-components"
-import useSWR from "swr"
 import Skeleton from "components/Skeleton"
 import Header from "./Header/Header"
 import TagList from "../../components/TagList/TagList"
@@ -13,39 +12,34 @@ import useHintSearch from "features/Searchbar/useHintSearch"
 import useSearchStores from "hooks/useSearchStores"
 import storeStore, { PANEL_TYPES } from "stores/store"
 import { useRouter } from "next/router"
+import { mapCenter } from "utils/map-helper"
 
-const StoreDetail = () => {
+const StoreDetail = ({ store }) => {
   const router = useRouter()
-  const { map, placeId, keyword, setPlaceId, setPanelType } = storeStore(
+  const { map, keyword, setPanelType } = storeStore(
     (state) => ({
       map: state.map,
-      placeId: state.placeId,
       keyword: state.keyword,
-      setPlaceId: state.setPlaceId,
       setPanelType: state.setPanelType,
     })
   )
   const { searchHints } = useHintSearch()
 
   const { data: stores } = useSearchStores()
-  const { data: store, mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   function handleReviewSave() {
     mutateStore()
   }
 
   const handleClose = () => {
-    setPlaceId(null)
     setPanelType(PANEL_TYPES.STORE_LIST)
 
-    const lat = map.center.lat().toFixed(6)
-    const lng = map.center.lng().toFixed(6)
-    const zoom = map.zoom
+    const { lat, lng, zoom } = mapCenter(map)
 
     if (keyword) {
       router.push(`search/${keyword}/@${lat},${lng},${zoom}z`)
     } else {
-      router.push(`@${lat},${lng},${zoom}z`)
+      router.replace(`/@${lat},${lng},${zoom}z`)
     }
 
     if (!stores) {
@@ -67,7 +61,7 @@ const StoreDetail = () => {
         placeId={store.placeId}
         isBookmark={store.isBookmark}
         url={store.url}
-        onBookmarkUpdate={mutateStore}
+        onBookmarkUpdate={handleReviewSave}
       />
       <ImagePreview photos={store.photos} name={store.name} />
       <H3>{store.name}</H3>
@@ -122,13 +116,10 @@ const Container = styled.div`
   width: 628px;
   position: relative;
   background-color: #ffffff;
-  padding-bottom: 1px;
-  height: 100%;
   overflow: scroll;
 
   @media ${devices.mobileXl} {
     width: 100%;
-    padding: 1px 0;
   }
 `
 

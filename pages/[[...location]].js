@@ -4,7 +4,6 @@ import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import LandingSearch from "features/LandingSearch"
 import LeftContainer from "features/LeftContainer"
-import StoreDetail from "features/StoreDetail"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import Head from "next/head"
 import store, { PANEL_TYPES } from "stores/store"
@@ -28,7 +27,6 @@ export default function MapPage() {
           {panelType !== PANEL_TYPES.INIT && <ShowLabelCheckbox />}
           {panelType === PANEL_TYPES.INIT && <LandingSearch />}
           {panelType === PANEL_TYPES.STORE_LIST && <LeftContainer />}
-          {panelType === PANEL_TYPES.STORE_DETAIL && <StoreDetail />}
           <GoogleMap>
             {panelType !== PANEL_TYPES.INIT && <StoreMarkers />}
             <MyLocationMarker />
@@ -127,6 +125,5 @@ const MapArea = styled.div`
     /* height: ${({ panelType }) =>
        panelType === PANEL_TYPES.STORE_LIST ? "calc(100% - 40px - 240px)" : "calc(100% - 56px)"}; */
     height: calc(100% - 56px);
-    overflow: scroll;
   }
 `
