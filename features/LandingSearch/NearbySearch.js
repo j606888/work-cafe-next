@@ -1,13 +1,13 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
-import store, { PANEL_TYPES } from "stores/store"
+import store from "stores/store"
+import { CircularProgress } from "@mui/material"
 
 const NearbySearch = () => {
-  const { map, setPanelType, myLocation, setMyLocation, setSearchCenter } = store((state) => ({
-    map: state.map,
-    setPanelType: state.setPanelType,
+  const [loading, setLoading] = useState(false)
+  const { myLocation, setMyLocation, setSearchCenter } = store((state) => ({
     myLocation: state.myLocation,
     setMyLocation: state.setMyLocation,
     setSearchCenter: state.setSearchCenter,
@@ -16,6 +16,7 @@ const NearbySearch = () => {
   const router = useRouter()
 
   const handleClick = async () => {
+    setLoading(true)
     try {
       let location
       if (myLocation) {
@@ -48,7 +49,10 @@ const NearbySearch = () => {
         <h3>正在找尋附近的咖啡店？</h3>
         <p>須許可此網頁存取你的GPS定位</p>
       </Content>
-      <SearchBtn onClick={handleClick}>搜尋附近</SearchBtn>
+      <SearchBtn onClick={handleClick}>
+        {loading && <CircularProgress size={18} color="success" />}
+        {loading ? "定位中" : "搜尋附近"}
+      </SearchBtn>
     </Container>
   )
 }
@@ -138,6 +142,10 @@ const SearchBtn = styled.button`
   color: #ffffff;
   font-size: 18px;
   line-height: 25px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 auto;
 
   @media ${devices.mobileXl} {
     width: auto;
