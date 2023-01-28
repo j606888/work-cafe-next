@@ -18,6 +18,7 @@ const mobileStyle = {
   `,
 }
 export const Container = styled.div`
+  min-height: 240px;
   box-sizing: border-box;
   display: flex;
   width: 100%;

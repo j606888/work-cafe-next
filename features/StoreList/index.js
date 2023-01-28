@@ -51,12 +51,12 @@ export default function StoreList({ expand }) {
     }
   }, [focusPlaceId])
 
-  if (!stores) return null
-  if (stores.totalStores === 0) return <NoMatch />
+  // if (!stores) return null
+  if (stores?.totalStores === 0) return <NoMatch />
 
   return (
     <>
-      <StoreCount>{stores.totalStores} 間咖啡店</StoreCount>
+      <StoreCount>{stores?.totalStores} 間咖啡店</StoreCount>
       <Container expand={expand}>
         {stores?.stores?.map((store, i) => (
           <StoreCard
