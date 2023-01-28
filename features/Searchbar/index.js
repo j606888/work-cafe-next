@@ -7,6 +7,7 @@ import useHintSearch from "./useHintSearch"
 import SvgButton from "components/SvgButton"
 import { useRouter } from "next/router"
 import store, { PANEL_TYPES } from "stores/store"
+import { mapCenter } from "utils/map-helper"
 
 const Searchbar = ({ type = "landing" }) => {
   const router = useRouter()
@@ -21,11 +22,13 @@ const Searchbar = ({ type = "landing" }) => {
   }))
 
   const handleSearch = (k) => {
+    const { lat, lng } = mapCenter(map)
     const url = new URL(window.location.href)
     const path = url.pathname
     router.push(`${path}?keyword=${k}`)
 
     setKeyword(k)
+    setSearchCenter({ lat, lng })
   }
 
   const handleCancel = () => {

@@ -9,11 +9,10 @@ import { useRouter } from "next/router"
 export default function StoreList({ expand }) {
   const router = useRouter()
   const { data: stores } = useSearchStores()
-  const { map, placeId, setPlaceId, setPanelType, focusPlaceId } = store((state) => ({
+  const { map, placeId, setPlaceId, focusPlaceId } = store((state) => ({
     map: state.map,
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
-    setPanelType: state.setPanelType,
     focusPlaceId: state.focusPlaceId,
   }))
   const storesRef = React.useRef({})
