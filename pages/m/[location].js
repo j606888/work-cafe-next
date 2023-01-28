@@ -10,7 +10,7 @@ import { labelStyles } from "features/GoogleMap/labelStyles"
 import useRWD from "hooks/useRWD"
 
 export default function MobileLocationPage() {
-  useRWD()
+  useRWD(true)
 
   return (
     <>
