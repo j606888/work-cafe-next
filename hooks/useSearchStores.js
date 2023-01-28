@@ -1,11 +1,18 @@
 import store from "stores/store"
 import useSWR from "swr"
+import queryString from 'query-string'
+import snakecaseKeys from "snakecase-keys"
 
 const useSearchStores = () => {
   const { searchCenter } = store((state) => ({
     searchCenter: state.searchCenter
   }))
-  const params = {}
+  let params = {}
+
+  if (typeof window !== "undefined") {
+    const parsed = queryString.parse(window.location.search)
+    params = { ...params, ...parsed }
+  }
 
   if (
     typeof window !== "undefined" &&
@@ -20,8 +27,10 @@ const useSearchStores = () => {
     params.lng = searchCenter.lng
   }
 
-  const queryString = new URLSearchParams(params).toString()
-  const { data } = useSWR(!!params.lat ? `/stores/location?${queryString}` : null)
+  params = snakecaseKeys(params, { deep: true })
+
+  const query = new URLSearchParams(params).toString()
+  const { data } = useSWR(!!params.lat ? `/stores/location?${query}` : null)
   const isLoading = !!params.lat && !data
 
   return { data, isLoading }

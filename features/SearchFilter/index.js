@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import FilterAltIcon from "@mui/icons-material/FilterAlt"
 import {
   Badge,
   Box,
@@ -23,48 +22,8 @@ import useFilterStore from "stores/useFilterStore"
 import CloseIcon from "@mui/icons-material/Close"
 import { useMediaQuery } from "@mui/material"
 import SvgButton from "components/SvgButton"
-
-const Container = styled.div`
-  position: relative;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 52px;
-  width: 142px;
-  background-color: #fff;
-  color: #493425;
-  border: 1px solid #e8e6e4;
-  border-radius: 20px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f6f6f6;
-  }
-  @media ${devices.mobileXl} {
-    display: none;
-  }
-`
-
-const SmallContainer = styled(Container)`
-  display: none;
-  width: 52px;
-  height: 52px;
-
-  @media ${devices.mobileXl} {
-    display: flex;
-  }
-
-  svg {
-    color: #94684a;
-  }
-`
-
-const CloseContainer = styled.div`
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-`
+import { useRouter } from "next/router"
+import queryString from 'query-string'
 
 const INIT_FILTERS = {
   openType: "NONE",
@@ -76,7 +35,8 @@ const INIT_FILTERS = {
   tagIds: [],
 }
 
-const SearchFilter = ({ onChange = () => {} }) => {
+const SearchFilter = () => {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const filters = useFilterStore((state) => state.filters)
   const setFilters = useFilterStore((state) => state.setFilters)
@@ -103,7 +63,10 @@ const SearchFilter = ({ onChange = () => {} }) => {
   const handleApply = () => {
     setSettingsMemo(settings)
     setFilters(settings)
-    onChange(_filterCleanSettings(settings))
+    const filters = _filterCleanSettings(settings)
+    const query = queryString.stringify(filters)
+    const { pathname } = window.location
+    router.push(`${pathname}?${query}`)
     setOpen(false)
   }
 
@@ -177,8 +140,6 @@ const SearchFilter = ({ onChange = () => {} }) => {
   )
 }
 
-export default SearchFilter
-
 function _calcBadgeCount(settingsMemo) {
   let i = 0
   ;["recommend", "wakeUp", "reviewOver"].forEach((key) => {
@@ -210,3 +171,46 @@ function _filterCleanSettings(settings) {
 
   return result
 }
+
+const Container = styled.div`
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  width: 142px;
+  background-color: #fff;
+  color: #493425;
+  border: 1px solid #e8e6e4;
+  border-radius: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f6f6f6;
+  }
+  @media ${devices.mobileXl} {
+    display: none;
+  }
+`
+
+const SmallContainer = styled(Container)`
+  display: none;
+  width: 52px;
+  height: 52px;
+
+  @media ${devices.mobileXl} {
+    display: flex;
+  }
+
+  svg {
+    color: #94684a;
+  }
+`
+
+const CloseContainer = styled.div`
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+`
+export default SearchFilter

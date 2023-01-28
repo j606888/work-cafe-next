@@ -6,7 +6,6 @@ import Searchbar from "features/Searchbar"
 import SvgButton from "components/SvgButton"
 
 const ShortBlock = ({
-  onFilterChange,
   showFilter = true,
   expand = false,
   onMapOpen,
@@ -15,7 +14,7 @@ const ShortBlock = ({
     <Container expand={expand}>
       <SearchTool>
         <Searchbar type="storeList" />
-        {showFilter && <SearchFilter onChange={onFilterChange} />}
+        {showFilter && <SearchFilter />}
       </SearchTool>
       {expand && (
         <ShowMapButton onClick={onMapOpen}>
