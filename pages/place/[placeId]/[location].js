@@ -1,5 +1,3 @@
-import { useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
 import AppBar from "features/AppBar"
 import StoreDetail from "features/StoreDetail"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
@@ -11,6 +9,8 @@ import SearchHere from "components/Button/SearchHere"
 import { useRouter } from "next/router"
 import useSWR from "swr"
 import Skeleton from "components/Skeleton"
+import useRWD from "hooks/useRWD"
+import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 
 function useStore() {
   const router = useRouter()
@@ -22,11 +22,12 @@ function useStore() {
 
 export default function PlacePage() {
   const store = useStore()
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const { isFullScreen } = useRWD()
 
-  if (!store) return <Skeleton />
+  
+  if (isFullScreen) {
+    if (!store) return <Skeleton />
 
-  if (fullScreen) {
     return (
       <>
         <Head>
@@ -40,16 +41,17 @@ export default function PlacePage() {
     return (
       <>
         <Head>
-          <title>{store.name}</title>
+          <title>{store?.name || 'Work Cafe'}</title>
         </Head>
         <Container>
           <AppBar />
           <MapArea>
             <StoreDetail store={store} />
+            <ShowLabelCheckbox />
             <GoogleMap>
+              <SearchHereButton />
               <StoreMarkers />
               <MyLocationMarker />
-              <SearchHereButton />
             </GoogleMap>
           </MapArea>
         </Container>

@@ -9,18 +9,26 @@ import StoreMarker from "./StoreMarker"
 const StoreMarkers = () => {
   const router = useRouter()
   const { data: stores } = useSearchStores()
-  const { placeId, setPlaceId, focusPlaceId, setFocusPlaceId, setPanelType, map, showLabel } =
-    store((state) => ({
-      placeId: state.placeId,
-      setPlaceId: state.setPlaceId,
-      setFocusPlaceId: state.setFocusPlaceId,
-      focusPlaceId: state.focusPlaceId,
-      setPanelType: state.setPanelType,
-      map: state.map,
-      showLabel: state.showLabel,
-    }))
+  const {
+    placeId,
+    setPlaceId,
+    focusPlaceId,
+    setFocusPlaceId,
+    setPanelType,
+    map,
+    showLabel,
+  } = store((state) => ({
+    placeId: state.placeId,
+    setPlaceId: state.setPlaceId,
+    setFocusPlaceId: state.setFocusPlaceId,
+    focusPlaceId: state.focusPlaceId,
+    setPanelType: state.setPanelType,
+    map: state.map,
+    showLabel: state.showLabel,
+  }))
   const fullScreen = useMediaQuery(devices.mobileXl)
-  const showLabel2 = (!fullScreen && showLabel) || map?.zoom >= 15
+  const showLabel2 =
+    (!fullScreen && showLabel) || (fullScreen && map?.zoom >= 15)
   function handleClickMarker(placeId) {
     if (fullScreen) {
       setFocusPlaceId(placeId)
@@ -32,7 +40,9 @@ const StoreMarkers = () => {
       setPlaceId(placeId)
       setFocusPlaceId(placeId)
       setPanelType(PANEL_TYPES.STORE_DETAIL)
-      router.push(`/place/${placeId}/@${lat},${lng},${zoom}z`)
+      router.push(`/place/${placeId}/@${lat},${lng},${zoom}z`, undefined, {
+        shallow: true,
+      })
     }
   }
 
