@@ -3,9 +3,10 @@ import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
 import store from "stores/store"
-import { CircularProgress } from "@mui/material"
+import { CircularProgress, useMediaQuery } from "@mui/material"
 
 const NearbySearch = () => {
+  const isFullScreen = useMediaQuery(devices.mobileXl)
   const [loading, setLoading] = useState(false)
   const { myLocation, setMyLocation, setSearchCenter } = store((state) => ({
     myLocation: state.myLocation,
@@ -24,7 +25,11 @@ const NearbySearch = () => {
       } else {
         location = await _getCurrentPosition()
       }
-      router.push(`/m/@${location.lat},${location.lng},15z`)
+      if (isFullScreen) {
+        router.push(`/m/@${location.lat},${location.lng},15z`)
+      } else {
+        router.push(`/@${location.lat},${location.lng},15z`)
+      }
       setMyLocation(location)
       setSearchCenter(location)
     } catch (err) {
@@ -144,6 +149,7 @@ const SearchBtn = styled.button`
   line-height: 25px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   margin: 0 auto;
 

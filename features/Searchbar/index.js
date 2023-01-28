@@ -6,11 +6,13 @@ import useFocusIndex from "./useFocusIndex"
 import useHintSearch from "./useHintSearch"
 import SvgButton from "components/SvgButton"
 import { useRouter } from "next/router"
-import store, { PANEL_TYPES } from "stores/store"
+import store from "stores/store"
 import { mapCenter } from "utils/map-helper"
+import useRWD from "hooks/useRWD"
 
 const Searchbar = ({ type = "landing" }) => {
   const router = useRouter()
+  const isFullScreen = useRWD()
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
@@ -25,9 +27,16 @@ const Searchbar = ({ type = "landing" }) => {
     const { lat, lng } = mapCenter(map)
     const { middleLat, middleLng } = await _searchResultMid({ lat, lng, k })
 
-    router.push(`/m/@${middleLat},${middleLng},15z?keyword=${k}`, undefined, {
-      shallow: true,
-    })
+    if (isFullScreen) {
+      router.push(`/m/@${middleLat},${middleLng},15z?keyword=${k}`, undefined, {
+        shallow: true,
+      })
+    } else {
+      router.push(`/@${middleLat},${middleLng},15z?keyword=${k}`, undefined, {
+        shallow: true,
+      })
+    }
+
     if (map) {
       map.setZoom(15)
       map.panTo({ lat: middleLat, lng: middleLng })

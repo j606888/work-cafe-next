@@ -78,7 +78,7 @@ const GoogleMap = ({ onClick, children }) => {
   }
 
   function onIdle() {
-    if (!map) return
+    if (!map || router.asPath === '/') return
 
     const lat = map.center.lat().toFixed(6)
     const lng = map.center.lng().toFixed(6)

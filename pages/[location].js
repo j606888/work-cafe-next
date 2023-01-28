@@ -2,14 +2,15 @@ import AppBar from "features/AppBar"
 import GoogleMap from "features/GoogleMap"
 import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
-import ShortBlock from "features/LeftContainer/ShortBlock"
-import StoreList from "features/StoreList"
+import LeftContainer from "features/LeftContainer"
+import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import Head from "next/head"
 import styled from "styled-components"
+import SearchHere from "components/Button/SearchHere"
 import { labelStyles } from "features/GoogleMap/labelStyles"
 import useRWD from "hooks/useRWD"
 
-export default function MobileLocationPage() {
+export default function MapPage() {
   useRWD()
 
   return (
@@ -17,35 +18,43 @@ export default function MobileLocationPage() {
       <Head>
         <title>Work Cafe</title>
       </Head>
-      <FullScreenOverlay>
+      <Container>
         <AppBar />
         <MapArea>
-          <ShortBlock />
+          <ShowLabelCheckbox />
+          <LeftContainer />
           <GoogleMap>
-            <MyLocationMarker />
             <StoreMarkers />
+            <MyLocationMarker />
+            <SearchHereButton />
           </GoogleMap>
         </MapArea>
-        <StoreList />
-      </FullScreenOverlay>
+      </Container>
     </>
   )
 }
 
-const FullScreenOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+const SearchHereButton = styled(SearchHere)`
+  position: absolute;
+  left: 50%;
+  top: 32px;
+  transform: translateX(-50%);
+  z-index: 2;
+
+`
+const Container = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
 `
 
 const MapArea = styled.div`
   position: relative;
+  // If using 100vh, when stores exist will overflow.
+  height: calc(100vh - 120px);
   width: 100%;
-  height: 100%;
+  display: flex;
+  flex-wrap: nowrap;
 
   ${labelStyles}
 `
