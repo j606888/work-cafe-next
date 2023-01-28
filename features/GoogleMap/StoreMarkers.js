@@ -30,8 +30,9 @@ const StoreMarkers = () => {
       const zoom = map.zoom
 
       setPlaceId(placeId)
+      setFocusPlaceId(placeId)
       setPanelType(PANEL_TYPES.STORE_DETAIL)
-      router.push(`place/${placeId}/@${lat},${lng},${zoom}z`)
+      router.push(`/place/${placeId}/@${lat},${lng},${zoom}z`)
     }
   }
 

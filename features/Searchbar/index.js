@@ -11,8 +11,8 @@ import { mapCenter } from "utils/map-helper"
 import useRWD from "hooks/useRWD"
 
 const Searchbar = ({ type = "landing" }) => {
+  const { isFullScreen } = useRWD()
   const router = useRouter()
-  const isFullScreen = useRWD()
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
