@@ -1,3 +1,4 @@
+import { orange100 } from "constants/color"
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
 
@@ -53,7 +54,7 @@ const WordButton = styled.button`
     css`
       font-weight: 500;
       color: #222120;
-      border-bottom: 2px solid #FFA233;
+      border-bottom: 2px solid ${orange100};
       z-index: 1;
     `}
 `

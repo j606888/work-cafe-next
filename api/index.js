@@ -3,7 +3,6 @@ import camelcaseKeys from "camelcase-keys"
 import snakecaseKeys from "snakecase-keys"
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST
-const STORYBOOK = process.env.STORYBOOK_MODE
 
 async function refreshAccessToken() {
   const refreshToken = localStorage.getItem("refreshToken")
@@ -15,7 +14,7 @@ async function refreshAccessToken() {
   localStorage.setItem("refreshToken", data.refreshToken)
 }
 
-const baseURL = !!STORYBOOK ? null : API_HOST
+const baseURL = API_HOST
 export const instance = axios.create({
   baseURL,
   headers: {

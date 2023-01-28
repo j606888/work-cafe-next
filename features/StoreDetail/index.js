@@ -31,7 +31,7 @@ const StoreDetail = ({ store }) => {
   const { data: stores } = useSearchStores()
 
   function handleReviewSave() {
-    mutateStore()
+    // mutateStore()
   }
 
   const handleClose = () => {

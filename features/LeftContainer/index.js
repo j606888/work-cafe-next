@@ -5,31 +5,16 @@ import { devices } from "constants/styled-theme"
 import ShortBlock from "./ShortBlock"
 import SvgButton from "components/SvgButton"
 import store from "stores/store"
-import { useRouter } from "next/router"
 
 const LeftContainer = () => {
-  const router = useRouter()
-  const { map, placeId, setPlaceId, setPanelType } = store((state) => ({
-    map: state.map,
+  const { placeId } = store((state) => ({
     placeId: state.placeId,
-    setPlaceId: state.setPlaceId,
-    setPanelType: state.setPanelType,
   }))
   const [expand, setExpand] = useState(false)
-
-  function handleSearch(keyword) {
-    setPlaceId(null)
-  }
-
-  function handleFilterChange(settings) {
-    updateSettings(settings)
-  }
 
   return (
     <Container expand={expand}>
       <ShortBlock
-        onSearch={handleSearch}
-        onFilterChange={handleFilterChange}
         showFilter={!placeId}
         expand={expand}
         onMapOpen={() => setExpand(false)}

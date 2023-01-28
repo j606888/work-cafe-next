@@ -1,3 +1,4 @@
+import { orange100 } from "constants/color";
 import { css } from "styled-components";
 
 export const labelStyles = css`
@@ -37,7 +38,7 @@ export const labelStyles = css`
   .labels-focus {
     background-color: white;
     border-radius: 28px;
-    border: 2px solid #ffa233;
+    border: 2px solid ${orange100};
     color: #222120;
     font-size: 14px;
     font-weight: 700;

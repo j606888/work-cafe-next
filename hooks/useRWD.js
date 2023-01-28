@@ -3,7 +3,7 @@ import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 
-const useRWD = (redirect=false) => {
+const useRWD = (options={}) => {
   const router = useRouter()
   const isFullScreen = useMediaQuery(devices.mobileXl)
 
@@ -12,14 +12,11 @@ const useRWD = (redirect=false) => {
       return window.location.href.includes("/m")
     }
 
-    console.log({ redirect })
-
-    if (redirect && router.isReady) {
+    if (options.redirect && router.isReady) {
       if (isFullScreen && !isMobileURL()) router.push("/m")
       if (!isFullScreen && isMobileURL()) router.push("/")
     }
-
-  }, [isFullScreen, router, redirect])
+  }, [isFullScreen, router, options])
 
   return { isFullScreen }
 }

@@ -11,6 +11,7 @@ import useSWR from "swr"
 import Skeleton from "components/Skeleton"
 import useRWD from "hooks/useRWD"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
+import { orange100 } from "constants/color"
 
 function useStore() {
   const router = useRouter()
@@ -22,7 +23,7 @@ function useStore() {
 
 export default function PlacePage() {
   const store = useStore()
-  const { isFullScreen } = useRWD(false)
+  const { isFullScreen } = useRWD()
 
   if (isFullScreen) {
     if (!store) return <Skeleton />
@@ -109,7 +110,7 @@ const MapArea = styled.div`
   .labels-focus {
     background-color: white;
     border-radius: 28px;
-    border: 2px solid #ffa233;
+    border: 2px solid ${orange100};
     color: #222120;
     font-size: 14px;
     font-weight: 700;

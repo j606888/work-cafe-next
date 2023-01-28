@@ -4,6 +4,7 @@ import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
 import store from "stores/store"
 import { CircularProgress, useMediaQuery } from "@mui/material"
+import { grey01, grey06, orange20 } from "constants/color"
 
 const NearbySearch = () => {
   const isFullScreen = useMediaQuery(devices.mobileXl)
@@ -93,7 +94,7 @@ const Container = styled.div`
   width: 100%;
   height: 112px;
   padding: 30px;
-  background-color: #fff7ee;
+  background-color: ${orange20};
   border-radius: 28px;
   align-items: center;
   justify-content: space-between;
@@ -112,7 +113,7 @@ const Content = styled.div`
   gap: 8px;
 
   h3 {
-    color: #222120;
+    color: ${grey01};
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -127,7 +128,7 @@ const Content = styled.div`
     line-height: 19px;
     display: flex;
     align-items: center;
-    color: #222120;
+    color: ${grey01};
   }
 
   @media ${devices.mobileXl} {
@@ -138,13 +139,13 @@ const Content = styled.div`
 `
 
 const SearchBtn = styled.button`
-  background-color: #222120;
+  background-color: ${grey01};
   border: none;
   cursor: pointer;
   border-radius: 12px;
   width: 120px;
   height: 52px;
-  color: #ffffff;
+  color: ${grey06};
   font-size: 18px;
   line-height: 25px;
   display: flex;
