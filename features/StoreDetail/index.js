@@ -13,8 +13,10 @@ import useSearchStores from "hooks/useSearchStores"
 import storeStore, { PANEL_TYPES } from "stores/store"
 import { useRouter } from "next/router"
 import { mapCenter } from "utils/map-helper"
+import useRWD from "hooks/useRWD"
 
 const StoreDetail = ({ store }) => {
+  const { isFullScreen } = useRWD()
   const router = useRouter()
   const { map, keyword, setPanelType, setPlaceId } = storeStore(
     (state) => ({
@@ -38,11 +40,11 @@ const StoreDetail = ({ store }) => {
 
     const { lat, lng, zoom } = mapCenter(map)
 
-    if (keyword) {
-      router.push(`/m/@${lat},${lng},${zoom}z?keyword=${keyword}`)
-    } else {
-      router.replace(`/m/@${lat},${lng},${zoom}z`)
-    }
+    let path = `/@${lat},${lng},${zoom}z`
+    if (keyword) path = path + `?keyword=${keyword}`
+    if (isFullScreen) path = "/m" + path
+
+    router.push(path)
 
     if (!stores) {
       searchHints("")
