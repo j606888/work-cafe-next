@@ -2,7 +2,6 @@ import { Button, Chip, Dialog, TextField } from "@mui/material"
 import { LoadingButton } from "@mui/lab"
 import React, { useState } from "react"
 import RecommendBlock from "./RecommendBlock"
-import { Form, Scroll, Buttons, ChipContainer } from "./styled"
 import ReviewApi from "api/review"
 import Snackbar from "components/Snackbar"
 import useSWR from "swr"
@@ -13,7 +12,9 @@ import useMediaQuery from "@mui/material/useMediaQuery"
 import LinearProgressWithLabel from "./LinearProgressWithLabel"
 import { sleep } from "utils/helper"
 import { useEffect } from "react"
+import styled from "styled-components"
 import { devices } from "constants/styled-theme"
+import { orange100 } from "constants/color"
 
 const ReviewForm = ({
   placeId,
@@ -191,5 +192,53 @@ const ReviewForm = ({
 function _variant(tagIds, id) {
   return tagIds.includes(id) ? "contained" : "outlined"
 }
+
+const Form = styled.form`
+  background-color: #fff;
+  width: 540px;
+  border-radius: 12px;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    padding: 1rem;
+    text-align: center;
+    background-color: ${orange100};
+    color: #fff;
+    margin: 0;
+  }
+
+  @media ${devices.mobileXl} {
+    width: 100%;
+  }
+`
+
+const Scroll = styled.div`
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: calc(80vh - 130px);
+  overflow: scroll;
+
+  @media ${devices.mobileXl} {
+    padding: 1rem;
+    max-height: none;
+    overflow: auto;
+  }
+`
+
+const Buttons = styled.div`
+  border-top: 1px solid #ccc;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+`
+
+const ChipContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+`
 
 export default ReviewForm

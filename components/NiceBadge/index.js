@@ -1,3 +1,4 @@
+import { grey06, orange100 } from 'constants/color'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -14,10 +15,10 @@ const Container = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #FFFFFF;
-  background: #FFA233;
+  border: 1px solid ${grey06};
+  background: ${orange100};
   border-radius: 24px;
-  color: #FFFFFF;
+  color: ${grey06};
   padding: 0 8px 0 4px;
 
   span {

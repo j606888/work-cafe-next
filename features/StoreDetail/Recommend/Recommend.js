@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
+import { grey01, grey06, orange20 } from "constants/color"
 
 const Recommend = ({ good = 6, bad = 1 }) => {
   return (
@@ -34,7 +35,7 @@ const Container = styled.div`
   display: flex;
   gap: 2.5rem;
   margin-top: 1rem;
-  background-color: #fff7ee;
+  background-color: ${orange20};
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
@@ -49,7 +50,7 @@ const Container = styled.div`
 `
 
 const Divider = styled.div`
-  background-color: #ffffff;
+  background-color: ${grey06};
   height: 64px;
   width: 2px;
 `
@@ -83,7 +84,7 @@ const Text = styled.span`
   font-style: normal;
   font-size: 14px;
   line-height: 24px;
-  color: #222120;
+  color: ${grey01};
 
   @media ${devices.mobileXl} {
     font-size: 12px;

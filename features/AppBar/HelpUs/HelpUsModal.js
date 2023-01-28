@@ -9,6 +9,7 @@ import RateReviewIcon from "@mui/icons-material/RateReview"
 import ReportIcon from "@mui/icons-material/Report"
 import BugReportIcon from "@mui/icons-material/BugReport"
 import styled from "styled-components"
+import { orange100, orange50 } from "constants/color"
 
 const Item = styled.div`
   display: flex;
@@ -18,11 +19,11 @@ const Item = styled.div`
 `
 
 const Link = styled.a`
-  color: #ffa233;
+  color: ${orange100};
 `
 
 const Button = styled.button`
-  background-color: #ffa233;
+  background-color: ${orange100};
   color: #ffffff;
   border: none;
   padding: 6px 12px;
@@ -30,7 +31,7 @@ const Button = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #ffd9ab;
+    background-color: ${orange50};
   }
 `
 
