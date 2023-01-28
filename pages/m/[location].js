@@ -1,10 +1,12 @@
 import AppBar from "features/AppBar"
 import GoogleMap from "features/GoogleMap"
+import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import ShortBlock from "features/LeftContainer/ShortBlock"
 import StoreList from "features/StoreList"
 import Head from "next/head"
 import styled from "styled-components"
+import { labelStyles } from "features/GoogleMap/labelStyles"
 
 export default function MobileLocationPage() {
   return (
@@ -17,6 +19,7 @@ export default function MobileLocationPage() {
         <MapArea>
           <ShortBlock />
           <GoogleMap>
+            <MyLocationMarker />
             <StoreMarkers />
           </GoogleMap>
         </MapArea>
@@ -40,4 +43,6 @@ const MapArea = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+
+  ${labelStyles}
 `
