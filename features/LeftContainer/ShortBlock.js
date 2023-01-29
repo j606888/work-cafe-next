@@ -1,10 +1,9 @@
-import SearchFilter from "features/SearchFilter"
 import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import Searchbar from "features/Searchbar"
 import SvgButton from "components/SvgButton"
-import SearchFilterV2 from "features/SearchFilterV2"
+import SearchFilter from "features/SearchFilter"
 
 const ShortBlock = ({
   showFilter = true,
@@ -15,7 +14,7 @@ const ShortBlock = ({
     <Container expand={expand}>
       <SearchTool>
         <Searchbar type="storeList" />
-        {showFilter && <SearchFilterV2 />}
+        {showFilter && <SearchFilter />}
       </SearchTool>
       {expand && (
         <ShowMapButton onClick={onMapOpen}>

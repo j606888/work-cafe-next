@@ -17,7 +17,7 @@ const TagsContainer = styled.div`
   gap: 1rem;
 `
 
-const TagsPicker = ({ tags = [], selectedTagIds = [], primary = false, onClick }) => {
+const TagsPicker = ({ tags = [], selectedTagIds = [], primary = true, onClick }) => {
   const targetTags = tags.filter(tag => tag.primary === primary)
 
   const handleClick = (tagId) => {
