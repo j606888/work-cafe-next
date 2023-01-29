@@ -44,7 +44,6 @@ const GoogleMap = ({ onClick, children }) => {
   )
 
   useEffect(() => {
-    console.log("LOAD MAP");
     const path = window.location.pathname
     const match = path.match(/@([\d.-]+),([\d.-]+),([\d]+)z/)
 
@@ -59,10 +58,6 @@ const GoogleMap = ({ onClick, children }) => {
         return cur
       })
       setSearchCenter({ lat: +match[1], lng: +match[2] })
-
-      if (path.includes("/search/")) {
-        setPanelType(PANEL_TYPES.STORE_LIST)
-      }
 
       if (path.includes("/place/")) {
         const placeId = path.match(/place\/(.*)\/@/)[1]

@@ -1,216 +1,72 @@
-import React from "react"
-import styled from "styled-components"
-import {
-  Badge,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-} from "@mui/material"
-import { useState } from "react"
-import OpenTimePicker from "features/SearchFilter/OpenTimePicker"
-import { useMemo } from "react"
-import _ from "lodash"
-import useSWR from "swr"
-import TagsPicker from "./TagsPicker"
-import AdvancedPicker from "./AdvancedPicker"
-import { devices } from "constants/styled-theme"
-import useFilterStore from "stores/useFilterStore"
-import CloseIcon from "@mui/icons-material/Close"
-import { useMediaQuery } from "@mui/material"
-import SvgButton from "components/SvgButton"
-import { useRouter } from "next/router"
-import queryString from 'query-string'
-
-const INIT_FILTERS = {
-  openType: "NONE",
-  openWeek: 0,
-  openHour: 99,
-  recommend: null,
-  wakeUp: false,
-  reviewOver: false,
-  tagIds: [],
-}
+import React, { useState } from 'react'
+import { Dialog, useMediaQuery } from '@mui/material'
+import styled from 'styled-components'
+import Filter from './Filter'
+import { grey04, orange100 } from 'constants/color'
+import { devices } from 'constants/styled-theme'
 
 const SearchFilter = () => {
-  const router = useRouter()
-  const [open, setOpen] = useState(false)
-  const filters = useFilterStore((state) => state.filters)
-  const setFilters = useFilterStore((state) => state.setFilters)
-  const [settingsMemo, setSettingsMemo] = useState(filters)
-  const [settings, setSettings] = useState(filters)
   const fullScreen = useMediaQuery(devices.mobileXl)
-  const { data: tags } = useSWR("/tags")
-  const badgeCount = useMemo(
-    () => _calcBadgeCount(settingsMemo),
-    [settingsMemo]
-  )
 
-  const handleClose = () => {
-    setOpen(false)
-    setSettings(settingsMemo)
-    setFilters(settingsMemo)
-  }
-
-  const handleReset = () => {
-    setSettings(INIT_FILTERS)
-    setFilters(settings)
-  }
-
-  const handleApply = () => {
-    setSettingsMemo(settings)
-    setFilters(settings)
-    const filters = _filterCleanSettings(settings)
-    const query = queryString.stringify(filters)
-    const { pathname } = window.location
-    router.push(`${pathname}?${query}`)
-    setOpen(false)
-  }
-
-  const handleOpenTimeChange = ({ openType, openWeek, openHour }) => {
-    setSettings((cur) => ({ ...cur, openType, openWeek, openHour }))
-  }
-
-  const handleClick = (tagId) => {
-    setSettings((cur) => {
-      if (cur.tagIds.includes(tagId)) {
-        const tagIds = cur.tagIds.filter((id) => id !== tagId)
-        return { ...cur, tagIds }
-      } else {
-        return { ...cur, tagIds: [...cur.tagIds, tagId] }
-      }
-    })
-  }
-
-  const handleAdvanceChange = (label, checked) => {
-    setSettings((cur) => ({ ...cur, [label]: checked }))
-  }
+  const [open, setOpen] = useState(false)
+  const [filterCount, setFilterCount] = useState(0)
 
   return (
     <>
-      <Badge badgeContent={badgeCount} color="primary">
-        <Container onClick={() => setOpen(true)}>
-          <img src="/filter.svg" alt="filter.svg" />
-          篩選條件
-        </Container>
-        <SmallContainer onClick={() => setOpen(true)}>
-          <SvgButton path="filter" />
-        </SmallContainer>
-      </Badge>
+      <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+        <img src="/filter.svg" alt="filter" />
+        篩選條件
+        {filterCount > 0 && <Badge>{filterCount}</Badge>}
+      </Button>
+
       <Dialog
         open={open}
-        onClose={handleClose}
-        maxWidth="sm"
-        fullWidth
+        onClose={() => setOpen(false)}
         fullScreen={fullScreen}
       >
-        <DialogTitle>篩選</DialogTitle>
-        <DialogContent>
-          <OpenTimePicker {...settings} onChange={handleOpenTimeChange} />
-          <Divider />
-          <TagsPicker
-            tags={tags}
-            primary
-            selectedTagIds={settings.tagIds}
-            onClick={handleClick}
-          />
-          <Divider />
-          <AdvancedPicker
-            wakeUp={settings.wakeUp}
-            reviewOver={settings.reviewOver}
-            onChange={handleAdvanceChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleReset}>重回預設</Button>
-          <Box style={{ flex: "1 0 0", textAlign: "right" }}>
-            <Button variant="contained" onClick={handleApply}>
-              套用
-            </Button>
-          </Box>
-        </DialogActions>
-        <CloseContainer onClick={handleClose}>
-          <CloseIcon />
-        </CloseContainer>
+        <Filter
+          onClose={() => setOpen(false)}
+          setFilterCount={setFilterCount}
+        />
       </Dialog>
     </>
   )
 }
 
-function _calcBadgeCount(settingsMemo) {
-  let i = 0
-  ;["recommend", "wakeUp", "reviewOver"].forEach((key) => {
-    if (settingsMemo[key] !== INIT_FILTERS[key]) {
-      i++
-    }
-  })
-  if (settingsMemo.openType !== "NONE") i++
-  i += settingsMemo.tagIds.length
-
-  return i
-}
-
-function _filterCleanSettings(settings) {
-  const result = {}
-
-  result.openType = settings.openType
-  if (settings.openType === "OPEN_AT") {
-    result.openWeek = settings.openWeek
-    if (settings.openHour !== 99) {
-      result.openHour = settings.openHour
-    }
-  }
-
-  if (settings.recommend) result.recommend = settings.recommend
-  if (!!settings.wakeUp) result.wakeUp = settings.wakeUp
-  if (!!settings.reviewOver) result.reviewOver = settings.reviewOver
-  if (settings.tagIds.length !== 0) result.tagIds = settings.tagIds
-
-  return result
-}
-
-const Container = styled.div`
-  position: relative;
-  box-sizing: border-box;
+const Button = styled.div`
+  width: 140px;
+  height: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 52px;
-  width: 142px;
-  background-color: #fff;
-  color: #493425;
-  border: 1px solid #e8e6e4;
+  gap: 4px;
   border-radius: 20px;
+  border: 1px solid ${grey04};
+  font-size: 16px;
+  flex-shrink: 0;
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
   cursor: pointer;
+  position: relative;
+  background-color: #FFFFFF;
 
-  &:hover {
-    background-color: #f6f6f6;
-  }
-  @media ${devices.mobileXl} {
-    display: none;
-  }
-`
-
-const SmallContainer = styled(Container)`
-  display: none;
-
-  @media ${devices.mobileXl} {
-    width: 52px;
-    height: 52px;
-    display: flex;
-  }
-
-  svg {
-    color: #94684a;
+  img {
+    width: 36px;
+    height: 36px;
   }
 `
 
-const CloseContainer = styled.div`
+const Badge = styled.div`
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  top: -6px;
+  right: -6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  background-color: ${orange100};
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
 `
+
 export default SearchFilter
