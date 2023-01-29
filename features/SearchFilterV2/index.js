@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import { Dialog } from '@mui/material'
+import { Dialog, useMediaQuery } from '@mui/material'
 import styled from 'styled-components'
 import Filter from './Filter'
 import { grey04, orange100 } from 'constants/color'
+import { devices } from 'constants/styled-theme'
 
 const SearchFilterV2 = () => {
+  const fullScreen = useMediaQuery(devices.mobileXl)
+
   const [open, setOpen] = useState(false)
-  const [filterCount, setFilterCount] = useState(2)
+  const [filterCount, setFilterCount] = useState(0)
 
   return (
     <>
@@ -15,8 +18,16 @@ const SearchFilterV2 = () => {
         篩選條件
         {filterCount > 0 && <Badge>{filterCount}</Badge>}
       </Button>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <Filter onClose={() => setOpen(false)} />
+
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        fullScreen={fullScreen}
+      >
+        <Filter
+          onClose={() => setOpen(false)}
+          setFilterCount={setFilterCount}
+        />
       </Dialog>
     </>
   )
@@ -36,6 +47,7 @@ const Button = styled.div`
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
   cursor: pointer;
   position: relative;
+  background-color: #FFFFFF;
 
   img {
     width: 36px;
