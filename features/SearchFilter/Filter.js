@@ -12,9 +12,9 @@ const Filter = ({ onClose }) => {
   const [wakeUp, setWakeUp] = useState(storedFilters?.wakeUp || false)
   const [tagIds, setTagIds] = useState(storedFilters?.tagIds || [])
   const [openTime, setOpenTime] = useState({
-    openType: storedFilters.openType || "NONE",
-    openWeek: storedFilters.openWeek || 0,
-    openHour: storedFilters.openHour || 99,
+    openType: storedFilters?.openType || "NONE",
+    openWeek: storedFilters?.openWeek || 0,
+    openHour: storedFilters?.openHour || 99,
   })
   const { data: tags } = useSWR("/tags")
 

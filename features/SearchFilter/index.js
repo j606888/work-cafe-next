@@ -12,11 +12,12 @@ const SearchFilter = () => {
   const [filterCount, setFilterCount] = useState(0)
 
   useEffect(() => {
-    const storedFilters = JSON.parse(localStorage.getItem("filters"))
+    const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}
     const { wakeUp, tagIds, openType } = storedFilters
+
     let count = 0
     if (wakeUp) count++
-    if (openType !== "NONE") count++
+    if (openType && openType !== "NONE") count++
     count += tagIds?.length || 0
 
     setFilterCount(count)
