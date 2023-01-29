@@ -29,6 +29,7 @@ const StoreMarkers = () => {
   const fullScreen = useMediaQuery(devices.mobileXl)
   const showLabel2 =
     (!fullScreen && showLabel) || (fullScreen && map?.zoom >= 15)
+
   function handleClickMarker(placeId) {
     if (fullScreen) {
       setFocusPlaceId(placeId)

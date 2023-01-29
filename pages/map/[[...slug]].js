@@ -12,8 +12,10 @@ import { useRouter } from "next/router"
 import LandingSearch from "features/LandingSearch"
 import StoreDetail from "features/StoreDetail"
 import useSWR from "swr"
+import useRWD from "hooks/useRWD"
 
 export default function MapPage() {
+  useRWD({ redirect: true })
   const router = useRouter()
   const { asPath } = router
   const match = asPath.match(/\/map\/place\/([^\/]+)/)

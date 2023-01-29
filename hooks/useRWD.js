@@ -13,8 +13,8 @@ const useRWD = (options={}) => {
     }
 
     if (options.redirect && router.isReady) {
-      if (isFullScreen && !isMobileURL()) router.push("/m")
-      if (!isFullScreen && isMobileURL()) router.push("/")
+      if (isFullScreen && !isMobileURL()) router.push("/m/map")
+      if (!isFullScreen && isMobileURL()) router.push("/map")
     }
   }, [isFullScreen, router, options])
 

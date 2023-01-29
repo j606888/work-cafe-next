@@ -27,13 +27,9 @@ const Searchbar = ({ type = "landing" }) => {
     const { lat, lng } = mapCenter(map)
     const { middleLat, middleLng } = await _searchResultMid({ lat, lng, k })
 
-    if (isFullScreen) {
-      router.push(`/m/@${middleLat},${middleLng},15z?keyword=${k}`, undefined, {
-        shallow: true,
-      })
-    } else {
-      router.push(`/map/@${middleLat},${middleLng},15z?keyword=${k}`)
-    }
+    let path = `/map/@${middleLat},${middleLng},15z?keyword=${k}`
+    if (isFullScreen) path = `/m${path}`
+    router.push(path)
 
     if (map) {
       map.setZoom(15)
