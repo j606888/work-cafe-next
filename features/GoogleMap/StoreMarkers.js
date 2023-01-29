@@ -40,9 +40,7 @@ const StoreMarkers = () => {
       setPlaceId(placeId)
       setFocusPlaceId(placeId)
       setPanelType(PANEL_TYPES.STORE_DETAIL)
-      router.push(`/place/${placeId}/@${lat},${lng},${zoom}z`, undefined, {
-        shallow: true,
-      })
+      router.push(`/map/place/${placeId}/@${lat},${lng},${zoom}z`)
     }
   }
 

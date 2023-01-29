@@ -37,9 +37,10 @@ export default function StoreList({ expand }) {
     const location = `@${lat},${lng},${zoom}z`
 
     setFocusPlaceId(placeId)
+    setPlaceId(placeId)
     // setPanelType("STORE_DETAIL")
 
-    router.push(`/place/${placeId}/${location}`)
+    router.push(`/map/place/${placeId}/${location}`)
   }
 
   React.useEffect(() => {

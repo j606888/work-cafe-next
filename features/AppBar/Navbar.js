@@ -51,7 +51,7 @@ const Navbar = () => {
     <>
       <NavbarContainer>
         <Links>
-          <HomeLink href="/">Work Cafe | Taiwan</HomeLink>
+          <HomeLink href="/map">Work Cafe | Taiwan</HomeLink>
           <Links2>
             <a
               href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"

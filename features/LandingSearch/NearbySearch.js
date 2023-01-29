@@ -9,7 +9,8 @@ import { grey01, grey06, orange20 } from "constants/color"
 const NearbySearch = () => {
   const isFullScreen = useMediaQuery(devices.mobileXl)
   const [loading, setLoading] = useState(false)
-  const { myLocation, setMyLocation, setSearchCenter } = store((state) => ({
+  const { map, myLocation, setMyLocation, setSearchCenter } = store((state) => ({
+    map: state.map,
     myLocation: state.myLocation,
     setMyLocation: state.setMyLocation,
     setSearchCenter: state.setSearchCenter,
@@ -26,10 +27,13 @@ const NearbySearch = () => {
       } else {
         location = await _getCurrentPosition()
       }
+
       if (isFullScreen) {
         router.push(`/m/@${location.lat},${location.lng},15z`)
       } else {
-        router.push(`/@${location.lat},${location.lng},15z`)
+        router.push(`/map/@${location.lat},${location.lng},15z`)
+        map.setZoom(15)
+        map.panTo(location)
       }
       setMyLocation(location)
       setSearchCenter(location)

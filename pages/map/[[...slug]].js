@@ -8,10 +8,19 @@ import Head from "next/head"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
 import { labelStyles } from "features/GoogleMap/labelStyles"
-import useRWD from "hooks/useRWD"
+import { useRouter } from "next/router"
+import LandingSearch from "features/LandingSearch"
+import StoreDetail from "features/StoreDetail"
+import useSWR from "swr"
 
 export default function MapPage() {
-  useRWD({ redirect: true })
+  const router = useRouter()
+  const { asPath } = router
+  const match = asPath.match(/\/map\/place\/([^\/]+)/)
+  const placeId = match && match[1]
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}`: null)
+
+  if (!router.isReady) return <div>Loading...</div>
 
   return (
     <>
@@ -22,11 +31,13 @@ export default function MapPage() {
         <AppBar />
         <MapArea>
           <ShowLabelCheckbox />
-          <LeftContainer />
+          {asPath.startsWith("/map/place/") && <StoreDetail store={store} />}
+          {asPath.startsWith("/map/@") && <LeftContainer />}
           <GoogleMap>
+            {asPath === "/map" && <LandingSearch />}
             <StoreMarkers />
             <MyLocationMarker />
-            <SearchHereButton />
+            <SearchHereButton isLanding={asPath === "/map"} />
           </GoogleMap>
         </MapArea>
       </Container>
@@ -36,11 +47,10 @@ export default function MapPage() {
 
 const SearchHereButton = styled(SearchHere)`
   position: absolute;
-  left: 50%;
+  left: ${({ isLanding }) => isLanding ? 'calc(50% + 312px)' : '50%'};
   top: 32px;
   transform: translateX(-50%);
   z-index: 2;
-
 `
 const Container = styled.div`
   height: 100vh;

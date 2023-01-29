@@ -32,9 +32,7 @@ const Searchbar = ({ type = "landing" }) => {
         shallow: true,
       })
     } else {
-      router.push(`/@${middleLat},${middleLng},15z?keyword=${k}`, undefined, {
-        shallow: true,
-      })
+      router.push(`/map/@${middleLat},${middleLng},15z?keyword=${k}`)
     }
 
     if (map) {
@@ -49,6 +47,11 @@ const Searchbar = ({ type = "landing" }) => {
   const handleCancel = () => {
     searchHints("")
     setShowOptions(false)
+
+    if (!isFullScreen) {
+      const { lat, lng } = mapCenter(map)
+      router.push(`/map/@${lat},${lng},${map.zoom}z`)
+    }
   }
 
   const onChange = (value) => {

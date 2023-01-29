@@ -1,7 +1,7 @@
 import create from "zustand"
 
 export const PANEL_TYPES = {
-  INIT: "INIT",
+  LANDING: "LANDING",
   STORE_LIST: "STORE_LIST",
   STORE_DETAIL: "STORE_DETAIL"
 }

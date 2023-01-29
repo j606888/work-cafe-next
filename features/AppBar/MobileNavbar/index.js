@@ -21,7 +21,7 @@ const MobileNavbar = () => {
   return (
     <>
       <Container>
-        <HomeLink href="/">Work Cafe | Taiwan</HomeLink>
+        <HomeLink href="/map">Work Cafe | Taiwan</HomeLink>
         {isLogin ? (
           <IsLogin onClose={handleClose} />
         ) : (
