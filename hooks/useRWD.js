@@ -9,7 +9,7 @@ const useRWD = (options={}) => {
 
   useEffect(() => {
     function isMobileURL() {
-      return window.location.href.includes("/m")
+      return window.location.href.includes("/m/map")
     }
 
     if (options.redirect && router.isReady) {
