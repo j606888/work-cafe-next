@@ -3,8 +3,8 @@ import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
-import TagsPicker from "features/SearchFilter/TagsPicker"
-import OpenTimePicker from "features/SearchFilter/OpenTimePicker"
+import TagsPicker from "./TagsPicker"
+import OpenTimePicker from "./OpenTimePicker"
 
 const Filter = ({ onClose }) => {
   const router = useRouter()
