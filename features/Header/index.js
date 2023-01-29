@@ -15,7 +15,7 @@ const Header = () => {
 
   return (
     <Container>
-      <Link href="/">
+      <Link href="/map">
         <h3>Work Cafe | Taiwan</h3>
       </Link>
       <div className="nav-links">

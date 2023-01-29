@@ -47,6 +47,7 @@ const Container = styled.div`
     left: auto;
     top: auto;
     box-shadow: none;
+    min-height: 100vh;
   }
 `
 

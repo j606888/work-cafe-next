@@ -196,10 +196,10 @@ const Container = styled.div`
 
 const SmallContainer = styled(Container)`
   display: none;
-  width: 52px;
-  height: 52px;
 
   @media ${devices.mobileXl} {
+    width: 52px;
+    height: 52px;
     display: flex;
   }
 

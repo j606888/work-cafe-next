@@ -44,6 +44,7 @@ const GoogleMap = ({ onClick, children }) => {
   )
 
   useEffect(() => {
+    console.log("LOAD MAP");
     const path = window.location.pathname
     const match = path.match(/@([\d.-]+),([\d.-]+),([\d]+)z/)
 
@@ -78,7 +79,7 @@ const GoogleMap = ({ onClick, children }) => {
   }
 
   function onIdle() {
-    if (!map || router.asPath === '/') return
+    if (!map || ['/map', '/m/map'].includes(router.asPath)) return
 
     const lat = map.center.lat().toFixed(6)
     const lng = map.center.lng().toFixed(6)

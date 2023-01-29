@@ -40,7 +40,7 @@ const StoreDetail = ({ store }) => {
 
     const { lat, lng, zoom } = mapCenter(map)
 
-    let path = `/@${lat},${lng},${zoom}z`
+    let path = `/map/@${lat},${lng},${zoom}z`
     if (keyword) path = path + `?keyword=${keyword}`
     if (isFullScreen) path = "/m" + path
 

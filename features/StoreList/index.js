@@ -5,6 +5,8 @@ import NoMatch from "features/LeftContainer/NoMatch"
 import useSearchStores from "hooks/useSearchStores"
 import store from "stores/store"
 import { useRouter } from "next/router"
+import { useMediaQuery } from "@mui/material"
+import { devices } from "constants/styled-theme"
 
 export default function StoreList({ expand }) {
   const router = useRouter()
@@ -17,6 +19,7 @@ export default function StoreList({ expand }) {
     setFocusPlaceId: state.setFocusPlaceId,
   }))
   const storesRef = React.useRef({})
+  const fullScreen = useMediaQuery(devices.mobileXl)
 
   const handleMouseEnter = (placeId) => {
     // setBouncePlaceId(placeId)
@@ -37,9 +40,10 @@ export default function StoreList({ expand }) {
     const location = `@${lat},${lng},${zoom}z`
 
     setFocusPlaceId(placeId)
-    // setPanelType("STORE_DETAIL")
-
-    router.push(`/place/${placeId}/${location}`)
+    setPlaceId(placeId)
+    let path = `/map/place/${placeId}/${location}`
+    if (fullScreen) path = `/m${path}`
+    router.push(path)
   }
 
   React.useEffect(() => {
