@@ -6,7 +6,7 @@ import useSWR from "swr"
 import TagsPicker from "features/SearchFilter/TagsPicker"
 import OpenTimePicker from "features/SearchFilter/OpenTimePicker"
 
-const Filter = ({ onClose, setFilterCount }) => {
+const Filter = ({ onClose }) => {
   const router = useRouter()
   const storedFilters = JSON.parse(localStorage.getItem("filters"))
   const [wakeUp, setWakeUp] = useState(storedFilters?.wakeUp || false)
@@ -19,21 +19,13 @@ const Filter = ({ onClose, setFilterCount }) => {
   const { data: tags } = useSWR("/tags")
 
   useEffect(() => {
-    let count = 0
-    if (wakeUp) count++
-    if (openTime.openType !== "NONE") count++
-    count += tagIds.length
-    setFilterCount(count)
-  }, [wakeUp, setFilterCount, tagIds, openTime])
-
-  useEffect(() => {
     const { openType, openWeek, openHour } = openTime
     let query = { wakeUp, tagIds, openType, openWeek, openHour }
     query = _filterCleanSettings(query)
     localStorage.setItem("filters", JSON.stringify(query))
     const pathWithoutQuery = router.asPath.split("?")[0]
     router.push({ pathname: pathWithoutQuery, query })
-  }, [wakeUp, setFilterCount, tagIds, openTime])
+  }, [wakeUp, tagIds, openTime])
 
   function handleToggleTag(tagId) {
     const newTagIds = [...tagIds]
