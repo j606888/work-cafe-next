@@ -84,7 +84,7 @@ const AddressSpan = styled.span`
 
 const StoreCount = styled.div`
   margin-left: auto;
-  width: 68px;
+  padding: 0 8px 0 4px;
   height: 32px;
   border-radius: 12px;
   border: 1px solid #e8e6e4;
