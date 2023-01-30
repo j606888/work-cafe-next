@@ -158,14 +158,14 @@ const SearchBtn = styled.button`
   align-items: center;
   justify-content: center;
   gap: 4px;
-  margin: 0 auto;
+  margin-left: auto;
 
   @media ${devices.mobileXl} {
     width: auto;
     height: auto;
     padding: 12px 20px;
     font-size: 16px;
-    margin-top: 30px;
+    margin: 30px auto 0;
   }
 `
 

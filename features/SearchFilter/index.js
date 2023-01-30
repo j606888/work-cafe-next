@@ -27,7 +27,7 @@ const SearchFilter = () => {
     <>
       <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
         <img src="/filter.svg" alt="filter" />
-        篩選條件
+        <span>篩選條件</span>
         {filterCount > 0 && <Badge>{filterCount}</Badge>}
       </Button>
 
@@ -61,6 +61,14 @@ const Button = styled.div`
   img {
     width: 36px;
     height: 36px;
+  }
+
+  @media ${devices.mobileXl} {
+    width: 52px;
+
+    span {
+      display: none;
+    }
   }
 `
 
