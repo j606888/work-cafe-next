@@ -11,7 +11,11 @@ import useRWD from "hooks/useRWD"
 import LandingSearch from "features/LandingSearch"
 import { useRouter } from "next/router"
 import StoreDetail from "features/StoreDetail"
+import SvgButton from "components/SvgButton"
 import useSWR from "swr"
+import { devices } from "constants/styled-theme"
+import { useState } from "react"
+import { grey01 } from "constants/color"
 
 export default function MobileMapPage() {
   useRWD({ redirect: true })
@@ -20,6 +24,7 @@ export default function MobileMapPage() {
   const match = asPath.match(/\/map\/place\/([^\/]+)/)
   const placeId = match && match[1]
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
+  const [expand, setExpand] = useState(false)
 
   if (!router.isReady) return <div>Loading...</div>
 
@@ -30,7 +35,7 @@ export default function MobileMapPage() {
       <Head>
         <title>Work Cafe</title>
       </Head>
-      <FullScreenOverlay lock={showMap}>
+      <FullScreenOverlay lock={showMap && !expand}>
         <AppBar />
         {asPath === "/m/map" && <LandingSearch />}
         {asPath.startsWith("/m/map/place/") && <StoreDetail store={store} />}
@@ -41,7 +46,18 @@ export default function MobileMapPage() {
             <StoreMarkers />
           </GoogleMap>
         </MapArea>
-        {showMap && <StoreList />}
+        {showMap && <>
+          <StoreList expand={expand} />
+        {!expand && (
+          <ExpandButton onClick={() => setExpand(true)}>
+            <SvgButton path="expand-btn" />
+          </ExpandButton>
+        )}
+        {expand && <ShowMapButton onClick={() => setExpand(false)}>
+          <img src="/arrow-down.svg" alt="arrow-down" />
+            <span>顯示地圖</span>
+          </ShowMapButton>}
+        </>}
       </FullScreenOverlay>
     </>
   )
@@ -66,4 +82,44 @@ const MapArea = styled.div`
   height: 100%;
 
   ${labelStyles}
+`
+
+const ShowMapButton = styled.div`
+  width: 120px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${grey01};
+  color: #FFFFFF;
+  gap: 4px;
+  border-radius: 12px;
+  position: fixed;
+  bottom: 31px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+`
+
+const ExpandButton = styled.div`
+  width: 32px;
+  height: 60px;
+  background-color: #ffffff;
+  z-index: 15;
+  position: fixed;
+  bottom: calc((100vh - 120px) / 2);
+  left: 628px;
+  transform: translateY(50%);
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  @media ${devices.mobileXl} {
+    left: 50%;
+    bottom: 217px;
+    transform: translateX(-50%) rotate(-90deg);
+    z-index: 10;
+  }
 `
