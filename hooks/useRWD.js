@@ -12,9 +12,11 @@ const useRWD = (options={}) => {
       return window.location.href.includes("/m/map")
     }
 
+    const { asPath } = router
+
     if (options.redirect && router.isReady) {
-      if (isFullScreen && !isMobileURL()) router.push("/m/map")
-      if (!isFullScreen && isMobileURL()) router.push("/map")
+      if (isFullScreen && !isMobileURL()) router.push(`/m${asPath}`)
+      if (!isFullScreen && isMobileURL()) router.push(asPath.replace('/m', ''))
     }
   }, [isFullScreen, router, options])
 

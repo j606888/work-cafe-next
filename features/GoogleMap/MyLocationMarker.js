@@ -13,7 +13,7 @@ const MyLocationMarker = () => {
       position={myLocation}
       icon={{
         url: "/me.svg",
-        scaledSize: new google.maps.Size(22, 22),
+        scaledSize: new google.maps.Size(48, 48),
       }}
     />
   )
