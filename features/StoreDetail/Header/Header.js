@@ -128,11 +128,17 @@ const BackButton = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  padding: 4px 16px 4px 8px;
+  border-radius: 12px;
 
   span {
     color: #222120;
     font-size: 16px;
     font-weight: 400;
+  }
+
+  &:hover {
+    background-color: #f3f3f3;
   }
 
   @media ${devices.mobileXl} {

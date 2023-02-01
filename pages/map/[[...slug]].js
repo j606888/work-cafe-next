@@ -20,7 +20,7 @@ export default function MapPage() {
   const { asPath } = router
   const match = asPath.match(/\/map\/place\/([^\/]+)/)
   const placeId = match && match[1]
-  const { data: store } = useSWR(placeId ? `/stores/${placeId}`: null)
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
   if (!router.isReady) return <div>Loading...</div>
 
@@ -32,7 +32,7 @@ export default function MapPage() {
       <Container>
         <AppBar />
         <MapArea>
-          <ShowLabelCheckbox />
+          {asPath !== "/map" && <ShowLabelCheckbox />}
           {asPath.startsWith("/map/place/") && <StoreDetail store={store} />}
           {asPath.startsWith("/map/@") && <LeftContainer />}
           <GoogleMap>
@@ -49,7 +49,7 @@ export default function MapPage() {
 
 const SearchHereButton = styled(SearchHere)`
   position: absolute;
-  left: ${({ isLanding }) => isLanding ? 'calc(50% + 312px)' : '50%'};
+  left: ${({ isLanding }) => (isLanding ? "calc(50% + 312px)" : "50%")};
   top: 32px;
   transform: translateX(-50%);
   z-index: 2;

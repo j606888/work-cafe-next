@@ -10,7 +10,7 @@ import Reviews from "./Reviews/Reviews"
 import OpenTime from "./OpenTime/OpenTime"
 import useHintSearch from "features/Searchbar/useHintSearch"
 import useSearchStores from "hooks/useSearchStores"
-import storeStore, { PANEL_TYPES } from "stores/store"
+import storeStore from "stores/store"
 import { useRouter } from "next/router"
 import { mapCenter } from "utils/map-helper"
 import useRWD from "hooks/useRWD"
@@ -18,11 +18,10 @@ import useRWD from "hooks/useRWD"
 const StoreDetail = ({ store }) => {
   const { isFullScreen } = useRWD()
   const router = useRouter()
-  const { map, keyword, setPanelType, setPlaceId } = storeStore(
+  const { map, keyword, setPlaceId } = storeStore(
     (state) => ({
       map: state.map,
       keyword: state.keyword,
-      setPanelType: state.setPanelType,
       setPlaceId: state.setPlaceId,
     })
   )
@@ -35,7 +34,6 @@ const StoreDetail = ({ store }) => {
   }
 
   const handleClose = () => {
-    setPanelType(PANEL_TYPES.STORE_LIST)
     setPlaceId(null)
 
     const { lat, lng, zoom } = mapCenter(map)

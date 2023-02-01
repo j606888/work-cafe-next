@@ -16,9 +16,8 @@ const Searchbar = ({ type = "landing" }) => {
   const [showOptions, setShowOptions] = useState(false)
   const { searchHints, hints, keyword } = useHintSearch()
   const { focusedIndex, onArrowUp, onArrowDown } = useFocusIndex()
-  const { map, setPanelType, setKeyword, setSearchCenter } = store((state) => ({
+  const { map, setKeyword, setSearchCenter } = store((state) => ({
     map: state.map,
-    setPanelType: state.setPanelType,
     setKeyword: state.setKeyword,
     setSearchCenter: state.setSearchCenter,
   }))

@@ -1,22 +1,18 @@
 import React from "react"
 import styled from "styled-components"
 import CircularProgress from "@mui/material/CircularProgress"
-import store, { PANEL_TYPES } from "stores/store"
+import store from "stores/store"
 import { mapCenter } from "utils/map-helper"
-import { useRouter } from "next/router"
-import { useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
+import useUpdateURL from "hooks/useUpdateURL"
 
 const SearchHere = ({ className }) => {
-  const router = useRouter()
-  const { map, setSearchCenter, setPanelType, setPlaceId, setFocusPlaceId  } = store((state) => ({
+  const { setCenterToURL } = useUpdateURL()
+  const { map, setSearchCenter, setPlaceId, setFocusPlaceId  } = store((state) => ({
     map: state.map,
     setSearchCenter: state.setSearchCenter,
-    setPanelType: state.setPanelType,
     setPlaceId: state.setPlaceId,
     setFocusPlaceId: state.setFocusPlaceId,
   }))
-  const isFullScreen = useMediaQuery(devices.mobileXl)
   const isLoading = false
 
   function onClick() {
@@ -24,11 +20,7 @@ const SearchHere = ({ className }) => {
     setPlaceId(null)
     setFocusPlaceId(null)
     setSearchCenter({ lat, lng })
-    setPanelType(PANEL_TYPES.STORE_LIST)
-    const path = `/map/@${lat},${lng},${map.zoom}z`
-    if (isFullScreen) path = "/m" + path
-
-    router.push(path)
+    setCenterToURL()
   }
 
   const icon = isLoading ? (
