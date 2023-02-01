@@ -4,22 +4,18 @@ import StoreCard from "components/StoreCard"
 import NoMatch from "features/LeftContainer/NoMatch"
 import useSearchStores from "hooks/useSearchStores"
 import store from "stores/store"
-import { useRouter } from "next/router"
-import { useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
+import useUpdateURL from "hooks/useUpdateURL"
 
 export default function StoreList({ expand }) {
-  const router = useRouter()
+  const { setCenterWithPlaceIdToURL } = useUpdateURL()
   const { data: stores } = useSearchStores()
-  const { map, placeId, setPlaceId, focusPlaceId, setFocusPlaceId } = store((state) => ({
-    map: state.map,
+  const { placeId, setPlaceId, focusPlaceId, setFocusPlaceId } = store((state) => ({
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
     focusPlaceId: state.focusPlaceId,
     setFocusPlaceId: state.setFocusPlaceId,
   }))
   const storesRef = React.useRef({})
-  const fullScreen = useMediaQuery(devices.mobileXl)
 
   const handleMouseEnter = (placeId) => {
     // setBouncePlaceId(placeId)
@@ -34,16 +30,9 @@ export default function StoreList({ expand }) {
   }
 
   function onClick({ placeId }) {
-    const lat = map.center.lat().toFixed(6)
-    const lng = map.center.lng().toFixed(6)
-    const zoom = map.zoom
-    const location = `@${lat},${lng},${zoom}z`
-
     setFocusPlaceId(placeId)
     setPlaceId(placeId)
-    let path = `/map/place/${placeId}/${location}`
-    if (fullScreen) path = `/m${path}`
-    router.push(path)
+    setCenterWithPlaceIdToURL(placeId)
   }
 
   React.useEffect(() => {

@@ -3,6 +3,20 @@ import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import store from "stores/store"
+import { alpha, styled as muiStyled } from  '@mui/material/styles'
+import { orange100, orange50 } from "constants/color"
+
+const CustomSwitch = muiStyled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: orange100,
+    "&:hover": {
+      backgroundColor: alpha(orange100, theme.palette.action.hoverOpacity),
+    },
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: orange50,
+  },
+}))
 
 const ShowLabelCheckbox = () => {
   const { showLabel, setShowLabel } = store((state) => ({
@@ -16,7 +30,10 @@ const ShowLabelCheckbox = () => {
     <Container>
       <FormControlLabel
         control={
-          <Switch checked={showLabel} onChange={handleChange} color="warning" />
+          <CustomSwitch
+            checked={showLabel}
+            onChange={handleChange}
+          />
         }
         label={<Span>店名</Span>}
       />

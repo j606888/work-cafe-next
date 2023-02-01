@@ -1,28 +1,26 @@
 import { useMediaQuery } from "@mui/material"
 import { devices } from "constants/styled-theme"
 import useSearchStores from "hooks/useSearchStores"
-import { useRouter } from "next/router"
+import useUpdateURL from "hooks/useUpdateURL"
 import React from "react"
-import store, { PANEL_TYPES } from "stores/store"
+import storeStore from "stores/store"
 import StoreMarker from "./StoreMarker"
 
-const StoreMarkers = () => {
-  const router = useRouter()
+const StoreMarkers = ({ store }) => {
+  const { setCenterWithPlaceIdToURL } = useUpdateURL()
   const { data: stores } = useSearchStores()
   const {
     placeId,
     setPlaceId,
     focusPlaceId,
     setFocusPlaceId,
-    setPanelType,
     map,
     showLabel,
-  } = store((state) => ({
+  } = storeStore((state) => ({
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
     setFocusPlaceId: state.setFocusPlaceId,
     focusPlaceId: state.focusPlaceId,
-    setPanelType: state.setPanelType,
     map: state.map,
     showLabel: state.showLabel,
   }))
@@ -34,25 +32,23 @@ const StoreMarkers = () => {
     if (fullScreen) {
       setFocusPlaceId(placeId)
     } else {
-      const lat = map.center.lat().toFixed(6)
-      const lng = map.center.lng().toFixed(6)
-      const zoom = map.zoom
-
       setPlaceId(placeId)
       setFocusPlaceId(placeId)
-      setPanelType(PANEL_TYPES.STORE_DETAIL)
-      router.push(`/map/place/${placeId}/@${lat},${lng},${zoom}z`)
+      setCenterWithPlaceIdToURL(placeId)
     }
   }
 
   if (!stores || !map) return null
+
+  let storeList = stores.stores
+  if (store && !storeList.map(store => store.placeId).includes(store.placeId)) storeList = [...storeList, store]
 
   const mapLng = map.center.lng()
   const mapLat = map.center.lat()
 
   return (
     <>
-      {stores.stores.map((store) => {
+      {storeList.map((store) => {
         return (
           <StoreMarker
             mapLng={mapLng}

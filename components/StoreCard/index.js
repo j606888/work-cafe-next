@@ -58,7 +58,7 @@ const StoreCard = React.forwardRef(
           </OpenStatus>
           <Address>・{vicinity}</Address>
         </SecondInfo>
-        {!fullScreen && <CustomTagList tags={tags} noWrap />}
+        {!fullScreen && tags.length > 0 && <CustomTagList tags={tags} fixedHeight />}
       </Container>
     )
   }
