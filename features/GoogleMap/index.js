@@ -33,15 +33,21 @@ const GoogleMap = ({ onClick, children }) => {
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
     mapIds: [process.env.NEXT_PUBLIC_MAP_ID],
   })
-  const { map, setMap, setPanelType, setPlaceId, setSearchCenter } = store(
-    (state) => ({
-      map: state.map,
-      setMap: state.setMap,
-      setPanelType: state.setPanelType,
-      setPlaceId: state.setPlaceId,
-      setSearchCenter: state.setSearchCenter,
-    })
-  )
+  const {
+    map,
+    setMap,
+    setPanelType,
+    setPlaceId,
+    setFocusPlaceId,
+    setSearchCenter,
+  } = store((state) => ({
+    map: state.map,
+    setMap: state.setMap,
+    setPanelType: state.setPanelType,
+    setPlaceId: state.setPlaceId,
+    setFocusPlaceId: state.setFocusPlaceId,
+    setSearchCenter: state.setSearchCenter,
+  }))
 
   useEffect(() => {
     const path = window.location.pathname
@@ -58,14 +64,15 @@ const GoogleMap = ({ onClick, children }) => {
         return cur
       })
       setSearchCenter({ lat: +match[1], lng: +match[2] })
-
-      if (path.includes("/place/")) {
-        const placeId = path.match(/place\/(.*)\/@/)[1]
-        setPlaceId(placeId)
-        setPanelType(PANEL_TYPES.STORE_DETAIL)
-      }
     } else {
       console.log("parsed failed")
+    }
+
+    if (path.includes("/place/")) {
+      const placeId = path.match(/place\/(.*)\/@/)[1]
+      setPlaceId(placeId)
+      setFocusPlaceId(placeId)
+      setPanelType(PANEL_TYPES.STORE_DETAIL)
     }
   }, [])
 
@@ -74,7 +81,7 @@ const GoogleMap = ({ onClick, children }) => {
   }
 
   function onIdle() {
-    if (!map || ['/map', '/m/map'].includes(router.asPath)) return
+    if (!map || ["/map", "/m/map"].includes(router.asPath)) return
 
     const lat = map.center.lat().toFixed(6)
     const lng = map.center.lng().toFixed(6)

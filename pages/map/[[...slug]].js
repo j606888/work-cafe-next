@@ -37,7 +37,7 @@ export default function MapPage() {
           {asPath.startsWith("/map/@") && <LeftContainer />}
           <GoogleMap>
             {asPath === "/map" && <LandingSearch />}
-            <StoreMarkers />
+            <StoreMarkers store={store} />
             <MyLocationMarker />
             <SearchHereButton isLanding={asPath === "/map"} />
           </GoogleMap>

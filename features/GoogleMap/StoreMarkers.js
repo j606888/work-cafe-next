@@ -3,10 +3,10 @@ import { devices } from "constants/styled-theme"
 import useSearchStores from "hooks/useSearchStores"
 import { useRouter } from "next/router"
 import React from "react"
-import store, { PANEL_TYPES } from "stores/store"
+import storeStore, { PANEL_TYPES } from "stores/store"
 import StoreMarker from "./StoreMarker"
 
-const StoreMarkers = () => {
+const StoreMarkers = ({ store }) => {
   const router = useRouter()
   const { data: stores } = useSearchStores()
   const {
@@ -17,7 +17,7 @@ const StoreMarkers = () => {
     setPanelType,
     map,
     showLabel,
-  } = store((state) => ({
+  } = storeStore((state) => ({
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
     setFocusPlaceId: state.setFocusPlaceId,
@@ -47,12 +47,15 @@ const StoreMarkers = () => {
 
   if (!stores || !map) return null
 
+  let storeList = stores.stores
+  if (store && !storeList.map(store => store.placeId).includes(store.placeId)) storeList = [...storeList, store]
+
   const mapLng = map.center.lng()
   const mapLat = map.center.lat()
 
   return (
     <>
-      {stores.stores.map((store) => {
+      {storeList.map((store) => {
         return (
           <StoreMarker
             mapLng={mapLng}

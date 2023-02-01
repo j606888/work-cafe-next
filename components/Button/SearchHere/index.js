@@ -3,19 +3,32 @@ import styled from "styled-components"
 import CircularProgress from "@mui/material/CircularProgress"
 import store, { PANEL_TYPES } from "stores/store"
 import { mapCenter } from "utils/map-helper"
+import { useRouter } from "next/router"
+import { useMediaQuery } from "@mui/material"
+import { devices } from "constants/styled-theme"
 
 const SearchHere = ({ className }) => {
-  const { map, setSearchCenter, setPanelType } = store((state) => ({
+  const router = useRouter()
+  const { map, setSearchCenter, setPanelType, setPlaceId, setFocusPlaceId  } = store((state) => ({
     map: state.map,
     setSearchCenter: state.setSearchCenter,
     setPanelType: state.setPanelType,
+    setPlaceId: state.setPlaceId,
+    setFocusPlaceId: state.setFocusPlaceId,
   }))
+  const isFullScreen = useMediaQuery(devices.mobileXl)
   const isLoading = false
 
   function onClick() {
     const { lat, lng } = mapCenter(map)
+    setPlaceId(null)
+    setFocusPlaceId(null)
     setSearchCenter({ lat, lng })
     setPanelType(PANEL_TYPES.STORE_LIST)
+    const path = `/map/@${lat},${lng},${map.zoom}z`
+    if (isFullScreen) path = "/m" + path
+
+    router.push(path)
   }
 
   const icon = isLoading ? (
