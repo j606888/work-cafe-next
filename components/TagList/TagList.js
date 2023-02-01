@@ -1,10 +1,10 @@
 import React from "react"
 import styled from "styled-components"
 
-const TagList = ({ tags = [], withCount = true, className, noWrap=false }) => {
+const TagList = ({ tags = [], withCount = true, className, fixedHeight=false }) => {
   if (withCount) {
     return (
-      <Container className={className} noWrap={noWrap}>
+      <Container className={className} fixedHeight={fixedHeight}>
         {tags.map((tag, index) => (
           <Tag key={index}>
             {tag.name} ({tag.count})
@@ -14,7 +14,7 @@ const TagList = ({ tags = [], withCount = true, className, noWrap=false }) => {
     )
   } else {
     return (
-      <Container noWrap={noWrap}>
+      <Container fixedHeight={fixedHeight}>
         {tags.map((tag, index) => (
           <Tag key={index}>{tag}</Tag>
         ))}
@@ -27,7 +27,8 @@ const Container = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-  flex-wrap: ${({ noWrap }) => noWrap ? 'nowrap' : 'wrap' };
+  flex-wrap: wrap;
+  height: ${({ fixedHeight }) => (fixedHeight ? "32px" : "auto")};
   overflow: hidden;
 `
 
