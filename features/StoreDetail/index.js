@@ -61,9 +61,7 @@ const StoreDetail = ({ store }) => {
       <Header
         onClick={handleClose}
         placeId={store.placeId}
-        isBookmark={store.isBookmark}
         url={store.url}
-        onBookmarkUpdate={handleReviewSave}
       />
       <ImagePreview photos={store.photos} name={store.name} />
       <H3>{store.name}</H3>

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import { Menu, MenuItem } from "@mui/material"
+import { Menu, MenuItem, Snackbar } from "@mui/material"
+import copy from "copy-to-clipboard"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import styled, { css } from "styled-components"
 import { devices } from "constants/styled-theme"
@@ -7,15 +8,16 @@ import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
 import useLoginModeStore from "stores/useLoginModeStore"
 import useUserStore from "stores/useUserStore"
 import useSWR from "swr"
-import ShareButton from './ShareButton'
+import ActionButton from "components/Button/ActionButton"
 
-const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
+const Header = ({ placeId, url, onClick }) => {
+  const [openSnack, setOpenSnack] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
   const setMode = useLoginModeStore((state) => state.setMode)
   const open = Boolean(anchorEl)
   const isLogin = useUserStore((state) => state.isLogin)
-  const { mutate } = useSWR(isLogin ? `/user-bookmarks` : null)
+  const { data: store, mutate } = useSWR(`/stores/${placeId}`)
 
   function handleMoreClick(e) {
     setAnchorEl(e.currentTarget)
@@ -24,20 +26,25 @@ const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
     setAnchorEl(null)
     setOpenNotCafe(false)
   }
+  function handleNavigate() {
+    window.open(url, '_blank')
+  }
+  function handleShare() {
+    const href = window.location.href
+    copy(href)
+    setOpenSnack(true)
+  }
   async function handleAddBookmark() {
     if (isLogin) {
       await addToBookmark({ placeId })
-      onBookmarkUpdate()
       mutate()
     } else {
       setMode("login")
     }
   }
-
   async function handleRemoveBookmark() {
     if (isLogin) {
       await removeFromBookmark({ placeId })
-      onBookmarkUpdate()
       mutate()
     } else {
       setMode("login")
@@ -52,34 +59,24 @@ const Header = ({ placeId, url, isBookmark, onClick, onBookmarkUpdate }) => {
           <span>搜尋結果</span>
         </BackButton>
         <ButtonGroup>
-          <UrlButton href={url} target="_blank">
-            <img src="/navigate.svg" alt="navigate" />
-            <span>導航</span>
-          </UrlButton>
-          {isBookmark ? (
-            <Button onClick={handleRemoveBookmark}>
-              <img src="/like.svg" alt="like" />
-              <span>已收藏</span>
-            </Button>
-          ) : (
-            <Button onClick={handleAddBookmark}>
-              <img src="/like.svg" alt="like" />
-              <span>收藏</span>
-            </Button>
+          <ActionButton svg="navigate" onClick={handleNavigate}>
+            導航
+          </ActionButton>
+          {store?.isBookmark ? (
+            <ActionButton svg="like-filled" onClick={handleRemoveBookmark}>已收藏</ActionButton>
+            ) : (
+            <ActionButton svg="like" onClick={handleAddBookmark}>收藏</ActionButton>
           )}
-
-          <ShareButton />
-          {/* {isBookmark ? (
-            <Button onClick={handleRemoveBookmark} active>
-              <BookmarkIcon />
-              <span>已收藏</span>
-            </Button>
-          ) : (
-            <Button onClick={handleAddBookmark}>
-              <BookmarkBorderIcon />
-              <span>收藏</span>
-            </Button>
-          )} */}
+          <ActionButton svg="share" onClick={handleShare}>
+            分享
+          </ActionButton>
+          <Snackbar
+            open={openSnack}
+            autoHideDuration={3000}
+            onClose={() => setOpenSnack(false)}
+            message="已複製到剪貼簿"
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          />
           <MoreButton onClick={handleMoreClick}>
             <img src="/more.svg" alt="more" />
           </MoreButton>
