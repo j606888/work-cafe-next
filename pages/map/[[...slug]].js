@@ -1,6 +1,6 @@
 import { devices } from "constants/styled-theme"
 import GoogleMap from "features/GoogleMap"
-import Header from "features/v2/Header"
+import Header from "features/Header"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
 import SearchStores from "features/SearchStores"
