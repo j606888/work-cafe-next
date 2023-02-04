@@ -1,5 +1,6 @@
 import { grey01, grey02, grey04 } from "constants/color"
 import { devices } from "constants/styled-theme"
+import AccountMenu from "features/AccountMenu"
 import React from "react"
 import styled from "styled-components"
 
@@ -23,7 +24,7 @@ const MainHeader = () => {
           {text}
         </Link>
       ))}
-      <UserInfo isLoggedIn={null}>J</UserInfo>
+      <AccountMenu />
     </Container>
   )
 }
@@ -73,22 +74,6 @@ const Link = styled.a`
 
   @media ${devices.mobileXl} {
     display: none;
-  }
-`
-
-const UserInfo = styled.div`
-  margin-left: auto;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background-color: #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  @media ${devices.mobileXl} {
-    width: 36px;
-    height: 36px;
   }
 `
 

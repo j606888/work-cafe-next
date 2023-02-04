@@ -1,0 +1,48 @@
+import React, { useState } from "react"
+import styled from "styled-components"
+import LoginForm from "./LoginForm"
+
+const AccountMenu = () => {
+  const [openForm, setOpenForm] = useState(false)
+
+  function handleOpenForm() {
+    setOpenForm(true)
+  }
+
+  return (
+    <>
+      <Container>
+        <Button onClick={handleOpenForm}>登入</Button>
+        <Button black onClick={handleOpenForm}>
+          註冊
+        </Button>
+      </Container>
+      <LoginForm open={openForm} onClose={() => setOpenForm(false)}/>
+    </>
+  )
+}
+
+const Container = styled.div`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+`
+
+const Button = styled.button`
+  border: 1px solid #222120;
+  border-radius: 12px;
+  height: 44px;
+  min-width: 68px;
+  line-height: 22px;
+  padding: 0 12px;
+  background-color: ${({ black }) => (black ? "#000000" : "#FFFFFF")};
+  color: ${({ black }) => (black ? "#FFFFFF" : "#000000")};
+  font-weight: 500;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+`
+
+export default AccountMenu
