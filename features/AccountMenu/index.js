@@ -1,13 +1,23 @@
+import { useMediaQuery } from "@mui/material"
+import { devices } from "constants/styled-theme"
 import React, { useState } from "react"
 import styled from "styled-components"
 import LoginForm from "./LoginForm"
 
 const AccountMenu = () => {
   const [openForm, setOpenForm] = useState(false)
+  const fullScreen = useMediaQuery(devices.mobileXl)
 
   function handleOpenForm() {
     setOpenForm(true)
   }
+
+  if (fullScreen)
+    return (
+      <Container>
+        <img src="/hamburger.svg" alt="hamburger" />
+      </Container>
+    )
 
   return (
     <>
@@ -17,7 +27,7 @@ const AccountMenu = () => {
           註冊
         </Button>
       </Container>
-      <LoginForm open={openForm} onClose={() => setOpenForm(false)}/>
+      <LoginForm open={openForm} onClose={() => setOpenForm(false)} />
     </>
   )
 }
