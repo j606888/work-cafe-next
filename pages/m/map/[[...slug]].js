@@ -16,6 +16,7 @@ import useSWR from "swr"
 import { devices } from "constants/styled-theme"
 import { useState } from "react"
 import { grey01 } from "constants/color"
+import SearchHere from "components/Button/SearchHere"
 
 export default function MobileMapPage() {
   useRWD({ redirect: true })
@@ -44,6 +45,7 @@ export default function MobileMapPage() {
           <GoogleMap>
             <MyLocationMarker />
             <StoreMarkers />
+            <SearchHereButton />
           </GoogleMap>
         </MapArea>
         {showMap && <>
@@ -82,6 +84,14 @@ const MapArea = styled.div`
   height: 100%;
 
   ${labelStyles}
+`
+
+const SearchHereButton = styled(SearchHere)`
+  position: absolute;
+  left: 50%;
+  top: 72px;
+  transform: translateX(-50%);
+  z-index: 2;
 `
 
 const ShowMapButton = styled.div`
