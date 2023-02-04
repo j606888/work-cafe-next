@@ -3,7 +3,7 @@ import GoogleMap from "features/GoogleMap"
 import Header from "features/v2/Header"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
-import SearchStores from "features/v2/SearchStores"
+import SearchStores from "features/SearchStores"
 import StoreList from "features/StoreList"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
@@ -29,12 +29,11 @@ const Content = ({ isLanding, store }) => {
   )
 }
 
-export default function NewMap() {
+export default function MapPage() {
   const { asPath, isReady } = useRouter()
   const isLanding = asPath === "/map"
   const match = asPath.match(/\/map\/place\/([^\/]+)/)
   const placeId = match && match[1]
-  console.log({ placeId })
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
   if (!isReady) return <div>loading...</div>
