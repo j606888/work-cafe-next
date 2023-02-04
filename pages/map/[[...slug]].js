@@ -11,6 +11,7 @@ import { useRouter } from "next/router"
 import LandingSearch from "features/LandingSearch"
 import useSWR from "swr"
 import StoreDetail from "features/StoreDetail"
+import { labelStyles } from "features/GoogleMap/labelStyles"
 
 const Content = ({ isLanding, store }) => {
   if (isLanding) return null
@@ -117,6 +118,7 @@ const MapContainer = styled.div`
   top: calc(80px + 40px);
   right: 0;
   bottom: 0;
+  ${labelStyles};
 
   @media ${devices.mobileXl} {
     position: fixed;
