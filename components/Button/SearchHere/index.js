@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress"
 import store from "stores/store"
 import { mapCenter } from "utils/map-helper"
 import useUpdateURL from "hooks/useUpdateURL"
+import { devices } from "constants/styled-theme"
 
 const SearchHere = ({ className }) => {
   const { setCenterToURL } = useUpdateURL()
@@ -61,6 +62,12 @@ const Container = styled.div`
     font-weight: 400;
     line-height: 22px;
     color: #222120;
+  }
+
+  @media ${devices.mobileXl} {
+    height: 48px;
+    border-radius: 18px;
+    /* font-size: 12px; */
   }
 `
 

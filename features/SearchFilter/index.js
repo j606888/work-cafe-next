@@ -84,6 +84,7 @@ const Badge = styled.div`
   border-radius: 50%;
   width: 24px;
   height: 24px;
+  font-size: 14px;
 `
 
 export default SearchFilter
