@@ -7,24 +7,42 @@ import SearchStores from "features/v2/SearchStores"
 import StoreList from "features/StoreList"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
+import { useRouter } from "next/router"
+import LandingSearch from "features/LandingSearch"
 
 export default function NewMap() {
-  return <>
-    <Header />
-    <Container>
-      <SearchStores />
-      <ContentContainer>
-        <StoreList />
-      </ContentContainer>
-      <MapContainer>
-        <SearchHere />
-        <ShowLabelCheckbox />
-        <GoogleMap>
-          <StoreMarkers />
-        </GoogleMap>
-      </MapContainer>
-    </Container>
-  </>
+  const { asPath, isReady } = useRouter()
+  const isLanding = asPath === "/new-map"
+
+  if (!isReady) return <div>loading...</div>
+
+  return (
+    <>
+      <Header />
+      <Container>
+        {!isLanding && (
+          <>
+            <SearchStores />
+            <ContentContainer>
+              <StoreList />
+            </ContentContainer>
+          </>
+        )}
+        <MapContainer isLanding={isLanding}>
+          {isLanding && <LandingSearch />}
+          {!isLanding && (
+            <>
+              <SearchHere />
+              <ShowLabelCheckbox />
+            </>
+          )}
+          <GoogleMap>
+            <StoreMarkers />
+          </GoogleMap>
+        </MapContainer>
+      </Container>
+    </>
+  )
 }
 
 const Container = styled.div`
@@ -54,7 +72,7 @@ const ContentContainer = styled.div`
 `
 
 const MapContainer = styled.div`
-  width: calc(100% - 628px);
+  width: ${({ isLanding }) => (isLanding ? "100%" : "calc(100% - 628px)")};
   height: calc(100% - 80px - 40px);
   position: fixed;
   top: calc(80px + 40px);
@@ -63,9 +81,9 @@ const MapContainer = styled.div`
 
   @media ${devices.mobileXl} {
     position: fixed;
-
     width: 100%;
-    height: calc(100% - 56px - 248px);
+    height: ${({ isLanding }) =>
+      isLanding ? "calc(100% - 56px)" : "calc(100% - 56px - 248px)"};
     top: 56px;
   }
 `
