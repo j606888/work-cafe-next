@@ -1,3 +1,4 @@
+import { grey04 } from 'constants/color'
 import { devices } from 'constants/styled-theme'
 import Searchbar from 'features/Searchbar'
 import SearchFilter from 'features/SearchFilter'
@@ -23,12 +24,14 @@ const Container = styled.div`
   align-items: center;
   padding: 0 28px;
   gap: 12px;
+  border-bottom: 1px solid ${grey04};
 
   @media ${devices.mobileXl} {
     height: 84px;
     width: 100%;
     top: 56px;
     background: none;
+    border-bottom: none;
   }
 `
 

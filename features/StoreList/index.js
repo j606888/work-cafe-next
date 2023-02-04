@@ -49,7 +49,7 @@ export default function StoreList({ expand }) {
 
   return (
     <>
-      <StoreCount>{stores?.totalStores} 間咖啡店</StoreCount>
+      {/* <StoreCount>{stores?.totalStores} 間咖啡店</StoreCount> */}
       <Container expand={expand}>
         {stores?.stores?.map((store, i) => (
           <StoreCard

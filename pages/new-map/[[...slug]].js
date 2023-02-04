@@ -4,36 +4,28 @@ import Header from "features/v2/Header"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
 import SearchStores from "features/v2/SearchStores"
+import StoreList from "features/StoreList"
+import StoreMarkers from "features/GoogleMap/StoreMarkers"
+import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 
 export default function NewMap() {
-  const boxes = []
-  for (let i = 0; i < 10; i++) {
-    boxes.push(<Box key={i}>{i}</Box>)
-  }
-
   return <>
     <Header />
     <Container>
       <SearchStores />
       <ContentContainer>
-        {boxes}
+        <StoreList />
       </ContentContainer>
       <MapContainer>
         <SearchHere />
-        <GoogleMap></GoogleMap>
+        <ShowLabelCheckbox />
+        <GoogleMap>
+          <StoreMarkers />
+        </GoogleMap>
       </MapContainer>
     </Container>
   </>
 }
-
-const Box = styled.div`
-  width: 64px;
-  height: 64px;
-  background-color: red;
-  margin: 1rem;
-
-  flex-shrink: 0;
-`
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +40,6 @@ const ContentContainer = styled.div`
   top: calc(80px + 40px + 112px);
   bottom: 0;
   overflow-y: auto;
-  background-color: #1abc9c;
 
   @media ${devices.mobileXl} {
     width: 100%;
