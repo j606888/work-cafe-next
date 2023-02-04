@@ -3,18 +3,20 @@ import GoogleMap from "features/GoogleMap"
 import Header from "features/v2/Header"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
+import SearchStores from "features/v2/SearchStores"
 
 export default function NewMap() {
+  const boxes = []
+  for (let i = 0; i < 10; i++) {
+    boxes.push(<Box key={i}>{i}</Box>)
+  }
+
   return <>
     <Header />
     <Container>
+      <SearchStores />
       <ContentContainer>
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
-        <Box />
+        {boxes}
       </ContentContainer>
       <MapContainer>
         <SearchHere />
@@ -39,10 +41,11 @@ const Container = styled.div`
 
 const ContentContainer = styled.div`
   width: 628px;
-  height: calc(100% - 80px - 40px);
+  /* 80px: MainHeader, 40px: HelpUs, 112px: SearchStores */
+  height: calc(100% - 80px - 40px - 112px);
   position: fixed;
   left: 0;
-  top: calc(80px + 40px);
+  top: calc(80px + 40px + 112px);
   bottom: 0;
   overflow-y: auto;
   background-color: #1abc9c;

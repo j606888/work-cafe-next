@@ -1,4 +1,4 @@
-import { grey01, grey02 } from "constants/color"
+import { grey01, grey02, grey04 } from "constants/color"
 import { devices } from "constants/styled-theme"
 import React from "react"
 import styled from "styled-components"
@@ -34,6 +34,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 0 60px;
+  border-bottom: 1px solid ${grey04};
 
   @media ${devices.mobileXl} {
     height: 56px;

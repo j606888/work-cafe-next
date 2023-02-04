@@ -71,6 +71,7 @@ const Container = styled.div`
   }
 
   @media ${devices.mobileXl} {
+    top: 84px;
     height: 48px;
     border-radius: 18px;
     /* font-size: 12px; */
