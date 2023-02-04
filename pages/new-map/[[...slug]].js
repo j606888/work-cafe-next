@@ -1,4 +1,5 @@
 import { devices } from "constants/styled-theme"
+import GoogleMap from "features/GoogleMap"
 import Header from "features/v2/Header"
 import styled from "styled-components"
 
@@ -14,7 +15,9 @@ export default function NewMap() {
         <Box />
         <Box />
       </ContentContainer>
-      <MapContainer>Map</MapContainer>
+      <MapContainer>
+        <GoogleMap></GoogleMap>
+      </MapContainer>
     </Container>
   </>
 }
@@ -33,19 +36,18 @@ const Container = styled.div`
 `
 
 const ContentContainer = styled.div`
-  width: 50%;
-  height: calc(100% - 80px);
+  width: 628px;
+  height: calc(100% - 80px - 40px);
   position: fixed;
   left: 0;
-  top: 80px;
+  top: calc(80px + 40px);
   bottom: 0;
   overflow-y: auto;
   background-color: #1abc9c;
-  border: 2px solid #2c3e50;
 
   @media ${devices.mobileXl} {
     width: 100%;
-    height: 274px;
+    height: 248px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -56,20 +58,18 @@ const ContentContainer = styled.div`
 `
 
 const MapContainer = styled.div`
-  width: 50%;
-  height: calc(100% - 80px);
+  width: calc(100% - 628px);
+  height: calc(100% - 80px - 40px);
   position: fixed;
+  top: calc(80px + 40px);
   right: 0;
-  top: 80px;
   bottom: 0;
-  background-color: #3498db;
-  border: 2px solid #9b59b6;
 
   @media ${devices.mobileXl} {
     position: fixed;
 
     width: 100%;
-    height: calc(100% - 56px - 274px);
+    height: calc(100% - 56px - 248px);
     top: 56px;
   }
 `
