@@ -1,6 +1,6 @@
 import React from 'react'
-import AdminLayout from 'features/AdminLayout'
-import Dashboard from 'features/AdminDashboard'
+import AdminLayout from "features/admin/AdminLayout"
+import Dashboard from 'features/admin/AdminDashboard'
 
 const DashboardPage = () => {
   return (

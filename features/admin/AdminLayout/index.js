@@ -10,7 +10,7 @@ import {
   RemoveModerator as RemoveModeratorIcon,
 } from "@mui/icons-material"
 import AppBar from "./AppBar"
-import MiniDrawer from "../../components/MiniDrawer"
+import MiniDrawer from "components/MiniDrawer"
 import { useRouter } from "next/router"
 import Skeleton from "components/Skeleton"
 import useUserStore from "stores/useUserStore"

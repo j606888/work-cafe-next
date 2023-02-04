@@ -1,5 +1,5 @@
-import AdminLayout from "features/AdminLayout"
-import AdminStoreCrawler from "features/AdminStoreCrawler"
+import AdminLayout from "features/admin/AdminLayout"
+import AdminStoreCrawler from "features/admin/AdminStoreCrawler"
 
 const Map = () => {
   return (
