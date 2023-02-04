@@ -14,17 +14,29 @@ import StoreDetail from "features/StoreDetail"
 
 const Content = ({ isLanding, store }) => {
   if (isLanding) return null
-  if (store) return (
-    <StoreDetailContainer>
-      <StoreDetail store={store} />
-    </StoreDetailContainer>
-  )
+  if (store)
+    return (
+      <StoreDetailContainer>
+        <StoreDetail store={store} />
+      </StoreDetailContainer>
+    )
   return (
     <>
       <SearchStores />
       <ContentContainer>
         <StoreList />
       </ContentContainer>
+    </>
+  )
+}
+
+const ContentOnMap = ({ isLanding }) => {
+  return isLanding ? (
+    <LandingSearch />
+  ) : (
+    <>
+      <SearchHere />
+      <ShowLabelCheckbox />
     </>
   )
 }
@@ -44,13 +56,7 @@ export default function MapPage() {
       <Container>
         <Content store={store} isLanding={isLanding} />
         <MapContainer isLanding={isLanding}>
-          {isLanding && <LandingSearch />}
-          {!isLanding && (
-            <>
-              <SearchHere />
-              <ShowLabelCheckbox />
-            </>
-          )}
+          <ContentOnMap isLanding={isLanding} />
           <GoogleMap>
             <StoreMarkers />
           </GoogleMap>
