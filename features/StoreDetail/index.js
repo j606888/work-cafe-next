@@ -13,10 +13,8 @@ import useSearchStores from "hooks/useSearchStores"
 import storeStore from "stores/store"
 import { useRouter } from "next/router"
 import { mapCenter } from "utils/map-helper"
-import useRWD from "hooks/useRWD"
 
 const StoreDetail = ({ store }) => {
-  const { isFullScreen } = useRWD()
   const router = useRouter()
   const { map, keyword, setPlaceId } = storeStore(
     (state) => ({
@@ -26,7 +24,6 @@ const StoreDetail = ({ store }) => {
     })
   )
   const { searchHints } = useHintSearch()
-
   const { data: stores } = useSearchStores()
 
   function handleReviewSave() {
@@ -38,7 +35,7 @@ const StoreDetail = ({ store }) => {
 
     const { lat, lng, zoom } = mapCenter(map)
 
-    let path = `/new-map/@${lat},${lng},${zoom}z`
+    let path = `/map/@${lat},${lng},${zoom}z`
     if (keyword) path = path + `?keyword=${keyword}`
 
     router.push(path)

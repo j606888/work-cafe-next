@@ -17,7 +17,7 @@ const LINKS = [
 const MainHeader = () => {
   return (
     <Container>
-      <HomeLink href="/new-map">Work Cafe | Taiwan</HomeLink>
+      <HomeLink href="/map">Work Cafe | Taiwan</HomeLink>
       {LINKS.map(({ href, text }, index) => (
         <Link href={href} key={index} target="_blank" rel="noreferrer">
           {text}

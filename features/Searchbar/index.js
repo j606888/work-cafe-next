@@ -27,7 +27,6 @@ const Searchbar = ({ type = "landing" }) => {
     const { middleLat, middleLng } = await _searchResultMid({ lat, lng, k })
 
     let path = `/map/@${middleLat},${middleLng},15z?keyword=${k}`
-    if (isFullScreen) path = `/m${path}`
     router.push(path)
 
     if (map) {

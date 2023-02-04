@@ -29,7 +29,7 @@ const NearbySearch = () => {
         location = await _getCurrentPosition()
       }
 
-      let path = `/new-map/@${location.lat},${location.lng},15z`
+      let path = `/map/@${location.lat},${location.lng},15z`
       router.push(path)
 
       map.setZoom(15)
