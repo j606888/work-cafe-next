@@ -33,9 +33,10 @@ const Container = styled.div`
   color: #fff;
 
   @media ${devices.mobileXl} {
-    height: ${HEIGHT.mobileXl};
+    display: none;
+    /* height: ${HEIGHT.mobileXl};
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 500; */
   }
 `
 

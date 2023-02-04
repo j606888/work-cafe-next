@@ -1,72 +1,128 @@
-import AppBar from "features/AppBar"
+import { devices } from "constants/styled-theme"
 import GoogleMap from "features/GoogleMap"
-import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
-import StoreMarkers from "features/GoogleMap/StoreMarkers"
-import LeftContainer from "features/LeftContainer"
-import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
-import Head from "next/head"
+import Header from "features/Header"
 import styled from "styled-components"
 import SearchHere from "components/Button/SearchHere"
-import { labelStyles } from "features/GoogleMap/labelStyles"
+import SearchStores from "features/SearchStores"
+import StoreList from "features/StoreList"
+import StoreMarkers from "features/GoogleMap/StoreMarkers"
+import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import { useRouter } from "next/router"
 import LandingSearch from "features/LandingSearch"
-import StoreDetail from "features/StoreDetail"
 import useSWR from "swr"
-import useRWD from "hooks/useRWD"
+import StoreDetail from "features/StoreDetail"
+
+const Content = ({ isLanding, store }) => {
+  if (isLanding) return null
+  if (store)
+    return (
+      <StoreDetailContainer>
+        <StoreDetail store={store} />
+      </StoreDetailContainer>
+    )
+  return (
+    <>
+      <SearchStores />
+      <ContentContainer>
+        <StoreList />
+      </ContentContainer>
+    </>
+  )
+}
+
+const ContentOnMap = ({ isLanding }) => {
+  return isLanding ? (
+    <LandingSearch />
+  ) : (
+    <>
+      <SearchHere />
+      <ShowLabelCheckbox />
+    </>
+  )
+}
 
 export default function MapPage() {
-  useRWD({ redirect: true })
-  const router = useRouter()
-  const { asPath } = router
+  const { asPath, isReady } = useRouter()
+  const isLanding = asPath === "/map"
   const match = asPath.match(/\/map\/place\/([^\/]+)/)
   const placeId = match && match[1]
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
-  if (!router.isReady) return <div>Loading...</div>
+  if (!isReady) return <div>loading...</div>
 
   return (
     <>
-      <Head>
-        <title>Work Cafe</title>
-      </Head>
+      <Header />
       <Container>
-        <AppBar />
-        <MapArea>
-          {asPath !== "/map" && <ShowLabelCheckbox />}
-          {asPath.startsWith("/map/place/") && <StoreDetail store={store} />}
-          {asPath.startsWith("/map/@") && <LeftContainer />}
+        <Content store={store} isLanding={isLanding} />
+        <MapContainer isLanding={isLanding}>
+          <ContentOnMap isLanding={isLanding} />
           <GoogleMap>
-            {asPath === "/map" && <LandingSearch />}
-            <StoreMarkers store={store} />
-            <MyLocationMarker />
-            <SearchHereButton isLanding={asPath === "/map"} />
+            <StoreMarkers />
           </GoogleMap>
-        </MapArea>
+        </MapContainer>
       </Container>
     </>
   )
 }
 
-const SearchHereButton = styled(SearchHere)`
-  position: absolute;
-  left: ${({ isLanding }) => (isLanding ? "calc(50% + 312px)" : "50%")};
-  top: 32px;
-  transform: translateX(-50%);
-  z-index: 2;
-`
 const Container = styled.div`
-  height: 100vh;
   display: flex;
-  flex-direction: column;
 `
 
-const MapArea = styled.div`
-  position: relative;
-  // If using 100vh, when stores exist will overflow.
-  height: calc(100vh - 120px);
-  width: 100%;
-  display: flex;
-  flex-wrap: nowrap;
+const StoreDetailContainer = styled.div`
+  width: 628px;
+  /* 80px: MainHeader, 40px: HelpUs, 112px: SearchStores */
+  height: calc(100% - 80px - 40px);
+  position: fixed;
+  left: 0;
+  top: calc(80px + 40px);
+  bottom: 0;
+  overflow-y: auto;
 
-  ${labelStyles}
+  @media ${devices.mobileXl} {
+    width: 100%;
+    top: 56px;
+    height: calc(100% - 56px);
+    z-index: 2;
+  }
+`
+
+const ContentContainer = styled.div`
+  width: 628px;
+  /* 80px: MainHeader, 40px: HelpUs, 112px: SearchStores */
+  height: calc(100% - 80px - 40px - 112px);
+  position: fixed;
+  left: 0;
+  top: calc(80px + 40px + 112px);
+  bottom: 0;
+  overflow-y: auto;
+
+  @media ${devices.mobileXl} {
+    width: 100%;
+    height: 248px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    overflow-x: auto;
+    display: flex;
+  }
+`
+
+const MapContainer = styled.div`
+  width: ${({ isLanding }) => (isLanding ? "100%" : "calc(100% - 628px)")};
+  height: calc(100% - 80px - 40px);
+  position: fixed;
+  top: calc(80px + 40px);
+  right: 0;
+  bottom: 0;
+
+  @media ${devices.mobileXl} {
+    position: fixed;
+    width: 100%;
+    height: ${({ isLanding }) =>
+      isLanding ? "calc(100% - 56px)" : "calc(100% - 56px - 248px)"};
+    top: 56px;
+  }
 `

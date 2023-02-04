@@ -3,11 +3,10 @@ import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
 import store from "stores/store"
-import { CircularProgress, useMediaQuery } from "@mui/material"
+import { CircularProgress } from "@mui/material"
 import { grey01, grey06, orange20 } from "constants/color"
 
 const NearbySearch = () => {
-  const isFullScreen = useMediaQuery(devices.mobileXl)
   const [loading, setLoading] = useState(false)
   const { map, myLocation, setMyLocation, setSearchCenter } = store(
     (state) => ({
@@ -31,7 +30,6 @@ const NearbySearch = () => {
       }
 
       let path = `/map/@${location.lat},${location.lng},15z`
-      if (isFullScreen) path = `/m${path}`
       router.push(path)
 
       map.setZoom(15)
