@@ -39,6 +39,12 @@ const SearchHere = ({ className }) => {
 }
 
 const Container = styled.div`
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;

@@ -10,8 +10,8 @@ const useUpdateURL = () => {
 
   function setCenterToURL() {
     const { lat, lng, zoom } = mapCenter(map)
-    let path = `/map/@${lat},${lng},${zoom}z`
-    if (isFullScreen) path = "/m" + path
+    let path = `/new-map/@${lat},${lng},${zoom}z`
+    // if (isFullScreen) path = "/m" + path
     router.push(path)
   }
   function setCenterWithPlaceIdToURL(placeId) {

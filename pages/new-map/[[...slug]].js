@@ -2,6 +2,7 @@ import { devices } from "constants/styled-theme"
 import GoogleMap from "features/GoogleMap"
 import Header from "features/v2/Header"
 import styled from "styled-components"
+import SearchHere from "components/Button/SearchHere"
 
 export default function NewMap() {
   return <>
@@ -16,6 +17,7 @@ export default function NewMap() {
         <Box />
       </ContentContainer>
       <MapContainer>
+        <SearchHere />
         <GoogleMap></GoogleMap>
       </MapContainer>
     </Container>
