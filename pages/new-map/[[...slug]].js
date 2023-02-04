@@ -9,10 +9,34 @@ import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import { useRouter } from "next/router"
 import LandingSearch from "features/LandingSearch"
+import useSWR from "swr"
+import StoreDetail from "features/StoreDetail"
+import { login } from "api/auth"
+
+const Content = ({ isLanding, store }) => {
+  if (isLanding) return null
+  if (store) return (
+    <StoreDetailContainer>
+      <StoreDetail store={store} />
+    </StoreDetailContainer>
+  )
+  return (
+    <>
+      <SearchStores />
+      <ContentContainer>
+        <StoreList />
+      </ContentContainer>
+    </>
+  )
+}
 
 export default function NewMap() {
   const { asPath, isReady } = useRouter()
   const isLanding = asPath === "/new-map"
+  const match = asPath.match(/\/new-map\/place\/([^\/]+)/)
+  const placeId = match && match[1]
+  console.log({ placeId })
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
   if (!isReady) return <div>loading...</div>
 
@@ -20,14 +44,7 @@ export default function NewMap() {
     <>
       <Header />
       <Container>
-        {!isLanding && (
-          <>
-            <SearchStores />
-            <ContentContainer>
-              <StoreList />
-            </ContentContainer>
-          </>
-        )}
+        <Content store={store} isLanding={isLanding} />
         <MapContainer isLanding={isLanding}>
           {isLanding && <LandingSearch />}
           {!isLanding && (
@@ -47,6 +64,24 @@ export default function NewMap() {
 
 const Container = styled.div`
   display: flex;
+`
+
+const StoreDetailContainer = styled.div`
+  width: 628px;
+  /* 80px: MainHeader, 40px: HelpUs, 112px: SearchStores */
+  height: calc(100% - 80px - 40px);
+  position: fixed;
+  left: 0;
+  top: calc(80px + 40px);
+  bottom: 0;
+  overflow-y: auto;
+
+  @media ${devices.mobileXl} {
+    width: 100%;
+    top: 56px;
+    height: calc(100% - 56px);
+    z-index: 2;
+  }
 `
 
 const ContentContainer = styled.div`
