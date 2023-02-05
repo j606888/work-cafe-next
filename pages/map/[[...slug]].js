@@ -6,6 +6,7 @@ import SearchHere from "components/Button/SearchHere"
 import SearchStores from "features/SearchStores"
 import StoreList from "features/StoreList"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
+import StoreMarker from "features/GoogleMap/StoreMarker"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import { useRouter } from "next/router"
 import LandingSearch from "features/LandingSearch"
@@ -13,6 +14,7 @@ import useSWR from "swr"
 import StoreDetail from "features/StoreDetail"
 import { labelStyles } from "features/GoogleMap/labelStyles"
 import Skeleton from "components/Skeleton"
+import Head from "next/head"
 
 const pickContent = ({ isLanding, store, storeLoading }) => {
   if (isLanding) return null
@@ -63,12 +65,20 @@ export default function MapPage() {
 
   return (
     <>
+      <Head>
+        <title>Work Cafe | Taiwan</title>
+        <link rel="icon" href="/cafe-orange.svg" type="image/svg" />
+        <meta name="description" content="Work Cafe - Taiwan" />
+      </Head>
       <Header />
       <Container>
         {content}
         <MapContainer isLanding={isLanding}>
           <ContentOnMap isLanding={isLanding} />
-          <GoogleMap>{!isLanding && <StoreMarkers />}</GoogleMap>
+          <GoogleMap>
+            {!isLanding && <StoreMarkers />}
+            {store && <StoreMarker store={store} isFocus />}
+          </GoogleMap>
         </MapContainer>
       </Container>
     </>

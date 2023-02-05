@@ -1,3 +1,4 @@
+import { devices } from 'constants/styled-theme'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -24,6 +25,18 @@ const Container = styled.div`
   p {
     font-size: 18px;
     margin: 0.3rem;
+  }
+
+  @media ${devices.mobileXl} {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      display: none;
+    }
   }
 `
 

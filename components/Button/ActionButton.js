@@ -22,6 +22,9 @@ const Container = styled.div`
   padding: 0 12px 0 8px;
   cursor: pointer;
   color: ${grey01};
+  &:hover {
+    background-color: #f5f5f5;
+  }
 
   @media ${devices.mobileXl} {
     border: none;
