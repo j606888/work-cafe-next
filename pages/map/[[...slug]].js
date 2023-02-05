@@ -12,9 +12,16 @@ import LandingSearch from "features/LandingSearch"
 import useSWR from "swr"
 import StoreDetail from "features/StoreDetail"
 import { labelStyles } from "features/GoogleMap/labelStyles"
+import Skeleton from "components/Skeleton"
 
-const Content = ({ isLanding, store }) => {
+const pickContent = ({isLanding, store, storeLoading}) => {
   if (isLanding) return null
+  if (storeLoading)
+    return (
+      <StoreDetailContainer>
+        <Skeleton />
+      </StoreDetailContainer>
+    )
   if (store)
     return (
       <StoreDetailContainer>
@@ -48,14 +55,17 @@ export default function MapPage() {
   const match = asPath.match(/\/map\/place\/([^\/]+)/)
   const placeId = match && match[1]
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
+  const storeLoading = placeId && !store
 
   if (!isReady) return <div>loading...</div>
+
+  const content = pickContent({ store, isLanding, storeLoading})
 
   return (
     <>
       <Header />
       <Container>
-        <Content store={store} isLanding={isLanding} />
+        {content}
         <MapContainer isLanding={isLanding}>
           <ContentOnMap isLanding={isLanding} />
           <GoogleMap>

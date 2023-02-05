@@ -7,7 +7,9 @@ const useSearchStores = () => {
   const { searchCenter } = store((state) => ({
     searchCenter: state.searchCenter
   }))
-  let params = {}
+  const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}
+
+  let params = { ...storedFilters  }
 
   if (typeof window !== "undefined") {
     const parsed = queryString.parse(window.location.search)

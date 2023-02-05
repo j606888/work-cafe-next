@@ -13,6 +13,8 @@ import useSearchStores from "hooks/useSearchStores"
 import storeStore from "stores/store"
 import { useRouter } from "next/router"
 import { mapCenter } from "utils/map-helper"
+import qs from "query-string"
+
 
 const StoreDetail = ({ store }) => {
   const router = useRouter()
@@ -34,9 +36,12 @@ const StoreDetail = ({ store }) => {
     setPlaceId(null)
 
     const { lat, lng, zoom } = mapCenter(map)
+    const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}
+    if (keyword) storedFilters.keyword = keyword
+    const queryParams = qs.stringify(storedFilters)
 
     let path = `/map/@${lat},${lng},${zoom}z`
-    if (keyword) path = path + `?keyword=${keyword}`
+    if (queryParams) path = path + `?${queryParams}`
 
     router.push(path)
 
