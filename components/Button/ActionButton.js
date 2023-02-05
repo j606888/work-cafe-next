@@ -30,7 +30,6 @@ const Container = styled.div`
       display: none;
     }
   }
-
 `
 
 export default ActionButton

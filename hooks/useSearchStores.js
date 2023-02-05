@@ -4,8 +4,9 @@ import queryString from 'query-string'
 import snakecaseKeys from "snakecase-keys"
 
 const useSearchStores = () => {
-  const { searchCenter } = store((state) => ({
-    searchCenter: state.searchCenter
+  const { searchCenter, keyword } = store((state) => ({
+    searchCenter: state.searchCenter,
+    keyword: state.keyword,
   }))
   const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}
 
@@ -16,14 +17,7 @@ const useSearchStores = () => {
     params = { ...params, ...parsed }
   }
 
-  if (
-    typeof window !== "undefined" &&
-    window.location.href.includes("keyword")
-  ) {
-    const keyword = window.location.search.replace("?keyword=", "")
-    params.keyword = keyword
-  }
-
+  if (keyword) params.keyword = keyword
   if (searchCenter.lat) {
     params.lat = searchCenter.lat
     params.lng = searchCenter.lng

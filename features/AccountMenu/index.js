@@ -3,10 +3,25 @@ import { devices } from "constants/styled-theme"
 import React, { useState } from "react"
 import styled from "styled-components"
 import LoginForm from "./LoginForm"
+import { GoogleOAuthProvider } from "@react-oauth/google"
+import useUserStore from "stores/useUserStore"
+import UserInfo from "./UserInfo"
+import create from "zustand"
+
+const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
+
+export const formControl = create((set) => ({
+  openForm: false,
+  setOpenForm: (openForm) => set({ openForm }),
+}))
 
 const AccountMenu = () => {
-  const [openForm, setOpenForm] = useState(false)
+  const { openForm, setOpenForm } = formControl((state) => ({
+    openForm: state.openForm,
+    setOpenForm: state.setOpenForm,
+  }))
   const fullScreen = useMediaQuery(devices.mobileXl)
+  const user = useUserStore((state) => state.user)
 
   function handleOpenForm() {
     setOpenForm(true)
@@ -19,6 +34,13 @@ const AccountMenu = () => {
       </Container>
     )
 
+  if (user)
+    return (
+      <Container>
+        <UserInfo user={user} />
+      </Container>
+    )
+
   return (
     <>
       <Container>
@@ -27,7 +49,9 @@ const AccountMenu = () => {
           註冊
         </Button>
       </Container>
-      <LoginForm open={openForm} onClose={() => setOpenForm(false)} />
+      <GoogleOAuthProvider clientId={GOOGLE_LOGIN_KEY}>
+        <LoginForm open={openForm} onClose={() => setOpenForm(false)} />
+      </GoogleOAuthProvider>
     </>
   )
 }

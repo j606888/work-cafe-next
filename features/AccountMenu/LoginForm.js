@@ -1,16 +1,34 @@
 import { Dialog } from "@mui/material"
+import { useGoogleLogin } from "@react-oauth/google"
 import OrDivider from "components/OrDivider"
 import { grey01, grey02, grey03, grey04 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
+import { googleLogin as googleLoginAPI } from "api/auth"
+import useUserStore from "stores/useUserStore"
 
 const DialogStyles = {
   borderRadius: "20px",
   width: "600px",
   minHeight: "500px",
-  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)"
+  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
 }
+
 const LoginForm = ({ open, onClose }) => {
+  const login = useUserStore((state) => state.login)
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const { accessToken, refreshToken } = await googleLoginAPI({
+        accessToken: tokenResponse.access_token,
+      })
+      localStorage.setItem("accessToken", accessToken)
+      localStorage.setItem("refreshToken", refreshToken)
+      login(accessToken)
+
+      onClose({ deep: true })
+    },
+  })
   return (
     <Dialog open={open} onClose={onClose} PaperProps={{ style: DialogStyles }}>
       <Header>
@@ -20,11 +38,11 @@ const LoginForm = ({ open, onClose }) => {
       <Content>
         <Title>歡迎加入Work Cafe!</Title>
         <Description>成為會員，集中收藏你的工作愛店。</Description>
-        <Input placeholder="Email"/>
-        <Input type="password" placeholder="密碼"/>
-        <ConfirmButton type="submit">繼續</ConfirmButton>
+        <Input placeholder="Email" />
+        <Input type="password" placeholder="密碼" />
+        <ConfirmButton type="submit" disabled>繼續(開發中)</ConfirmButton>
         <OrDivider />
-        <GoogleLogin>
+        <GoogleLogin onClick={googleLogin}>
           <Icon src="/google.svg" alt="google" />
           繼續使用 Google 登入
         </GoogleLogin>
@@ -88,13 +106,17 @@ const ConfirmButton = styled.button`
   margin-top: 16px;
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1));
   width: 100%;
-  background: ${grey01};
+  /* background: ${grey01}; */
   border-radius: 12px;
   height: 44px;
   color: #ffffff;
   border: none;
   font-size: 16px;
-  cursor: pointer;
+  /* cursor: pointer; */
+
+  /* disabled */
+  cursor: not-allowed;
+  background-color: #999;
 `
 
 const GoogleLogin = styled.button`

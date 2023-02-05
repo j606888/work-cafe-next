@@ -41,6 +41,7 @@ const Searchbar = ({ type = "landing" }) => {
   const handleCancel = () => {
     searchHints("")
     setShowOptions(false)
+    setKeyword("")
 
     if (!isFullScreen) {
       const { lat, lng } = mapCenter(map)

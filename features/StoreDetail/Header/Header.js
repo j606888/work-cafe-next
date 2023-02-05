@@ -4,20 +4,14 @@ import copy from "copy-to-clipboard"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import styled, { css } from "styled-components"
 import { devices } from "constants/styled-theme"
-import { addToBookmark, removeFromBookmark } from "api/user_bookmark"
-import useLoginModeStore from "stores/useLoginModeStore"
-import useUserStore from "stores/useUserStore"
-import useSWR from "swr"
 import ActionButton from "components/Button/ActionButton"
+import BookmarkButton from "./BookmarkButton"
 
 const Header = ({ placeId, url, onClick }) => {
   const [openSnack, setOpenSnack] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
-  const setMode = useLoginModeStore((state) => state.setMode)
   const open = Boolean(anchorEl)
-  const isLogin = useUserStore((state) => state.isLogin)
-  const { data: store, mutate } = useSWR(`/stores/${placeId}`)
 
   function handleMoreClick(e) {
     setAnchorEl(e.currentTarget)
@@ -27,28 +21,12 @@ const Header = ({ placeId, url, onClick }) => {
     setOpenNotCafe(false)
   }
   function handleNavigate() {
-    window.open(url, '_blank')
+    window.open(url, "_blank")
   }
   function handleShare() {
     const href = window.location.href
     copy(href)
     setOpenSnack(true)
-  }
-  async function handleAddBookmark() {
-    if (isLogin) {
-      await addToBookmark({ placeId })
-      mutate()
-    } else {
-      setMode("login")
-    }
-  }
-  async function handleRemoveBookmark() {
-    if (isLogin) {
-      await removeFromBookmark({ placeId })
-      mutate()
-    } else {
-      setMode("login")
-    }
   }
 
   return (
@@ -62,11 +40,7 @@ const Header = ({ placeId, url, onClick }) => {
           <ActionButton svg="navigate" onClick={handleNavigate}>
             導航
           </ActionButton>
-          {store?.isBookmark ? (
-            <ActionButton svg="like-filled" onClick={handleRemoveBookmark}>已收藏</ActionButton>
-            ) : (
-            <ActionButton svg="like" onClick={handleAddBookmark}>收藏</ActionButton>
-          )}
+          <BookmarkButton placeId={placeId} />
           <ActionButton svg="share" onClick={handleShare}>
             分享
           </ActionButton>
