@@ -6,6 +6,7 @@ import SearchHere from "components/Button/SearchHere"
 import SearchStores from "features/SearchStores"
 import StoreList from "features/StoreList"
 import StoreMarkers from "features/GoogleMap/StoreMarkers"
+import StoreMarker from "features/GoogleMap/StoreMarker"
 import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
 import { useRouter } from "next/router"
 import LandingSearch from "features/LandingSearch"
@@ -74,7 +75,10 @@ export default function MapPage() {
         {content}
         <MapContainer isLanding={isLanding}>
           <ContentOnMap isLanding={isLanding} />
-          <GoogleMap>{!isLanding && <StoreMarkers />}</GoogleMap>
+          <GoogleMap>
+            {!isLanding && <StoreMarkers />}
+            {store && <StoreMarker store={store} isFocus />}
+          </GoogleMap>
         </MapContainer>
       </Container>
     </>
