@@ -6,6 +6,7 @@ import React from "react"
 import styled from "styled-components"
 import { googleLogin as googleLoginAPI } from "api/auth"
 import useUserStore from "stores/useUserStore"
+import { devices } from "constants/styled-theme"
 
 const DialogStyles = {
   borderRadius: "20px",
@@ -58,10 +59,20 @@ const Header = styled.div`
   text-align: center;
   font-size: 20px;
   position: relative;
+
+  @media ${devices.mobileXl} {
+    font-size: 18px;
+    height: 56px;
+    line-height: 56px;
+  }
 `
 
 const Content = styled.div`
   padding: 44px 52px;
+
+  @media ${devices.mobileXl} {
+    padding: 22px 24px;
+  }
 `
 
 const Title = styled.h3`
@@ -73,6 +84,11 @@ const Title = styled.h3`
   color: ${grey01};
   margin: 0;
   margin-bottom: 12px;
+
+  @media ${devices.mobileXl} {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
 `
 
 const Description = styled.p`
@@ -84,6 +100,10 @@ const Description = styled.p`
   margin: 0;
   margin-bottom: 32px;
   color: ${grey01};
+
+  @media ${devices.mobileXl} {
+    margin-bottom: 18px;
+  }
 `
 
 const Input = styled.input`
@@ -143,6 +163,11 @@ const CloseButton = styled.img`
   top: 24px;
   right: 28px;
   cursor: pointer;
+
+  @media ${devices.mobileXl} {
+    top: 16px;
+    right: 20px;
+  }
 `
 
 export default LoginForm

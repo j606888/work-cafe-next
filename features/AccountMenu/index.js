@@ -7,6 +7,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google"
 import useUserStore from "stores/useUserStore"
 import UserInfo from "./UserInfo"
 import create from "zustand"
+import MobileMenu from "./MobileMenu"
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
@@ -30,7 +31,10 @@ const AccountMenu = () => {
   if (fullScreen)
     return (
       <Container>
-        <img src="/hamburger.svg" alt="hamburger" />
+        <MobileMenu onOpen={() => setOpenForm(true)} user={user} />
+        <GoogleOAuthProvider clientId={GOOGLE_LOGIN_KEY}>
+          <LoginForm open={openForm} onClose={() => setOpenForm(false)} />
+        </GoogleOAuthProvider>
       </Container>
     )
 

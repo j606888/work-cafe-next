@@ -4,7 +4,7 @@ import AccountMenu from "features/AccountMenu"
 import React from "react"
 import styled from "styled-components"
 
-const LINKS = [
+export const LINKS = [
   {
     href: "https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/",
     text: "什麼是Work Cafe？",
@@ -60,7 +60,7 @@ const HomeLink = styled.a`
   }
 `
 
-const Link = styled.a`
+export const Link = styled.a`
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
