@@ -33,7 +33,7 @@ const FakeTextBox = styled.div`
   font-size: 14px;
   line-height: 19px;
   &:hover {
-    background-color: #e5e5e5;
+    background-color: #f5f5f5;
   }
 
   @media ${devices.mobileXl} {
