@@ -4,12 +4,15 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import LoginForm from "./LoginForm"
 import { GoogleOAuthProvider } from "@react-oauth/google"
+import useUserStore from "stores/useUserStore"
+import UserInfo from "./UserInfo"
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
 const AccountMenu = () => {
   const [openForm, setOpenForm] = useState(false)
   const fullScreen = useMediaQuery(devices.mobileXl)
+  const user = useUserStore((state) => state.user)
 
   function handleOpenForm() {
     setOpenForm(true)
@@ -19,6 +22,13 @@ const AccountMenu = () => {
     return (
       <Container>
         <img src="/hamburger.svg" alt="hamburger" />
+      </Container>
+    )
+
+  if (user)
+    return (
+      <Container>
+        <UserInfo user={user} />
       </Container>
     )
 
