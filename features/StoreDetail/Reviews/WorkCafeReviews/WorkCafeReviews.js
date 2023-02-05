@@ -1,4 +1,4 @@
-import { Avatar, Divider, IconButton, Menu, MenuItem } from "@mui/material"
+import { Avatar, IconButton, Menu, MenuItem } from "@mui/material"
 import React from "react"
 import ImagesWorm from "components/ImagesWorm/ImagesWorm"
 import { useState } from "react"
@@ -6,9 +6,11 @@ import { MoreVert } from "@mui/icons-material"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import TagList from "components/TagList/TagList"
+import DeleteConfirmDialog from "./DeleteConfirmDialog"
 
-const EditBox = ({ onDelete, onEdit }) => {
+const EditBox = ({ onDelete }) => {
   const [anchorEl, setAnchorEl] = useState(null)
+  const [openDeleteConfirm, setOpenDeleteConfirm] = useState(false)
   const open = Boolean(anchorEl)
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget)
@@ -16,13 +18,13 @@ const EditBox = ({ onDelete, onEdit }) => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const handleEdit = () => {
-    onEdit()
-    setAnchorEl(null)
-  }
   const handleDelete = () => {
     onDelete()
     setAnchorEl(null)
+  }
+  const openConfirmDialog = () => {
+    setAnchorEl(null)
+    setOpenDeleteConfirm(true)
   }
 
   return (
@@ -31,9 +33,13 @@ const EditBox = ({ onDelete, onEdit }) => {
         <MoreVert />
       </IconButton>
       <Menu open={open} anchorEl={anchorEl} onClose={handleClose}>
-        <MenuItem onClick={handleEdit}>編輯</MenuItem>
-        <MenuItem onClick={handleDelete}>刪除</MenuItem>
+        <MenuItem onClick={openConfirmDialog}>刪除</MenuItem>
       </Menu>
+      <DeleteConfirmDialog
+        open={openDeleteConfirm}
+        onClose={() => setOpenDeleteConfirm(false)}
+        onDelete={handleDelete}
+      />
     </EditBoxContainer>
   )
 }

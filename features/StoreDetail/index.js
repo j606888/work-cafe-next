@@ -15,7 +15,6 @@ import { useRouter } from "next/router"
 import { mapCenter } from "utils/map-helper"
 import qs from "query-string"
 
-
 const StoreDetail = ({ store }) => {
   const router = useRouter()
   const { map, keyword, setPlaceId } = storeStore(
