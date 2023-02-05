@@ -7,13 +7,13 @@ import useSWR from "swr"
 import useUserStore from "stores/useUserStore"
 import { devices } from "constants/styled-theme"
 import { grey04 } from "constants/color"
-import useLoginModeStore from "stores/useLoginModeStore"
+import { formControl } from "features/AccountMenu"
 
 const BookmarkButton = ({ placeId }) => {
+  const setOpenForm = formControl((state) => state.setOpenForm)
   const [loading, setLoading] = useState(false)
   const { data: store, mutate } = useSWR(`/stores/${placeId}`)
   const isLogin = useUserStore((state) => state.isLogin)
-  const setMode = useLoginModeStore((state) => state.setMode)
 
   async function handleAddBookmark() {
     if (isLogin) {
@@ -22,7 +22,7 @@ const BookmarkButton = ({ placeId }) => {
       await mutate()
       setLoading(false)
     } else {
-      setMode("login")
+      setOpenForm(true)
     }
   }
   async function handleRemoveBookmark() {
@@ -32,7 +32,7 @@ const BookmarkButton = ({ placeId }) => {
       await mutate()
       setLoading(false)
     } else {
-      setMode("login")
+      setOpenForm(true)
     }
   }
 

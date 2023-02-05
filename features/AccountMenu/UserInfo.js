@@ -16,7 +16,6 @@ const UserInfo = ({ user }) => {
   const open = Boolean(anchorEl)
   const logout = useUserStore((state) => state.logout)
 
-
   const avatar = user.avatar_url ? <Avatar alt={user.name} src={user.avatar_url} /> : <Avatar>{user.name[0]}</Avatar>
 
   function handleClick(e) {

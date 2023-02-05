@@ -6,11 +6,20 @@ import LoginForm from "./LoginForm"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import useUserStore from "stores/useUserStore"
 import UserInfo from "./UserInfo"
+import create from "zustand"
 
 const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
+export const formControl = create((set) => ({
+  openForm: false,
+  setOpenForm: (openForm) => set({ openForm }),
+}))
+
 const AccountMenu = () => {
-  const [openForm, setOpenForm] = useState(false)
+  const { openForm, setOpenForm } = formControl((state) => ({
+    openForm: state.openForm,
+    setOpenForm: state.setOpenForm,
+  }))
   const fullScreen = useMediaQuery(devices.mobileXl)
   const user = useUserStore((state) => state.user)
 
