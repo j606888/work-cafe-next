@@ -13,6 +13,7 @@ import useSWR from "swr"
 import StoreDetail from "features/StoreDetail"
 import { labelStyles } from "features/GoogleMap/labelStyles"
 import Skeleton from "components/Skeleton"
+import Head from "next/head"
 
 const pickContent = ({ isLanding, store, storeLoading }) => {
   if (isLanding) return null
@@ -63,6 +64,10 @@ export default function MapPage() {
 
   return (
     <>
+      <Head>
+        <title>Work Cafe | Taiwan</title>
+        <link rel="icon" href="/cafe-orange.svg" type="image/svg" />
+      </Head>
       <Header />
       <Container>
         {content}
