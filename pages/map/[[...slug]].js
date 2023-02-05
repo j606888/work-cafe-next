@@ -67,6 +67,7 @@ export default function MapPage() {
       <Head>
         <title>Work Cafe | Taiwan</title>
         <link rel="icon" href="/cafe-orange.svg" type="image/svg" />
+        <meta name="description" content="Work Cafe - Taiwan" />
       </Head>
       <Header />
       <Container>
