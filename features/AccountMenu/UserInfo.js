@@ -2,7 +2,8 @@ import { Avatar, Divider, IconButton, Menu } from '@mui/material'
 import { grey02 } from 'constants/color'
 import React, { useState } from 'react'
 import useUserStore from 'stores/useUserStore'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import Link from 'next/link'
 
 const MenuStyles = {
   sx: {
@@ -44,16 +45,26 @@ const UserInfo = ({ user }) => {
         onClick={handleClose}
         PaperProps={MenuStyles}
       >
-        <MenuItem>收藏清單</MenuItem>
-        <MenuItem>評論</MenuItem>
+        <MenuItem disabled>收藏清單</MenuItem>
+        <MenuItem disabled>評論</MenuItem>
         <Divider />
-        <MenuItem>個人資料</MenuItem>
+        <MenuItem disabled>個人資料</MenuItem>
+        {user.role === "admin" && (
+          <MenuItem>
+            <Link href="/admin/dashboard">後台管理</Link>
+          </MenuItem>
+        )}
         <Divider />
         <MenuItem onClick={handleLogout}>登出</MenuItem>
       </Menu>
     </>
   )
 }
+
+const disableStyle = css`
+  cursor: not-allowed;
+  color: #999;
+`
 
 const MenuItem = styled.div`
   cursor: pointer;
@@ -65,8 +76,15 @@ const MenuItem = styled.div`
   font-size: 16px;
 
   &:hover {
-    background-color: #fafafa;
+    background-color: #f5f5f5;
   }
+
+  a {
+    color: ${grey02};
+    text-decoration: none;
+  }
+
+  ${({ disabled }) => disabled && disableStyle}
 `
 
 export default UserInfo

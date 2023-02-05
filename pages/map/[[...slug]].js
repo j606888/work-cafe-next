@@ -14,7 +14,7 @@ import StoreDetail from "features/StoreDetail"
 import { labelStyles } from "features/GoogleMap/labelStyles"
 import Skeleton from "components/Skeleton"
 
-const pickContent = ({isLanding, store, storeLoading}) => {
+const pickContent = ({ isLanding, store, storeLoading }) => {
   if (isLanding) return null
   if (storeLoading)
     return (
@@ -59,7 +59,7 @@ export default function MapPage() {
 
   if (!isReady) return <div>loading...</div>
 
-  const content = pickContent({ store, isLanding, storeLoading})
+  const content = pickContent({ store, isLanding, storeLoading })
 
   return (
     <>
@@ -68,9 +68,7 @@ export default function MapPage() {
         {content}
         <MapContainer isLanding={isLanding}>
           <ContentOnMap isLanding={isLanding} />
-          <GoogleMap>
-            <StoreMarkers />
-          </GoogleMap>
+          <GoogleMap>{!isLanding && <StoreMarkers />}</GoogleMap>
         </MapContainer>
       </Container>
     </>
