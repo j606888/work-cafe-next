@@ -1,7 +1,7 @@
 import { instance } from "./index"
 
-export async function googleLogin({ credential }) {
-  const params = { credential }
+export async function googleLogin({ accessToken }) {
+  const params = { accessToken }
   const res = await instance.post("/auth/google", params)
 
   return res.data

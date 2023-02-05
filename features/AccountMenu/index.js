@@ -3,6 +3,9 @@ import { devices } from "constants/styled-theme"
 import React, { useState } from "react"
 import styled from "styled-components"
 import LoginForm from "./LoginForm"
+import { GoogleOAuthProvider } from "@react-oauth/google"
+
+const GOOGLE_LOGIN_KEY = process.env.NEXT_PUBLIC_GOOGLE_LOGIN_KEY
 
 const AccountMenu = () => {
   const [openForm, setOpenForm] = useState(false)
@@ -27,7 +30,9 @@ const AccountMenu = () => {
           註冊
         </Button>
       </Container>
-      <LoginForm open={openForm} onClose={() => setOpenForm(false)} />
+      <GoogleOAuthProvider clientId={GOOGLE_LOGIN_KEY}>
+        <LoginForm open={openForm} onClose={() => setOpenForm(false)} />
+      </GoogleOAuthProvider>
     </>
   )
 }
