@@ -11,7 +11,7 @@ import { devices } from "constants/styled-theme"
 const DialogStyles = {
   borderRadius: "20px",
   width: "600px",
-  minHeight: "500px",
+  // minHeight: "500px",
   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
 }
 
@@ -37,12 +37,12 @@ const LoginForm = ({ open, onClose }) => {
         <CloseButton src="/cancel.svg" alt="cancel" onClick={onClose} />
       </Header>
       <Content>
-        <Title>歡迎加入Work Cafe!</Title>
+        {/* <Title>歡迎加入Work Cafe!</Title>
         <Description>成為會員，集中收藏你的工作愛店。</Description>
         <Input placeholder="Email" />
         <Input type="password" placeholder="密碼" />
         <ConfirmButton type="submit" disabled>繼續(開發中)</ConfirmButton>
-        <OrDivider />
+        <OrDivider /> */}
         <GoogleLogin onClick={googleLogin}>
           <Icon src="/google.svg" alt="google" />
           繼續使用 Google 登入
