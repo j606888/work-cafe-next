@@ -63,7 +63,7 @@ const StoreDetail = ({ store }) => {
         placeId={store.placeId}
         url={store.url}
       />
-      <ImagePreview photos={store.photos} name={store.name} />
+      <ImagePreview placeId={store.placeId} photos={store.photos} name={store.name} />
       <H3>{store.name}</H3>
       {store.tags.length > 0 && (
         <TagListContainer>

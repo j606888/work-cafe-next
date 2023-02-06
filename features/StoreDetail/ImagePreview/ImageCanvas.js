@@ -1,12 +1,25 @@
-import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
-import { Dialog, ImageList, ImageListItem } from "@mui/material"
+import { Dialog, ImageList, ImageListItem, Snackbar } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import SvgButton from "components/SvgButton"
+import copy from "copy-to-clipboard"
+import BookmarkButton from "../Header/BookmarkButton"
+import { snackbarStore } from "features/GlobalSnackbar"
 
-const ImageCanvas = ({ photos, open, onClose, name }) => {
+const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
   const fullScreen = useMediaQuery(devices.mobileXl)
+  const { openSnackbar, setMessage } = snackbarStore((state) => ({
+    openSnackbar: state.openSnackbar,
+    setMessage: state.setMessage,
+  }))
+
+  function handleShare() {
+    const href = window.location.href
+    copy(href)
+    setMessage("已複製到剪貼簿")
+    openSnackbar()
+  }
 
   return (
     <Dialog
@@ -15,16 +28,14 @@ const ImageCanvas = ({ photos, open, onClose, name }) => {
       fullWidth
       maxWidth="lg"
       fullScreen={fullScreen}
+      PaperProps={!fullScreen && { sx: { borderRadius: "20px", maxHeight: "85%" } }}
     >
       <Header>
         <h3>{name}</h3>
         <MobileBackButton path="arrow-left" onClick={onClose} />
         <ButtonGroup>
-          <Button>
-            <img src="/like.svg" alt="like" />
-            <span>收藏</span>
-          </Button>
-          <Button>
+          <BookmarkButton placeId={placeId} />
+          <Button onClick={handleShare}>
             <img src="/share.svg" alt="share" />
             <span>分享</span>
           </Button>
@@ -104,6 +115,7 @@ const ButtonGroup = styled.div`
 
 const DialogContainer = styled.div`
   padding: 0 72px;
+  overflow-x: scroll;
 
   @media ${devices.mobileXl} {
     padding: 0;
