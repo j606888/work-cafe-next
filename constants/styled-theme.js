@@ -5,7 +5,7 @@ const styledTheme = {
 const sizes = {
   mobileSm: '375px',
   mobileMd: '390px',
-  mobileXl: '414px',
+  mobileXl: '420px',
 }
 
 export const devices = {
