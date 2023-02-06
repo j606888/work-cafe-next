@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import store from "stores/store"
 import { alpha, styled as muiStyled } from  '@mui/material/styles'
-import { orange100, orange50 } from "constants/color"
+import { grey03, orange100, orange50 } from "constants/color"
 
 const CustomSwitch = muiStyled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -16,6 +16,9 @@ const CustomSwitch = muiStyled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
     backgroundColor: orange50,
   },
+  "& .MuiSwitch-track": {
+    backgroundColor: grey03
+  }
 }))
 
 const ShowLabelCheckbox = () => {
