@@ -1,9 +1,10 @@
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material'
-import Select from 'components/Select'
-import { grey01, grey03, grey04, orange100 } from 'constants/color'
-import { devices } from 'constants/styled-theme'
-import React from 'react'
-import styled from 'styled-components'
+import { FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material"
+import Select from "components/Select"
+import { grey01, grey03, grey04, orange100 } from "constants/color"
+import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
+import { devices } from "constants/styled-theme"
+import React from "react"
+import styled from "styled-components"
 
 const RadioStyle = {
   "&.Mui-checked": {
@@ -37,7 +38,8 @@ const FilterForm = ({ onClose }) => {
               control={<Radio sx={RadioStyle} />}
               label="自訂"
             />
-            <Select />
+            <Select options={OPEN_WEEKS} />
+            <Select options={OPEN_HOURS} />
           </RadioGroup>
         </Banana>
         <h3>標籤</h3>
