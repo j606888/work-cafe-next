@@ -9,6 +9,7 @@ import {
 } from "@mui/material"
 import styled from "styled-components"
 import { OPEN_TYPES, OPEN_WEEKS, OPEN_HOURS } from "constants/openTime"
+import { orange100 } from "constants/color"
 
 const Container = styled.div``
 
@@ -47,7 +48,16 @@ const OpenTimePicker = ({
             <FormControlLabel
               key={openType.label}
               value={openType.value}
-              control={<Radio />}
+              control={
+                <Radio
+                  sx={{
+                    color: orange100,
+                    "&.Mui-checked": {
+                      color: orange100,
+                    },
+                  }}
+                />
+              }
               label={openType.label}
             />
           ))}
