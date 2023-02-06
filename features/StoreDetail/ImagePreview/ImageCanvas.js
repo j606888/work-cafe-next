@@ -1,51 +1,68 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
-import { Dialog, ImageList, ImageListItem } from "@mui/material"
+import { Dialog, ImageList, ImageListItem, Snackbar } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import SvgButton from "components/SvgButton"
+import copy from "copy-to-clipboard"
+import BookmarkButton from "../Header/BookmarkButton"
 
-const ImageCanvas = ({ photos, open, onClose, name }) => {
+const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
   const fullScreen = useMediaQuery(devices.mobileXl)
+  const [openSnack, setOpenSnack] = useState(false)
+
+  function handleShare() {
+    const href = window.location.href
+    copy(href)
+    setOpenSnack(true)
+  }
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      fullWidth
-      maxWidth="lg"
-      fullScreen={fullScreen}
-    >
-      <Header>
-        <h3>{name}</h3>
-        <MobileBackButton path="arrow-left" onClick={onClose} />
-        <ButtonGroup>
-          <Button>
-            <img src="/like.svg" alt="like" />
-            <span>收藏</span>
-          </Button>
-          <Button>
-            <img src="/share.svg" alt="share" />
-            <span>分享</span>
-          </Button>
-          <SvgButton path="cancel" onClick={onClose} />
-        </ButtonGroup>
-      </Header>
-      <DialogContainer>
-        <ImageList
-          variant="masonry"
-          cols={fullScreen ? 1 : 2}
-          gap={8}
-          sx={{ marginTop: 0 }}
-        >
-          {photos.map((item) => (
-            <ImageListItem key={item}>
-              <img src={item} alt={item} loading="lazy" />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      </DialogContainer>
-    </Dialog>
+    <>
+      <Dialog
+        onClose={onClose}
+        open={open}
+        fullWidth
+        maxWidth="lg"
+        fullScreen={fullScreen}
+        PaperProps={{ sx: { borderRadius: "20px", maxHeight: '85%' } }}
+      >
+        <Header>
+          <h3>{name}</h3>
+          <MobileBackButton path="arrow-left" onClick={onClose} />
+          <ButtonGroup>
+            <BookmarkButton placeId={placeId} />
+            <Button onClick={handleShare}>
+              <img src="/share.svg" alt="share" />
+              <span>分享</span>
+            </Button>
+            <SvgButton path="cancel" onClick={onClose} />
+          </ButtonGroup>
+        </Header>
+        <DialogContainer>
+          <ImageList
+            variant="masonry"
+            cols={fullScreen ? 1 : 2}
+            gap={8}
+            sx={{ marginTop: 0 }}
+          >
+            {photos.map((item) => (
+              <ImageListItem key={item}>
+                <img src={item} alt={item} loading="lazy" />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </DialogContainer>
+      </Dialog>
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnack(false)}
+        message="已複製到剪貼簿"
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        sx={{ zIndex: 999 }}
+      />
+    </>
   )
 }
 
@@ -104,6 +121,7 @@ const ButtonGroup = styled.div`
 
 const DialogContainer = styled.div`
   padding: 0 72px;
+  overflow-x: scroll;
 
   @media ${devices.mobileXl} {
     padding: 0;
