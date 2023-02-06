@@ -6,7 +6,7 @@ import { mapCenter } from "utils/map-helper"
 import useUpdateURL from "hooks/useUpdateURL"
 import { devices } from "constants/styled-theme"
 
-const SearchHere = ({ className }) => {
+const SearchHere = () => {
   const { setCenterToURL } = useUpdateURL()
   const { map, setSearchCenter, setPlaceId, setFocusPlaceId  } = store((state) => ({
     map: state.map,
@@ -31,7 +31,7 @@ const SearchHere = ({ className }) => {
   )
 
   return (
-    <Container onClick={onClick} className={className}>
+    <Container onClick={onClick}>
       {icon}
       <span>搜尋此區</span>
     </Container>
@@ -44,20 +44,18 @@ const Container = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   height: 56px;
-  width: 142px;
+  padding: 0 18px 0 12px;
   background-color: #fff;
   border-radius: 20px;
   border: 1px solid #e8e6e4;
   filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.2));
   cursor: pointer;
   gap: 0.2rem;
-  padding-right: 8px;
 
   &:hover {
     background-color: #f5f5f5;
@@ -71,10 +69,18 @@ const Container = styled.div`
   }
 
   @media ${devices.mobileXl} {
-    top: 84px;
+    top: auto;
+    left: auto;
+    transform: none;
+    right: 12px;
+    bottom: 18px;
     height: 48px;
     border-radius: 18px;
-    /* font-size: 12px; */
+    padding: 0 18px 0 18px;
+
+    img {
+      display: none;
+    }
   }
 `
 
