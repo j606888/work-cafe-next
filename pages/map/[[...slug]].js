@@ -15,6 +15,7 @@ import StoreDetail from "features/StoreDetail"
 import { labelStyles } from "features/GoogleMap/labelStyles"
 import Skeleton from "components/Skeleton"
 import Head from "next/head"
+import GlobalSnackbar from "features/GlobalSnackbar"
 
 const pickContent = ({ isLanding, store, storeLoading }) => {
   if (isLanding) return null
@@ -81,6 +82,7 @@ export default function MapPage() {
           </GoogleMap>
         </MapContainer>
       </Container>
+      <GlobalSnackbar />
     </>
   )
 }

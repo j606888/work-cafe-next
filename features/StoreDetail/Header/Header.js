@@ -6,12 +6,16 @@ import styled, { css } from "styled-components"
 import { devices } from "constants/styled-theme"
 import ActionButton from "components/Button/ActionButton"
 import BookmarkButton from "./BookmarkButton"
+import { snackbarStore } from "features/GlobalSnackbar"
 
 const Header = ({ placeId, url, onClick }) => {
-  const [openSnack, setOpenSnack] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
   const open = Boolean(anchorEl)
+  const { openSnackbar, setMessage } = snackbarStore((state) => ({
+    openSnackbar: state.openSnackbar,
+    setMessage: state.setMessage,
+  }))
 
   function handleMoreClick(e) {
     setAnchorEl(e.currentTarget)
@@ -26,7 +30,8 @@ const Header = ({ placeId, url, onClick }) => {
   function handleShare() {
     const href = window.location.href
     copy(href)
-    setOpenSnack(true)
+    setMessage("已複製到剪貼簿")
+    openSnackbar()
   }
 
   return (
@@ -44,13 +49,6 @@ const Header = ({ placeId, url, onClick }) => {
           <ActionButton svg="share" onClick={handleShare}>
             分享
           </ActionButton>
-          <Snackbar
-            open={openSnack}
-            autoHideDuration={3000}
-            onClose={() => setOpenSnack(false)}
-            message="已複製到剪貼簿"
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          />
           <MoreButton onClick={handleMoreClick}>
             <img src="/more.svg" alt="more" />
           </MoreButton>
