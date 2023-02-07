@@ -1,7 +1,7 @@
 import { grey04 } from 'constants/color'
 import { devices } from 'constants/styled-theme'
 import Searchbar from 'features/Searchbar'
-import SearchFilter from 'features/v2/SearchFilter'
+import SearchFilter from 'features/SearchFilter'
 import React from 'react'
 import styled from 'styled-components'
 
