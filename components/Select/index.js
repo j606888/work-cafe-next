@@ -7,17 +7,18 @@ const Select = ({
   options = [],
   onChange = () => {},
   disabled = false,
-  defaultSelectedOption,
+  defaultSelectedValue,
 }) => {
   const [showOptions, setShowOptions] = useState(false)
-  const [selectedOption, setSelectedOption] = useState(
-    defaultSelectedOption || options[0]
+  const [selectedValue, setSelectedValue] = useState(defaultSelectedValue)
+  const selectedOption = options.find(
+    (option) => option.value === selectedValue
   )
 
-  function handleOnChange(option) {
-    setSelectedOption(option)
+  function handleOnChange({ _label, value}) {
+    setSelectedValue(value)
     setShowOptions(false)
-    onChange(option)
+    onChange(value)
   }
 
   useEffect(() => {
@@ -34,8 +35,8 @@ const Select = ({
   }, [])
 
   useEffect(() => {
-    setSelectedOption(defaultSelectedOption)
-  }, [defaultSelectedOption])
+    setSelectedValue(defaultSelectedValue)
+  }, [defaultSelectedValue])
 
   const src = disabled ? "/arrows/down-grey.svg" : "/arrows/down-black.svg"
 

@@ -11,34 +11,18 @@ const RadioStyle = {
   },
 }
 
-const OpenTimeGroup = ({ defaultOptions={}, onChange=() => {} }) => {
-  const [openTime, setOpenTime] = useState(defaultOptions.openTime || "NONE")
-  const [openWeek, setOpenWeek] = useState(
-    defaultOptions.openWeek || OPEN_WEEKS[0]
-  )
-  const [openHour, setOpenHour] = useState(
-    defaultOptions.openHour || OPEN_HOURS[0]
-  )
-
+const OpenTimeGroup = ({ openTime, openWeek, openHour, onChange=() => {} }) => {
   function handleOpenTimeChange(e) {
-    setOpenTime(e.target.value)
+    onChange("openTime", e.target.value)
   }
 
-  function handleWeekChange(option) {
-    setOpenWeek(option)
+  function handleWeekChange(value) {
+    onChange("openWeek", value)
   }
 
-  function handleHourChange(option) {
-    setOpenHour(option)
+  function handleHourChange(value) {
+    onChange("openHour", value)
   }
-
-  useEffect(() => {
-    if (openTime === "OPEN_AT") {
-      onChange({ openTime, openWeek: openWeek.value, openHour: openHour.value })
-    } else {
-      onChange({ openTime })
-    }
-  }, [onChange, openTime, openWeek, openHour])
 
   return (
     <Container>
@@ -69,13 +53,13 @@ const OpenTimeGroup = ({ defaultOptions={}, onChange=() => {} }) => {
             options={OPEN_WEEKS}
             disabled={openTime !== "OPEN_AT"}
             onChange={handleWeekChange}
-            defaultSelectedOption={openWeek}
+            defaultSelectedValue={openWeek}
           />
           <Select
             options={OPEN_HOURS}
             disabled={openTime !== "OPEN_AT"}
             onChange={handleHourChange}
-            defaultSelectedOption={openHour}
+            defaultSelectedValue={openHour}
           />
         </CustomLabel>
       </RadioGroup>

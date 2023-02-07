@@ -1,15 +1,38 @@
 import { grey01, grey04 } from "constants/color"
+import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
 import { devices } from "constants/styled-theme"
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import OpenTimeGroup from "./OpenTimeGroup"
 
 
+const FilterForm = ({ onClose, _openTime, _openWeek, _openHour, onApply }) => {
+  const [openTime, setOpenTime] = useState(_openTime)
+  const [openWeek, setOpenWeek] = useState(_openWeek)
+  const [openHour, setOpenHour] = useState(_openHour)
 
-const FilterForm = ({ onClose }) => {
+  const setters = {
+    openTime: setOpenTime,
+    openWeek: setOpenWeek,
+    openHour: setOpenHour,
+  }
 
-  function handleOpenTimeChange(option) {
-    console.log(option)
+  function handleOpenTimeChange(key, value) {
+    setters[key](value)
+  }
+
+  function handleClear() {
+    setOpenTime("NONE")
+    setOpenWeek(OPEN_WEEKS[0].value)
+    setOpenHour(OPEN_HOURS[0].value)
+  }
+
+  function handleApply() {
+    if (openTime !== "OPEN_AT") {
+      onApply({ openTime })
+    } else {
+      onApply({ openTime, openWeek, openHour })
+    }
   }
 
   return (
@@ -19,10 +42,19 @@ const FilterForm = ({ onClose }) => {
         <CloseButton src="/cancel.svg" alt="cancel" onClick={onClose} />
       </Title>
       <Content>
-        <OpenTimeGroup onChange={handleOpenTimeChange} />
+        <OpenTimeGroup
+          onChange={handleOpenTimeChange}
+          openTime={openTime}
+          openWeek={openWeek}
+          openHour={openHour}
+        />
         <h3>標籤</h3>
         <h3>地圖顯示</h3>
       </Content>
+      <FilterActions>
+        <ClearText onClick={handleClear}>清除全部</ClearText>
+        <ApplyButton onClick={handleApply}>套用搜尋</ApplyButton>
+      </FilterActions>
     </Container>
   )
 }
@@ -76,10 +108,31 @@ const Content = styled.div`
   }
 `
 
-const Banana = styled.div`
-  margin-bottom: 40px;
+const FilterActions = styled.div`
+  height: 95px;
+  padding: 0 32px 0 41px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid ${grey04};
 `
 
+const ClearText = styled.span`
+  text-decoration-line: underline;
+  font-size: 16px;
+  color: ${grey01};
+  cursor: pointer;
+`
 
+const ApplyButton = styled.button`
+  border: none;
+  background-color: ${grey01};
+  border-radius: 12px;
+  height: 44px;
+  padding: 0 20px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+`
 
 export default FilterForm
