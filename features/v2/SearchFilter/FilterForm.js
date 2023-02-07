@@ -5,6 +5,7 @@ import React, { useState } from "react"
 import styled from "styled-components"
 import MapDisplayGroup from "./MapDisplayGroup"
 import OpenTimeGroup from "./OpenTimeGroup"
+import TagsGroup from "./TagsGroup"
 
 const FilterForm = ({
   onClose,
@@ -12,18 +13,21 @@ const FilterForm = ({
   _openWeek,
   _openHour,
   _wakeUp,
+  _tagIds,
   onApply,
 }) => {
   const [openTime, setOpenTime] = useState(_openTime)
   const [openWeek, setOpenWeek] = useState(_openWeek)
   const [openHour, setOpenHour] = useState(_openHour)
   const [wakeUp, setWakeUp] = useState(_wakeUp)
+  const [tagIds, setTagIds] = useState(_tagIds)
 
   const setters = {
     openTime: setOpenTime,
     openWeek: setOpenWeek,
     openHour: setOpenHour,
     wakeUp: setWakeUp,
+    tagIds: setTagIds,
   }
 
   function handleOpenTimeChange(key, value) {
@@ -35,13 +39,14 @@ const FilterForm = ({
     setOpenWeek(OPEN_WEEKS[0].value)
     setOpenHour(OPEN_HOURS[0].value)
     setWakeUp(false)
+    setTagIds([])
   }
 
   function handleApply() {
     if (openTime !== "OPEN_AT") {
-      onApply({ openTime, wakeUp })
+      onApply({ wakeUp, tagIds, openTime })
     } else {
-      onApply({ openTime, openWeek, openHour, wakeUp })
+      onApply({ wakeUp, tagIds, openTime, openWeek, openHour })
     }
   }
 
@@ -58,7 +63,7 @@ const FilterForm = ({
           openWeek={openWeek}
           openHour={openHour}
         />
-        <h3>標籤</h3>
+        <TagsGroup tagIds={tagIds} onChange={handleOpenTimeChange} />
         <MapDisplayGroup wakeUp={wakeUp} onChange={handleOpenTimeChange} />
       </Content>
       <FilterActions>
