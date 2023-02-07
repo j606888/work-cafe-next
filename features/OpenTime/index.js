@@ -88,7 +88,7 @@ const OpenTime = ({ onChange = () => {} }) => {
               dispatch({ type: "CHANGE_TYPE", payload: e.target.value })
             }
           >
-            <RadioLabel label={"不指定時間"} value={OPEN_TYPES.NONE} />
+            <RadioLabel label={"不限時間"} value={OPEN_TYPES.NONE} />
             <RadioLabel label={"營業中"} value={OPEN_TYPES.OPEN_NOW} />
             <Divider sx={{ my: 1 }} />
             <RadioLabel label={"營業時間"} value={OPEN_TYPES.OPEN_AT} />

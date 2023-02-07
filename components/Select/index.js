@@ -1,41 +1,72 @@
-import { grey01, grey03 } from 'constants/color'
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import OptionList from './OptionList'
+import { grey01, grey03 } from "constants/color"
+import React, { useEffect, useState } from "react"
+import styled, { css } from "styled-components"
+import OptionList from "./OptionList"
 
-const Select = ({ options=[], onChange }) => {
+const Select = ({
+  options = [],
+  onChange = () => {},
+  disabled = false,
+  defaultSelectedOption,
+}) => {
   const [showOptions, setShowOptions] = useState(false)
-  const [value, setValue] = useState("")
+  const [selectedOption, setSelectedOption] = useState(
+    defaultSelectedOption || options[0]
+  )
 
-  function handleOptionClick(option) {
-    setValue(option)
+  function handleOnChange(option) {
+    setSelectedOption(option)
     setShowOptions(false)
+    onChange(option)
   }
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(".custom-select")) {
+        setShowOptions(false)
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside)
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+    }
+  }, [])
+
+  useEffect(() => {
+    setSelectedOption(defaultSelectedOption)
+  }, [defaultSelectedOption])
+
+  const src = disabled ? "/arrows/down-grey.svg" : "/arrows/down-black.svg"
+
   return (
-    <Wrapper>
-      <Container
-        onClick={() => setShowOptions(!showOptions)}
+    <Container className="custom-select">
+      <SelectedOption
+        disabled={disabled}
+        onClick={() => !disabled && setShowOptions(!showOptions)}
         onBlur={() => setShowOptions(false)}
       >
-        {value.label}
-        <DownButton src="/arrows/down-grey.svg" alt="arrow-down" />
-      </Container>
+        {selectedOption.label}
+        <DownButton src={src} alt="arrow-down" />
+      </SelectedOption>
       <OptionList
+        disabled={disabled}
         show={showOptions}
-        onClick={handleOptionClick}
+        onChange={handleOnChange}
         options={options}
       />
-    </Wrapper>
+    </Container>
   )
 }
 
-const Wrapper = styled.div`
-  position: relative;
+const Container = styled.div`
   display: inline-block;
+  position: relative;
   width: 140px;
+  cursor: pointer;
 `
 
-const Container = styled.div`
+const SelectedOption = styled.div`
   border-radius: 12px;
   position: relative;
   padding: 0 20px;
@@ -45,6 +76,13 @@ const Container = styled.div`
   background-color: #ffffff;
   border: 1px solid ${grey03};
   cursor: pointer;
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      color: ${grey03};
+      cursor: not-allowed;
+    `}
 `
 
 const DownButton = styled.img`

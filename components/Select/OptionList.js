@@ -2,14 +2,16 @@ import React from "react"
 import Option from "./Option"
 import styled from "styled-components"
 
-const OptionList = ({ show, options, onClick }) => {
+const OptionList = ({ show, options, onChange }) => {
   if (!show) return null
   if (options.length === 0) return null
 
   return (
     <Container>
       {options.map((option, index) => (
-        <Option key={index} onClick={() => onClick(option)}>{option.label}</Option>
+        <Option key={index} onClick={() => onChange(option)}>
+          {option.label}
+        </Option>
       ))}
     </Container>
   )
