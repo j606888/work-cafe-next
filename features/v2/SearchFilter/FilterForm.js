@@ -3,18 +3,27 @@ import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
 import { devices } from "constants/styled-theme"
 import React, { useState } from "react"
 import styled from "styled-components"
+import MapDisplayGroup from "./MapDisplayGroup"
 import OpenTimeGroup from "./OpenTimeGroup"
 
-
-const FilterForm = ({ onClose, _openTime, _openWeek, _openHour, onApply }) => {
+const FilterForm = ({
+  onClose,
+  _openTime,
+  _openWeek,
+  _openHour,
+  _wakeUp,
+  onApply,
+}) => {
   const [openTime, setOpenTime] = useState(_openTime)
   const [openWeek, setOpenWeek] = useState(_openWeek)
   const [openHour, setOpenHour] = useState(_openHour)
+  const [wakeUp, setWakeUp] = useState(_wakeUp)
 
   const setters = {
     openTime: setOpenTime,
     openWeek: setOpenWeek,
     openHour: setOpenHour,
+    wakeUp: setWakeUp,
   }
 
   function handleOpenTimeChange(key, value) {
@@ -25,13 +34,14 @@ const FilterForm = ({ onClose, _openTime, _openWeek, _openHour, onApply }) => {
     setOpenTime("NONE")
     setOpenWeek(OPEN_WEEKS[0].value)
     setOpenHour(OPEN_HOURS[0].value)
+    setWakeUp(false)
   }
 
   function handleApply() {
     if (openTime !== "OPEN_AT") {
-      onApply({ openTime })
+      onApply({ openTime, wakeUp })
     } else {
-      onApply({ openTime, openWeek, openHour })
+      onApply({ openTime, openWeek, openHour, wakeUp })
     }
   }
 
@@ -49,7 +59,7 @@ const FilterForm = ({ onClose, _openTime, _openWeek, _openHour, onApply }) => {
           openHour={openHour}
         />
         <h3>標籤</h3>
-        <h3>地圖顯示</h3>
+        <MapDisplayGroup wakeUp={wakeUp} onChange={handleOpenTimeChange} />
       </Content>
       <FilterActions>
         <ClearText onClick={handleClear}>清除全部</ClearText>

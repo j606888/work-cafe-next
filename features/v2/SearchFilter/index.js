@@ -12,23 +12,26 @@ const SearchFilter = () => {
   const [openTime, setOpenTime] = useState("NONE")
   const [openWeek, setOpenWeek] = useState(OPEN_WEEKS[0].value)
   const [openHour, setOpenHour] = useState(OPEN_HOURS[0].value)
+  const [wakeUp, setWakeUp] = useState(false)
 
   function handleClose() {
     setOpen(false)
   }
 
-  function handleApply({ openTime, openWeek, openHour }) {
+  function handleApply({ openTime, openWeek, openHour, wakeUp }) {
     if (openTime) setOpenTime(openTime)
     if (openWeek) setOpenWeek(openWeek)
     if (openHour) setOpenHour(openHour)
+    if (wakeUp) setWakeUp(wakeUp)
     setOpen(false)
   }
 
   useEffect(() => {
     let count = 0
     if (openTime !== "NONE") count+=1
+    if (wakeUp) count+=1
     setFilterCount(count)
-  }, [openTime])
+  }, [openTime, wakeUp])
 
   return (
     <>
@@ -49,6 +52,7 @@ const SearchFilter = () => {
             _openTime={openTime}
             _openWeek={openWeek}
             _openHour={openHour}
+            _wakeUp={wakeUp}
           />
         </Dialog>
       )}
