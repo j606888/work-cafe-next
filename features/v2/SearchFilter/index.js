@@ -6,16 +6,27 @@ import { useEffect, useState } from "react"
 import ButtonWithCount from "./ButtonWithCount"
 import FilterForm from "./FilterForm"
 
+const MobileDrawerStyle = {
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  height: "85%",
+}
 const SearchFilter = () => {
   const storedFilters = JSON.parse(localStorage.getItem("filters"))
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [filterCount, setFilterCount] = useState(+localStorage.getItem("filterCount"))
+  const [filterCount, setFilterCount] = useState(
+    +localStorage.getItem("filterCount")
+  )
   const fullScreen = useMediaQuery(devices.mobileXl)
 
   const [openTime, setOpenTime] = useState(storedFilters?.openTime || "NONE")
-  const [openWeek, setOpenWeek] = useState(storedFilters?.openWeek || OPEN_WEEKS[0].value)
-  const [openHour, setOpenHour] = useState(storedFilters?.openHour || OPEN_HOURS[0].value)
+  const [openWeek, setOpenWeek] = useState(
+    storedFilters?.openWeek || OPEN_WEEKS[0].value
+  )
+  const [openHour, setOpenHour] = useState(
+    storedFilters?.openHour || OPEN_HOURS[0].value
+  )
   const [wakeUp, setWakeUp] = useState(storedFilters?.wakeUp || false)
   const [tagIds, setTagIds] = useState(storedFilters?.tagIds || [])
 
@@ -25,8 +36,8 @@ const SearchFilter = () => {
 
   function handleApply({ openTime, openWeek, openHour, wakeUp, tagIds }) {
     let count = 0
-    if (openTime !== "NONE") count+=1
-    if (wakeUp) count+=1
+    if (openTime !== "NONE") count += 1
+    if (wakeUp) count += 1
     count += tagIds.length
     setFilterCount(count)
 
@@ -59,8 +70,21 @@ const SearchFilter = () => {
     <>
       <ButtonWithCount onClick={() => setOpen(true)} count={filterCount} />
       {fullScreen ? (
-        <Drawer open={open} onClose={handleClose} anchor="bottom">
-          This is drawer
+        <Drawer
+          open={open}
+          onClose={handleClose}
+          anchor="bottom"
+          PaperProps={fullScreen && { sx: MobileDrawerStyle }}
+        >
+          <FilterForm
+            onClose={handleClose}
+            onApply={handleApply}
+            _openTime={openTime}
+            _openWeek={openWeek}
+            _openHour={openHour}
+            _wakeUp={wakeUp}
+            _tagIds={tagIds}
+          />
         </Drawer>
       ) : (
         <Dialog
@@ -86,7 +110,7 @@ const SearchFilter = () => {
 function _filterCleanSettings(settings) {
   const result = {}
 
-  if (settings.openTime !== 'NONE') result.openTime = settings.openTime
+  if (settings.openTime !== "NONE") result.openTime = settings.openTime
   if (settings.openTime === "OPEN_AT") {
     result.openWeek = settings.openWeek
     if (settings.openHour !== 99) {

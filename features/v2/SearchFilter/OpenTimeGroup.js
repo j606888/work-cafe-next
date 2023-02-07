@@ -4,6 +4,7 @@ import { FormControlLabel, Radio, RadioGroup } from "@mui/material"
 import Select from "components/Select"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
 import { orange100 } from "constants/color"
+import { devices } from "constants/styled-theme"
 
 const RadioStyle = {
   "&.Mui-checked": {
@@ -74,6 +75,14 @@ const Container = styled.div`
 const CustomLabel = styled.div`
   display: flex;
   gap: 12px;
+
+  @media ${devices.mobileXl} {
+    flex-wrap: wrap;
+    & > :first-child {
+      width: 100%;
+      flex-shrink: 0;
+    }
+  }
 `
 
 export default OpenTimeGroup

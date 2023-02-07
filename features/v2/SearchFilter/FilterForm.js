@@ -76,6 +76,10 @@ const FilterForm = ({
 
 const Container = styled.div`
   width: 596px;
+
+  @media ${devices.mobileXl} {
+    width: 100%;
+  }
 `
 
 const Title = styled.div`
@@ -92,6 +96,10 @@ const Title = styled.div`
 
   span {
     margin: 0 auto;
+  }
+
+  @media ${devices.mobileXl} {
+    height: 62px;
   }
 `
 
@@ -121,6 +129,18 @@ const Content = styled.div`
     margin: 0;
     margin-bottom: 16px;
   }
+
+  @media ${devices.mobileXl} {
+    max-height: calc(100% - 62px - 80px);
+    overflow-y: scroll;
+    padding: 26px 29px;
+
+    h3 {
+      font-size: 20px;
+      line-height: 27px;
+      margin-bottom: 12px;
+    }
+  }
 `
 
 const FilterActions = styled.div`
@@ -130,6 +150,10 @@ const FilterActions = styled.div`
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid ${grey04};
+
+  @media ${devices.mobileXl} {
+    height: 80px;
+  }
 `
 
 const ClearText = styled.span`
