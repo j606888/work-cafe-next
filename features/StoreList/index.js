@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Container } from "./styled"
+import { Container, StoreCount } from "./styled"
 import StoreCard from "components/StoreCard"
 import NoMatch from "features/StoreList/NoMatch"
 import useSearchStores from "hooks/useSearchStores"

@@ -125,7 +125,7 @@ const WeekHourPicker = ({
           width={180}
           defaultChecked={hour}
         >
-          <CustomRadio value={99} text="不指定時間" width="158px" />
+          <CustomRadio value={99} text="不限時間" width="158px" />
           <CustomRadio value={0} text="深夜" width="76px" />
           <CustomRadio value={12} text="中午" width="76px" />
           <CustomRadio value={1} text="凌晨 1:00" width="76px" />

@@ -1,90 +1,127 @@
-import React, { useEffect, useState } from "react"
-import { Dialog, useMediaQuery } from "@mui/material"
-import styled from "styled-components"
-import Filter from "./Filter"
-import { grey04, orange100 } from "constants/color"
+import { Dialog, Drawer, useMediaQuery } from "@mui/material"
+import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
 import { devices } from "constants/styled-theme"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import ButtonWithCount from "./ButtonWithCount"
+import FilterForm from "./FilterForm"
 
+const MobileDrawerStyle = {
+  borderTopLeftRadius: "20px",
+  borderTopRightRadius: "20px",
+  height: "85%",
+}
 const SearchFilter = () => {
+  const storedFilters = JSON.parse(localStorage.getItem("filters"))
+  const router = useRouter()
+  const [open, setOpen] = useState(false)
+  const [filterCount, setFilterCount] = useState(
+    +localStorage.getItem("filterCount")
+  )
   const fullScreen = useMediaQuery(devices.mobileXl)
 
-  const [open, setOpen] = useState(false)
-  const [filterCount, setFilterCount] = useState(0)
+  const [openTime, setOpenTime] = useState(storedFilters?.openTime || "NONE")
+  const [openWeek, setOpenWeek] = useState(
+    storedFilters?.openWeek || OPEN_WEEKS[0].value
+  )
+  const [openHour, setOpenHour] = useState(
+    storedFilters?.openHour || OPEN_HOURS[0].value
+  )
+  const [wakeUp, setWakeUp] = useState(storedFilters?.wakeUp || false)
+  const [tagIds, setTagIds] = useState(storedFilters?.tagIds || [])
+
+  function handleClose() {
+    setOpen(false)
+  }
+
+  function handleApply({ openTime, openWeek, openHour, wakeUp, tagIds }) {
+    let count = 0
+    if (openTime !== "NONE") count += 1
+    if (wakeUp) count += 1
+    count += tagIds.length
+    setFilterCount(count)
+
+    if (openTime) setOpenTime(openTime)
+    if (openWeek) setOpenWeek(openWeek)
+    if (openHour) setOpenHour(openHour)
+    setWakeUp(wakeUp)
+    setTagIds(tagIds)
+
+    let query = {
+      openTime,
+      openWeek,
+      openHour,
+      wakeUp,
+      tagIds,
+    }
+    query = _filterCleanSettings(query)
+    localStorage.setItem("filters", JSON.stringify(query))
+    const pathWithoutQuery = router.asPath.split("?")[0]
+    router.push({ pathname: pathWithoutQuery, query })
+
+    setOpen(false)
+  }
 
   useEffect(() => {
-    const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}
-    const { wakeUp, tagIds, openType } = storedFilters
-
-    let count = 0
-    if (wakeUp) count++
-    if (openType && openType !== "NONE") count++
-    count += tagIds?.length || 0
-
-    setFilterCount(count)
-  }, [open])
+    localStorage.setItem("filterCount", filterCount)
+  }, [filterCount])
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-        <img src="/filter.svg" alt="filter" />
-        <span>篩選條件</span>
-        {filterCount > 0 && <Badge>{filterCount}</Badge>}
-      </Button>
-
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        fullScreen={fullScreen}
-      >
-        <Filter onClose={() => setOpen(false)} />
-      </Dialog>
+      <ButtonWithCount onClick={() => setOpen(true)} count={filterCount} />
+      {fullScreen ? (
+        <Drawer
+          open={open}
+          onClose={handleClose}
+          anchor="bottom"
+          PaperProps={fullScreen && { sx: MobileDrawerStyle }}
+        >
+          <FilterForm
+            onClose={handleClose}
+            onApply={handleApply}
+            _openTime={openTime}
+            _openWeek={openWeek}
+            _openHour={openHour}
+            _wakeUp={wakeUp}
+            _tagIds={tagIds}
+          />
+        </Drawer>
+      ) : (
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          PaperProps={{ sx: { borderRadius: "20px" } }}
+        >
+          <FilterForm
+            onClose={handleClose}
+            onApply={handleApply}
+            _openTime={openTime}
+            _openWeek={openWeek}
+            _openHour={openHour}
+            _wakeUp={wakeUp}
+            _tagIds={tagIds}
+          />
+        </Dialog>
+      )}
     </>
   )
 }
 
-const Button = styled.div`
-  width: 140px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  border-radius: 20px;
-  border: 1px solid ${grey04};
-  font-size: 16px;
-  flex-shrink: 0;
-  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
-  cursor: pointer;
-  position: relative;
-  background-color: #ffffff;
+function _filterCleanSettings(settings) {
+  const result = {}
 
-  img {
-    width: 36px;
-    height: 36px;
-  }
-
-  @media ${devices.mobileXl} {
-    width: 52px;
-
-    span {
-      display: none;
+  if (settings.openTime !== "NONE") result.openTime = settings.openTime
+  if (settings.openTime === "OPEN_AT") {
+    result.openWeek = settings.openWeek
+    if (settings.openHour !== 99) {
+      result.openHour = settings.openHour
     }
   }
-`
 
-const Badge = styled.div`
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  background-color: ${orange100};
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  font-size: 14px;
-`
+  if (!!settings.wakeUp) result.wakeUp = settings.wakeUp
+  if (settings.tagIds.length !== 0) result.tagIds = settings.tagIds
+
+  return result
+}
 
 export default SearchFilter
