@@ -9,19 +9,20 @@ import useUpdateURL from "hooks/useUpdateURL"
 export default function StoreList({ expand }) {
   const { setCenterWithPlaceIdToURL } = useUpdateURL()
   const { data: stores } = useSearchStores()
-  const { placeId, setPlaceId, focusPlaceId, setFocusPlaceId } = store((state) => ({
+  const { placeId, setPlaceId, focusPlaceId, setFocusPlaceId, setBouncePlaceId } = store((state) => ({
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
     focusPlaceId: state.focusPlaceId,
     setFocusPlaceId: state.setFocusPlaceId,
+    setBouncePlaceId: state.setBouncePlaceId,
   }))
   const storesRef = React.useRef({})
 
   const handleMouseEnter = (placeId) => {
-    // setBouncePlaceId(placeId)
+    setBouncePlaceId(placeId)
   }
   const handleMouseLeave = (_placeId) => {
-    // setBouncePlaceId(null)
+    setBouncePlaceId(null)
   }
   const handleClick = ({ placeId, lat, lng }) => {
     setPlaceId(placeId)

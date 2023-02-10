@@ -21,6 +21,12 @@ const store = create((set) => ({
       ...state,
       focusPlaceId,
     })),
+  bouncePlaceId: null,
+  setBouncePlaceId: (bouncePlaceId) =>
+    set((state) => ({
+      ...state,
+      bouncePlaceId,
+    })),
   keyword: null,
   setKeyword: (keyword) =>
     set((state) => ({

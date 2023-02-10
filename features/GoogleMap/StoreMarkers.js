@@ -13,14 +13,16 @@ const StoreMarkers = ({ store }) => {
     placeId,
     setPlaceId,
     focusPlaceId,
+    bouncePlaceId,
     setFocusPlaceId,
     map,
     showLabel,
   } = storeStore((state) => ({
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
-    setFocusPlaceId: state.setFocusPlaceId,
     focusPlaceId: state.focusPlaceId,
+    bouncePlaceId: state.bouncePlaceId,
+    setFocusPlaceId: state.setFocusPlaceId,
     map: state.map,
     showLabel: state.showLabel,
   }))
@@ -60,7 +62,7 @@ const StoreMarkers = ({ store }) => {
               store.placeId === placeId || store.placeId === focusPlaceId
             }
             // isBookmark={store.bookmark}
-            // isBounce={store.placeId === bouncePlaceId}
+            isBounce={store.placeId === bouncePlaceId}
             onClick={handleClickMarker}
           />
         )
