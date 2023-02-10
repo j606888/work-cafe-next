@@ -94,10 +94,10 @@ const WorkCafeReviews = ({
 function _dateString(timestamp) {
   const time = new Date(timestamp * 1000)
   const year = time.getFullYear()
-  const month = time.getMonth()
+  const month = time.getMonth() + 1
   const date = time.getDate()
   const day = time.getDay()
-  const isWeekend = [5, 6].includes(day) ? "週末造訪" : "平日造訪"
+  const isWeekend = [0, 6].includes(day) ? "週末造訪" : "平日造訪"
 
   return `${year}年${month}月${date}日・${isWeekend}`
 }
