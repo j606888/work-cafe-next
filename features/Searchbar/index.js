@@ -26,6 +26,8 @@ const Searchbar = ({ type = "landing" }) => {
     const { lat, lng } = mapCenter(map)
     const { middleLat, middleLng } = await _searchResultMid({ lat, lng, k })
 
+    if (!middleLat || !middleLng) return
+
     let path = `/map/@${middleLat},${middleLng},15z?keyword=${k}`
     router.push(path)
 
