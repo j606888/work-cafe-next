@@ -32,7 +32,7 @@ const StoreDetail = ({ store }) => {
 
   const handleClose = () => {
     setPlaceId(null)
-    setFocusPlaceId(null)
+    // setFocusPlaceId(null)
 
     const { lat, lng, zoom } = mapCenter(map)
     const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}

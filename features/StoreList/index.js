@@ -55,6 +55,11 @@ export default function StoreList({ expand }) {
         block: "center",
       })
     }
+
+    // Tricky way to remove focusPlaceId when clicking "Go back"
+    if (!placeId) {
+      setFocusPlaceId(null)
+    }
   }, [focusPlaceId])
 
   // if (!stores) return null
