@@ -2,10 +2,18 @@ import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import { grey01, grey06, orange20 } from "constants/color"
+import formControlStore from "stores/FormControlStore"
 
 const Recommend = ({ good = 6, bad = 1 }) => {
+  const { setNewReviewOpen } = formControlStore((state) => ({
+    setNewReviewOpen: state.setNewReviewOpen,
+  }))
+
+  function handleClick() {
+    setNewReviewOpen(true)
+  }
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <BlockContainer>
         <img src="/thumb-up.svg" alt="thumb-up" />
         <div>
@@ -40,6 +48,7 @@ const Container = styled.div`
   display: inline-flex;
   align-items: center;
   padding: 0 30px;
+  cursor: pointer;
 
   @media ${devices.mobileXl} {
     margin: 16px 24px;

@@ -1,12 +1,12 @@
 import ReviewForm from "features/ReviewForm"
 import React from "react"
-import { useState } from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import useSWR from "swr"
 import WorkCafeReviews from "./WorkCafeReviews/WorkCafeReviews"
 import ReviewApi from "api/review"
 import useUserStore from "stores/useUserStore"
+import formControlStore from "stores/FormControlStore"
 
 const Container = styled.div`
   display: flex;
@@ -43,14 +43,17 @@ const FakeTextBox = styled.div`
 `
 
 const NewReview = ({ placeId, name, onSave }) => {
-  const [open, setOpen] = useState(false)
+  const { newReviewOpen, setNewReviewOpen } = formControlStore((state) => ({
+    newReviewOpen: state.newReviewOpen,
+    setNewReviewOpen: state.setNewReviewOpen,
+  }))
   const user = useUserStore((state) => state.user)
   const { data: myReview, mutate } = useSWR(
     user ? `/stores/${placeId}/reviews/me` : null
   )
 
   async function handleSave() {
-    setOpen(false)
+    setNewReviewOpen(false)
     await onSave()
     mutate()
   }
@@ -61,7 +64,7 @@ const NewReview = ({ placeId, name, onSave }) => {
   }
 
   function handleEdit() {
-    setOpen(true)
+    setNewReviewOpen(true)
   }
 
   return (
@@ -80,7 +83,7 @@ const NewReview = ({ placeId, name, onSave }) => {
         ) : (
           <>
             <img src="/guest.svg" alt="guest" />
-            <FakeTextBox onClick={() => setOpen(true)}>
+            <FakeTextBox onClick={() => setNewReviewOpen(true)}>
               留下我的評論（這裡適合辦公嗎？）
             </FakeTextBox>
           </>
@@ -90,9 +93,9 @@ const NewReview = ({ placeId, name, onSave }) => {
         key={myReview?.id || "review-form"}
         myReview={myReview}
         placeId={placeId}
-        open={open}
+        open={newReviewOpen}
         name={name}
-        onClose={() => setOpen(false)}
+        onClose={() => setNewReviewOpen(false)}
         onSave={handleSave}
       />
     </>
