@@ -51,16 +51,19 @@ const NewReview = ({ placeId, name, onSave }) => {
   const { data: myReview, mutate } = useSWR(
     user ? `/stores/${placeId}/reviews/me` : null
   )
+  const { mutate: mutateStore } = useSWR(`/stores/${placeId}`)
 
   async function handleSave() {
     setNewReviewOpen(false)
     await onSave()
     mutate()
+    mutateStore()
   }
 
   async function handleDelete() {
     await ReviewApi.deleteMyReview({ placeId })
     mutate()
+    mutateStore()
   }
 
   function handleEdit() {
