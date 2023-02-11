@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import { grey01, grey06, orange20 } from "constants/color"
-import formControlStore from "stores/FormControlStore"
+import formControlStore from "stores/formControlStore"
 
 const Recommend = ({ good = 6, bad = 1 }) => {
   const { setNewReviewOpen } = formControlStore((state) => ({

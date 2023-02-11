@@ -6,7 +6,7 @@ import useSWR from "swr"
 import WorkCafeReviews from "./WorkCafeReviews/WorkCafeReviews"
 import ReviewApi from "api/review"
 import useUserStore from "stores/useUserStore"
-import formControlStore from "stores/FormControlStore"
+import formControlStore from "stores/formControlStore"
 
 const Container = styled.div`
   display: flex;
