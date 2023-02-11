@@ -13,7 +13,7 @@ const StoreCard = React.forwardRef(
       name,
       vicinity,
       reviewsCount,
-      isOpen,
+      openNow,
       lat,
       lng,
       images = [],
@@ -53,8 +53,8 @@ const StoreCard = React.forwardRef(
           <h3>{name}</h3>
         </MainInfo>
         <SecondInfo>
-          <OpenStatus isOpen={isOpen}>
-            {isOpen ? "營業中" : "已打烊"}
+          <OpenStatus isOpen={openNow}>
+            {openNow ? "營業中" : "已打烊"}
           </OpenStatus>
           <Address>・{vicinity}</Address>
         </SecondInfo>

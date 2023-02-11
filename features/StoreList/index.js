@@ -26,6 +26,7 @@ export default function StoreList({ expand }) {
   }
   const handleClick = ({ placeId, lat, lng }) => {
     setPlaceId(placeId)
+    setBouncePlaceId(null)
     // setFocusPlaceId(placeId)
     onClick({ placeId, lat, lng })
   }

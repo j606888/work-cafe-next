@@ -17,13 +17,12 @@ import qs from "query-string"
 
 const StoreDetail = ({ store }) => {
   const router = useRouter()
-  const { map, keyword, setPlaceId } = storeStore(
-    (state) => ({
-      map: state.map,
-      keyword: state.keyword,
-      setPlaceId: state.setPlaceId,
-    })
-  )
+  const { map, keyword, setPlaceId, setFocusPlaceId } = storeStore((state) => ({
+    map: state.map,
+    keyword: state.keyword,
+    setPlaceId: state.setPlaceId,
+    setFocusPlaceId: state.setFocusPlaceId,
+  }))
   const { searchHints } = useHintSearch()
   const { data: stores } = useSearchStores()
 
@@ -33,6 +32,7 @@ const StoreDetail = ({ store }) => {
 
   const handleClose = () => {
     setPlaceId(null)
+    setFocusPlaceId(null)
 
     const { lat, lng, zoom } = mapCenter(map)
     const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}
