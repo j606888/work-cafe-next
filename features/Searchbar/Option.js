@@ -24,12 +24,16 @@ const StoreOption = ({ name, address }) => {
   )
 }
 
-const DistrictOption = ({ name, address }) => {
+const DistrictOption = ({ name, address, count }) => {
   return (
     <>
       <img src="/location_28.svg" alt="location_28" />
       <span>{name}</span>
       <AddressSpan>{address}</AddressSpan>
+      <StoreCount>
+        <img src="/cafe.svg" alt="cafe" />
+        <span>{count}</span>
+      </StoreCount>
     </>
   )
 }
