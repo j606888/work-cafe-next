@@ -66,13 +66,17 @@ function _label({ showLabel, store, isFocus, angle }) {
     const className = 'right'
 
     return {
-      text: store.name,
+      text: _removeTextInParenthesis(store.name),
       fontSize: "12px",
       className: `labels ${className}`,
     }
   }
 
   return null
+}
+
+function _removeTextInParenthesis (str) {
+  return str.replace(/\s*\([^\)]*\)/, "")
 }
 
 function _angle(cx, cy, ex, ey) {

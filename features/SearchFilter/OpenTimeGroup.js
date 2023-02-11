@@ -12,9 +12,9 @@ const RadioStyle = {
   },
 }
 
-const OpenTimeGroup = ({ openTime, openWeek, openHour, onChange=() => {} }) => {
-  function handleOpenTimeChange(e) {
-    onChange("openTime", e.target.value)
+const OpenTimeGroup = ({ openType, openWeek, openHour, onChange=() => {} }) => {
+  function handleOpenTypeChange(e) {
+    onChange("openType", e.target.value)
   }
 
   function handleWeekChange(value) {
@@ -30,8 +30,8 @@ const OpenTimeGroup = ({ openTime, openWeek, openHour, onChange=() => {} }) => {
       <h3>營業時間</h3>
       <RadioGroup
         name="open-time-group"
-        value={openTime}
-        onChange={handleOpenTimeChange}
+        value={openType}
+        onChange={handleOpenTypeChange}
       >
         <FormControlLabel
           value="NONE"
@@ -52,13 +52,13 @@ const OpenTimeGroup = ({ openTime, openWeek, openHour, onChange=() => {} }) => {
           />
           <Select
             options={OPEN_WEEKS}
-            disabled={openTime !== "OPEN_AT"}
+            disabled={openType !== "OPEN_AT"}
             onChange={handleWeekChange}
             defaultSelectedValue={openWeek}
           />
           <Select
             options={OPEN_HOURS}
-            disabled={openTime !== "OPEN_AT"}
+            disabled={openType !== "OPEN_AT"}
             onChange={handleHourChange}
             defaultSelectedValue={openHour}
           />

@@ -1,11 +1,14 @@
 import React, { useState } from "react"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { devices } from "constants/styled-theme"
 
 const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
   const displayText = isOpenNow ? "營業中" : "休息中"
   const closeText =
-    !open && closeTime && `・ 結束營業時間 ${_closePeriod(closeTime)}`
+    !open &&
+    isOpenNow &&
+    closeTime &&
+    `・ 結束營業時間 ${_closePeriod(closeTime)}`
   const icon = open ? (
     <img src="/up-btn.svg" alt="up-btn" />
   ) : (
@@ -23,6 +26,8 @@ const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
 }
 const OpenTime = ({ isOpenNow, closeTime, openingHours = [] }) => {
   const [open, setOpen] = useState(false)
+  const today = new Date()
+  const weekday = today.getDay()
 
   function toggleOpen() {
     setOpen((cur) => !cur)
@@ -39,11 +44,11 @@ const OpenTime = ({ isOpenNow, closeTime, openingHours = [] }) => {
       {open && (
         <OpenHours>
           {openingHours.map((openingHour, index) => (
-            <DayBox key={index}>
+            <DayBox key={index} bold={weekday == openingHour.weekday}>
               <div>{openingHour.label}</div>
               <div className="period">
-                {openingHour.periods.map((period, idx) => (
-                  <span key={idx}>{`${period.start} - ${period.end}`}</span>
+                {openingHour.periodTexts.map((periodText, idx) => (
+                  <span key={idx}>{periodText}</span>
                 ))}
               </div>
             </DayBox>
@@ -104,6 +109,10 @@ const DayBox = styled.div`
   margin-left: 32px;
   gap: 1rem;
   margin-bottom: 12px;
+
+  ${({ bold }) => bold && css`
+    font-weight: bold;
+  `}
 
   .period {
     display: flex;
