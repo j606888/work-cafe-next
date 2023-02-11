@@ -20,7 +20,7 @@ const SearchFilter = () => {
   )
   const fullScreen = useMediaQuery(devices.mobileXl)
 
-  const [openTime, setOpenTime] = useState(storedFilters?.openTime || "NONE")
+  const [openType, setOpenType] = useState(storedFilters?.openType || "NONE")
   const [openWeek, setOpenWeek] = useState(
     storedFilters?.openWeek || OPEN_WEEKS[0].value
   )
@@ -34,21 +34,21 @@ const SearchFilter = () => {
     setOpen(false)
   }
 
-  function handleApply({ openTime, openWeek, openHour, wakeUp, tagIds }) {
+  function handleApply({ openType, openWeek, openHour, wakeUp, tagIds }) {
     let count = 0
-    if (openTime !== "NONE") count += 1
+    if (openType !== "NONE") count += 1
     if (wakeUp) count += 1
     count += tagIds.length
     setFilterCount(count)
 
-    if (openTime) setOpenTime(openTime)
+    if (openType) setOpenType(openType)
     if (openWeek) setOpenWeek(openWeek)
     if (openHour) setOpenHour(openHour)
     setWakeUp(wakeUp)
     setTagIds(tagIds)
 
     let query = {
-      openTime,
+      openType,
       openWeek,
       openHour,
       wakeUp,
@@ -79,7 +79,7 @@ const SearchFilter = () => {
           <FilterForm
             onClose={handleClose}
             onApply={handleApply}
-            _openTime={openTime}
+            _openType={openType}
             _openWeek={openWeek}
             _openHour={openHour}
             _wakeUp={wakeUp}
@@ -95,7 +95,7 @@ const SearchFilter = () => {
           <FilterForm
             onClose={handleClose}
             onApply={handleApply}
-            _openTime={openTime}
+            _openType={openType}
             _openWeek={openWeek}
             _openHour={openHour}
             _wakeUp={wakeUp}
@@ -110,8 +110,8 @@ const SearchFilter = () => {
 function _filterCleanSettings(settings) {
   const result = {}
 
-  if (settings.openTime !== "NONE") result.openTime = settings.openTime
-  if (settings.openTime === "OPEN_AT") {
+  if (settings.openType !== "NONE") result.openType = settings.openType
+  if (settings.openType === "OPEN_AT") {
     result.openWeek = settings.openWeek
     if (settings.openHour !== 99) {
       result.openHour = settings.openHour

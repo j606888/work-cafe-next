@@ -9,33 +9,33 @@ import TagsGroup from "./TagsGroup"
 
 const FilterForm = ({
   onClose,
-  _openTime,
+  _openType,
   _openWeek,
   _openHour,
   _wakeUp,
   _tagIds,
   onApply,
 }) => {
-  const [openTime, setOpenTime] = useState(_openTime)
+  const [openType, setOpenType] = useState(_openType)
   const [openWeek, setOpenWeek] = useState(_openWeek)
   const [openHour, setOpenHour] = useState(_openHour)
   const [wakeUp, setWakeUp] = useState(_wakeUp)
   const [tagIds, setTagIds] = useState(_tagIds)
 
   const setters = {
-    openTime: setOpenTime,
+    openType: setOpenType,
     openWeek: setOpenWeek,
     openHour: setOpenHour,
     wakeUp: setWakeUp,
     tagIds: setTagIds,
   }
 
-  function handleOpenTimeChange(key, value) {
+  function handleChange(key, value) {
     setters[key](value)
   }
 
   function handleClear() {
-    setOpenTime("NONE")
+    setOpenType("NONE")
     setOpenWeek(OPEN_WEEKS[0].value)
     setOpenHour(OPEN_HOURS[0].value)
     setWakeUp(false)
@@ -43,10 +43,10 @@ const FilterForm = ({
   }
 
   function handleApply() {
-    if (openTime !== "OPEN_AT") {
-      onApply({ wakeUp, tagIds, openTime })
+    if (openType !== "OPEN_AT") {
+      onApply({ wakeUp, tagIds, openType })
     } else {
-      onApply({ wakeUp, tagIds, openTime, openWeek, openHour })
+      onApply({ wakeUp, tagIds, openType, openWeek, openHour })
     }
   }
 
@@ -58,13 +58,13 @@ const FilterForm = ({
       </Title>
       <Content>
         <OpenTimeGroup
-          onChange={handleOpenTimeChange}
-          openTime={openTime}
+          onChange={handleChange}
+          openType={openType}
           openWeek={openWeek}
           openHour={openHour}
         />
-        <TagsGroup tagIds={tagIds} onChange={handleOpenTimeChange} />
-        <MapDisplayGroup wakeUp={wakeUp} onChange={handleOpenTimeChange} />
+        <TagsGroup tagIds={tagIds} onChange={handleChange} />
+        <MapDisplayGroup wakeUp={wakeUp} onChange={handleChange} />
       </Content>
       <FilterActions>
         <ClearText onClick={handleClear}>清除全部</ClearText>
