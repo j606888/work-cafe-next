@@ -9,7 +9,15 @@ import useUpdateURL from "hooks/useUpdateURL"
 export default function StoreList({ expand }) {
   const { setCenterWithPlaceIdToURL } = useUpdateURL()
   const { data: stores } = useSearchStores()
-  const { placeId, setPlaceId, focusPlaceId, setFocusPlaceId, setBouncePlaceId } = store((state) => ({
+  const {
+    map,
+    placeId,
+    setPlaceId,
+    focusPlaceId,
+    setFocusPlaceId,
+    setBouncePlaceId,
+  } = store((state) => ({
+    map: state.map,
     placeId: state.placeId,
     setPlaceId: state.setPlaceId,
     focusPlaceId: state.focusPlaceId,
@@ -27,7 +35,10 @@ export default function StoreList({ expand }) {
   const handleClick = ({ placeId, lat, lng }) => {
     setPlaceId(placeId)
     setBouncePlaceId(null)
-    // setFocusPlaceId(placeId)
+    map.panTo({
+      lat,
+      lng,
+    })
     onClick({ placeId, lat, lng })
   }
 
