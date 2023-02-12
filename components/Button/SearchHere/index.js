@@ -8,16 +8,19 @@ import { devices } from "constants/styled-theme"
 
 const SearchHere = () => {
   const { setCenterToURL } = useUpdateURL()
-  const { map, setSearchCenter, setPlaceId, setFocusPlaceId  } = store((state) => ({
+  const { map, setSearchCenter, setPlaceId, setFocusPlaceId, setKeyword  } = store((state) => ({
     map: state.map,
     setSearchCenter: state.setSearchCenter,
     setPlaceId: state.setPlaceId,
     setFocusPlaceId: state.setFocusPlaceId,
+    setKeyword: state.setKeyword,
   }))
   const isLoading = false
 
   function onClick() {
     const { lat, lng } = mapCenter(map)
+
+    setKeyword('')
     setPlaceId(null)
     setFocusPlaceId(null)
     setSearchCenter({ lat, lng })
