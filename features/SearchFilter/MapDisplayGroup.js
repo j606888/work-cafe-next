@@ -3,9 +3,12 @@ import { orange100 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
 
-const MapDisplayGroup = ({ wakeUp, onChange = () => {} }) => {
-  function handleChange(e) {
-    onChange('wakeUp', e.target.checked)
+const MapDisplayGroup = ({ wakeUp, hideChain, onChange = () => {} }) => {
+  function handleChangeWakeUp(e) {
+    onChange("wakeUp", e.target.checked)
+  }
+  function handleChangeHideChain(e) {
+    onChange("hideChain", e.target.checked)
   }
 
   return (
@@ -16,10 +19,21 @@ const MapDisplayGroup = ({ wakeUp, onChange = () => {} }) => {
           <Checkbox
             sx={{ "&.Mui-checked": { color: orange100 } }}
             checked={wakeUp}
-            onChange={handleChange}
+            onChange={handleChangeWakeUp}
           />
         }
         label="只顯示有評論的店家"
+      />
+      <br />
+      <FormControlLabel
+        control={
+          <Checkbox
+            sx={{ "&.Mui-checked": { color: orange100 } }}
+            checked={hideChain}
+            onChange={handleChangeHideChain}
+          />
+        }
+        label="隱藏連鎖店家"
       />
     </Container>
   )
