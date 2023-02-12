@@ -66,9 +66,9 @@ const WorkCafeReviews = ({
     <Container>
       <UserInfo>
         {userName ? (
-          <img src="/guest.svg" alt="guest" />
-        ) : (
           <Avatar alt={userName} src={userAvatarUrl} />
+          ) : (
+          <img src="/guest.svg" alt="guest" />
         )}
         <Content>
           <h6>{userName}</h6>

@@ -5,9 +5,12 @@ import NoMatch from "features/StoreList/NoMatch"
 import useSearchStores from "hooks/useSearchStores"
 import store from "stores/store"
 import useUpdateURL from "hooks/useUpdateURL"
+import { useMediaQuery } from "@mui/material"
+import { devices } from "constants/styled-theme"
 
 export default function StoreList({ expand }) {
   const { setCenterWithPlaceIdToURL } = useUpdateURL()
+  const fullScreen = useMediaQuery(devices.mobileXl)
   const { data: stores } = useSearchStores()
   const {
     map,
@@ -57,10 +60,10 @@ export default function StoreList({ expand }) {
     }
 
     // Tricky way to remove focusPlaceId when clicking "Go back"
-    if (!placeId) {
+    if (!placeId && !fullScreen) {
       setFocusPlaceId(null)
     }
-  }, [focusPlaceId])
+  }, [focusPlaceId, fullScreen])
 
   // if (!stores) return null
   if (stores?.totalStores === 0) return <NoMatch />

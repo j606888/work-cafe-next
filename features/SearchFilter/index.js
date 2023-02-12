@@ -9,7 +9,7 @@ import FilterForm from "./FilterForm"
 const MobileDrawerStyle = {
   borderTopLeftRadius: "20px",
   borderTopRightRadius: "20px",
-  height: "85%",
+  maxHeight: "85%",
 }
 const SearchFilter = () => {
   const storedFilters = JSON.parse(localStorage.getItem("filters"))
