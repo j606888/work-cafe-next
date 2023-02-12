@@ -133,7 +133,7 @@ const SearchBox = ({ type, children, onSearch, onCancel }) => {
 async function _searchResultMid({ lat, lng, k }) {
   const API_HOST = process.env.NEXT_PUBLIC_API_HOST
   const res = await fetch(
-    `${API_HOST}/stores/location?lat=${lat}&lng=${lng}&keyword=${k}`
+    `${API_HOST}/stores/location?lat=${lat}&lng=${lng}&keyword=${k}&preflight=true`
   )
   const data = await res.json()
   const stores = data.stores
