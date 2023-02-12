@@ -13,6 +13,7 @@ const FilterForm = ({
   _openWeek,
   _openHour,
   _wakeUp,
+  _hideChain,
   _tagIds,
   onApply,
 }) => {
@@ -20,6 +21,7 @@ const FilterForm = ({
   const [openWeek, setOpenWeek] = useState(_openWeek)
   const [openHour, setOpenHour] = useState(_openHour)
   const [wakeUp, setWakeUp] = useState(_wakeUp)
+  const [hideChain, setHideChain] = useState(_hideChain)
   const [tagIds, setTagIds] = useState(_tagIds)
 
   const setters = {
@@ -27,6 +29,7 @@ const FilterForm = ({
     openWeek: setOpenWeek,
     openHour: setOpenHour,
     wakeUp: setWakeUp,
+    hideChain: setHideChain,
     tagIds: setTagIds,
   }
 
@@ -39,14 +42,15 @@ const FilterForm = ({
     setOpenWeek(OPEN_WEEKS[0].value)
     setOpenHour(OPEN_HOURS[0].value)
     setWakeUp(false)
+    setHideChain(false)
     setTagIds([])
   }
 
   function handleApply() {
     if (openType !== "OPEN_AT") {
-      onApply({ wakeUp, tagIds, openType })
+      onApply({ wakeUp, tagIds, hideChain, openType })
     } else {
-      onApply({ wakeUp, tagIds, openType, openWeek, openHour })
+      onApply({ wakeUp, tagIds, hideChain, openType, openWeek, openHour })
     }
   }
 
@@ -64,7 +68,7 @@ const FilterForm = ({
           openHour={openHour}
         />
         <TagsGroup tagIds={tagIds} onChange={handleChange} />
-        <MapDisplayGroup wakeUp={wakeUp} onChange={handleChange} />
+        <MapDisplayGroup wakeUp={wakeUp} hideChain={hideChain} onChange={handleChange} />
       </Content>
       <FilterActions>
         <ClearText onClick={handleClear}>清除全部</ClearText>

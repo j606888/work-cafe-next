@@ -28,16 +28,25 @@ const SearchFilter = () => {
     storedFilters?.openHour || OPEN_HOURS[0].value
   )
   const [wakeUp, setWakeUp] = useState(storedFilters?.wakeUp || false)
+  const [hideChain, setHideChain] = useState(storedFilters?.hideChain || false)
   const [tagIds, setTagIds] = useState(storedFilters?.tagIds || [])
 
   function handleClose() {
     setOpen(false)
   }
 
-  function handleApply({ openType, openWeek, openHour, wakeUp, tagIds }) {
+  function handleApply({
+    openType,
+    openWeek,
+    openHour,
+    wakeUp,
+    hideChain,
+    tagIds,
+  }) {
     let count = 0
     if (openType !== "NONE") count += 1
     if (wakeUp) count += 1
+    if (hideChain) count += 1
     count += tagIds.length
     setFilterCount(count)
 
@@ -45,6 +54,7 @@ const SearchFilter = () => {
     if (openWeek) setOpenWeek(openWeek)
     if (openHour) setOpenHour(openHour)
     setWakeUp(wakeUp)
+    setHideChain(hideChain)
     setTagIds(tagIds)
 
     let query = {
@@ -52,6 +62,7 @@ const SearchFilter = () => {
       openWeek,
       openHour,
       wakeUp,
+      hideChain,
       tagIds,
     }
     query = _filterCleanSettings(query)
@@ -83,6 +94,7 @@ const SearchFilter = () => {
             _openWeek={openWeek}
             _openHour={openHour}
             _wakeUp={wakeUp}
+            _hideChain={hideChain}
             _tagIds={tagIds}
           />
         </Drawer>
@@ -99,6 +111,7 @@ const SearchFilter = () => {
             _openWeek={openWeek}
             _openHour={openHour}
             _wakeUp={wakeUp}
+            _hideChain={hideChain}
             _tagIds={tagIds}
           />
         </Dialog>
@@ -119,6 +132,7 @@ function _filterCleanSettings(settings) {
   }
 
   if (!!settings.wakeUp) result.wakeUp = settings.wakeUp
+  if (!!settings.hideChain) result.hideChain = settings.hideChain
   if (settings.tagIds.length !== 0) result.tagIds = settings.tagIds
 
   return result
