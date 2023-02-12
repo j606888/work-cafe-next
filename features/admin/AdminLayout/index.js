@@ -7,7 +7,7 @@ import {
   Map as MapIcon,
   Person as PersonIcon,
   BugReport as BugReportIcon,
-  RemoveModerator as RemoveModeratorIcon,
+  Hub as HubIcon,
 } from "@mui/icons-material"
 import AppBar from "./AppBar"
 import MiniDrawer from "components/MiniDrawer"
@@ -32,9 +32,9 @@ const lists = [
     icon: <MapIcon />,
   },
   {
-    text: "BlackList",
-    url: "/admin/blacklist",
-    icon: <RemoveModeratorIcon />,
+    text: "ChainStores",
+    url: "/admin/chain-stores",
+    icon: <HubIcon />,
   },
   {
     text: "Users",

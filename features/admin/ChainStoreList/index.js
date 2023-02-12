@@ -6,7 +6,7 @@ import {
 } from "@mui/material"
 import useSWR from "swr"
 
-const AdminBlacklist = () => {
+const ChainStoreList = () => {
   const { data: chainStores } = useSWR("/admin/chain-stores")
   if (!chainStores) return <div>Loading...</div>
 
@@ -61,4 +61,4 @@ const AdminBlacklist = () => {
   )
 }
 
-export default AdminBlacklist
+export default ChainStoreList
