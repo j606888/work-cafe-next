@@ -76,6 +76,9 @@ const FilterForm = ({
 
 const Container = styled.div`
   width: 596px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 
   @media ${devices.mobileXl} {
     width: 100%;
@@ -91,8 +94,13 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   color: ${grey01};
-  position: relative;
+  position: absolute;
   border: 1px solid ${grey04};
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 10;
 
   span {
     margin: 0 auto;
@@ -117,7 +125,12 @@ const CloseButton = styled.img`
 
 const Content = styled.div`
   min-height: 300px;
-  padding: 39px;
+  max-height: 650px;
+  padding-top: calc(39px + 70px);
+  padding-bottom: calc(39px + 95px);
+  padding-left: 39px;
+  padding-right: 39px;
+  overflow-y: scroll;
 
   h3 {
     font-weight: 700;
@@ -131,9 +144,15 @@ const Content = styled.div`
   }
 
   @media ${devices.mobileXl} {
+    min-height: auto;
     max-height: calc(100% - 62px - 80px);
     overflow-y: scroll;
     padding: 26px 29px;
+
+    padding-top: calc(26px + 62px);
+    padding-bottom: calc(26px + 80px);
+    padding-left: 29px;
+    padding-right: 29px;
 
     h3 {
       font-size: 20px;
@@ -150,9 +169,16 @@ const FilterActions = styled.div`
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid ${grey04};
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 10;
 
   @media ${devices.mobileXl} {
     height: 80px;
+    position: fixed;
   }
 `
 
