@@ -38,7 +38,7 @@ const Box = styled.div`
 
   @media ${devices.mobileXl} {
     ${({ hide }) => hide && `display: none;`}
-    width: 90%;
+    width: ${({fullWidth}) => fullWidth ? '100%' : '90%'};
     height: 240px;
     flex: none;
     border-radius: 0 !important;
@@ -107,7 +107,7 @@ const ImagePreview = ({ placeId, photos = [], name }) => {
   return (
     <>
       <Container onClick={() => setOpen(true)}>
-        <BoxA img={photos[0]}></BoxA>
+        <BoxA img={photos[0]} fullWidth={photos.length == 1}></BoxA>
         <BoxB img={photos[1]} hide={photos.length < 2}></BoxB>
         <BoxC
           img={photos[2]}
