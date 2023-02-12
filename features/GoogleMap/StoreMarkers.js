@@ -61,7 +61,7 @@ const StoreMarkers = ({ store }) => {
             isFocus={
               store.placeId === placeId || store.placeId === focusPlaceId
             }
-            // isBookmark={store.bookmark}
+            isBookmark={store.bookmark}
             isBounce={store.placeId === bouncePlaceId}
             onClick={handleClickMarker}
           />
