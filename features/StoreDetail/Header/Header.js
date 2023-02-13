@@ -7,6 +7,9 @@ import { devices } from "constants/styled-theme"
 import ActionButton from "components/Button/ActionButton"
 import BookmarkButton from "./BookmarkButton"
 import { snackbarStore } from "features/GlobalSnackbar"
+import useUserStore from "stores/useUserStore"
+import { syncPhoto } from "api/admin/store"
+import useSWR from "swr"
 
 const Header = ({ placeId, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -16,6 +19,8 @@ const Header = ({ placeId, url, onClick }) => {
     openSnackbar: state.openSnackbar,
     setMessage: state.setMessage,
   }))
+  const user = useUserStore((state) => state.user)
+  const { mutate } = useSWR(`/stores/${placeId}`)
 
   function handleMoreClick(e) {
     setAnchorEl(e.currentTarget)
@@ -32,6 +37,10 @@ const Header = ({ placeId, url, onClick }) => {
     copy(href)
     setMessage("已複製到剪貼簿")
     openSnackbar()
+  }
+  async function syncPhotos() {
+    await syncPhoto({ placeId })
+    mutate()
   }
 
   return (
@@ -56,6 +65,9 @@ const Header = ({ placeId, url, onClick }) => {
       </Container>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={() => setOpenNotCafe(true)}>回報不適合工作</MenuItem>
+        {user.role === "admin" && (
+          <MenuItem onClick={syncPhotos}>新增照片5張</MenuItem>
+        )}
       </Menu>
       <NotCafeReport
         placeId={placeId}
