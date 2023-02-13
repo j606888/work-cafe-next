@@ -60,7 +60,7 @@ export default function MapPage() {
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
   const storeLoading = placeId && !store
 
-  if (!isReady) return <div>loading...</div>
+  if (!isReady) return <h1>Work Cafe | Taiwan</h1>
 
   const content = pickContent({ store, isLanding, storeLoading })
 

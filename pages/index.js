@@ -13,9 +13,18 @@ export default function IndexPage() {
         <title>Work Cafe | Taiwan</title>
         <link rel="icon" href="/cafe-orange.svg" type="image/svg" />
       </Head>
-      <div>
-        <p>等待轉址中...</p>
-      </div>
+      <h1>Work Cafe | Taiwan</h1>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+  const { req, res } = context
+
+  if (req.url === '/') {
+    res.writeHead(302, { Location: '/map' })
+    res.end()
+  }
+
+  return { props: {} }
 }
