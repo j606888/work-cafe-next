@@ -65,7 +65,7 @@ const Header = ({ placeId, url, onClick }) => {
       </Container>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={() => setOpenNotCafe(true)}>回報不適合工作</MenuItem>
-        {user.role === "admin" && (
+        {user?.role === "admin" && (
           <MenuItem onClick={syncPhotos}>新增照片5張</MenuItem>
         )}
       </Menu>

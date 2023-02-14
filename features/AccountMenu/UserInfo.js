@@ -49,7 +49,7 @@ const UserInfo = ({ user }) => {
         <MenuItem disabled>評論</MenuItem>
         <Divider />
         <MenuItem disabled>個人資料</MenuItem>
-        {user.role === "admin" && (
+        {user?.role === "admin" && (
           <MenuItem>
             <Link href="/admin/dashboard">後台管理</Link>
           </MenuItem>

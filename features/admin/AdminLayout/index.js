@@ -53,7 +53,7 @@ const AdminLayout = ({ children }) => {
     if (!user) {
       const currentUrl = window.location.href
       router.push(`/login?to=${currentUrl}`)
-    } else if (user.role !== "admin") {
+    } else if (user?.role !== "admin") {
       router.push("/")
     } else {
       setIsReady(true)
