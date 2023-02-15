@@ -31,9 +31,11 @@ instance.interceptors.request.use((config) => {
     config.data = snakecaseKeys(config.data, { deep: true })
   }
 
-  const accessToken = localStorage.getItem("accessToken")
-  if (accessToken) {
-    config.headers["Authorization"] = `Bearer ${accessToken}`
+  if (typeof localStorage !== 'undefined') {
+    const accessToken = localStorage.getItem("accessToken")
+    if (accessToken) {
+      config.headers["Authorization"] = `Bearer ${accessToken}`
+    }
   }
 
   return config
@@ -49,6 +51,8 @@ instance.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config
+    console.log("---error----");
+    console.log(error)
     if (error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true
 

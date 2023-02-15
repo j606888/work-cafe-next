@@ -1,5 +1,11 @@
 import { instance } from "./index"
 
-export async function hideUnqualifiedStores() {
-  await instance.post(`/admin/stores/hide-all-unqualified`)
+export function getStoreByPlaceId(placeId) {
+  return instance.get(`/stores/${placeId}`)
 }
+
+const Apis = {
+  getStoreByPlaceId,
+}
+
+export default Apis
