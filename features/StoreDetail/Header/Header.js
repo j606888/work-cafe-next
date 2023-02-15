@@ -33,8 +33,9 @@ const Header = ({ placeId, url, onClick }) => {
     window.open(url, "_blank")
   }
   function handleShare() {
-    const href = window.location.href
-    copy(href)
+    const origin = window.location.origin
+    const shareLink = `${origin}/share/${placeId}`
+    copy(shareLink)
     setMessage("已複製到剪貼簿")
     openSnackbar()
   }
