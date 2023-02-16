@@ -12,24 +12,30 @@ const MobileDrawerStyle = {
   maxHeight: "85%",
 }
 const SearchFilter = () => {
-  const storedFilters = JSON.parse(localStorage.getItem("filters"))
   const router = useRouter()
   const [open, setOpen] = useState(false)
-  const [filterCount, setFilterCount] = useState(
-    +localStorage.getItem("filterCount")
-  )
+  const [filterCount, setFilterCount] = useState(0)
   const fullScreen = useMediaQuery(devices.mobileXl)
 
-  const [openType, setOpenType] = useState(storedFilters?.openType || "NONE")
-  const [openWeek, setOpenWeek] = useState(
-    storedFilters?.openWeek || OPEN_WEEKS[0].value
-  )
-  const [openHour, setOpenHour] = useState(
-    storedFilters?.openHour || OPEN_HOURS[0].value
-  )
-  const [wakeUp, setWakeUp] = useState(storedFilters?.wakeUp || false)
-  const [hideChain, setHideChain] = useState(storedFilters?.hideChain || false)
-  const [tagIds, setTagIds] = useState(storedFilters?.tagIds || [])
+  const [openType, setOpenType] = useState("NONE")
+  const [openWeek, setOpenWeek] = useState(OPEN_WEEKS[0].value)
+  const [openHour, setOpenHour] = useState(OPEN_HOURS[0].value)
+  const [wakeUp, setWakeUp] = useState(false)
+  const [hideChain, setHideChain] = useState(false)
+  const [tagIds, setTagIds] = useState([])
+
+  useEffect(() => {
+    const _filterCount = +localStorage.getItem("filterCount")
+    setFilterCount(_filterCount)
+
+    const storedFilters = JSON.parse(localStorage.getItem("filters"))
+    if (storedFilters?.openType) setOpenType(storedFilters?.openType)
+    if (storedFilters?.openWeek) setOpenWeek(storedFilters?.openWeek)
+    if (storedFilters?.openHour) setOpenHour(storedFilters?.openHour)
+    if (storedFilters?.wakeUp) setWakeUp(storedFilters?.wakeUp)
+    if (storedFilters?.hideChain) setHideChain(storedFilters?.hideChain)
+    if (storedFilters?.tagIds) setTagIds(storedFilters?.tagIds)
+  }, [])
 
   function handleClose() {
     setOpen(false)

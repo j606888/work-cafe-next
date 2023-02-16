@@ -8,7 +8,10 @@ const useSearchStores = () => {
     searchCenter: state.searchCenter,
     keyword: state.keyword,
   }))
-  const storedFilters = JSON.parse(localStorage.getItem("filters")) || {}
+  let storedFilters = {}
+  if (typeof localStorage !== "undefined" && localStorage.getItem("filters")) {
+    storedFilters = localStorage.getItem("filters")
+  }
 
   let params = { ...storedFilters  }
 

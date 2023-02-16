@@ -18,6 +18,7 @@ import Head from "next/head"
 import GlobalSnackbar from "features/GlobalSnackbar"
 import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import MyPosition from "features/MyPosition"
+import { useEffect } from "react"
 
 const pickContent = ({ isLanding, store, storeLoading }) => {
   if (isLanding) return null
@@ -62,14 +63,21 @@ export default function MapPage() {
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
   const storeLoading = placeId && !store
 
-  if (!isReady) return <h1>Work Cafe | Taiwan</h1>
+  useEffect(() => {
+    let title = "Work Cafe | Taiwan"
+    if (store) title = `${store.name} - ${title}`
+
+    document.title = title
+  }, [])
+
+  if (!isReady) return null
 
   const content = pickContent({ store, isLanding, storeLoading })
 
   return (
     <>
       <Head>
-        <title>Work Cafe | Taiwan</title>
+        <title>Work Cafe</title>
         <link rel="icon" href="/cafe-orange.svg" type="image/svg" />
         <meta name="description" content="Work Cafe - Taiwan" />
       </Head>
