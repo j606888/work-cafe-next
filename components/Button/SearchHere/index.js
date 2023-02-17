@@ -73,11 +73,11 @@ const Container = styled.div`
 
   @media ${devices.mobileXl} {
     top: auto;
-    left: auto;
     transform: none;
-    right: 12px;
-    bottom: 18px;
-    height: 48px;
+    bottom: 20px;
+    left: auto;
+    right: 60px;
+    height: 42px;
     border-radius: 18px;
     padding: 0 18px 0 18px;
 
