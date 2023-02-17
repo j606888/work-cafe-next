@@ -4,6 +4,7 @@ import MyLocationIcon from "@mui/icons-material/MyLocation"
 import { getCurrentPosition } from "utils/helper"
 import store from "stores/store"
 import { grey02, orange100 } from "constants/color"
+import { devices } from "constants/styled-theme"
 
 const MyPosition = () => {
   const [color, setColor] = useState(grey02)
@@ -56,6 +57,13 @@ const Container = styled.div`
   right: 20px;
   bottom: 28px;
   cursor: pointer;
+
+  @media ${devices.mobileXl} {
+    width: 40px;
+    height: 40px;
+    right: 12px;
+    bottom: 20px;
+  }
 `
 
 export default MyPosition
