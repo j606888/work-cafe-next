@@ -2,7 +2,7 @@ import { useMediaQuery } from "@mui/material"
 import { devices } from "constants/styled-theme"
 import useSearchStores from "hooks/useSearchStores"
 import useUpdateURL from "hooks/useUpdateURL"
-import React from "react"
+import React, { useEffect } from "react"
 import storeStore from "stores/store"
 import StoreMarker from "./StoreMarker"
 
@@ -39,6 +39,21 @@ const StoreMarkers = ({ store }) => {
       setCenterWithPlaceIdToURL(placeId)
     }
   }
+
+  useEffect(() => {
+    if (map && stores) {
+
+      if (stores.stores.length > 1) {
+        const bounds = new window.google.maps.LatLngBounds()
+        stores.stores.forEach((store) => {
+          bounds.extend(new window.google.maps.LatLng(store.lat, store.lng))
+        })
+        map.fitBounds(bounds)
+      } else {
+        map.setZoom(17)
+      }
+    }
+  }, [stores, map])
 
   if (!stores || !map) return null
 
