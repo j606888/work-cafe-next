@@ -14,7 +14,7 @@ const useUpdateURL = () => {
   function setCenterWithPlaceIdToURL(placeId) {
     const { lat, lng, zoom } = mapCenter(map)
     let path = `/map/place/${placeId}/@${lat},${lng},${zoom}z`
-    router.push(path)
+    router.push(path, undefined, { shallow: true })
   }
 
   return { setCenterToURL, setCenterWithPlaceIdToURL }

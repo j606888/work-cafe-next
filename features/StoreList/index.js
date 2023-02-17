@@ -8,7 +8,7 @@ import useUpdateURL from "hooks/useUpdateURL"
 import { useMediaQuery } from "@mui/material"
 import { devices } from "constants/styled-theme"
 
-export default function StoreList({ expand }) {
+export default function StoreList() {
   const { setCenterWithPlaceIdToURL } = useUpdateURL()
   const fullScreen = useMediaQuery(devices.mobileXl)
   const { data: stores } = useSearchStores()
@@ -71,7 +71,7 @@ export default function StoreList({ expand }) {
   return (
     <>
       {/* <StoreCount>{stores?.totalStores} 間咖啡店</StoreCount> */}
-      <Container expand={expand}>
+      <Container>
         {stores?.stores?.map((store, i) => (
           <StoreCard
             ref={(el) => (storesRef.current[store.placeId] = el)}
