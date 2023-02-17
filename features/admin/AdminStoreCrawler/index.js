@@ -114,10 +114,4 @@ const Container = styled.div`
   z-index: -2;
 `
 
-const MyLocationContainer = styled.div`
-  position: absolute;
-  right: 0.5rem;
-  bottom: 7rem;
-`
-
 export default AdminStoreCrawler
