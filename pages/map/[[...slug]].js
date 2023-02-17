@@ -62,13 +62,15 @@ export default function MapPage() {
   const placeId = match && match[1]
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
   const storeLoading = placeId && !store
+  let title = "Work Cafe | Taiwan"
+  if (store) title = `${store.name} - ${title}`
 
   useEffect(() => {
     let title = "Work Cafe | Taiwan"
     if (store) title = `${store.name} - ${title}`
 
     document.title = title
-  }, [])
+  }, [store])
 
   if (!isReady) return null
 
@@ -77,7 +79,7 @@ export default function MapPage() {
   return (
     <>
       <Head>
-        <title>Work Cafe</title>
+        <title>{title}</title>
         <link rel="icon" href="/cafe-orange.svg" type="image/svg" />
         <meta name="description" content="Work Cafe - Taiwan" />
       </Head>
