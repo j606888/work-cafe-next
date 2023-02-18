@@ -7,6 +7,12 @@ const formControlStore = create((set) => ({
       ...state,
       newReviewOpen: open,
     })),
+  defaultDecision: null,
+  setDefaultDecision: (decision) =>
+    set((state) => ({
+      ...state,
+      defaultDecision: decision,
+    })),
 }))
 
 export default formControlStore
