@@ -54,10 +54,25 @@ const Option = ({ result, onClick, focus }) => {
 
   return (
     <Container onClick={onClick} onMouseDown={onMouseDown} focus={focus}>
-      <Inner {...result} />
+      <InnerContainer>
+        <Inner {...result} />
+      </InnerContainer>
     </Container>
   )
 }
+
+const InnerContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  overflow: hidden;
+
+  span {
+    white-space: nowrap;
+  }
+`
 
 const Container = styled.div`
   color: #222120;
@@ -71,10 +86,6 @@ const Container = styled.div`
   font-size: 14px;
   ${({ focus }) => focus && `background-color: #f2f2f2;`}
 
-  span {
-    white-space: pre;
-  }
-
   &:hover {
     background-color: #f2f2f2;
     cursor: pointer;
@@ -84,6 +95,9 @@ const Container = styled.div`
 const AddressSpan = styled.span`
   color: #afaaa3;
   font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 const StoreCount = styled.div`

@@ -13,7 +13,12 @@ const StoreMarker = ({
   onMouseOver = () => {},
   onMouseOut = () => {},
 }) => {
-  const icon = _iconColor({ isFocus, wakeUp: store.wakeUp, isBookmark })
+  const icon = _iconColor({
+    isFocus,
+    wakeUp: store.wakeUp,
+    isBookmark,
+    isBounce,
+  })
   const position = {
     lat: store.lat,
     lng: store.lng,
@@ -42,8 +47,8 @@ const StoreMarker = ({
 
 export default StoreMarker
 
-function _iconColor({ isFocus, wakeUp, isBookmark }) {
-  if (isFocus) return "/pins/target-pin.svg"
+function _iconColor({ isFocus, wakeUp, isBookmark, isBounce }) {
+  if (isFocus || isBounce) return "/pins/target-pin.svg"
   if (isBookmark) return "/pins/like-pin.svg"
   if (wakeUp) return "/pins/black-pin.svg"
   return "/pins/black-pin.svg"
