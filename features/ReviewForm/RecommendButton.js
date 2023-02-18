@@ -1,4 +1,5 @@
 import { orange20 } from "constants/color"
+import { devices } from "constants/styled-theme"
 import React from "react"
 import styled from "styled-components"
 
@@ -27,8 +28,23 @@ const Container = styled.div`
   span {
     font-weight: 700;
     font-size: 20px;
-    line-height: 24px;
     color: #222120;
+  }
+
+  @media ${devices.mobileXl} {
+    width: 132px;
+    height: 60px;
+    padding-left: 18px;
+
+    img {
+      height: 44px;
+      width: 44px;
+    }
+
+    span {
+      font-size: 16px;
+    }
+
   }
 `
 

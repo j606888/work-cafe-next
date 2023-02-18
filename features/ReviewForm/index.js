@@ -1,4 +1,4 @@
-import { Dialog, Divider, TextField, Typography } from "@mui/material"
+import { Divider, TextField, Typography, useMediaQuery } from "@mui/material"
 import CloseButton from "components/CloseButton"
 import { grey01, grey02, grey03 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
@@ -8,16 +8,8 @@ import AddIcon from "@mui/icons-material/Add"
 import useSWR from "swr"
 import ReviewApi from "api/review"
 import formControlStore from "stores/formControlStore"
-
-const TitleStyle = {
-  fontSize: "16px",
-  color: grey01,
-  fontWeight: 400,
-  margin: "0 80px",
-  textOverflow: "ellipsis",
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-}
+import Wrapper from "./Wrapper"
+import { devices } from "constants/styled-theme"
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -90,29 +82,14 @@ const ReviewForm = ({ store }) => {
   }
 
   return (
-    <Dialog
-      open={newReviewOpen}
-      onClose={handleClose}
-      PaperProps={{ style: { borderRadius: "20px", width: "596px" } }}
-    >
+    <Wrapper open={newReviewOpen} onClose={handleClose}>
       <Header>
-        <Typography variant="h2" style={TitleStyle}>
-          {store.name}
-        </Typography>
+        <H2>{store.name}</H2>
         <CloseButton onClick={handleClose} />
       </Header>
       <Divider />
       <Body>
-        <Typography
-          variant="h4"
-          style={{
-            fontWeight: 700,
-            fontSize: "20px",
-            color: grey01,
-          }}
-        >
-          推薦這裡 給想辦公的人嗎？
-        </Typography>
+        <H4>推薦這裡 給想辦公的人嗎？</H4>
         <Buttons>
           <RecommendButton
             decision={true}
@@ -145,17 +122,10 @@ const ReviewForm = ({ store }) => {
           <AddIcon />
           <span>新增照片</span>
         </NewPhotoButton>
-        <Typography
-          variant="h4"
-          style={{
-            fontWeight: 700,
-            fontSize: "20px",
-            color: grey01,
-          }}
-        >
+        <H4>
           這家店有哪些特色？
           <span style={{ fontSize: "16px" }}>（可複選）</span>
-        </Typography>
+        </H4>
         <TagsContainer>
           {tags?.map((tag) => {
             const checked = selectedTagIds.includes(tag.id)
@@ -182,7 +152,7 @@ const ReviewForm = ({ store }) => {
           發送
         </ActionButton>
       </Footer>
-    </Dialog>
+    </Wrapper>
   )
 }
 
@@ -205,12 +175,43 @@ const TagCheckbox = styled.div`
       color: #ffffff;
     `}
 `
+
+const H2 = styled.h2`
+  font-size: 16px;
+  color: ${grey01};
+  font-weight: 400;
+  margin: 0 80px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+  @media ${devices.mobileXl} {
+    margin: 0 66px;
+  }
+`
+
+const H4 = styled.h4`
+  font-weight: 700;
+  font-size: 20px;
+  color: ${grey01};
+  margin: 0;
+
+  @media ${devices.mobileXl} {
+    font-size: 16px;
+  }
+`
+
 const Header = styled.div`
   height: 68px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+
+  @media ${devices.mobileXl} {
+    flex-shrink: 0;
+    height: 61px;
+  }
 `
 
 const TagsContainer = styled.div`
@@ -224,6 +225,10 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @media ${devices.mobileXl} {
+    padding: 29px;
+  }
 `
 
 const NewPhotoButton = styled.div`
