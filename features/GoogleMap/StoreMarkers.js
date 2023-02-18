@@ -42,23 +42,20 @@ const StoreMarkers = ({ store }) => {
 
   useEffect(() => {
     if (map && stores) {
-
-      if (stores.stores.length > 1) {
-        const bounds = new window.google.maps.LatLngBounds()
-        stores.stores.forEach((store) => {
-          bounds.extend(new window.google.maps.LatLng(store.lat, store.lng))
-        })
-        map.fitBounds(bounds)
-      } else {
-        map.setZoom(17)
-      }
+      const bounds = new window.google.maps.LatLngBounds()
+      stores.stores.forEach((store) => {
+        bounds.extend(new window.google.maps.LatLng(store.lat, store.lng))
+      })
+      map.fitBounds(bounds)
+      if (stores.stores.length === 1) map.setZoom(17)
     }
   }, [stores, map])
 
   if (!stores || !map) return null
 
   let storeList = stores.stores
-  if (store && !storeList.map(store => store.placeId).includes(store.placeId)) storeList = [...storeList, store]
+  if (store && !storeList.map((store) => store.placeId).includes(store.placeId))
+    storeList = [...storeList, store]
 
   const mapLng = map.center.lng()
   const mapLat = map.center.lat()

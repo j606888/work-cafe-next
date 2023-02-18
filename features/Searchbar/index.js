@@ -24,20 +24,10 @@ const Searchbar = ({ type = "landing" }) => {
 
   const handleSearch = async (k) => {
     const { lat, lng } = mapCenter(map)
-    const { middleLat, middleLng } = await _searchResultMid({ lat, lng, k })
-
-    if (!middleLat || !middleLng) return
-
-    let path = `/map/@${middleLat},${middleLng},15z?keyword=${k}`
+    const path = `/map/@${lat},${lng},15z?keyword=${k}`
     router.push(path)
-
-    if (map) {
-      map.setZoom(15)
-      map.panTo({ lat: middleLat, lng: middleLng })
-    }
-
     setKeyword(k)
-    setSearchCenter({ lat: middleLat, lng: middleLng })
+    setSearchCenter({ lat, lng })
   }
 
   const handleCancel = () => {
@@ -128,28 +118,6 @@ const SearchBox = ({ type, children, onSearch, onCancel }) => {
         <SvgButton path="search-btn" onClick={onSearch} />
       </>
     )
-}
-
-async function _searchResultMid({ lat, lng, k }) {
-  const API_HOST = process.env.NEXT_PUBLIC_API_HOST
-  const res = await fetch(
-    `${API_HOST}/stores/location?lat=${lat}&lng=${lng}&keyword=${k}&preflight=true`
-  )
-  const data = await res.json()
-  const stores = data.stores
-
-  let latSum = 0
-  let lngSum = 0
-
-  stores.forEach((store) => {
-    latSum += store.lat
-    lngSum += store.lng
-  })
-
-  return {
-    middleLat: +(latSum / stores.length).toFixed(6),
-    middleLng: +(lngSum / stores.length).toFixed(6),
-  }
 }
 
 const Wrapper = styled.div`
