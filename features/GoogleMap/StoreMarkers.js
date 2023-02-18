@@ -41,7 +41,7 @@ const StoreMarkers = ({ store }) => {
   }
 
   useEffect(() => {
-    if (map && stores) {
+    if (map && stores && stores.stores.length > 0) {
       const bounds = new window.google.maps.LatLngBounds()
       stores.stores.forEach((store) => {
         bounds.extend(new window.google.maps.LatLng(store.lat, store.lng))
