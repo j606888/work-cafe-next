@@ -143,6 +143,7 @@ const ReviewForm = ({ store }) => {
         </TagsContainer>
       </Body>
       <Divider />
+      {/* TODO, mobile need to lock */}
       <Footer>
         <ActionButton onClick={handleClose}>取消</ActionButton>
         <ActionButton
@@ -233,6 +234,8 @@ const Body = styled.div`
 
   @media ${devices.mobileXl} {
     padding: 29px;
+    height: calc(100% - 61px - 84px);
+    overflow-y: auto;
   }
 `
 
@@ -262,6 +265,12 @@ const Footer = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
+
+  @media ${devices.mobileXl} {
+    flex-shrink: 0;
+    height: 84px;
+    padding: 0 26px;
+  }
 `
 
 const ActionButton = styled.div`

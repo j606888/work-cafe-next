@@ -5,8 +5,7 @@ import React from "react"
 const MobileDrawerStyle = {
   borderTopLeftRadius: "20px",
   borderTopRightRadius: "20px",
-  maxHeight: "85%",
-  overflow: "auto"
+  maxHeight: "85%"
 }
 
 const Wrapper = ({ children, open, onClose }) => {
