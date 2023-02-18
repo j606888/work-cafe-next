@@ -14,6 +14,7 @@ import storeStore from "stores/store"
 import { useRouter } from "next/router"
 import { mapCenter } from "utils/map-helper"
 import qs from "query-string"
+import ReviewForm from "features/ReviewForm"
 
 const StoreDetail = ({ store }) => {
   const router = useRouter()
@@ -98,6 +99,7 @@ const StoreDetail = ({ store }) => {
         )}
       </ListItem>
       <Recommend good={store.recommendYes} bad={store.recommendNo} />
+      <ReviewForm store={store} />
       <Reviews
         placeId={store.placeId}
         name={store.name}
