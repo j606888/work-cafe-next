@@ -8,11 +8,7 @@ export const LINKS = [
   {
     href: "https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/",
     text: "什麼是Work Cafe？",
-  },
-  {
-    href: "https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/shi-yong-jiao-xue/di-yi-ci-shi-yong",
-    text: "使用教學",
-  },
+  }
 ]
 
 const MainHeader = () => {
