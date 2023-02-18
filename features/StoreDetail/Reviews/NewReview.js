@@ -1,4 +1,4 @@
-import ReviewForm from "features/ReviewForm"
+import ReviewForm from "features/_ReviewForm"
 import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
