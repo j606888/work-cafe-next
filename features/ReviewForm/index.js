@@ -118,10 +118,11 @@ const ReviewForm = ({ store }) => {
             },
           }}
         />
-        <NewPhotoButton>
+        {/* <NewPhotoButton>
           <AddIcon />
           <span>新增照片</span>
-        </NewPhotoButton>
+        </NewPhotoButton> */}
+        <WhiteSpace />
         <H4>
           這家店有哪些特色？
           <span style={{ fontSize: "16px" }}>（可複選）</span>
@@ -155,6 +156,10 @@ const ReviewForm = ({ store }) => {
     </Wrapper>
   )
 }
+
+const WhiteSpace = styled.div`
+  height: 12px;
+`
 
 const TagCheckbox = styled.div`
   height: 36px;
