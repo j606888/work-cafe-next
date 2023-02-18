@@ -9,11 +9,13 @@ const useSearchStores = () => {
     keyword: state.keyword,
   }))
   let storedFilters = {}
-  if (typeof localStorage !== "undefined" && localStorage.getItem("filters")) {
-    storedFilters = localStorage.getItem("filters")
-  }
 
-  let params = { ...storedFilters  }
+  if (typeof localStorage !== "undefined" && localStorage.getItem("filters")) {
+    storedFilters = JSON.parse(localStorage.getItem("filters"))
+  }
+  // TODO, performance ISSUE, console.log(storedFilters)
+
+  let params = { ...storedFilters }
 
   if (typeof window !== "undefined") {
     const parsed = queryString.parse(window.location.search)
