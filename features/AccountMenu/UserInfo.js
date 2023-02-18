@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 const MenuStyles = {
   sx: {
-    width: '160px',
+    width: '180px',
     color: grey02,
     fontSize: '16px',
   }
@@ -45,10 +45,19 @@ const UserInfo = ({ user }) => {
         onClick={handleClose}
         PaperProps={MenuStyles}
       >
-        <MenuItem disabled>收藏清單</MenuItem>
-        <MenuItem disabled>評論</MenuItem>
+        <MenuItem disabled>
+          <span>收藏清單</span>
+          <span>(開發中)</span>
+        </MenuItem>
+        <MenuItem disabled>
+          <span>評論</span>
+          <span>(開發中)</span>
+        </MenuItem>
         <Divider />
-        <MenuItem disabled>個人資料</MenuItem>
+        <MenuItem disabled>
+          <span>個人資料</span>
+          <span>(開發中)</span>
+        </MenuItem>
         {user?.role === "admin" && (
           <MenuItem>
             <Link href="/admin/dashboard">後台管理</Link>
@@ -74,6 +83,8 @@ const MenuItem = styled.div`
   line-height: 44px;
   color: ${grey02};
   font-size: 16px;
+  display: flex;
+  justify-content: space-between;
 
   &:hover {
     background-color: #f5f5f5;
