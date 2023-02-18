@@ -24,6 +24,7 @@ const StoreDetail = ({ store }) => {
     setPlaceId: state.setPlaceId,
     setFocusPlaceId: state.setFocusPlaceId,
   }))
+
   const { searchHints } = useHintSearch()
   const { data: stores } = useSearchStores()
 
@@ -59,12 +60,12 @@ const StoreDetail = ({ store }) => {
 
   return (
     <Container>
-      <Header
-        onClick={handleClose}
+      <Header onClick={handleClose} placeId={store.placeId} url={store.url} />
+      <ImagePreview
         placeId={store.placeId}
-        url={store.url}
+        photos={store.photos}
+        name={store.name}
       />
-      <ImagePreview placeId={store.placeId} photos={store.photos} name={store.name} />
       <H3>{store.name}</H3>
       {store.tags.length > 0 && (
         <TagListContainer>
@@ -99,7 +100,9 @@ const StoreDetail = ({ store }) => {
         )}
       </ListItem>
       <Recommend good={store.recommendYes} bad={store.recommendNo} />
-      <ReviewForm store={store} />
+      <ReviewForm
+        store={store}
+      />
       <Reviews
         placeId={store.placeId}
         name={store.name}

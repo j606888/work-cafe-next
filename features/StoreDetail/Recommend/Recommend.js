@@ -4,17 +4,22 @@ import { devices } from "constants/styled-theme"
 import { grey01, grey06, orange20 } from "constants/color"
 import formControlStore from "stores/formControlStore"
 
-const Recommend = ({ good = 6, bad = 1 }) => {
-  const { setNewReviewOpen } = formControlStore((state) => ({
-    setNewReviewOpen: state.setNewReviewOpen,
-  }))
+const Recommend = ({ good = 0, bad = 0 }) => {
+  const { setNewReviewOpen, setDefaultDecision } = formControlStore(
+    (state) => ({
+      setNewReviewOpen: state.setNewReviewOpen,
+      setDefaultDecision: state.setDefaultDecision,
+    })
+  )
 
-  function handleClick() {
+  function handleClick(defaultDecision) {
+    setDefaultDecision(defaultDecision)
     setNewReviewOpen(true)
   }
+
   return (
-    <Container onClick={handleClick}>
-      <BlockContainer>
+    <Container>
+      <BlockContainer onClick={() => handleClick("yes")}>
         <img src="/thumb-up.svg" alt="thumb-up" />
         <div>
           <Number>{good}</Number>
@@ -22,7 +27,7 @@ const Recommend = ({ good = 6, bad = 1 }) => {
         </div>
       </BlockContainer>
       <Divider />
-      <BlockContainer>
+      <BlockContainer onClick={() => handleClick("no")}>
         <img src="/thumb-down.svg" alt="thumb-down" />
         <div>
           <Number>{bad}</Number>

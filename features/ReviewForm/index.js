@@ -1,11 +1,13 @@
 import { Dialog, Divider, TextField, Typography } from "@mui/material"
 import CloseButton from "components/CloseButton"
 import { grey01, grey02, grey03 } from "constants/color"
-import React from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import RecommendButton from "./RecommendButton"
 import AddIcon from "@mui/icons-material/Add"
 import useSWR from "swr"
+import ReviewApi from "api/review"
+import formControlStore from "stores/formControlStore"
 
 const TitleStyle = {
   fontSize: "16px",
@@ -31,20 +33,73 @@ const CssTextField = styled(TextField)({
   },
 })
 
-const ReviewForm = ({ store = {}, open = true, onClose }) => {
+const ReviewForm = ({ store }) => {
+  const [decision, setDecision] = useState(null)
+  const [selectedTagIds, setSelectedTagIds] = useState([])
+  const inputRef = useRef()
   const { data: tags } = useSWR("/tags")
+  const { mutate: mutateStore } = useSWR(`/stores/${store.placeId}`)
+  const { mutate: mutateStoreReviews } = useSWR(
+    `/stores/${store.placeId}/reviews`
+  )
+  const { newReviewOpen, setNewReviewOpen, defaultDecision } = formControlStore(
+    (state) => ({
+      newReviewOpen: state.newReviewOpen,
+      setNewReviewOpen: state.setNewReviewOpen,
+      defaultDecision: state.defaultDecision,
+    })
+  )
+
+  useEffect(() => {
+    setDecision(defaultDecision)
+  }, [defaultDecision])
+
+  function handleClickTag(tagId) {
+    const newTagIds = [...selectedTagIds]
+    const index = selectedTagIds.indexOf(tagId)
+    if (index === -1) {
+      newTagIds.push(tagId)
+    } else {
+      newTagIds.splice(index, 1)
+    }
+
+    setSelectedTagIds(newTagIds)
+  }
+
+  function handleClose() {
+    setNewReviewOpen(false)
+  }
+
+  async function handleSubmit() {
+    if (!decision) return
+
+    const data = {
+      recommend: decision,
+      tagIds: selectedTagIds,
+      description: inputRef.current.value,
+    }
+
+    // Id are used for upload image
+    const { id } = await ReviewApi.createReview({
+      placeId: store.placeId,
+      data,
+    })
+    await mutateStore()
+    await mutateStoreReviews()
+    handleClose()
+  }
 
   return (
     <Dialog
-      open={open}
-      onClose={onClose}
+      open={newReviewOpen}
+      onClose={handleClose}
       PaperProps={{ style: { borderRadius: "20px", width: "596px" } }}
     >
       <Header>
         <Typography variant="h2" style={TitleStyle}>
           {store.name}
         </Typography>
-        <CloseButton />
+        <CloseButton onClick={handleClose} />
       </Header>
       <Divider />
       <Body>
@@ -59,11 +114,20 @@ const ReviewForm = ({ store = {}, open = true, onClose }) => {
           推薦這裡 給想辦公的人嗎？
         </Typography>
         <Buttons>
-          <RecommendButton decision={true} focus />
-          <RecommendButton decision={false} />
+          <RecommendButton
+            decision={true}
+            onClick={() => setDecision("yes")}
+            checked={decision === "yes"}
+          />
+          <RecommendButton
+            decision={false}
+            onClick={() => setDecision("no")}
+            checked={decision === "no"}
+          />
         </Buttons>
         <CssTextField
           fullWidth
+          inputRef={inputRef}
           rows={3}
           multiline
           placeholder="分享更多你在這家店的體驗"
@@ -77,7 +141,6 @@ const ReviewForm = ({ store = {}, open = true, onClose }) => {
             },
           }}
         />
-        {/* TODO, margin-bottom for button is not good, make is block */}
         <NewPhotoButton>
           <AddIcon />
           <span>新增照片</span>
@@ -94,15 +157,30 @@ const ReviewForm = ({ store = {}, open = true, onClose }) => {
           <span style={{ fontSize: "16px" }}>（可複選）</span>
         </Typography>
         <TagsContainer>
-          {tags?.map((tag) => (
-            <TagCheckbox key={tag.id}>{tag.name}</TagCheckbox>
-          ))}
+          {tags?.map((tag) => {
+            const checked = selectedTagIds.includes(tag.id)
+            return (
+              <TagCheckbox
+                key={tag.id}
+                onClick={() => handleClickTag(tag.id)}
+                checked={checked}
+              >
+                {tag.name}
+              </TagCheckbox>
+            )
+          })}
         </TagsContainer>
       </Body>
       <Divider />
       <Footer>
-        <ActionButton>取消</ActionButton>
-        <ActionButton contained>發送</ActionButton>
+        <ActionButton onClick={handleClose}>取消</ActionButton>
+        <ActionButton
+          contained
+          disabled={decision === null}
+          onClick={handleSubmit}
+        >
+          發送
+        </ActionButton>
       </Footer>
     </Dialog>
   )
@@ -189,9 +267,18 @@ const ActionButton = styled.div`
   ${({ contained }) =>
     contained &&
     css`
+      background-color: ${grey01};
+      border: 1px solid ${grey03};
+      color: #ffffff;
+    `}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
       background-color: ${grey03};
       border: 1px solid ${grey03};
       color: #ffffff;
+      cursor: not-allowed;
     `}
 `
 export default ReviewForm

@@ -2,12 +2,12 @@ import { orange20 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
 
-const RecommendButton = ({ decision = true, onClick, focus=false }) => {
+const RecommendButton = ({ decision = true, onClick, checked=false }) => {
   const src = decision ? "/thumb-up.svg" : "/thumb-down.svg"
   const text = decision ? "推薦" : "不推薦"
 
   return (
-    <Container onClick={onClick} focus={focus}>
+    <Container onClick={onClick} checked={checked}>
       <img src={src} alt={src} />
       <span>{text}</span>
     </Container>
@@ -17,7 +17,7 @@ const RecommendButton = ({ decision = true, onClick, focus=false }) => {
 const Container = styled.div`
   width: 160px;
   height: 76px;
-  background-color: ${({ focus }) => (focus ? orange20 : "#f8f8f8")};
+  background-color: ${({ checked }) => (checked ? orange20 : "#f8f8f8")};
   border-radius: 20px;
   display: flex;
   padding-left: 21px;

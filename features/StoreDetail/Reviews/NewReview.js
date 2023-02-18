@@ -43,9 +43,9 @@ const FakeTextBox = styled.div`
 `
 
 const NewReview = ({ placeId, name, onSave }) => {
-  const { newReviewOpen, setNewReviewOpen } = formControlStore((state) => ({
-    newReviewOpen: state.newReviewOpen,
+  const { setNewReviewOpen, setDefaultDecision } = formControlStore((state) => ({
     setNewReviewOpen: state.setNewReviewOpen,
+    setDefaultDecision: state.setDefaultDecision,
   }))
   const user = useUserStore((state) => state.user)
   const { data: myReview, mutate } = useSWR(
@@ -70,6 +70,11 @@ const NewReview = ({ placeId, name, onSave }) => {
     setNewReviewOpen(true)
   }
 
+  function handleOpen() {
+    setDefaultDecision(null)
+    setNewReviewOpen(true)
+  }
+
   return (
     <>
       <Container>
@@ -86,13 +91,13 @@ const NewReview = ({ placeId, name, onSave }) => {
         ) : (
           <>
             <img src="/guest.svg" alt="guest" />
-            <FakeTextBox onClick={() => setNewReviewOpen(true)}>
+            <FakeTextBox onClick={handleOpen}>
               留下我的評論（這裡適合辦公嗎？）
             </FakeTextBox>
           </>
         )}
       </Container>
-      <ReviewForm
+      {/* <ReviewForm
         key={myReview?.id || "review-form"}
         myReview={myReview}
         placeId={placeId}
@@ -100,7 +105,7 @@ const NewReview = ({ placeId, name, onSave }) => {
         name={name}
         onClose={() => setNewReviewOpen(false)}
         onSave={handleSave}
-      />
+      /> */}
     </>
   )
 }
