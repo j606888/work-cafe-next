@@ -1,4 +1,6 @@
-import { grey01, grey04 } from "constants/color"
+import { Divider } from "@mui/material"
+import CloseButton from "components/CloseButton"
+import { grey01 } from "constants/color"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
 import { devices } from "constants/styled-theme"
 import React, { useState } from "react"
@@ -55,12 +57,13 @@ const FilterForm = ({
   }
 
   return (
-    <Container>
-      <Title>
+    <>
+      <Header>
         <span>篩選條件</span>
-        <CloseButton src="/cancel.svg" alt="cancel" onClick={onClose} />
-      </Title>
-      <Content>
+        <CloseButton onClick={onClose} />
+      </Header>
+      <Divider />
+      <Body>
         <OpenTimeGroup
           onChange={handleChange}
           openType={openType}
@@ -69,27 +72,17 @@ const FilterForm = ({
         />
         <TagsGroup tagIds={tagIds} onChange={handleChange} />
         <MapDisplayGroup wakeUp={wakeUp} hideChain={hideChain} onChange={handleChange} />
-      </Content>
-      <FilterActions>
+      </Body>
+      <Divider />
+      <Footer>
         <ClearText onClick={handleClear}>清除全部</ClearText>
         <ApplyButton onClick={handleApply}>套用搜尋</ApplyButton>
-      </FilterActions>
-    </Container>
+      </Footer>
+    </>
   )
 }
 
-const Container = styled.div`
-  width: 596px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-
-  @media ${devices.mobileXl} {
-    width: 100%;
-  }
-`
-
-const Title = styled.div`
+const Header = styled.div`
   height: 70px;
   text-align: center;
   font-weight: 400;
@@ -98,13 +91,7 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   color: ${grey01};
-  position: absolute;
-  border: 1px solid ${grey04};
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #ffffff;
-  z-index: 10;
+  position: relative;
 
   span {
     margin: 0 auto;
@@ -112,29 +99,16 @@ const Title = styled.div`
 
   @media ${devices.mobileXl} {
     height: 62px;
+    flex-shrink: 0;
   }
 `
 
-const CloseButton = styled.img`
-  position: absolute;
-  top: 24px;
-  right: 28px;
-  cursor: pointer;
-
-  @media ${devices.mobileXl} {
-    top: 16px;
-    right: 20px;
-  }
-`
-
-const Content = styled.div`
+const Body = styled.div`
   min-height: 300px;
   max-height: 650px;
-  padding-top: calc(39px + 70px);
-  padding-bottom: calc(39px + 95px);
-  padding-left: 39px;
-  padding-right: 39px;
-  overflow-y: scroll;
+  padding: 39px;
+  max-height: calc(100% - 70px - 95px);
+  overflow-y: auto;
 
   h3 {
     font-weight: 700;
@@ -144,19 +118,11 @@ const Content = styled.div`
     align-items: center;
     color: ${grey01};
     margin: 0;
-    margin-bottom: 16px;
   }
 
   @media ${devices.mobileXl} {
-    min-height: auto;
-    max-height: calc(100% - 62px - 80px);
-    overflow-y: scroll;
     padding: 26px 29px;
-
-    padding-top: calc(26px + 62px);
-    padding-bottom: calc(26px + 80px);
-    padding-left: 29px;
-    padding-right: 29px;
+    max-height: calc(100% - 62px - 80px);
 
     h3 {
       font-size: 20px;
@@ -166,23 +132,17 @@ const Content = styled.div`
   }
 `
 
-const FilterActions = styled.div`
+const Footer = styled.div`
   height: 95px;
   padding: 0 32px 0 41px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid ${grey04};
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
   background-color: #ffffff;
-  z-index: 10;
 
   @media ${devices.mobileXl} {
     height: 80px;
-    position: fixed;
+    flex-shrink: 0;
   }
 `
 
