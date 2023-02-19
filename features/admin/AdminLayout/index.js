@@ -8,6 +8,7 @@ import {
   Person as PersonIcon,
   BugReport as BugReportIcon,
   Hub as HubIcon,
+  Sell as SellIcon,
 } from "@mui/icons-material"
 import AppBar from "./AppBar"
 import MiniDrawer from "components/MiniDrawer"
@@ -40,6 +41,11 @@ const lists = [
     text: "Users",
     url: "/admin/users",
     icon: <PersonIcon />,
+  },
+  {
+    text: "Users",
+    url: "/admin/tags",
+    icon: <SellIcon />,
   },
 ]
 
