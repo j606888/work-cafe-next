@@ -1,4 +1,4 @@
-import { useMediaQuery } from "@mui/material"
+import { Tooltip, useMediaQuery } from "@mui/material"
 import { devices } from "constants/styled-theme"
 import React, { useState } from "react"
 import styled from "styled-components"
@@ -40,7 +40,16 @@ const AccountMenu = () => {
 
   if (user)
     return (
-      <Container>
+      <Container gap="24px">
+        <a
+          href="https://j606888.gitbook.io/work-cafe-jiao-xue-wen-jian/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <Tooltip title="什麼是 Work Cafe?">
+           <img src="/help.svg" alt="help" />
+          </Tooltip>
+        </a>
         <UserInfo user={user} />
       </Container>
     )
