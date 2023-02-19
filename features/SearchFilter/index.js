@@ -1,21 +1,14 @@
-import { Dialog, Drawer, useMediaQuery } from "@mui/material"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
-import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import ButtonWithCount from "./ButtonWithCount"
 import FilterForm from "./FilterForm"
+import Wrapper from "./Ｗrapper"
 
-const MobileDrawerStyle = {
-  borderTopLeftRadius: "20px",
-  borderTopRightRadius: "20px",
-  maxHeight: "85%",
-}
 const SearchFilter = () => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [filterCount, setFilterCount] = useState(0)
-  const fullScreen = useMediaQuery(devices.mobileXl)
 
   const [openType, setOpenType] = useState("NONE")
   const [openWeek, setOpenWeek] = useState(OPEN_WEEKS[0].value)
@@ -86,42 +79,18 @@ const SearchFilter = () => {
   return (
     <>
       <ButtonWithCount onClick={() => setOpen(true)} count={filterCount} />
-      {fullScreen ? (
-        <Drawer
-          open={open}
+      <Wrapper open={open} onClose={handleClose}>
+        <FilterForm
           onClose={handleClose}
-          anchor="bottom"
-          PaperProps={fullScreen && { sx: MobileDrawerStyle }}
-        >
-          <FilterForm
-            onClose={handleClose}
-            onApply={handleApply}
-            _openType={openType}
-            _openWeek={openWeek}
-            _openHour={openHour}
-            _wakeUp={wakeUp}
-            _hideChain={hideChain}
-            _tagIds={tagIds}
-          />
-        </Drawer>
-      ) : (
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          PaperProps={{ sx: { borderRadius: "20px" } }}
-        >
-          <FilterForm
-            onClose={handleClose}
-            onApply={handleApply}
-            _openType={openType}
-            _openWeek={openWeek}
-            _openHour={openHour}
-            _wakeUp={wakeUp}
-            _hideChain={hideChain}
-            _tagIds={tagIds}
-          />
-        </Dialog>
-      )}
+          onApply={handleApply}
+          _openType={openType}
+          _openWeek={openWeek}
+          _openHour={openHour}
+          _wakeUp={wakeUp}
+          _hideChain={hideChain}
+          _tagIds={tagIds}
+        />
+      </Wrapper>
     </>
   )
 }

@@ -2,6 +2,7 @@ import { grey01, grey02, grey04 } from "constants/color"
 import { devices } from "constants/styled-theme"
 import AccountMenu from "features/AccountMenu"
 import React from "react"
+import useUserStore from "stores/useUserStore"
 import styled from "styled-components"
 
 export const LINKS = [
@@ -12,10 +13,12 @@ export const LINKS = [
 ]
 
 const MainHeader = () => {
+  const user = useUserStore((state) => state.user)
+
   return (
     <Container>
       <HomeLink href="/map">Work Cafe | Taiwan</HomeLink>
-      {LINKS.map(({ href, text }, index) => (
+      {!user && LINKS.map(({ href, text }, index) => (
         <Link href={href} key={index} target="_blank" rel="noreferrer">
           {text}
         </Link>
