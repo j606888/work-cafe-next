@@ -55,6 +55,7 @@ const WorkCafeReviews = ({
   userAvatarUrl,
   createdAt,
   description,
+  visitDay,
   photos = [],
   editable,
   recommend,
@@ -67,12 +68,12 @@ const WorkCafeReviews = ({
       <UserInfo>
         {userName ? (
           <Avatar alt={userName} src={userAvatarUrl} />
-          ) : (
+        ) : (
           <img src="/guest.svg" alt="guest" />
         )}
         <Content>
           <h6>{userName}</h6>
-          <span>{_dateString(createdAt)}</span>
+          <span>{_dateString(createdAt, visitDay)}</span>
           <TagDiv>
             <img
               src={ICON_MAP[recommend]}
@@ -91,13 +92,12 @@ const WorkCafeReviews = ({
   )
 }
 
-function _dateString(timestamp) {
+function _dateString(timestamp, visitDay) {
   const time = new Date(timestamp * 1000)
   const year = time.getFullYear()
   const month = time.getMonth() + 1
   const date = time.getDate()
-  const day = time.getDay()
-  const isWeekend = [0, 6].includes(day) ? "週末造訪" : "平日造訪"
+  const isWeekend = visitDay === "weekday" ? "週末造訪" : "平日造訪"
 
   return `${year}年${month}月${date}日・${isWeekend}`
 }

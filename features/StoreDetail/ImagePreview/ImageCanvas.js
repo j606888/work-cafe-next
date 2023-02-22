@@ -6,8 +6,12 @@ import SvgButton from "components/SvgButton"
 import copy from "copy-to-clipboard"
 import BookmarkButton from "../Header/BookmarkButton"
 import { snackbarStore } from "features/GlobalSnackbar"
+import ActionButton from "components/Button/ActionButton"
+import ComingSoonForm from "components/ComingSoonForm"
+import { useState } from "react"
 
 const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
+  const [openComing, setOpenComing] = useState(false)
   const fullScreen = useMediaQuery(devices.mobileXl)
   const { openSnackbar, setMessage } = snackbarStore((state) => ({
     openSnackbar: state.openSnackbar,
@@ -21,43 +25,57 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
     setMessage("已複製到剪貼簿")
     openSnackbar()
   }
+  function handleComingSoon() {
+    setOpenComing(true)
+  }
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      fullWidth
-      maxWidth="lg"
-      fullScreen={fullScreen}
-      PaperProps={!fullScreen && { sx: { borderRadius: "20px", maxHeight: "85%" } }}
-    >
-      <Header>
-        <h3>{name}</h3>
-        <MobileBackButton path="arrow-left" onClick={onClose} />
-        <ButtonGroup>
-          <BookmarkButton placeId={placeId} />
-          <Button onClick={handleShare}>
-            <img src="/share.svg" alt="share" />
-            <span>分享</span>
-          </Button>
-          <SvgButton path="cancel" onClick={onClose} />
-        </ButtonGroup>
-      </Header>
-      <DialogContainer>
-        <ImageList
-          variant="masonry"
-          cols={fullScreen ? 1 : 2}
-          gap={8}
-          sx={{ marginTop: 0 }}
-        >
-          {photos.map((item) => (
-            <ImageListItem key={item}>
-              <img src={item} alt={item} loading="lazy" />
-            </ImageListItem>
-          ))}
-        </ImageList>
-      </DialogContainer>
-    </Dialog>
+    <>
+      <Dialog
+        onClose={onClose}
+        open={open}
+        fullWidth
+        maxWidth="lg"
+        fullScreen={fullScreen}
+        PaperProps={
+          !fullScreen && { sx: { borderRadius: "20px", maxHeight: "85%" } }
+        }
+      >
+        <Header>
+          <h3>{name}</h3>
+          <MobileBackButton path="arrow-left" onClick={onClose} />
+          <ButtonGroup>
+            {/* <BookmarkButton placeId={placeId} /> */}
+            <ActionButton svg="like" onClick={handleComingSoon}>
+              收藏
+            </ActionButton>
+            <ActionButton svg="fire" onClick={handleComingSoon}>
+              想去
+            </ActionButton>
+            <Button onClick={handleShare}>
+              <img src="/share.svg" alt="share" />
+              <span>分享</span>
+            </Button>
+            <SvgButton path="cancel" onClick={onClose} />
+          </ButtonGroup>
+        </Header>
+        <DialogContainer>
+          <ImageList
+            variant="masonry"
+            cols={fullScreen ? 1 : 2}
+            gap={8}
+            sx={{ marginTop: 0 }}
+          >
+            {photos.map((item) => (
+              <ImageListItem key={item}>
+                <img src={item} alt={item} loading="lazy" />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </DialogContainer>
+      </Dialog>
+      <ComingSoonForm open={openComing} onClose={() => setOpenComing(false)} />
+    </>
   )
 }
 

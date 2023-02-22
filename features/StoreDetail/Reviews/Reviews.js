@@ -8,8 +8,10 @@ import useSWR from "swr"
 import Skeleton from "components/Skeleton"
 import GoogleReviewCard from "./GoogleReviewCard"
 import useUserStore from "stores/useUserStore"
+import styled from "styled-components"
+import { grey01, grey04 } from "constants/color"
 
-const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
+const Reviews = ({ placeId, name, url, onSave, googleReviews=[] }) => {
   const [active, setActive] = useState("workCafe")
   const user = useUserStore(state => state.user)
   const { data: reviews, mutate: reviewsMutate } = useSWR(
@@ -37,13 +39,11 @@ const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
   return (
     <Container>
       <Chooser onChange={handleActiveChange} />
-      {active === 'workCafe' && (
+      {active === "workCafe" && (
         <>
           <NewReview placeId={placeId} name={name} onSave={handleSave} />
-          {reviews.reviews.map(review => (
-            <WorkCafeReviews key={review.id}
-              {...review}
-            />
+          {reviews.reviews.map((review) => (
+            <WorkCafeReviews key={review.id} {...review} />
           ))}
           {reviews.reviews.length === 0 && !myReview && (
             <LeaveFirstReview>
@@ -53,17 +53,33 @@ const Reviews = ({ placeId, name, onSave, googleReviews=[] }) => {
           )}
         </>
       )}
-      {
-        active === 'googleMap' && (
-          <>
-            {googleReviews.map(review => (
-              <GoogleReviewCard key={review.time} {...review }/>
-            ))}
-          </>
-        )
-      }
+      {active === "googleMap" && (
+        <>
+          {googleReviews.map((review) => (
+            <GoogleReviewCard key={review.time} {...review} />
+          ))}
+          <LinkContainer>
+            <GoogleReviewLink href={url} target="_blank">看更多Google Map評論</GoogleReviewLink>
+          </LinkContainer>
+        </>
+      )}
     </Container>
   )
 }
 
+const LinkContainer = styled.div`
+  text-align: center;
+  margin-bottom: 64px;
+`
+
+const GoogleReviewLink = styled.a`
+  margin: 0 auto;
+  display: inline-block;
+  border: 1px solid ${grey04};
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
+  border-radius: 12px;
+  padding: 11px 21px;
+  color: ${grey01};
+  text-decoration: none;
+`
 export default Reviews
