@@ -10,6 +10,7 @@ import { snackbarStore } from "features/GlobalSnackbar"
 import useUserStore from "stores/useUserStore"
 import { syncPhoto } from "api/admin/store"
 import useSWR from "swr"
+import ComingSoonForm from "components/ComingSoonForm"
 
 const Header = ({ placeId, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -19,6 +20,7 @@ const Header = ({ placeId, url, onClick }) => {
     openSnackbar: state.openSnackbar,
     setMessage: state.setMessage,
   }))
+  const [openComing, setOpenComing] = useState(false)
   const user = useUserStore((state) => state.user)
   const { mutate } = useSWR(`/stores/${placeId}`)
 
@@ -39,6 +41,9 @@ const Header = ({ placeId, url, onClick }) => {
     setMessage("已複製到剪貼簿")
     openSnackbar()
   }
+  function handleComingSoon() {
+    setOpenComing(true)
+  }
   async function syncPhotos() {
     await syncPhoto({ placeId })
     mutate()
@@ -55,10 +60,16 @@ const Header = ({ placeId, url, onClick }) => {
           <ActionButton svg="navigate" onClick={handleNavigate}>
             導航
           </ActionButton>
-          <BookmarkButton placeId={placeId} />
-          <ActionButton svg="share" onClick={handleShare}>
-            分享
+          {/* <BookmarkButton placeId={placeId} /> */}
+          <ActionButton svg="like" onClick={handleComingSoon}>
+            收藏
           </ActionButton>
+          <ActionButton svg="fire" onClick={handleComingSoon}>
+            想去
+          </ActionButton>
+          {/* <ActionButton svg="share" onClick={handleComingSoon}>
+            分享
+          </ActionButton> */}
           <MoreButton onClick={handleMoreClick}>
             <img src="/more.svg" alt="more" />
           </MoreButton>
@@ -75,6 +86,7 @@ const Header = ({ placeId, url, onClick }) => {
         open={openNotCafe}
         onClose={handleClose}
       />
+      <ComingSoonForm open={openComing} onClose={() => setOpenComing(false)} />
     </>
   )
 }
