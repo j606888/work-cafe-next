@@ -22,7 +22,7 @@ const TagsGroup = ({ tagIds, onChange = () => {} }) => {
 
   return (
     <Container>
-      <h3>標籤</h3>
+      <H3>店家特色</H3>
       <TagList>
         {data.map(({ id, name, _primary }) => {
           const checked = tagIds.includes(id)
@@ -39,6 +39,10 @@ const TagsGroup = ({ tagIds, onChange = () => {} }) => {
 
 const Container = styled.div`
   margin-bottom: 44px;
+`
+
+const H3 = styled.h3`
+  margin-bottom: 12px !important;
 `
 
 const TagList = styled.div`

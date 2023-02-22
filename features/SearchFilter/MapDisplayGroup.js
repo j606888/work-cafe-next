@@ -13,7 +13,7 @@ const MapDisplayGroup = ({ wakeUp, hideChain, onChange = () => {} }) => {
 
   return (
     <Container>
-      <h3>地圖顯示</h3>
+      <h3>其他</h3>
       <FormControlLabel
         control={
           <Checkbox

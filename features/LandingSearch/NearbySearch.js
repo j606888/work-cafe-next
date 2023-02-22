@@ -20,6 +20,8 @@ const NearbySearch = () => {
   const router = useRouter()
 
   const handleClick = async () => {
+    if (loading) return
+
     setLoading(true)
     try {
       let location
@@ -60,8 +62,11 @@ const NearbySearch = () => {
         <p>須許可此網頁存取你的GPS定位</p>
       </Content>
       <SearchBtn onClick={handleClick}>
-        {loading && <CircularProgress size={18} color="success" />}
-        {loading ? "定位中" : "搜尋附近"}
+        {loading ? (
+          <CircularProgress size={28} sx={{ color: "#FFFFFF" }} />
+        ) : (
+          "搜尋附近"
+        )}
       </SearchBtn>
     </Container>
   )

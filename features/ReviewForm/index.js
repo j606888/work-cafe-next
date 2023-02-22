@@ -1,4 +1,10 @@
-import { Divider, TextField, Typography, useMediaQuery } from "@mui/material"
+import {
+  CircularProgress,
+  Divider,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from "@mui/material"
 import CloseButton from "components/CloseButton"
 import { grey01, grey02, grey03 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
@@ -34,6 +40,7 @@ const ReviewForm = ({ store }) => {
   const { mutate: mutateStoreReviews } = useSWR(
     `/stores/${store.placeId}/reviews`
   )
+  const [isLoading, setIsLoading] = useState(false)
   const { newReviewOpen, setNewReviewOpen, defaultDecision } = formControlStore(
     (state) => ({
       newReviewOpen: state.newReviewOpen,
@@ -65,6 +72,8 @@ const ReviewForm = ({ store }) => {
   async function handleSubmit() {
     if (!decision) return
 
+    setIsLoading(true)
+
     const data = {
       recommend: decision,
       tagIds: selectedTagIds,
@@ -79,6 +88,7 @@ const ReviewForm = ({ store }) => {
     await mutateStore()
     await mutateStoreReviews()
     handleClose()
+    setIsLoading(false)
   }
 
   return (
@@ -143,7 +153,6 @@ const ReviewForm = ({ store }) => {
         </TagsContainer>
       </Body>
       <Divider />
-      {/* TODO, mobile need to lock */}
       <Footer>
         <ActionButton onClick={handleClose}>取消</ActionButton>
         <ActionButton
@@ -151,7 +160,11 @@ const ReviewForm = ({ store }) => {
           disabled={decision === null}
           onClick={handleSubmit}
         >
-          發送
+          {isLoading ? (
+            <CircularProgress size={16} sx={{ color: "#FFFFFF" }} />
+          ) : (
+            "發送 "
+          )}
         </ActionButton>
       </Footer>
     </Wrapper>
