@@ -1,12 +1,15 @@
 import {
   CircularProgress,
   Divider,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
   TextField,
   Typography,
   useMediaQuery,
 } from "@mui/material"
 import CloseButton from "components/CloseButton"
-import { grey01, grey02, grey03 } from "constants/color"
+import { grey01, grey02, grey03, orange100 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import RecommendButton from "./RecommendButton"
@@ -31,9 +34,27 @@ const CssTextField = styled(TextField)({
   },
 })
 
+const RadioColor = {
+  color: orange100,
+  "&.Mui-checked": {
+    color: orange100,
+  },
+}
+
+function _getDefaultVisitDay() {
+  const today = new Date()
+  const dayOfWeek = today.getDay()
+  if ([0, 6].includes(dayOfWeek)) {
+    return "weekend"
+  } else {
+    return "weekday"
+  }
+}
+
 const ReviewForm = ({ store }) => {
   const [decision, setDecision] = useState(null)
   const [selectedTagIds, setSelectedTagIds] = useState([])
+  const [visitDay, setVisitDay] = useState(_getDefaultVisitDay())
   const inputRef = useRef()
   const { data: tags } = useSWR("/tags")
   const { mutate: mutateStore } = useSWR(`/stores/${store.placeId}`)
@@ -78,6 +99,7 @@ const ReviewForm = ({ store }) => {
       recommend: decision,
       tagIds: selectedTagIds,
       description: inputRef.current.value,
+      visitDay: visitDay
     }
 
     // Id are used for upload image
@@ -133,6 +155,22 @@ const ReviewForm = ({ store }) => {
           <span>新增照片</span>
         </NewPhotoButton> */}
         <WhiteSpace />
+        <H4>最近一次造訪這間店的時間？</H4>
+        <RadioGroup
+          value={visitDay}
+          onChange={(e) => setVisitDay(e.target.value)}
+        >
+          <FormControlLabel
+            value="weekday"
+            control={<Radio sx={RadioColor} />}
+            label="平日"
+          />
+          <FormControlLabel
+            value="weekend"
+            control={<Radio sx={RadioColor} />}
+            label="週末/國定假日"
+          />
+        </RadioGroup>
         <H4>
           這家店有哪些特色？
           <span style={{ fontSize: "16px" }}>（可複選）</span>
