@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Menu, MenuItem, Snackbar } from "@mui/material"
+import React, { useRef, useState } from "react"
+import { Menu, MenuItem } from "@mui/material"
 import copy from "copy-to-clipboard"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import styled, { css } from "styled-components"
@@ -40,6 +40,7 @@ const Header = ({ placeId, url, onClick }) => {
     copy(shareLink)
     setMessage("已複製到剪貼簿")
     openSnackbar()
+    setAnchorEl(null)
   }
   function handleComingSoon() {
     setOpenComing(true)
@@ -67,16 +68,25 @@ const Header = ({ placeId, url, onClick }) => {
           <ActionButton svg="fire" onClick={handleComingSoon}>
             想去
           </ActionButton>
-          {/* <ActionButton svg="share" onClick={handleComingSoon}>
-            分享
-          </ActionButton> */}
           <MoreButton onClick={handleMoreClick}>
             <img src="/more.svg" alt="more" />
           </MoreButton>
         </ButtonGroup>
       </Container>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={() => setOpenNotCafe(true)}>回報不適合工作</MenuItem>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{ sx: { borderRadius: "12px" } }}
+      >
+        <MenuItem onClick={handleShare}>
+          <img src="/share.svg" alt="share" />
+          分享
+        </MenuItem>
+        <MenuItem onClick={() => setOpenNotCafe(true)}>
+          <img src="/block.svg" alt="block" />
+          回報不是咖啡店
+        </MenuItem>
         {user?.role === "admin" && (
           <MenuItem onClick={syncPhotos}>新增照片5張</MenuItem>
         )}

@@ -108,6 +108,7 @@ const StoreDetail = ({ store }) => {
         name={store.name}
         onSave={handleReviewSave}
         googleReviews={store.reviews}
+        url={store.url}
       />
     </Container>
   )
