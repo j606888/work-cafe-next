@@ -58,6 +58,7 @@ const ReviewForm = ({ store }) => {
   const inputRef = useRef()
   const { data: tags } = useSWR("/tags")
   const { mutate: mutateStore } = useSWR(`/stores/${store.placeId}`)
+  const { mutate: mutateMyReview } = useSWR(`/stores/${store.placeId}/reviews/me`)
   const { mutate: mutateStoreReviews } = useSWR(
     `/stores/${store.placeId}/reviews`
   )
@@ -109,6 +110,7 @@ const ReviewForm = ({ store }) => {
     })
     await mutateStore()
     await mutateStoreReviews()
+    await mutateMyReview()
     handleClose()
     setIsLoading(false)
   }
@@ -264,9 +266,9 @@ const Header = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
+  flex-shrink: 0;
 
   @media ${devices.mobileXl} {
-    flex-shrink: 0;
     height: 61px;
   }
 `
@@ -282,11 +284,12 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: auto;
+  height: calc(100% - 68px - 94px);
 
   @media ${devices.mobileXl} {
     padding: 29px;
     height: calc(100% - 61px - 84px);
-    overflow-y: auto;
   }
 `
 
@@ -316,9 +319,9 @@ const Footer = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
+  flex-shrink: 0;
 
   @media ${devices.mobileXl} {
-    flex-shrink: 0;
     height: 84px;
     padding: 0 26px;
   }
