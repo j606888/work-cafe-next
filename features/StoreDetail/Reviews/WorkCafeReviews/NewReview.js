@@ -6,6 +6,7 @@ import WorkCafeReview from "./ReviewCard"
 import ReviewApi from "api/review"
 import useUserStore from "stores/useUserStore"
 import formControlStore from "stores/formControlStore"
+import { Divider } from "@mui/material"
 
 const MyReview = ({ placeId, onSave }) => {
   const { setNewReviewOpen, setDefaultDecision } = formControlStore((state) => ({
@@ -52,6 +53,7 @@ const MyReview = ({ placeId, onSave }) => {
               onDelete={handleDelete}
               onEdit={handleEdit}
             />
+            <Divider />
           </div>
         ) : (
           <>
