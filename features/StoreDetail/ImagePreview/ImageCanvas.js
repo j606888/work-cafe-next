@@ -9,6 +9,7 @@ import { snackbarStore } from "features/GlobalSnackbar"
 import ActionButton from "components/Button/ActionButton"
 import ComingSoonForm from "components/ComingSoonForm"
 import { useState } from "react"
+import Tooltip from "components/Tooltip"
 
 const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
   const [openComing, setOpenComing] = useState(false)
@@ -38,7 +39,7 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
         maxWidth="lg"
         fullScreen={fullScreen}
         PaperProps={
-          !fullScreen && { sx: { borderRadius: "20px", maxHeight: "85%" } }
+          fullScreen ? {} : { sx: { borderRadius: "20px", maxHeight: "85%" } }
         }
       >
         <Header>
@@ -46,12 +47,16 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
           <MobileBackButton path="arrow-left" onClick={onClose} />
           <ButtonGroup>
             {/* <BookmarkButton placeId={placeId} /> */}
-            <ActionButton svg="like" onClick={handleComingSoon}>
-              收藏
-            </ActionButton>
-            <ActionButton svg="fire" onClick={handleComingSoon}>
-              想去
-            </ActionButton>
+            <Tooltip title="功能開發中" placement="bottom-end">
+              <ActionButton svg="like" onClick={handleComingSoon}>
+                收藏
+              </ActionButton>
+            </Tooltip>
+            <Tooltip title="功能開發中" placement="bottom-end">
+              <ActionButton svg="fire" onClick={handleComingSoon}>
+                想去
+              </ActionButton>
+            </Tooltip>
             <Button onClick={handleShare}>
               <img src="/share.svg" alt="share" />
               <span>分享</span>

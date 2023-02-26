@@ -1,24 +1,27 @@
 import {
+  Box,
   CircularProgress,
   Divider,
   FormControlLabel,
   Radio,
   RadioGroup,
   TextField,
-  Typography,
-  useMediaQuery,
 } from "@mui/material"
 import CloseButton from "components/CloseButton"
+import StorePhotoApi from "api/store-photo"
 import { grey01, grey02, grey03, orange100 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import RecommendButton from "./RecommendButton"
-import AddIcon from "@mui/icons-material/Add"
 import useSWR from "swr"
 import ReviewApi from "api/review"
 import formControlStore from "stores/formControlStore"
 import Wrapper from "./Wrapper"
 import { devices } from "constants/styled-theme"
+import useRefreshStore from "hooks/useRefreshStore"
+import ImageUpload from "./ImageUpload"
+import axios from "axios"
+import LinearProgress from "components/LinearProgress"
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -54,13 +57,11 @@ function _getDefaultVisitDay() {
 const ReviewForm = ({ store }) => {
   const [decision, setDecision] = useState(null)
   const [selectedTagIds, setSelectedTagIds] = useState([])
+  const [images, setImages] = useState([])
   const [visitDay, setVisitDay] = useState(_getDefaultVisitDay())
   const inputRef = useRef()
   const { data: tags } = useSWR("/tags")
-  const { mutate: mutateStore } = useSWR(`/stores/${store.placeId}`)
-  const { mutate: mutateStoreReviews } = useSWR(
-    `/stores/${store.placeId}/reviews`
-  )
+  const refreshStore = useRefreshStore({ placeId: store.placeId })
   const [isLoading, setIsLoading] = useState(false)
   const { newReviewOpen, setNewReviewOpen, defaultDecision } = formControlStore(
     (state) => ({
@@ -90,6 +91,10 @@ const ReviewForm = ({ store }) => {
     setNewReviewOpen(false)
   }
 
+  function handleImageChange(images) {
+    setImages(images)
+  }
+
   async function handleSubmit() {
     if (!decision) return
 
@@ -99,7 +104,7 @@ const ReviewForm = ({ store }) => {
       recommend: decision,
       tagIds: selectedTagIds,
       description: inputRef.current.value,
-      visitDay: visitDay
+      visitDay: visitDay,
     }
 
     // Id are used for upload image
@@ -107,10 +112,30 @@ const ReviewForm = ({ store }) => {
       placeId: store.placeId,
       data,
     })
-    await mutateStore()
-    await mutateStoreReviews()
+    await uploadImages(id)
+    await refreshStore()
     handleClose()
     setIsLoading(false)
+  }
+
+  async function uploadImages(reviewId) {
+    for (let file of images) {
+      const { url } = await StorePhotoApi.getUploadLink({
+        placeId: store.placeId,
+      })
+      const config = {
+        headers: {
+          "Content-Type": file.type,
+        },
+      }
+      await axios.put(url, file, config)
+      const link = url.split("?")[0]
+      await StorePhotoApi.createStorePhoto({
+        placeId: store.placeId,
+        url: link,
+        reviewId,
+      })
+    }
   }
 
   return (
@@ -150,10 +175,7 @@ const ReviewForm = ({ store }) => {
             },
           }}
         />
-        {/* <NewPhotoButton>
-          <AddIcon />
-          <span>新增照片</span>
-        </NewPhotoButton> */}
+        <ImageUpload onChange={handleImageChange} />
         <WhiteSpace />
         <H4>最近一次造訪這間店的時間？</H4>
         <RadioGroup
@@ -190,6 +212,7 @@ const ReviewForm = ({ store }) => {
           })}
         </TagsContainer>
       </Body>
+      {isLoading && <LinearProgress />}
       <Divider />
       <Footer>
         <ActionButton onClick={handleClose}>取消</ActionButton>
@@ -258,23 +281,23 @@ const H4 = styled.h4`
   }
 `
 
+const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+`
+
 const Header = styled.div`
   height: 68px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  flex-shrink: 0;
 
   @media ${devices.mobileXl} {
-    flex-shrink: 0;
     height: 61px;
   }
-`
-
-const TagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
 `
 
 const Body = styled.div`
@@ -282,31 +305,27 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: auto;
+  height: calc(100% - 68px - 94px);
 
   @media ${devices.mobileXl} {
     padding: 29px;
     height: calc(100% - 61px - 84px);
-    overflow-y: auto;
   }
-`
 
-const NewPhotoButton = styled.div`
-  width: 128px;
-  height: 44px;
-  margin: 0 auto;
-  margin-bottom: 28px;
+  &::-webkit-scrollbar {
+    width: 8px;
+    display: block;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: 1px solid #222120;
-  border-radius: 12px;
-`
+  &::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-right: 1px solid #f1f1f1;
+  }
 
-const Buttons = styled.div`
-  display: flex;
-  gap: 16px;
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
 `
 
 const Footer = styled.div`
@@ -316,12 +335,17 @@ const Footer = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
+  flex-shrink: 0;
 
   @media ${devices.mobileXl} {
-    flex-shrink: 0;
     height: 84px;
     padding: 0 26px;
   }
+`
+
+const Buttons = styled.div`
+  display: flex;
+  gap: 16px;
 `
 
 const ActionButton = styled.div`

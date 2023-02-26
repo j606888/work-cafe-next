@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react"
-import { Menu, MenuItem } from "@mui/material"
+import { Box, Menu, MenuItem } from "@mui/material"
+import Tooltip from "components/Tooltip"
 import copy from "copy-to-clipboard"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import styled, { css } from "styled-components"
@@ -62,12 +63,16 @@ const Header = ({ placeId, url, onClick }) => {
             導航
           </ActionButton>
           {/* <BookmarkButton placeId={placeId} /> */}
-          <ActionButton svg="like" onClick={handleComingSoon}>
-            收藏
-          </ActionButton>
-          <ActionButton svg="fire" onClick={handleComingSoon}>
-            想去
-          </ActionButton>
+          <Tooltip title="功能開發中" placement="bottom-end">
+            <ActionButton svg="like" onClick={handleComingSoon}>
+              收藏
+            </ActionButton>
+          </Tooltip>
+          <Tooltip title="功能開發中" placement="bottom-end">
+            <ActionButton svg="fire" onClick={handleComingSoon}>
+              想去
+            </ActionButton>
+          </Tooltip>
           <MoreButton onClick={handleMoreClick}>
             <img src="/more.svg" alt="more" />
           </MoreButton>
