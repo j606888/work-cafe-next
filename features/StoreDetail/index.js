@@ -6,7 +6,7 @@ import TagList from "../../components/TagList/TagList"
 import Recommend from "./Recommend/Recommend"
 import ImagePreview from "./ImagePreview/ImagePreview"
 import { devices } from "constants/styled-theme"
-import Reviews from "./Reviews/Reviews"
+import Reviews from "./Reviews"
 import OpenTime from "./OpenTime/OpenTime"
 import useHintSearch from "features/Searchbar/useHintSearch"
 import useSearchStores from "hooks/useSearchStores"
@@ -103,13 +103,7 @@ const StoreDetail = ({ store }) => {
       <ReviewForm
         store={store}
       />
-      <Reviews
-        placeId={store.placeId}
-        name={store.name}
-        onSave={handleReviewSave}
-        googleReviews={store.reviews}
-        url={store.url}
-      />
+      <Reviews placeId={store.placeId} />
     </Container>
   )
 }

@@ -5,20 +5,18 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  Typography,
-  useMediaQuery,
 } from "@mui/material"
 import CloseButton from "components/CloseButton"
 import { grey01, grey02, grey03, orange100 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import RecommendButton from "./RecommendButton"
-import AddIcon from "@mui/icons-material/Add"
 import useSWR from "swr"
 import ReviewApi from "api/review"
 import formControlStore from "stores/formControlStore"
 import Wrapper from "./Wrapper"
 import { devices } from "constants/styled-theme"
+import useRefreshStore from "hooks/useRefreshStore"
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -57,11 +55,7 @@ const ReviewForm = ({ store }) => {
   const [visitDay, setVisitDay] = useState(_getDefaultVisitDay())
   const inputRef = useRef()
   const { data: tags } = useSWR("/tags")
-  const { mutate: mutateStore } = useSWR(`/stores/${store.placeId}`)
-  const { mutate: mutateMyReview } = useSWR(`/stores/${store.placeId}/reviews/me`)
-  const { mutate: mutateStoreReviews } = useSWR(
-    `/stores/${store.placeId}/reviews`
-  )
+  const refreshStore = useRefreshStore({ placeId: store.placeId })
   const [isLoading, setIsLoading] = useState(false)
   const { newReviewOpen, setNewReviewOpen, defaultDecision } = formControlStore(
     (state) => ({
@@ -108,9 +102,7 @@ const ReviewForm = ({ store }) => {
       placeId: store.placeId,
       data,
     })
-    await mutateStore()
-    await mutateStoreReviews()
-    await mutateMyReview()
+    await refreshStore()
     handleClose()
     setIsLoading(false)
   }
@@ -260,6 +252,13 @@ const H4 = styled.h4`
   }
 `
 
+
+const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+`
+
 const Header = styled.div`
   height: 68px;
   display: flex;
@@ -273,11 +272,6 @@ const Header = styled.div`
   }
 `
 
-const TagsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-`
 
 const Body = styled.div`
   padding: 36px;
@@ -290,6 +284,35 @@ const Body = styled.div`
   @media ${devices.mobileXl} {
     padding: 29px;
     height: calc(100% - 61px - 84px);
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    display: block;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #666;
+    border-right: 1px solid #f1f1f1;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+`
+
+const Footer = styled.div`
+  height: 94px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  flex-shrink: 0;
+
+  @media ${devices.mobileXl} {
+    height: 84px;
+    padding: 0 26px;
   }
 `
 
@@ -310,21 +333,6 @@ const NewPhotoButton = styled.div`
 const Buttons = styled.div`
   display: flex;
   gap: 16px;
-`
-
-const Footer = styled.div`
-  height: 94px;
-  padding: 0 32px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
-  flex-shrink: 0;
-
-  @media ${devices.mobileXl} {
-    height: 84px;
-    padding: 0 26px;
-  }
 `
 
 const ActionButton = styled.div`

@@ -49,7 +49,7 @@ const ICON_MAP = {
   no: "/thumb-down.svg",
 }
 
-const WorkCafeReviews = ({
+const ReviewCard = ({
   id,
   userName,
   userAvatarUrl,
@@ -66,10 +66,10 @@ const WorkCafeReviews = ({
   return (
     <Container>
       <UserInfo>
-        {userName ? (
+        {userAvatarUrl ? (
           <Avatar alt={userName} src={userAvatarUrl} />
         ) : (
-          <img src="/guest.svg" alt="guest" />
+          <img src="/guests/guest.svg" alt="guest" />
         )}
         <Content>
           <h6>{userName}</h6>
@@ -167,4 +167,4 @@ const EditBoxContainer = styled.div`
   top: 0;
 `
 
-export default WorkCafeReviews
+export default ReviewCard

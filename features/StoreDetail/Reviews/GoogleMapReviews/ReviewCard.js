@@ -7,7 +7,7 @@ import { useState } from "react"
 import { useRef } from "react"
 import { useEffect } from "react"
 
-const GoogleReviewCard = ({
+const ReviewCard = ({
   authorName,
   rating,
   relativeTimeDescription,
@@ -120,4 +120,4 @@ const Content = styled.div`
   }
 `
 
-export default GoogleReviewCard
+export default ReviewCard

@@ -1,48 +1,13 @@
-import ReviewForm from "features/_ReviewForm"
 import React from "react"
 import styled from "styled-components"
 import { devices } from "constants/styled-theme"
 import useSWR from "swr"
-import WorkCafeReviews from "./WorkCafeReviews/WorkCafeReviews"
+import WorkCafeReview from "./ReviewCard"
 import ReviewApi from "api/review"
 import useUserStore from "stores/useUserStore"
 import formControlStore from "stores/formControlStore"
 
-const Container = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  margin: 28px 0;
-
-  @media ${devices.mobileXl} {
-    margin: 24px 0;
-  }
-`
-
-const FakeTextBox = styled.div`
-  border: 1px solid #afaaa3;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 0 12px;
-  border-radius: 12px;
-  cursor: pointer;
-  color: #42403f;
-  font-style: normal;
-  font-size: 14px;
-  line-height: 19px;
-  &:hover {
-    background-color: #f5f5f5;
-  }
-
-  @media ${devices.mobileXl} {
-    height: 36px;
-    font-size: 12px;
-  }
-`
-
-const NewReview = ({ placeId, name, onSave }) => {
+const MyReview = ({ placeId, onSave }) => {
   const { setNewReviewOpen, setDefaultDecision } = formControlStore((state) => ({
     setNewReviewOpen: state.setNewReviewOpen,
     setDefaultDecision: state.setDefaultDecision,
@@ -81,7 +46,7 @@ const NewReview = ({ placeId, name, onSave }) => {
         {myReview ? (
           <div style={{ width: "100%" }}>
             <p>你的評論</p>
-            <WorkCafeReviews
+            <WorkCafeReview
               {...myReview}
               editable
               onDelete={handleDelete}
@@ -90,7 +55,7 @@ const NewReview = ({ placeId, name, onSave }) => {
           </div>
         ) : (
           <>
-            <img src="/guest.svg" alt="guest" />
+            <img src="/guests/guest-orange.svg" alt="guest" />
             <FakeTextBox onClick={handleOpen}>
               留下我的評論（這裡適合辦公嗎？）
             </FakeTextBox>
@@ -110,4 +75,39 @@ const NewReview = ({ placeId, name, onSave }) => {
   )
 }
 
-export default NewReview
+
+const Container = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 28px 0;
+
+  @media ${devices.mobileXl} {
+    margin: 24px 0;
+  }
+`
+
+const FakeTextBox = styled.div`
+  border: 1px solid #afaaa3;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #42403f;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 19px;
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  @media ${devices.mobileXl} {
+    height: 36px;
+    font-size: 12px;
+  }
+`
+
+export default MyReview
