@@ -39,7 +39,7 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
         maxWidth="lg"
         fullScreen={fullScreen}
         PaperProps={
-          !fullScreen && { sx: { borderRadius: "20px", maxHeight: "85%" } }
+          fullScreen ? {} : { sx: { borderRadius: "20px", maxHeight: "85%" } }
         }
       >
         <Header>

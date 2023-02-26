@@ -7,6 +7,7 @@ import {
   TextField,
 } from "@mui/material"
 import CloseButton from "components/CloseButton"
+
 import { grey01, grey02, grey03, orange100 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
@@ -144,10 +145,10 @@ const ReviewForm = ({ store }) => {
             },
           }}
         />
-        {/* <NewPhotoButton>
-          <AddIcon />
+        <NewPhotoButton>
+          <img src="/add.svg" alt="add" />
           <span>新增照片</span>
-        </NewPhotoButton> */}
+        </NewPhotoButton>
         <WhiteSpace />
         <H4>最近一次造訪這間店的時間？</H4>
         <RadioGroup
@@ -321,6 +322,7 @@ const NewPhotoButton = styled.div`
   height: 44px;
   margin: 0 auto;
   margin-bottom: 28px;
+  flex-shrink: 0;
 
   display: flex;
   align-items: center;
