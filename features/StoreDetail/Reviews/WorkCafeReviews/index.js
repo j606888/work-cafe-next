@@ -1,4 +1,5 @@
 import { grey02 } from "constants/color"
+import { devices } from "constants/styled-theme"
 import React from "react"
 import useUserStore from "stores/useUserStore"
 import styled from "styled-components"
@@ -38,6 +39,10 @@ const LeaveFirstReview = styled.div`
   color: ${grey02};
   font-size: 16px;
   line-height: 22px;
+
+  @media ${devices.mobileXl} {
+    font-size: 14px;
+  }
 `
 
 export default WorkCafeReviews
