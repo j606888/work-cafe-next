@@ -1,3 +1,5 @@
+import { grey01 } from "constants/color"
+import { devices } from "constants/styled-theme"
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
@@ -43,7 +45,7 @@ const ImageUpload = ({ onChange = () => {} }) => {
       />
       <Button onClick={handleButtonClick}>
         <img src="/add.svg" alt="add" />
-        新增照片
+        新增相片
       </Button>
       <ImageContainer>
         {selectedFiles.map((file) => (
@@ -61,7 +63,12 @@ const ImageUpload = ({ onChange = () => {} }) => {
   )
 }
 
-const Container = styled.div``
+const Container = styled.div`
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`
 
 const ImageContainer = styled.div`
   display: flex;
@@ -76,6 +83,11 @@ const ImagePreview = styled.div`
   height: 156px;
   border-radius: 12px;
   overflow: hidden;
+
+  @media ${devices.mobileXl} {
+    width: 128px;
+    height: 128px;
+  }
 `
 
 const Image = styled.img`
@@ -88,8 +100,7 @@ const Button = styled.button`
   width: 128px;
   height: 44px;
   margin: 0 auto;
-  margin-bottom: 28px;
-  flex-shrink: 0;
+  color: ${grey01};
 
   display: flex;
   align-items: center;
