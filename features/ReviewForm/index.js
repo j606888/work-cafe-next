@@ -1,4 +1,5 @@
 import {
+  Box,
   CircularProgress,
   Divider,
   FormControlLabel,
@@ -7,7 +8,7 @@ import {
   TextField,
 } from "@mui/material"
 import CloseButton from "components/CloseButton"
-
+import StorePhotoApi from "api/store-photo"
 import { grey01, grey02, grey03, orange100 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
@@ -18,6 +19,9 @@ import formControlStore from "stores/formControlStore"
 import Wrapper from "./Wrapper"
 import { devices } from "constants/styled-theme"
 import useRefreshStore from "hooks/useRefreshStore"
+import ImageUpload from "./ImageUpload"
+import axios from "axios"
+import LinearProgress from "components/LinearProgress"
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -53,6 +57,7 @@ function _getDefaultVisitDay() {
 const ReviewForm = ({ store }) => {
   const [decision, setDecision] = useState(null)
   const [selectedTagIds, setSelectedTagIds] = useState([])
+  const [images, setImages] = useState([])
   const [visitDay, setVisitDay] = useState(_getDefaultVisitDay())
   const inputRef = useRef()
   const { data: tags } = useSWR("/tags")
@@ -86,6 +91,10 @@ const ReviewForm = ({ store }) => {
     setNewReviewOpen(false)
   }
 
+  function handleImageChange(images) {
+    setImages(images)
+  }
+
   async function handleSubmit() {
     if (!decision) return
 
@@ -95,7 +104,7 @@ const ReviewForm = ({ store }) => {
       recommend: decision,
       tagIds: selectedTagIds,
       description: inputRef.current.value,
-      visitDay: visitDay
+      visitDay: visitDay,
     }
 
     // Id are used for upload image
@@ -103,9 +112,30 @@ const ReviewForm = ({ store }) => {
       placeId: store.placeId,
       data,
     })
+    await uploadImages(id)
     await refreshStore()
     handleClose()
     setIsLoading(false)
+  }
+
+  async function uploadImages(reviewId) {
+    for (let file of images) {
+      const { url } = await StorePhotoApi.getUploadLink({
+        placeId: store.placeId,
+      })
+      const config = {
+        headers: {
+          "Content-Type": file.type,
+        },
+      }
+      await axios.put(url, file, config)
+      const link = url.split("?")[0]
+      await StorePhotoApi.createStorePhoto({
+        placeId: store.placeId,
+        url: link,
+        reviewId,
+      })
+    }
   }
 
   return (
@@ -145,10 +175,7 @@ const ReviewForm = ({ store }) => {
             },
           }}
         />
-        <NewPhotoButton>
-          <img src="/add.svg" alt="add" />
-          <span>新增照片</span>
-        </NewPhotoButton>
+        <ImageUpload onChange={handleImageChange} />
         <WhiteSpace />
         <H4>最近一次造訪這間店的時間？</H4>
         <RadioGroup
@@ -185,6 +212,7 @@ const ReviewForm = ({ store }) => {
           })}
         </TagsContainer>
       </Body>
+      {isLoading && <LinearProgress />}
       <Divider />
       <Footer>
         <ActionButton onClick={handleClose}>取消</ActionButton>
@@ -253,7 +281,6 @@ const H4 = styled.h4`
   }
 `
 
-
 const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -272,7 +299,6 @@ const Header = styled.div`
     height: 61px;
   }
 `
-
 
 const Body = styled.div`
   padding: 36px;
@@ -315,21 +341,6 @@ const Footer = styled.div`
     height: 84px;
     padding: 0 26px;
   }
-`
-
-const NewPhotoButton = styled.div`
-  width: 128px;
-  height: 44px;
-  margin: 0 auto;
-  margin-bottom: 28px;
-  flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: 1px solid #222120;
-  border-radius: 12px;
 `
 
 const Buttons = styled.div`
