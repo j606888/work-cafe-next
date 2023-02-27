@@ -22,6 +22,7 @@ import useRefreshStore from "hooks/useRefreshStore"
 import ImageUpload from "./ImageUpload"
 import axios from "axios"
 import LinearProgress from "components/LinearProgress"
+import { snackbarStore } from "features/GlobalSnackbar"
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -60,6 +61,9 @@ const ReviewForm = ({ store }) => {
   const [images, setImages] = useState([])
   const [visitDay, setVisitDay] = useState(_getDefaultVisitDay())
   const inputRef = useRef()
+  const { setMessage } = snackbarStore((state) => ({
+    setMessage: state.setMessage,
+  }))
   const { data: tags } = useSWR("/tags")
   const refreshStore = useRefreshStore({ placeId: store.placeId })
   const [isLoading, setIsLoading] = useState(false)
@@ -114,6 +118,7 @@ const ReviewForm = ({ store }) => {
     })
     await uploadImages(id)
     await refreshStore()
+    setMessage("評論成功")
     handleClose()
     setIsLoading(false)
   }

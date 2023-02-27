@@ -47,6 +47,7 @@ const OpenTime = ({ isOpenNow, closeTime, openingHours = [] }) => {
             <DayBox key={index} bold={weekday == openingHour.weekday}>
               <div>{openingHour.label}</div>
               <div className="period">
+                {openingHour.periodTexts.length === 0 && <span>休息</span>}
                 {openingHour.periodTexts.map((periodText, idx) => (
                   <span key={idx}>{periodText}</span>
                 ))}

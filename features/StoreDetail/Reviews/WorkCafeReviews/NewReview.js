@@ -8,7 +8,7 @@ import useUserStore from "stores/useUserStore"
 import formControlStore from "stores/formControlStore"
 import { Divider } from "@mui/material"
 
-const MyReview = ({ placeId, onSave }) => {
+const MyReview = ({ placeId }) => {
   const { setNewReviewOpen, setDefaultDecision } = formControlStore((state) => ({
     setNewReviewOpen: state.setNewReviewOpen,
     setDefaultDecision: state.setDefaultDecision,
@@ -18,13 +18,6 @@ const MyReview = ({ placeId, onSave }) => {
     user ? `/stores/${placeId}/reviews/me` : null
   )
   const { mutate: mutateStore } = useSWR(`/stores/${placeId}`)
-
-  async function handleSave() {
-    setNewReviewOpen(false)
-    await onSave()
-    mutate()
-    mutateStore()
-  }
 
   async function handleDelete() {
     await ReviewApi.deleteMyReview({ placeId })

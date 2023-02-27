@@ -7,7 +7,7 @@ export const snackbarStore = create((set) => ({
   openSnackbar: () => set((state) => ({ ...state, open: true })),
   closeSnackbar: () => set((state) => ({ ...state, open: false })),
   message: "",
-  setMessage: (message) => set((state) => ({ ...state, message}))
+  setMessage: (message) => set((state) => ({ ...state, message, open: true }))
 }))
 
 const GlobalSnackbar = () => {
