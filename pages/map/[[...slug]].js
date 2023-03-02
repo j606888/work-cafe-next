@@ -18,9 +18,16 @@ import Head from "next/head"
 import GlobalSnackbar from "features/GlobalSnackbar"
 import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
 import MyPosition from "features/MyPosition"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
-const pickContent = ({ isLanding, store, storeLoading }) => {
+const usePickContent = ({ isLanding, store, storeLoading }) => {
+  const [showBorder, setShowBorder] = useState(true)
+
+  const handleScroll = (event) => {
+    const scrollTop = event.target.scrollTop
+    setShowBorder(scrollTop > 0)
+  }
+
   if (isLanding) return null
   if (storeLoading)
     return (
@@ -36,8 +43,8 @@ const pickContent = ({ isLanding, store, storeLoading }) => {
     )
   return (
     <>
-      <SearchStores />
-      <ContentContainer>
+      <SearchStores showBorder={showBorder} />
+      <ContentContainer onScroll={handleScroll}>
         <StoreList />
       </ContentContainer>
     </>
@@ -72,9 +79,10 @@ export default function MapPage() {
     document.title = title
   }, [store])
 
+  const content = usePickContent({ store, isLanding, storeLoading })
+
   if (!isReady) return null
 
-  const content = pickContent({ store, isLanding, storeLoading })
 
   return (
     <>

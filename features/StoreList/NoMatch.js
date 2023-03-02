@@ -7,7 +7,7 @@ const REPORT_URL = "https://forms.gle/ievHHnQT6U3UNQEdA"
 const NoMatch = () => {
   return (
     <Container>
-      <Img src="/not_found.png" alt="not_found" />
+      <Img src="/not-found.svg" alt="not_found" />
       <H3>找不到相符的咖啡店</H3>
       <P>請嘗試其他搜尋關鍵字，或減少篩選條件。</P>
       <P>
@@ -26,6 +26,7 @@ const H3 = styled.h3`
 const P = styled.p`
   font-size: 16px;
   color: ${grey02};
+  margin: 2px;
 `
 
 const A = styled.a`
@@ -41,16 +42,6 @@ const Container = styled.div`
   text-align: center;
   color: #333;
   background-color: #fff;
-
-  h3 {
-    font-size: 36px;
-    margin: 1rem;
-  }
-
-  p {
-    font-size: 18px;
-    margin: 0.3rem;
-  }
 
   @media ${devices.mobileXl} {
     width: 100%;

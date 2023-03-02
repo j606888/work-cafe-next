@@ -52,7 +52,7 @@ const WordButton = styled.button`
   ${({ active }) =>
     active &&
     css`
-      font-weight: 500;
+      font-weight: 700;
       color: #222120;
       border-bottom: 2px solid ${orange100};
       z-index: 1;

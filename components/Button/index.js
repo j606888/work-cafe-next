@@ -2,9 +2,9 @@ import { grey01 } from "constants/color"
 import React from "react"
 import styled, { css } from "styled-components"
 
-const Button = ({ onClick, children, variant }) => {
+const Button = ({ onClick, children, variant, width }) => {
   return (
-    <Container onClick={onClick} variant={variant}>
+    <Container onClick={onClick} variant={variant} width={width}>
       {children}
     </Container>
   )
@@ -21,6 +21,7 @@ const Container = styled.button`
   border: 1px solid ${grey01};
   background-color: #ffffff;
   cursor: pointer;
+  ${({ width }) => width && `width: ${width}px;`}
 
   ${({ variant }) =>
     variant &&
