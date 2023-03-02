@@ -1,3 +1,4 @@
+import { grey01 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
 
@@ -18,8 +19,10 @@ const StoreOption = ({ name, address }) => {
   return (
     <>
       <img src="/cafe.svg" alt="cafe" />
-      <span>{name}</span>
-      <AddressSpan>{address}</AddressSpan>
+      <ShrinkContainer>
+        <StoreNameSpan>{name}</StoreNameSpan>
+        <AddressSpan>{address}</AddressSpan>
+      </ShrinkContainer>
     </>
   )
 }
@@ -92,12 +95,21 @@ const Container = styled.div`
   }
 `
 
-const AddressSpan = styled.span`
-  color: #afaaa3;
-  font-size: 12px;
+const ShrinkContainer = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #afaaa3;
+  font-size: 12px;
+`
+
+const StoreNameSpan = styled.span`
+  color: ${grey01};
+  font-size: 14px;
+`
+
+const AddressSpan = styled.span`
+  margin-left: 8px;
 `
 
 const StoreCount = styled.div`

@@ -46,7 +46,7 @@ const AccountMenu = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <Tooltip title="什麼是 Work Cafe?">
+          <Tooltip title="教學">
            <img src="/help.svg" alt="help" />
           </Tooltip>
         </a>

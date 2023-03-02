@@ -25,7 +25,7 @@ const ComingSoonForm = ({ open, onClose }) => {
       }}
     >
       <H3>功能開發中</H3>
-      <P>「收藏喜愛店家」功能正在開發中！ 想許願其他功能，歡迎回饋給我們。</P>
+      <P>「收藏想去店家」功能正在開發中！ 想許願其他功能，歡迎回饋給我們。</P>
       <ButtonGroup>
         <Button onClick={() => window.open(FEED_BACK_URL, "_blank")}>
           前往回饋
