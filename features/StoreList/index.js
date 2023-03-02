@@ -27,7 +27,10 @@ export default function StoreList() {
     setFocusPlaceId: state.setFocusPlaceId,
     setBouncePlaceId: state.setBouncePlaceId,
   }))
+  const [showBorder, setShowBorder] = React.useState(true)
   const storesRef = React.useRef({})
+
+  
 
   const handleMouseEnter = (placeId) => {
     setBouncePlaceId(placeId)
