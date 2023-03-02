@@ -47,18 +47,20 @@ const ImageUpload = ({ onChange = () => {} }) => {
         <img src="/add.svg" alt="add" />
         新增相片
       </Button>
-      <ImageContainer>
-        {selectedFiles.map((file) => (
-          <ImagePreview key={file.name}>
-            <RemoveButton
-              src="/cancel-filled.svg"
-              alt="cancel"
-              onClick={() => removeFile(file.name)}
-            />
-            <Image src={URL.createObjectURL(file)} alt={file.name} />
-          </ImagePreview>
-        ))}
-      </ImageContainer>
+      {selectedFiles.length > 0 && (
+        <ImageContainer>
+          {selectedFiles.map((file) => (
+            <ImagePreview key={file.name}>
+              <RemoveButton
+                src="/cancel-filled.svg"
+                alt="cancel"
+                onClick={() => removeFile(file.name)}
+              />
+              <Image src={URL.createObjectURL(file)} alt={file.name} />
+            </ImagePreview>
+          ))}
+        </ImageContainer>
+      )}
     </Container>
   )
 }

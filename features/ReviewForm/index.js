@@ -24,22 +24,7 @@ import axios from "axios"
 import LinearProgress from "components/LinearProgress"
 import { snackbarStore } from "features/GlobalSnackbar"
 
-const CssTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: grey01,
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: grey01,
-  },
-  "& .MuiOutlinedInput-root": {
-    "&.Mui-focused fieldset": {
-      borderColor: grey01,
-    },
-  },
-})
-
 const RadioColor = {
-  color: orange100,
   "&.Mui-checked": {
     color: orange100,
   },
@@ -151,71 +136,73 @@ const ReviewForm = ({ store }) => {
       </Header>
       <Divider />
       <Body>
-        <H4>推薦這裡 給想辦公的人嗎？</H4>
-        <Buttons>
-          <RecommendButton
-            decision={true}
-            onClick={() => setDecision("yes")}
-            checked={decision === "yes"}
-          />
-          <RecommendButton
-            decision={false}
-            onClick={() => setDecision("no")}
-            checked={decision === "no"}
-          />
-        </Buttons>
-        <CssTextField
-          fullWidth
-          inputRef={inputRef}
-          rows={3}
-          multiline
-          placeholder="分享更多你在這家店的體驗"
-          InputProps={{
-            style: {
-              borderRadius: "20px",
-              padding: "12px 24px",
-              "&:focus": {
-                border: grey01,
+        <Box>
+          <H4>推薦這裡 給想辦公的人嗎？</H4>
+          <Buttons>
+            <RecommendButton
+              decision={true}
+              onClick={() => setDecision("yes")}
+              checked={decision === "yes"}
+            />
+            <RecommendButton
+              decision={false}
+              onClick={() => setDecision("no")}
+              checked={decision === "no"}
+            />
+          </Buttons>
+          <TextField
+            fullWidth
+            inputRef={inputRef}
+            rows={3}
+            multiline
+            placeholder="分享更多你在這家店的體驗"
+            InputProps={{
+              style: {
+                borderRadius: "20px",
+                padding: "12px 24px",
               },
-            },
-          }}
-        />
-        <ImageUpload onChange={handleImageChange} />
-        <WhiteSpace />
-        <H4>最近一次造訪這間店的時間？</H4>
-        <RadioGroup
-          value={visitDay}
-          onChange={(e) => setVisitDay(e.target.value)}
-        >
-          <FormControlLabel
-            value="weekday"
-            control={<Radio sx={RadioColor} />}
-            label="平日"
+            }}
           />
-          <FormControlLabel
-            value="weekend"
-            control={<Radio sx={RadioColor} />}
-            label="週末/國定假日"
-          />
-        </RadioGroup>
-        <H4>
-          這家店有哪些特色？
-          <span style={{ fontSize: "16px" }}>（可複選）</span>
-        </H4>
-        <TagsContainer>
-          {tags?.map((tag) => {
-            const checked = selectedTagIds.includes(tag.id)
-            return (
-              <TagCheckbox
-                key={tag.id}
-                onClick={() => handleClickTag(tag.id)}
-                checked={checked}
-              >
-                {tag.name}
-              </TagCheckbox>
-            )
-          })}
-        </TagsContainer>
+          <ImageUpload onChange={handleImageChange} />
+        </Box>
+        <Box>
+          <H4>最近一次造訪這間店的時間？</H4>
+          <RadioGroup
+            value={visitDay}
+            onChange={(e) => setVisitDay(e.target.value)}
+          >
+            <FormControlLabel
+              value="weekday"
+              control={<Radio sx={RadioColor} />}
+              label="平日"
+            />
+            <FormControlLabel
+              value="weekend"
+              control={<Radio sx={RadioColor} />}
+              label="週末/國定假日"
+            />
+          </RadioGroup>
+        </Box>
+        <Box>
+          <H4>
+            這家店有哪些特色？
+            <span style={{ fontSize: "16px" }}>（可複選）</span>
+          </H4>
+          <TagsContainer>
+            {tags?.map((tag) => {
+              const checked = selectedTagIds.includes(tag.id)
+              return (
+                <TagCheckbox
+                  key={tag.id}
+                  onClick={() => handleClickTag(tag.id)}
+                  checked={checked}
+                >
+                  {tag.name}
+                </TagCheckbox>
+              )
+            })}
+          </TagsContainer>
+        </Box>
       </Body>
       {isLoading && <LinearProgress />}
       <Divider />
@@ -236,10 +223,6 @@ const ReviewForm = ({ store }) => {
     </Wrapper>
   )
 }
-
-const WhiteSpace = styled.div`
-  height: 12px;
-`
 
 const TagCheckbox = styled.div`
   height: 36px;
@@ -309,13 +292,19 @@ const Body = styled.div`
   padding: 36px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 44px;
   overflow-y: auto;
   height: calc(100% - 68px - 94px);
 
   @media ${devices.mobileXl} {
     padding: 29px;
     height: calc(100% - 61px - 84px);
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
   &::-webkit-scrollbar {
