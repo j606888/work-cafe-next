@@ -12,6 +12,7 @@ import useUserStore from "stores/useUserStore"
 import { syncPhoto } from "api/admin/store"
 import useSWR from "swr"
 import ComingSoonForm from "components/ComingSoonForm"
+import { grey05 } from "constants/color"
 
 const Header = ({ placeId, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -179,6 +180,10 @@ const MoreButton = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &:hover {
+    background-color: ${grey05};
+  }
 
   @media ${devices.mobileXl} {
     border: none;

@@ -1,15 +1,17 @@
 import {
-  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
 } from "@mui/material"
 import RateReviewIcon from "@mui/icons-material/RateReview"
 import ReportIcon from "@mui/icons-material/Report"
 import BugReportIcon from "@mui/icons-material/BugReport"
 import styled from "styled-components"
-import { orange100, orange50 } from "constants/color"
+import { orange100 } from "constants/color"
+import Dialog from "components/Dialog"
+import Button from "components/Button"
 
 const Item = styled.div`
   display: flex;
@@ -22,23 +24,11 @@ const Link = styled.a`
   color: ${orange100};
 `
 
-const Button = styled.button`
-  background-color: ${orange100};
-  color: #ffffff;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 12px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: ${orange50};
-  }
-`
-
 const HelpUsModal = ({ open, onClose }) => {
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} sx={{ minWidth: "660px" }}>
       <DialogTitle>幫助我們做得更好</DialogTitle>
+      <Divider />
       <DialogContent>
         <DialogContentText>
           這個網站才剛起步，需要眾人的力量才能讓整個網站的功能更加完整。
@@ -76,7 +66,9 @@ const HelpUsModal = ({ open, onClose }) => {
           來回報
         </DialogContentText>
         <DialogActions>
-          <Button onClick={onClose}>我知道了</Button>
+          <Button onClick={onClose} variant>
+            我知道了
+          </Button>
         </DialogActions>
       </DialogContent>
     </Dialog>

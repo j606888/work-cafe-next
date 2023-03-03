@@ -57,10 +57,9 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
                 想去
               </ActionButton>
             </Tooltip>
-            <Button onClick={handleShare}>
-              <img src="/share.svg" alt="share" />
-              <span>分享</span>
-            </Button>
+            <ActionButton svg="share" onClick={handleShare}>
+              分享
+            </ActionButton>
             <SvgButton path="cancel" onClick={onClose} />
           </ButtonGroup>
         </Header>

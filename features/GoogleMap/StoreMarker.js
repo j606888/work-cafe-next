@@ -1,5 +1,5 @@
 import { Marker } from "@react-google-maps/api"
-import React from "react"
+import React, { useState } from "react"
 
 const StoreMarker = ({
   store,
@@ -10,14 +10,17 @@ const StoreMarker = ({
   mapLng = 0,
   mapLat = 0,
   onClick = () => {},
-  onMouseOver = () => {},
-  onMouseOut = () => {},
+  // onMouseOver = () => {},
+  // onMouseOut = () => {},
 }) => {
+  const [mouseOver, setMouseOver] = useState(false)
+
   const icon = _iconColor({
     isFocus,
     wakeUp: store.wakeUp,
     isBookmark,
     isBounce,
+    mouseOver,
   })
   const position = {
     lat: store.lat,
@@ -30,6 +33,8 @@ const StoreMarker = ({
     showLabel,
     isFocus,
     angle,
+    mouseOver,
+    isBounce,
   })
 
   return (
@@ -39,23 +44,25 @@ const StoreMarker = ({
       position={position}
       animation={animation}
       label={label}
-      onMouseOver={() => onMouseOver(store.placeId)}
-      onMouseOut={() => onMouseOut(store.placeId)}
+      onMouseOver={() => setMouseOver(true)}
+      onMouseOut={() => setMouseOver(false)}
+      // onMouseOver={() => onMouseOver(store.placeId)}
+      // onMouseOut={() => onMouseOut(store.placeId)}
     />
   )
 }
 
 export default StoreMarker
 
-function _iconColor({ isFocus, wakeUp, isBookmark, isBounce }) {
-  if (isFocus || isBounce) return "/pins/target-pin.svg"
+function _iconColor({ isFocus, wakeUp, isBookmark, isBounce, mouseOver }) {
+  if (isFocus || isBounce || mouseOver) return "/pins/target-pin.svg"
   if (isBookmark) return "/pins/like-pin.svg"
   if (wakeUp) return "/pins/black-pin.svg"
   return "/pins/black-pin.svg"
 }
 
-function _label({ showLabel, store, isFocus, angle }) {
-  if (isFocus) {
+function _label({ showLabel, store, isFocus, angle, mouseOver, isBounce }) {
+  if (isFocus || mouseOver || isBounce) {
     return {
       text: store.name,
       fontSize: "12px",
@@ -68,7 +75,7 @@ function _label({ showLabel, store, isFocus, angle }) {
     // else if (angle > 45 && angle <= 135) className = 'top'
     // else if (angle > 135 && angle <= 225) className = 'left'
     // else if (angle > 225 && angle <= 315) className = 'bottom'
-    const className = 'right'
+    const className = "right"
 
     return {
       text: _removeTextInParenthesis(store.name),
