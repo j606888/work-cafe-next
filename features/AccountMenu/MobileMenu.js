@@ -16,6 +16,7 @@ const DialogStyles = {
   sx: {
     width: "90%",
     minHeight: "80%",
+    borderRadius: '20px'
   },
 }
 

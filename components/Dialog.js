@@ -5,14 +5,12 @@ import { grey01 } from 'constants/color'
 
 
 const PaperProps = {
-  style: {
-    borderRadius: "20px",
-    padding: "34px 38px 24px",
-    display: "flex",
-    alignItems: "center",
-    minWidth: "300px",
-    position: "relative",
-  },
+  borderRadius: "20px",
+  padding: "34px 38px 24px",
+  display: "flex",
+  alignItems: "center",
+  minWidth: "300px",
+  position: "relative",
 }
 
 const IconButtonSx = {
@@ -25,9 +23,11 @@ const IconButtonSx = {
   },
 }
 
-const Dialog = ({ open, onClose, children }) => {
+const Dialog = ({ open, onClose, children, sx={} }) => {
+  const paperProps = { style: { ...PaperProps, ...sx }}
+
   return (
-    <MuiDialog open={open} onClose={onClose} PaperProps={PaperProps}>
+    <MuiDialog open={open} onClose={onClose} PaperProps={paperProps}>
       <IconButton onClick={onClose} sx={IconButtonSx}>
         <CloseButton />
       </IconButton>
