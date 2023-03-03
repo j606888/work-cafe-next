@@ -40,6 +40,8 @@ const StoreMarkers = ({ store }) => {
     }
   }
 
+  
+
   useEffect(() => {
     if (map && stores && stores.stores.length > 0) {
       const bounds = new window.google.maps.LatLngBounds()
