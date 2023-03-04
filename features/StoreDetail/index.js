@@ -60,7 +60,7 @@ const StoreDetail = ({ store }) => {
 
   return (
     <Container>
-      <Header onClick={handleClose} placeId={store.placeId} url={store.url} />
+      <Header onClick={handleClose} name={store.name} placeId={store.placeId} url={store.url} />
       <ImagePreview
         placeId={store.placeId}
         photos={store.photos}

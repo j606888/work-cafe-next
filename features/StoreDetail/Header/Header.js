@@ -14,7 +14,7 @@ import useSWR from "swr"
 import ComingSoonForm from "components/ComingSoonForm"
 import { grey05 } from "constants/color"
 
-const Header = ({ placeId, url, onClick }) => {
+const Header = ({ placeId, name, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
   const open = Boolean(anchorEl)
@@ -34,7 +34,15 @@ const Header = ({ placeId, url, onClick }) => {
     setOpenNotCafe(false)
   }
   function handleNavigate() {
-    window.open(url, "_blank")
+    const baseUrl = "https://www.google.com/maps/dir/"
+    const queryParams = {
+      api: 1,
+      query: "Google",
+      destination_place_id: placeId,
+      destination: name
+    }
+    const queryString = new URLSearchParams(queryParams).toString()
+    window.open(`${baseUrl}?${queryString}`, "_blank")
   }
   function handleShare() {
     const origin = window.location.origin
