@@ -48,6 +48,7 @@ const StoreMarker = ({
       onMouseOut={() => setMouseOver(false)}
       // onMouseOver={() => onMouseOver(store.placeId)}
       // onMouseOut={() => onMouseOut(store.placeId)}
+      zIndex={isBounce || isFocus ? 10 : 1}
     />
   )
 }
