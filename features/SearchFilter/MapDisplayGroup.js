@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel } from "@mui/material"
+import { Checkbox, Tooltip, FormControlLabel, Box } from "@mui/material"
 import { orange100 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
@@ -33,7 +33,14 @@ const MapDisplayGroup = ({ wakeUp, hideChain, onChange = () => {} }) => {
             onChange={handleChangeHideChain}
           />
         }
-        label="隱藏連鎖店家"
+        label={
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <span>隱藏連鎖店家</span>
+            <Tooltip placement="right" title="如：星巴克、路易莎、cama café 等連鎖店家">
+              <img src="/help.svg" alt="help" width="28px" height="28px" />
+            </Tooltip>
+          </Box>
+        }
       />
     </Container>
   )
