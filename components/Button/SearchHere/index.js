@@ -20,7 +20,6 @@ const SearchHere = () => {
   function onClick() {
     const { lat, lng } = mapCenter(map)
 
-    setKeyword('')
     setPlaceId(null)
     setFocusPlaceId(null)
     setSearchCenter({ lat, lng })

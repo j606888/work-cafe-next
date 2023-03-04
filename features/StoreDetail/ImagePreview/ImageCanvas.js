@@ -3,28 +3,21 @@ import { devices } from "constants/styled-theme"
 import { Dialog, ImageList, ImageListItem, Snackbar } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import SvgButton from "components/SvgButton"
-import copy from "copy-to-clipboard"
-import BookmarkButton from "../Header/BookmarkButton"
-import { snackbarStore } from "features/GlobalSnackbar"
 import ActionButton from "components/Button/ActionButton"
 import ComingSoonForm from "components/ComingSoonForm"
 import { useState } from "react"
 import Tooltip from "components/Tooltip"
+import ShareStore from "components/ShareStore"
+import useSWR from "swr"
 
 const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
   const [openComing, setOpenComing] = useState(false)
+  const [openShareStore, setOpenShareStore] = useState(false)
+  const { data: store } = useSWR(`/stores/${placeId}`)
   const fullScreen = useMediaQuery(devices.mobileXl)
-  const { openSnackbar, setMessage } = snackbarStore((state) => ({
-    openSnackbar: state.openSnackbar,
-    setMessage: state.setMessage,
-  }))
 
   function handleShare() {
-    const origin = window.location.origin
-    const shareLink = `${origin}/share/${placeId}`
-    copy(shareLink)
-    setMessage("已複製到剪貼簿")
-    openSnackbar()
+    setOpenShareStore(true)
   }
   function handleComingSoon() {
     setOpenComing(true)
@@ -79,6 +72,11 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
         </DialogContainer>
       </Dialog>
       <ComingSoonForm open={openComing} onClose={() => setOpenComing(false)} />
+      <ShareStore
+        store={store}
+        open={openShareStore}
+        onClose={() => setOpenShareStore(false)}
+      />
     </>
   )
 }

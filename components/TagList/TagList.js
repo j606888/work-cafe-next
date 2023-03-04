@@ -1,7 +1,28 @@
+import { selectedTagIdsStore } from "features/SearchFilter/FilterForm"
 import React from "react"
 import styled from "styled-components"
 
 const TagList = ({ tags = [], withCount = true, className, fixedHeight=false }) => {
+  const { selectedTagIds } = selectedTagIdsStore((state) => ({
+    selectedTagIds: state.selectedTagIds,
+  }))
+
+  tags.sort((x, y) => {
+    const xIndex = selectedTagIds.indexOf(x.id)
+    const yIndex = selectedTagIds.indexOf(y.id)
+
+    if (xIndex === -1 && yIndex === -1) {
+      return x.id - y.id
+    } else if (xIndex === -1) {
+      return 1
+    } else if (yIndex === -1) {
+      return -1
+    } else {
+      return xIndex - yIndex
+    }
+  })
+
+
   if (withCount) {
     return (
       <Container className={className} fixedHeight={fixedHeight}>

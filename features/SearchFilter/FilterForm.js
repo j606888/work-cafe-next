@@ -3,11 +3,17 @@ import CloseButton from "components/CloseButton"
 import { grey01 } from "constants/color"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
 import { devices } from "constants/styled-theme"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import MapDisplayGroup from "./MapDisplayGroup"
 import OpenTimeGroup from "./OpenTimeGroup"
 import TagsGroup from "./TagsGroup"
+import create from "zustand"
+
+export const selectedTagIdsStore = create((set) => ({
+  selectedTagIds: [],
+  setSelectedTagIds: (selectedTagIds) => set({ selectedTagIds }),
+}))
 
 const FilterForm = ({
   onClose,
@@ -25,6 +31,13 @@ const FilterForm = ({
   const [wakeUp, setWakeUp] = useState(_wakeUp)
   const [hideChain, setHideChain] = useState(_hideChain)
   const [tagIds, setTagIds] = useState(_tagIds)
+  const { setSelectedTagIds } = selectedTagIdsStore((state) => ({
+    setSelectedTagIds: state.setSelectedTagIds,
+  }))
+
+  useEffect(() => {
+    setSelectedTagIds(tagIds)
+  }, [tagIds, setSelectedTagIds])
 
   const setters = {
     openType: setOpenType,

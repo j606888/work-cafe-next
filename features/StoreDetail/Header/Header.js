@@ -1,30 +1,25 @@
-import React, { useRef, useState } from "react"
-import { Box, Menu, MenuItem } from "@mui/material"
+import React, { useState } from "react"
+import {  Menu, MenuItem } from "@mui/material"
 import Tooltip from "components/Tooltip"
-import copy from "copy-to-clipboard"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import styled, { css } from "styled-components"
 import { devices } from "constants/styled-theme"
 import ActionButton from "components/Button/ActionButton"
-import BookmarkButton from "./BookmarkButton"
-import { snackbarStore } from "features/GlobalSnackbar"
 import useUserStore from "stores/useUserStore"
 import { syncPhoto } from "api/admin/store"
 import useSWR from "swr"
 import ComingSoonForm from "components/ComingSoonForm"
 import { grey05 } from "constants/color"
+import ShareStore from "components/ShareStore"
 
-const Header = ({ placeId, url, onClick }) => {
+const Header = ({ placeId, name, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
   const [openNotCafe, setOpenNotCafe] = useState(false)
   const open = Boolean(anchorEl)
-  const { openSnackbar, setMessage } = snackbarStore((state) => ({
-    openSnackbar: state.openSnackbar,
-    setMessage: state.setMessage,
-  }))
   const [openComing, setOpenComing] = useState(false)
+  const [openShareStore, setOpenShareStore] = useState(false)
   const user = useUserStore((state) => state.user)
-  const { mutate } = useSWR(`/stores/${placeId}`)
+  const { data: store, mutate } = useSWR(`/stores/${placeId}`)
 
   function handleMoreClick(e) {
     setAnchorEl(e.currentTarget)
@@ -34,14 +29,18 @@ const Header = ({ placeId, url, onClick }) => {
     setOpenNotCafe(false)
   }
   function handleNavigate() {
-    window.open(url, "_blank")
+    const baseUrl = "https://www.google.com/maps/dir/"
+    const queryParams = {
+      api: 1,
+      query: "Google",
+      destination_place_id: placeId,
+      destination: name
+    }
+    const queryString = new URLSearchParams(queryParams).toString()
+    window.open(`${baseUrl}?${queryString}`, "_blank")
   }
   function handleShare() {
-    const origin = window.location.origin
-    const shareLink = `${origin}/share/${placeId}`
-    copy(shareLink)
-    setMessage("已複製到剪貼簿")
-    openSnackbar()
+    setOpenShareStore(true)
     setAnchorEl(null)
   }
   function handleComingSoon() {
@@ -97,6 +96,11 @@ const Header = ({ placeId, url, onClick }) => {
           <MenuItem onClick={syncPhotos}>新增照片5張</MenuItem>
         )}
       </Menu>
+      <ShareStore
+        store={store}
+        open={openShareStore}
+        onClose={() => setOpenShareStore(false)}
+      />
       <NotCafeReport
         placeId={placeId}
         open={openNotCafe}
