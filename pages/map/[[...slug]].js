@@ -140,6 +140,7 @@ const ContentContainer = styled.div`
   top: calc(80px + 40px + 112px);
   bottom: 0;
   overflow-y: auto;
+  box-sizing: border-box;
 
   @media ${devices.mobileXl} {
     width: 100%;
