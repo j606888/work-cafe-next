@@ -30,8 +30,6 @@ export default function StoreList() {
   const [showBorder, setShowBorder] = React.useState(true)
   const storesRef = React.useRef({})
 
-  
-
   const handleMouseEnter = (placeId) => {
     setBouncePlaceId(placeId)
   }
@@ -45,6 +43,7 @@ export default function StoreList() {
       lat,
       lng,
     })
+    map.setZoom(17)
     onClick({ placeId, lat, lng })
   }
 

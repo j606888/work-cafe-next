@@ -28,7 +28,7 @@ const StoreMarkers = ({ store }) => {
   }))
   const fullScreen = useMediaQuery(devices.mobileXl)
   const showLabel2 =
-    (!fullScreen && showLabel) || (fullScreen && map?.zoom >= 15)
+    (!fullScreen && showLabel) || (fullScreen && map?.zoom >= 16)
 
   function handleClickMarker(placeId) {
     if (fullScreen) {
@@ -39,8 +39,6 @@ const StoreMarkers = ({ store }) => {
       setCenterWithPlaceIdToURL(placeId)
     }
   }
-
-  
 
   useEffect(() => {
     if (map && stores && stores.stores.length > 0) {

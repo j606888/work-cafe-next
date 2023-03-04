@@ -15,6 +15,7 @@ const MyLocationMarker = () => {
         url: "/me.svg",
         scaledSize: new google.maps.Size(48, 48),
       }}
+      zIndex={100}
     />
   )
 }
