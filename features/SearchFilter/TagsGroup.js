@@ -1,3 +1,4 @@
+import { Alert } from "@mui/material"
 import { grey02, grey03 } from "constants/color"
 import React from "react"
 import styled, { css } from "styled-components"
@@ -23,6 +24,7 @@ const TagsGroup = ({ tagIds, onChange = () => {} }) => {
   return (
     <Container>
       <H3>店家特色</H3>
+      <Alert severity="warning" sx={{ mb: 2 }}>目前評論數量不足，搭配關鍵字可能會因此找不到店家，還請多包涵。</Alert>
       <TagList>
         {data.map(({ id, name, _primary }) => {
           const checked = tagIds.includes(id)
