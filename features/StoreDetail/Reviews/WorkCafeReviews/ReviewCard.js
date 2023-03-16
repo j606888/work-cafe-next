@@ -97,7 +97,7 @@ function _dateString(timestamp, visitDay) {
   const year = time.getFullYear()
   const month = time.getMonth() + 1
   const date = time.getDate()
-  const isWeekend = visitDay === "weekday" ? "週末造訪" : "平日造訪"
+  const isWeekend = visitDay === "weekend" ? "週末造訪" : "平日造訪"
 
   return `${year}年${month}月${date}日・${isWeekend}`
 }
