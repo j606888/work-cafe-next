@@ -11,7 +11,7 @@ const Button = ({ onClick, children, variant, width }) => {
 }
 
 const Container = styled.button`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;

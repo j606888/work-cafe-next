@@ -10,7 +10,7 @@ import {
 import CloseButton from "components/CloseButton"
 import StorePhotoApi from "api/store-photo"
 import { grey01, grey02, grey03, orange100 } from "constants/color"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import RecommendButton from "./RecommendButton"
 import useSWR from "swr"
@@ -23,6 +23,7 @@ import ImageUpload from "./ImageUpload"
 import axios from "axios"
 import LinearProgress from "components/LinearProgress"
 import { snackbarStore } from "features/GlobalSnackbar"
+import { debounce } from "lodash"
 
 const RadioColor = {
   "&.Mui-checked": {
@@ -85,7 +86,7 @@ const ReviewForm = ({ store }) => {
   }
 
   async function handleSubmit() {
-    if (!decision) return
+    if (!decision || isLoading) return
 
     setIsLoading(true)
 
@@ -342,7 +343,7 @@ const Buttons = styled.div`
   gap: 16px;
 `
 
-const ActionButton = styled.div`
+const ActionButton = styled.button`
   display: flex;
   width: 80px;
   height: 44px;
@@ -350,12 +351,13 @@ const ActionButton = styled.div`
   justify-content: center;
   border: 1px solid ${grey01};
   border-radius: 12px;
+  background-color: #ffffff;
   cursor: pointer;
 
   ${({ contained }) =>
     contained &&
     css`
-      background-color: ${grey01};
+      background-color: #000000;
       border: 1px solid ${grey03};
       color: #ffffff;
     `}
