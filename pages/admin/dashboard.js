@@ -1,13 +1,11 @@
-import React from 'react'
-import AdminLayout from "features/admin/AdminLayout"
-import Dashboard from 'features/admin/AdminDashboard'
+import React from "react"
+import Dashboard from "features/admin/AdminDashboard"
+import { LayoutAdmin } from "layout/admin"
 
 const DashboardPage = () => {
-  return (
-    <AdminLayout>
-      <Dashboard />
-    </AdminLayout>
-  )
+  return <Dashboard />
 }
+
+DashboardPage.PageLayout = LayoutAdmin
 
 export default DashboardPage

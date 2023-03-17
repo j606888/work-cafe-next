@@ -21,7 +21,13 @@ function MyApp({ Component, pageProps }) {
         }}
       >
         <ThemeProvider theme={styledTheme}>
-          <Component {...pageProps} />
+          {Component.PageLayout ? (
+            <Component.PageLayout>
+              <Component {...pageProps} />
+            </Component.PageLayout>
+          ) : (
+            <Component {...pageProps} />
+          )}
         </ThemeProvider>
       </SWRConfig>
     </>

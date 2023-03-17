@@ -1,8 +1,11 @@
-import AdminLayout from "features/admin/AdminLayout"
-import ChainStoreList from "features/admin/ChainStoreList";
+import React from "react"
+import ChainStoreList from "features/admin/ChainStoreList"
+import { LayoutAdmin } from "layout/admin"
 
-export default function ChainStorePage() {
-  return <AdminLayout>
-    <ChainStoreList />
-  </AdminLayout>
+const ChainStorePage = () => {
+  return <ChainStoreList />
 }
+
+ChainStorePage.PageLayout = LayoutAdmin
+
+export default ChainStorePage

@@ -1,12 +1,10 @@
-import AdminLayout from "features/admin/AdminLayout"
 import AdminTags from "features/admin/AdminTags"
+import { LayoutAdmin } from "layout/admin"
 
 const AdminTagsPage = () => {
-  return(
-  <AdminLayout>
-    <AdminTags />
-  </AdminLayout>
-  )
+  return <AdminTags />
 }
+
+AdminTagsPage.PageLayout = LayoutAdmin
 
 export default AdminTagsPage
