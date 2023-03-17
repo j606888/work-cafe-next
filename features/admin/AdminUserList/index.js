@@ -6,10 +6,10 @@ import Skeleton from "components/Skeleton"
 import { useReducer } from "react"
 
 const columns = [
-  createCol("id", "ID", "left", true),
   createCol("name", "Name", "left", false),
-  createCol("email", "Email", "right", false),
-  createCol("createdAt", "Created At", "right", true),
+  createCol("email", "Email", "left", false),
+  createCol("reviewsCount", "Reviews", "left", false),
+  createCol("createdAt", "Created At", "left", true),
 ]
 
 function createCol(id, label, align, canOrder) {
