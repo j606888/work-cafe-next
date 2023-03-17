@@ -1,6 +1,7 @@
 import React from "react"
-import { TableCell, TableRow, TableBody } from "@mui/material"
+import { TableCell, TableRow, TableBody, Avatar } from "@mui/material"
 import Link from "next/link"
+import dayjs from "dayjs"
 
 const StoreRow = ({ row }) => {
   return (
@@ -23,12 +24,19 @@ const StoreRow = ({ row }) => {
 const UserRow = ({ row }) => {
   return (
     <TableRow hover role="checkbox" tabIndex={-1}>
-      <TableCell>
-        <Link href={`/admin/users/${row.id}`}>{row.id}</Link>
+      <TableCell align="left" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Avatar
+          alt={row.name}
+          src={row.avatarUrl}
+          sx={{ width: 36, height: 36 }}
+        />
+        <span>{row.name}</span>
       </TableCell>
-      <TableCell align="left">{row.name}</TableCell>
-      <TableCell align="right">{row.email}</TableCell>
-      <TableCell align="right">{row.createdAt}</TableCell>
+      <TableCell align="left">{row.email}</TableCell>
+      <TableCell align="left">{row.reviewsCount}</TableCell>
+      <TableCell align="left">
+        {dayjs(row.createdAt).format("YYYY/MM/DD")}
+      </TableCell>
     </TableRow>
   )
 }

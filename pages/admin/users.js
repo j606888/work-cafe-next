@@ -1,12 +1,10 @@
 import AdminUserList from "features/admin/AdminUserList"
-import AdminLayout from "features/admin/AdminLayout"
+import { LayoutAdmin } from "layout/admin"
 
 const UserPage = () => {
-  return (
-    <AdminLayout>
-      <AdminUserList />
-    </AdminLayout>
-  )
+  return <AdminUserList />
 }
+
+UserPage.PageLayout = LayoutAdmin
 
 export default UserPage

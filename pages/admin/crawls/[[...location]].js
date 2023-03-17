@@ -1,12 +1,10 @@
-import AdminLayout from "features/admin/AdminLayout"
 import AdminStoreCrawler from "features/admin/AdminStoreCrawler"
+import { LayoutAdmin } from "layout/admin"
 
 const Map = () => {
-  return (
-    <AdminLayout>
-      <AdminStoreCrawler />
-    </AdminLayout>
-  )
+  return <AdminStoreCrawler />
 }
+
+Map.PageLayout = LayoutAdmin
 
 export default Map
