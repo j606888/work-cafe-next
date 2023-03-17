@@ -9,6 +9,7 @@ import {
   BugReport as BugReportIcon,
   Hub as HubIcon,
   Sell as SellIcon,
+  Message as MessageIcon
 } from "@mui/icons-material"
 import AppBar from "./AppBar"
 import MiniDrawer from "components/MiniDrawer"
@@ -46,6 +47,11 @@ const lists = [
     text: "Users",
     url: "/admin/tags",
     icon: <SellIcon />,
+  },
+  {
+    text: "Reviews",
+    url: "/admin/reviews",
+    icon: <MessageIcon />,
   },
 ]
 
@@ -87,7 +93,7 @@ const AdminLayout = ({ children }) => {
         handleLogout={handleLogout}
       />
       <MiniDrawer open={open} lists={lists} />
-      <Box component="main" sx={{ flexGrow: 1, zIndex: 10, paddingTop: '64px' }}>
+      <Box component="main" sx={{ flexGrow: 1, zIndex: 10, paddingTop: '64px', boxSizing: 'border-box' }}>
         {children}
       </Box>
     </Box>
