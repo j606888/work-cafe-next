@@ -6,8 +6,6 @@ import NewStore from "features/NewStore"
 import React, { useState } from "react"
 import styled from "styled-components"
 
-const REPORT_URL = "https://forms.gle/ievHHnQT6U3UNQEdA"
-
 const NoMatch = () => {
   const [open, setOpen] = useState(false)
 
@@ -18,16 +16,10 @@ const NoMatch = () => {
         <H3>找不到相符的咖啡店</H3>
         <P>請嘗試其他搜尋關鍵字，或減少篩選條件。</P>
         <P>
-          若仍找不到店家，請
-          <A href={REPORT_URL} target="_blank">
-            回報問題
-          </A>
-          ，我們將儘速處理。
+          若仍找不到店家，請協助我們
+          <A onClick={() => setOpen(true)}>新增店家</A>
+          ，系統將立即匯入資料。
         </P>
-        <br />
-        <Button variant onClick={() => setOpen(true)}>
-          新增店家
-        </Button>
       </Container>
       <NewStore open={open} onClose={() => setOpen(false)} />
     </>
@@ -46,8 +38,9 @@ const P = styled.p`
   margin: 2px;
 `
 
-const A = styled.a`
+const A = styled.span`
   color: #5c8aff;
+  cursor: pointer;
 `
 
 const Container = styled.div`
@@ -58,7 +51,7 @@ const Container = styled.div`
 
   @media ${devices.mobileXl} {
     width: 100%;
-    padding-top: 24px;
+    padding: 24px;
     img {
       display: none;
     }

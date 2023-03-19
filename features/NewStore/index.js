@@ -15,6 +15,8 @@ import CityCenter from "constants/city-center"
 import { createStore, storeGoogleSearch } from "api/stores"
 import StoreCard from "./StoreCard"
 
+const REPORT_URL = "https://forms.gle/ievHHnQT6U3UNQEdA"
+
 const NewStore = ({ open, onClose }) => {
   const [location, setLocation] = useState("")
   const [keyword, setKeyword] = useState("")
@@ -55,7 +57,7 @@ const NewStore = ({ open, onClose }) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <Box sx={{ width: 420 }}>
+      <Box sx={{ maxWidth: 420 }}>
         <h3>新增店家</h3>
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
           <InputLabel id="select-city-label">店家縣市</InputLabel>
@@ -93,7 +95,11 @@ const NewStore = ({ open, onClose }) => {
         </FormControl>
         {notFound && (
           <Alert severity="error" sx={{ mt: 2 }}>
-            搜尋不到店家QQ，只能麻煩你填單了
+            搜尋不到店家QQ，只能麻煩你
+            <a href={REPORT_URL} target="_blank" rel="noreferrer">
+              回報
+            </a>
+            了
           </Alert>
         )}
         {stores.map((store) => (
