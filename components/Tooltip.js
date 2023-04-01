@@ -2,13 +2,13 @@ import React from "react"
 import { Box, Tooltip as MuiTooltip } from "@mui/material"
 import { tooltipClasses } from "@mui/material/Tooltip"
 import { styled } from "@mui/material/styles"
-import { grey02 } from "constants/color"
+import { colors } from "constants/styled-theme"
 
 const StyledTooltip = styled(({ className, ...props }) => (
   <MuiTooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: grey02,
+    backgroundColor: colors.black02,
     color: "#FFFFFF",
     boxShadow: theme.shadows[1],
     fontSize: 14,

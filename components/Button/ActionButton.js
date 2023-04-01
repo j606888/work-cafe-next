@@ -1,4 +1,3 @@
-import { grey01, grey04 } from 'constants/color'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -12,7 +11,7 @@ const ActionButton = ({ svg, onClick, children }) => {
 }
 
 const Container = styled.div`
-  border: 1px solid ${grey04};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   border-radius: 12px;
   display: flex;
   align-items: center;

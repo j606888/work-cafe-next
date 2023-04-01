@@ -1,4 +1,3 @@
-import { grey06, orange100 } from 'constants/color'
 import React from 'react'
 import styled from 'styled-components'
 import { useMediaQuery } from '@mui/material'

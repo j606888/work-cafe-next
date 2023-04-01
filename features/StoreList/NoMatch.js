@@ -1,7 +1,3 @@
-import { Box } from "@mui/material"
-import Button from "components/Button"
-import { grey02 } from "constants/color"
-
 import NewStore from "features/NewStore"
 import React, { useState } from "react"
 import styled from "styled-components"
@@ -28,13 +24,13 @@ const NoMatch = () => {
 
 const H3 = styled.h3`
   font-size: 24px;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.black02};
   font-weight: 700;
 `
 
 const P = styled.p`
   font-size: 16px;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.black02};
   margin: 2px;
 `
 

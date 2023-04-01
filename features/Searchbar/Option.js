@@ -1,4 +1,3 @@
-import { grey01 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
 
@@ -104,7 +103,7 @@ const ShrinkContainer = styled.div`
 `
 
 const StoreNameSpan = styled.span`
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   font-size: 14px;
 `
 

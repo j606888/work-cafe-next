@@ -1,4 +1,3 @@
-import { grey01 } from "constants/color"
 import React from "react"
 import styled, { css } from "styled-components"
 
@@ -15,10 +14,10 @@ const Container = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   padding: 10px 16px;
   border-radius: 12px;
-  border: 1px solid ${grey01};
+  border: 1px solid ${({ theme }) => theme.colors.black01};
   background-color: #ffffff;
   cursor: pointer;
   ${({ width }) => width && `width: ${width}px;`}

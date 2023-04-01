@@ -9,7 +9,6 @@ import useUserStore from "stores/useUserStore"
 import { syncPhoto } from "api/admin/store"
 import useSWR from "swr"
 import ComingSoonForm from "components/ComingSoonForm"
-import { grey05 } from "constants/color"
 import ShareStore from "components/ShareStore"
 
 const Header = ({ placeId, name, url, onClick }) => {
@@ -186,7 +185,7 @@ const MoreButton = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: ${grey05};
+    background-color: ${({ theme }) => theme.colors.grey03};
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

@@ -1,4 +1,3 @@
-import { grey01, grey04 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
 import useSWR from "swr"
@@ -31,11 +30,11 @@ const LinkContainer = styled.div`
 const GoogleReviewLink = styled.a`
   margin: 0 auto;
   display: inline-block;
-  border: 1px solid ${grey04};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
   border-radius: 12px;
   padding: 11px 21px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   text-decoration: none;
 `
 

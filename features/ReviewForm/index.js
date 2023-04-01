@@ -9,7 +9,6 @@ import {
 } from "@mui/material"
 import CloseButton from "components/CloseButton"
 import StorePhotoApi from "api/store-photo"
-import { grey03 } from "constants/color"
 import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import RecommendButton from "./RecommendButton"

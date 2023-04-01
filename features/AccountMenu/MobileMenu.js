@@ -8,7 +8,6 @@ import {
 import React, { useState } from "react"
 import styled from "styled-components"
 import { LINKS } from "features/Header/MainHeader"
-import { grey02 } from "constants/color"
 import UserBlock from "components/UserBlock"
 import useUserStore from "stores/useUserStore"
 
@@ -81,7 +80,7 @@ const Link = styled.a`
   display: flex;
   align-items: center;
   text-align: center;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.black02};
   margin: 18px 0;
   text-decoration: none;
 `

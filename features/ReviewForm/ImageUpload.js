@@ -1,5 +1,3 @@
-import { grey01 } from "constants/color"
-
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
@@ -102,7 +100,7 @@ const Button = styled.button`
   width: 128px;
   height: 44px;
   margin: 0 auto;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
 
   display: flex;
   align-items: center;

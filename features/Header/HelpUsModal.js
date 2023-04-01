@@ -9,9 +9,9 @@ import RateReviewIcon from "@mui/icons-material/RateReview"
 import ReportIcon from "@mui/icons-material/Report"
 import BugReportIcon from "@mui/icons-material/BugReport"
 import styled from "styled-components"
-import { orange100 } from "constants/color"
 import Dialog from "components/Dialog"
 import Button from "components/Button"
+import { colors } from "constants/styled-theme"
 
 const Item = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ const Item = styled.div`
 `
 
 const Link = styled.a`
-  color: ${orange100};
+  color: ${colors.green01};
 `
 
 const HelpUsModal = ({ open, onClose }) => {

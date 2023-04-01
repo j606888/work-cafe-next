@@ -1,12 +1,9 @@
 import { Dialog } from "@mui/material"
 import { useGoogleLogin } from "@react-oauth/google"
-import OrDivider from "components/OrDivider"
-import { grey01, grey02, grey03, grey04 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
 import { googleLogin as googleLoginAPI } from "api/auth"
 import useUserStore from "stores/useUserStore"
-
 
 const DialogStyles = {
   borderRadius: "20px",
@@ -53,7 +50,7 @@ const LoginForm = ({ open, onClose }) => {
 }
 
 const Header = styled.div`
-  border-bottom: 1px solid ${grey04};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey02};
   height: 72px;
   line-height: 72px;
   text-align: center;
@@ -81,7 +78,6 @@ const Title = styled.h3`
   line-height: 38px;
   display: flex;
   align-items: center;
-  color: ${grey01};
   margin: 0;
   margin-bottom: 12px;
 
@@ -99,7 +95,6 @@ const Description = styled.p`
   align-items: center;
   margin: 0;
   margin-bottom: 32px;
-  color: ${grey01};
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin-bottom: 18px;
@@ -109,7 +104,6 @@ const Description = styled.p`
 const Input = styled.input`
   width: 100%;
   background: #ffffff;
-  border: 1px solid ${grey03};
   height: 52px;
   line-height: 52px;
   border-radius: 12px;
@@ -118,7 +112,6 @@ const Input = styled.input`
   font-size: 16px;
 
   &::placeholder {
-    color: ${grey02};
   }
 `
 
@@ -126,7 +119,6 @@ const ConfirmButton = styled.button`
   margin-top: 16px;
   filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.1));
   width: 100%;
-  /* background: ${grey01}; */
   border-radius: 12px;
   height: 44px;
   color: #ffffff;

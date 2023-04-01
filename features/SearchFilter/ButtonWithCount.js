@@ -1,5 +1,3 @@
-import { grey04, orange100 } from "constants/color"
-
 import styled from "styled-components"
 
 const ButtonWithCount = ({ onClick, count }) => {
@@ -20,7 +18,7 @@ const Button = styled.div`
   justify-content: center;
   gap: 4px;
   border-radius: 20px;
-  border: 1px solid ${grey04};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   font-size: 16px;
   flex-shrink: 0;
   filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.04));
@@ -49,7 +47,7 @@ const Badge = styled.div`
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  background-color: ${orange100};
+  background-color: ${({ theme }) => theme.colors.green01};
   border-radius: 50%;
   width: 24px;
   height: 24px;

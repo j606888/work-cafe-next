@@ -1,5 +1,3 @@
-import { grey02 } from "constants/color"
-
 import React from "react"
 import useUserStore from "stores/useUserStore"
 import styled from "styled-components"
@@ -36,8 +34,9 @@ const WorkCafeReviews = ({ placeId }) => {
 const LeaveFirstReview = styled.div`
   margin: 3rem auto;
   text-align: center;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.black02};
   font-size: 16px;
+  font-weight: 500;
   line-height: 22px;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

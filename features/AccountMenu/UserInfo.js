@@ -1,14 +1,14 @@
 import { Avatar, Divider, IconButton, Menu } from '@mui/material'
-import { grey02 } from 'constants/color'
 import React, { useState } from 'react'
 import useUserStore from 'stores/useUserStore'
 import styled, { css } from 'styled-components'
 import Link from 'next/link'
+import { colors } from 'constants/styled-theme'
 
 const MenuStyles = {
   sx: {
     width: '180px',
-    color: grey02,
+    color: colors.black02,
     fontSize: '16px',
   }
 }
@@ -81,7 +81,7 @@ const MenuItem = styled.div`
   height: 48px;
   padding: 0 24px;
   line-height: 44px;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.black02};
   font-size: 16px;
   display: flex;
   justify-content: space-between;
@@ -91,7 +91,7 @@ const MenuItem = styled.div`
   }
 
   a {
-    color: ${grey02};
+    color: ${({ theme }) => theme.colors.black02};
     text-decoration: none;
   }
 

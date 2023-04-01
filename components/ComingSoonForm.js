@@ -1,5 +1,5 @@
 import { Dialog } from "@mui/material"
-import { grey01 } from "constants/color"
+import { colors } from "constants/styled-theme"
 import React from "react"
 import styled from "styled-components"
 import Button from "./Button"
@@ -35,7 +35,7 @@ const ComingSoonForm = ({ open, onClose }) => {
         </Button>
       </ButtonGroup>
       <CloseButton
-        sx={{ top: 12, right: 12, transform: "none", color: grey01 }}
+        sx={{ top: 12, right: 12, transform: "none", color: colors.black01 }}
         onClick={onClose}
       />
     </Dialog>
@@ -47,12 +47,12 @@ const H3 = styled.h3`
   font-size: 16px;
   margin: 0;
   margin-bottom: 12px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
 `
 
 const P = styled.p`
   font-size: 14px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
 `
 
 const ButtonGroup = styled.div`

@@ -1,7 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-
-import { grey01, grey06, orange20 } from "constants/color"
 import formControlStore from "stores/formControlStore"
 
 const Recommend = ({ good = 0, bad = 0 }) => {
@@ -64,7 +62,7 @@ const Container = styled.div`
 `
 
 const Divider = styled.div`
-  background-color: ${grey06};
+  background-color: ${({ theme }) => theme.colors.white};
   height: 64px;
   width: 2px;
 `

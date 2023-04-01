@@ -1,4 +1,3 @@
-import { grey03 } from "constants/color"
 import React from "react"
 import styled from "styled-components"
 import UserAvatar from "./UserAvatar"
@@ -26,7 +25,7 @@ const Container = styled.div`
 
   span {
     font-size: 8px;
-    color: ${grey03};
+    color: ${({ theme }) => theme.colors.grey01};
   }
 `
 

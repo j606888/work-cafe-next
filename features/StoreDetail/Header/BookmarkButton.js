@@ -5,8 +5,6 @@ import { CircularProgress } from "@mui/material"
 import styled from "styled-components"
 import useSWR from "swr"
 import useUserStore from "stores/useUserStore"
-
-import { grey04 } from "constants/color"
 import { formControl } from "features/AccountMenu"
 
 const BookmarkButton = ({ placeId }) => {
@@ -55,7 +53,7 @@ const BookmarkButton = ({ placeId }) => {
 }
 
 const LoadingContainer = styled.div`
-  border: 1px solid ${grey04};
+  border: 1px solid ${({ theme }) => theme.colors.grey02};
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -63,7 +61,7 @@ const LoadingContainer = styled.div`
   height: 44px;
   padding: 0 12px 0 8px;
   cursor: pointer;
-  color: ${grey04};
+  color: ${({ theme }) => theme.colors.grey02};
   padding: 0 24px;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {

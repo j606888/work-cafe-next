@@ -3,16 +3,15 @@ import { styled } from "@mui/material/styles"
 import  {
   linearProgressClasses,
 } from "@mui/material/LinearProgress"
-import { orange100, orange50 } from "constants/color"
-
+import { colors } from "constants/styled-theme"
 
 const CustomLinear = styled(MuiLinearProgress)(({ theme }) => ({
   [`&.${linearProgressClasses.colorPrimary}`]: {
     backgroundColor:
-      orange100
+      colors.green01
   },
   [`& .${linearProgressClasses.bar}`]: {
-    backgroundColor: orange50
+    backgroundColor: colors.green02
   },
 }))
 
