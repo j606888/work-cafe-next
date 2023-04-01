@@ -7,7 +7,6 @@ import ReviewApi from "api/review"
 import useUserStore from "stores/useUserStore"
 import formControlStore from "stores/formControlStore"
 import { Divider } from "@mui/material"
-import { grey02, grey03 } from "constants/color"
 
 const MyReview = ({ placeId }) => {
   const { setNewReviewOpen, setDefaultDecision } = formControlStore((state) => ({
@@ -51,7 +50,7 @@ const MyReview = ({ placeId }) => {
           </div>
         ) : (
           <>
-            <img src="/guests/guest-orange.svg" alt="guest" />
+            <img src="/v2/face-green.svg" alt="guest" />
             <FakeTextBox onClick={handleOpen}>
               留下我的評論（這裡適合辦公嗎？）
             </FakeTextBox>
@@ -84,7 +83,7 @@ const Container = styled.div`
 `
 
 const FakeTextBox = styled.div`
-  border: 1px solid ${grey03};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   height: 44px;
   display: flex;
   align-items: center;
@@ -92,7 +91,7 @@ const FakeTextBox = styled.div`
   padding: 0 12px;
   border-radius: 12px;
   cursor: pointer;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.grey01};
   font-style: normal;
   font-size: 14px;
   line-height: 19px;

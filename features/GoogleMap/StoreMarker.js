@@ -56,7 +56,7 @@ const StoreMarker = ({
 export default StoreMarker
 
 function _iconColor({ isFocus, wakeUp, isBookmark, isBounce, mouseOver }) {
-  if (isFocus || isBounce || mouseOver) return "/pins/target-pin.svg"
+  if (isFocus || isBounce || mouseOver) return "/v2/pin-green.svg"
   if (isBookmark) return "/pins/like-pin.svg"
   if (wakeUp) return "/pins/black-pin.svg"
   return "/pins/black-pin.svg"

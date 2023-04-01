@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material"
 import Select from "components/Select"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
-import { orange100 } from "constants/color"
+import { colors } from "constants/styled-theme"
 
 
 const RadioStyle = {
   "&.Mui-checked": {
-    color: orange100,
+    color: colors.green01,
   },
 }
 

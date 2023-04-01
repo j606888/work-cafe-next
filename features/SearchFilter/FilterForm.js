@@ -1,6 +1,5 @@
 import { Divider } from "@mui/material"
 import CloseButton from "components/CloseButton"
-import { grey01 } from "constants/color"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
 
 import React, { useEffect, useState } from "react"
@@ -103,7 +102,7 @@ const Header = styled.div`
   line-height: 22px;
   display: flex;
   align-items: center;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   position: relative;
 
   span {
@@ -129,7 +128,7 @@ const Body = styled.div`
     line-height: 33px;
     display: flex;
     align-items: center;
-    color: ${grey01};
+    color: ${({ theme }) => theme.colors.black01};
     margin: 0;
   }
 
@@ -162,13 +161,13 @@ const Footer = styled.div`
 const ClearText = styled.span`
   text-decoration-line: underline;
   font-size: 16px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   cursor: pointer;
 `
 
 const ApplyButton = styled.button`
   border: none;
-  background-color: ${grey01};
+  background-color: ${({ theme }) => theme.colors.black01};
   border-radius: 12px;
   height: 44px;
   padding: 0 20px;

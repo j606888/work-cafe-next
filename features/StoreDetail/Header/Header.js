@@ -231,5 +231,3 @@ const Button = styled.button`
     }
   }
 `
-
-const UrlButton = Button.withComponent("a")

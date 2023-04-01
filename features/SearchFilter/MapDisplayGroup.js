@@ -1,5 +1,5 @@
 import { Checkbox, Tooltip, FormControlLabel, Box } from "@mui/material"
-import { orange100 } from "constants/color"
+import { colors } from "constants/styled-theme"
 import React from "react"
 import styled from "styled-components"
 
@@ -17,7 +17,7 @@ const MapDisplayGroup = ({ wakeUp, hideChain, onChange = () => {} }) => {
       <FormControlLabel
         control={
           <Checkbox
-            sx={{ "&.Mui-checked": { color: orange100 } }}
+            sx={{ "&.Mui-checked": { color: colors.green01 } }}
             checked={wakeUp}
             onChange={handleChangeWakeUp}
           />
@@ -28,7 +28,7 @@ const MapDisplayGroup = ({ wakeUp, hideChain, onChange = () => {} }) => {
       <FormControlLabel
         control={
           <Checkbox
-            sx={{ "&.Mui-checked": { color: orange100 } }}
+            sx={{ "&.Mui-checked": { color: colors.green01 } }}
             checked={hideChain}
             onChange={handleChangeHideChain}
           />
@@ -36,7 +36,10 @@ const MapDisplayGroup = ({ wakeUp, hideChain, onChange = () => {} }) => {
         label={
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <span>隱藏連鎖店家</span>
-            <Tooltip placement="right" title="如：星巴克、路易莎、cama café 等連鎖店家">
+            <Tooltip
+              placement="right"
+              title="如：星巴克、路易莎、cama café 等連鎖店家"
+            >
               <img src="/help.svg" alt="help" width="28px" height="28px" />
             </Tooltip>
           </Box>

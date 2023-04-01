@@ -20,7 +20,7 @@ const Recommend = ({ good = 0, bad = 0 }) => {
   return (
     <Container>
       <BlockContainer onClick={() => handleClick("yes")}>
-        <img src="/thumb-up.svg" alt="thumb-up" />
+        <img src="/v2/thumb-up-green.svg" alt="thumb-up" width={52} />
         <div>
           <Number>{good}</Number>
           <Text>人 推薦辦公</Text>
@@ -28,7 +28,7 @@ const Recommend = ({ good = 0, bad = 0 }) => {
       </BlockContainer>
       <Divider />
       <BlockContainer onClick={() => handleClick("no")}>
-        <img src="/thumb-down.svg" alt="thumb-down" />
+        <img src="/v2/thumb-down-black.svg" alt="thumb-down" />
         <div>
           <Number>{bad}</Number>
           <Text>人 不推薦辦公</Text>
@@ -48,7 +48,7 @@ const Container = styled.div`
   display: flex;
   gap: 2.5rem;
   margin-top: 1rem;
-  background-color: ${orange20};
+  background-color: ${({ theme }) => theme.colors.green03};
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
@@ -72,10 +72,10 @@ const Divider = styled.div`
 const BlockContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .4rem;
 
   img {
-    width: 42px;
+    width: 52px;
   }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -98,7 +98,7 @@ const Text = styled.span`
   font-style: normal;
   font-size: 14px;
   line-height: 24px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 12px;

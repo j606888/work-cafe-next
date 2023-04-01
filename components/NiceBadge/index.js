@@ -2,11 +2,10 @@ import { grey06, orange100 } from 'constants/color'
 import React from 'react'
 import styled from 'styled-components'
 import { useMediaQuery } from '@mui/material'
-import { devices } from 'constants/styled-theme'
 
 const NiceBadge = ({ number=0, className }) => {
   const fullScreen = useMediaQuery('(max-width: 720px)')
-  const src = fullScreen ? '/nice-small.svg' : '/nice-large.svg'
+  const src = fullScreen ? '/v2/badge-nice-small.svg' : '/v2/badge-nice-large.svg'
 
   return (
     <Container className={className}>
@@ -20,10 +19,10 @@ const Container = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${grey06};
-  background: ${orange100};
+  border: 1px solid ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.green01};
   border-radius: 24px;
-  color: ${grey06};
+  color: ${({ theme }) => theme.colors.white};
   padding: 0 8px 0 4px;
   height: 24px;
 

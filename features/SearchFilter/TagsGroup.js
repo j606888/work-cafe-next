@@ -1,5 +1,4 @@
 import { Alert } from "@mui/material"
-import { grey02, grey03 } from "constants/color"
 import React from "react"
 import styled, { css } from "styled-components"
 import useSWR from "swr"
@@ -57,10 +56,10 @@ const Tag = styled.span`
   display: inline-block;
   height: 36px;
   padding: 0 16px;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.black02};
   font-size: 16px;
   background-color: #ffffff;
-  border: 1px solid ${grey03};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   border-radius: 12px;
   line-height: 36px;
   cursor: pointer;
@@ -68,8 +67,8 @@ const Tag = styled.span`
   ${({ checked }) =>
     checked &&
     css`
-      background-color: ${grey02};
-      border: 1px solid ${grey02};
+      background-color: ${({ theme }) => theme.colors.black02};
+      border: 1px solid ${({ theme }) => theme.colors.black02};
       color: #ffffff;
     `}
 `

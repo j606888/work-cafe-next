@@ -9,8 +9,8 @@ import {
 } from "@mui/material"
 import CloseButton from "components/CloseButton"
 import StorePhotoApi from "api/store-photo"
-import { grey01, grey02, grey03, orange100 } from "constants/color"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import { grey03 } from "constants/color"
+import React, { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 import RecommendButton from "./RecommendButton"
 import useSWR from "swr"
@@ -23,11 +23,11 @@ import ImageUpload from "./ImageUpload"
 import axios from "axios"
 import LinearProgress from "components/LinearProgress"
 import { snackbarStore } from "features/GlobalSnackbar"
-import { debounce } from "lodash"
+import { colors } from "constants/styled-theme"
 
 const RadioColor = {
   "&.Mui-checked": {
-    color: orange100,
+    color: colors.green01,
   },
 }
 
@@ -234,20 +234,20 @@ const TagCheckbox = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid ${grey03};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
 
-  ${({ checked }) =>
+  ${({ checked, theme }) =>
     checked &&
     css`
-      border: 1px solid ${grey02};
-      background-color: ${grey02};
+      border: 1px solid ${theme.colors.black02};
+      background-color: ${theme.colors.black02};
       color: #ffffff;
     `}
 `
 
 const H2 = styled.h2`
   font-size: 16px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   font-weight: 400;
   margin: 0 80px;
   text-overflow: ellipsis;
@@ -262,7 +262,7 @@ const H2 = styled.h2`
 const H4 = styled.h4`
   font-weight: 700;
   font-size: 20px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   margin: 0;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
@@ -349,24 +349,24 @@ const ActionButton = styled.button`
   height: 44px;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${grey01};
+  border: 1px solid ${({ theme }) => theme.colors.black01};
   border-radius: 12px;
   background-color: #ffffff;
   cursor: pointer;
 
-  ${({ contained }) =>
+  ${({ contained, theme }) =>
     contained &&
     css`
       background-color: #000000;
-      border: 1px solid ${grey03};
+      border: 1px solid ${theme.colors.grey01};
       color: #ffffff;
     `}
 
-  ${({ disabled }) =>
+  ${({ disabled, theme }) =>
     disabled &&
     css`
-      background-color: ${grey03};
-      border: 1px solid ${grey03};
+      background-color: ${theme.colors.grey01};
+      border: 1px solid ${theme.colors.grey01};
       color: #ffffff;
       cursor: not-allowed;
     `}

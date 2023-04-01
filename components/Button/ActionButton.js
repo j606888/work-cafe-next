@@ -20,7 +20,7 @@ const Container = styled.div`
   height: 44px;
   padding: 0 12px 0 8px;
   cursor: pointer;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   &:hover {
     background-color: #f5f5f5;
   }

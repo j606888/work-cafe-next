@@ -1,7 +1,5 @@
-import { orange100 } from "constants/color"
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
-
 
 const Chooser = ({ onChange }) => {
   const [active, setActive] = useState("workCafe")
@@ -54,7 +52,7 @@ const WordButton = styled.button`
     css`
       font-weight: 700;
       color: #222120;
-      border-bottom: 2px solid ${orange100};
+      border-bottom: 2px solid ${({ theme }) => theme.colors.green01};
       z-index: 1;
     `}
 `

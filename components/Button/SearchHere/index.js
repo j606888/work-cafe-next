@@ -28,7 +28,7 @@ const SearchHere = () => {
   const icon = isLoading ? (
     <CircularProgress size={18} />
   ) : (
-    <img src="/search-btn-outline.svg" alt="search-btn" />
+    <img src="/v2/search.svg" alt="search-btn" />
   )
 
   return (

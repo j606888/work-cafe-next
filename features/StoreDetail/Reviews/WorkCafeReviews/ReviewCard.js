@@ -45,8 +45,8 @@ const EditBox = ({ onDelete }) => {
 }
 
 const ICON_MAP = {
-  yes: "/thumb-up.svg",
-  no: "/thumb-down.svg",
+  yes: "/v2/thumb-up-green.svg",
+  no: "/v2/thumb-down-black.svg",
 }
 
 const ReviewCard = ({

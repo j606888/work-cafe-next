@@ -3,6 +3,7 @@ import styled from "styled-components"
 import StarIcon from "@mui/icons-material/Star"
 import StarHalfIcon from "@mui/icons-material/StarHalf"
 import StarOutlineIcon from "@mui/icons-material/StarOutline"
+import { colors } from "constants/styled-theme"
 
 const RatingStars = ({ rating, userRatingsTotal, showRate = true }) => {
   return (
@@ -30,7 +31,7 @@ function chooseStar(limit, rating) {
 }
 
 const style = {
-  color: "#FABC05",
+  color: colors.green01,
   fontSize: 18,
 }
 

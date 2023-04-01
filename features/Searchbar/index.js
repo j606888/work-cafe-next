@@ -105,7 +105,7 @@ const SearchBox = ({ type, children, onSearch, onCancel }) => {
   if (type === "storeList")
     return (
       <>
-        <SvgButton path="search-btn-outline" onClick={onSearch} />
+        <SvgButton path="v2/search" onClick={onSearch} />
         {children}
         <SvgButton path="cancel-filled" onClick={onCancel} />
       </>

@@ -1,4 +1,3 @@
-import { grey01, grey03 } from "constants/color"
 import React, { useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 import OptionList from "./OptionList"
@@ -73,15 +72,15 @@ const SelectedOption = styled.div`
   padding: 0 20px;
   height: 48px;
   line-height: 48px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   background-color: #ffffff;
-  border: 1px solid ${grey03};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   cursor: pointer;
 
   ${({ disabled }) =>
     disabled &&
     css`
-      color: ${grey03};
+      color: ${({ theme }) => theme.colors.grey01};
       cursor: not-allowed;
     `}
 `
