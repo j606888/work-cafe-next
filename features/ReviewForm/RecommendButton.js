@@ -1,15 +1,16 @@
-import { orange20 } from "constants/color"
-import { devices } from "constants/styled-theme"
 import React from "react"
 import styled from "styled-components"
 
 const RecommendButton = ({ decision = true, onClick, checked=false }) => {
-  const src = decision ? "/thumb-up.svg" : "/thumb-down.svg"
+  const color = checked ? "green": "black"
+  const src = decision
+    ? `/v2/thumb-up-${color}.svg`
+    : `/v2/thumb-down-${color}.svg`
   const text = decision ? "推薦" : "不推薦"
 
   return (
     <Container onClick={onClick} checked={checked}>
-      <img src={src} alt={src} />
+      <img src={src} alt={src} width={52} />
       <span>{text}</span>
     </Container>
   )
@@ -18,7 +19,7 @@ const RecommendButton = ({ decision = true, onClick, checked=false }) => {
 const Container = styled.div`
   width: 160px;
   height: 76px;
-  background-color: ${({ checked }) => (checked ? orange20 : "#f8f8f8")};
+  background-color: ${({ theme, checked }) => (checked ? theme.colors.green03 : "#f8f8f8")};
   border-radius: 20px;
   display: flex;
   padding-left: 21px;
@@ -31,7 +32,7 @@ const Container = styled.div`
     color: #222120;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 132px;
     height: 60px;
     padding-left: 18px;

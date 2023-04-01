@@ -1,9 +1,9 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { grey02 } from "constants/color"
 import { snackbarStore } from "features/GlobalSnackbar"
 import React from "react"
 import Dialog from "./Dialog"
 import copy from "copy-to-clipboard"
+import { colors } from "constants/styled-theme"
 
 const ShareStore = ({ open, onClose, store }) => {
   const { setMessage } = snackbarStore((state) => ({
@@ -34,13 +34,13 @@ const ShareStore = ({ open, onClose, store }) => {
         <img src={store.photos[0]} alt={store.name} width={64} height={64} />
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="subtitle2">{store.name}</Typography>
-          <Typography variant="body2" sx={{ color: grey02 }}>
+          <Typography variant="body2" sx={{ color: colors.black02 }}>
             {store.address}
           </Typography>
         </Box>
       </Box>
       <Box sx={{ width: '100%'}}>
-        <Typography variant="body2" sx={{ color: grey02 }}>
+        <Typography variant="body2" sx={{ color: colors.black02 }}>
           分享連結
         </Typography>
         <Box

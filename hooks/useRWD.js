@@ -1,8 +1,8 @@
 import { useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
+
 
 const useRWD = () => {
-  const isFullScreen = useMediaQuery(devices.mobileXl)
+  const isFullScreen = useMediaQuery('(max-width: 720px)')
 
   return { isFullScreen }
 }

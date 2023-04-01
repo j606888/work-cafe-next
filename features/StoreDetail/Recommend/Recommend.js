@@ -1,7 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
-import { grey01, grey06, orange20 } from "constants/color"
 import formControlStore from "stores/formControlStore"
 
 const Recommend = ({ good = 0, bad = 0 }) => {
@@ -20,7 +18,7 @@ const Recommend = ({ good = 0, bad = 0 }) => {
   return (
     <Container>
       <BlockContainer onClick={() => handleClick("yes")}>
-        <img src="/thumb-up.svg" alt="thumb-up" />
+        <img src="/v2/thumb-up-green.svg" alt="thumb-up" width={52} />
         <div>
           <Number>{good}</Number>
           <Text>人 推薦辦公</Text>
@@ -28,7 +26,7 @@ const Recommend = ({ good = 0, bad = 0 }) => {
       </BlockContainer>
       <Divider />
       <BlockContainer onClick={() => handleClick("no")}>
-        <img src="/thumb-down.svg" alt="thumb-down" />
+        <img src="/v2/thumb-down-black.svg" alt="thumb-down" />
         <div>
           <Number>{bad}</Number>
           <Text>人 不推薦辦公</Text>
@@ -48,14 +46,14 @@ const Container = styled.div`
   display: flex;
   gap: 2.5rem;
   margin-top: 1rem;
-  background-color: ${orange20};
+  background-color: ${({ theme }) => theme.colors.green03};
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
   padding: 0 30px;
   cursor: pointer;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 16px 24px;
     gap: 1.2rem;
     padding: 0 16px;
@@ -64,7 +62,7 @@ const Container = styled.div`
 `
 
 const Divider = styled.div`
-  background-color: ${grey06};
+  background-color: ${({ theme }) => theme.colors.white};
   height: 64px;
   width: 2px;
 `
@@ -72,13 +70,13 @@ const Divider = styled.div`
 const BlockContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .4rem;
 
   img {
-    width: 42px;
+    width: 52px;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     gap: 0.6rem;
     img {
       width: 32px;
@@ -89,7 +87,7 @@ const Number = styled.span`
   font-size: 28px;
   font-weight: 500;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 20px;
   }
 `
@@ -98,9 +96,9 @@ const Text = styled.span`
   font-style: normal;
   font-size: 14px;
   line-height: 24px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 12px;
   }
 `

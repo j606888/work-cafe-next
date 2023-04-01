@@ -1,5 +1,3 @@
-import { grey01, grey04 } from 'constants/color'
-import { devices } from 'constants/styled-theme'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -13,7 +11,7 @@ const ActionButton = ({ svg, onClick, children }) => {
 }
 
 const Container = styled.div`
-  border: 1px solid ${grey04};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -21,12 +19,12 @@ const Container = styled.div`
   height: 44px;
   padding: 0 12px 0 8px;
   cursor: pointer;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   &:hover {
     background-color: #f5f5f5;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     border: none;
 
     span {

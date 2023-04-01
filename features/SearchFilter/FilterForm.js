@@ -1,8 +1,7 @@
 import { Divider } from "@mui/material"
 import CloseButton from "components/CloseButton"
-import { grey01 } from "constants/color"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
-import { devices } from "constants/styled-theme"
+
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import MapDisplayGroup from "./MapDisplayGroup"
@@ -103,14 +102,14 @@ const Header = styled.div`
   line-height: 22px;
   display: flex;
   align-items: center;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   position: relative;
 
   span {
     margin: 0 auto;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 62px;
     flex-shrink: 0;
   }
@@ -129,11 +128,11 @@ const Body = styled.div`
     line-height: 33px;
     display: flex;
     align-items: center;
-    color: ${grey01};
+    color: ${({ theme }) => theme.colors.black01};
     margin: 0;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 26px 29px;
     max-height: calc(100% - 62px - 80px);
 
@@ -153,7 +152,7 @@ const Footer = styled.div`
   justify-content: space-between;
   background-color: #ffffff;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 80px;
     flex-shrink: 0;
   }
@@ -162,13 +161,13 @@ const Footer = styled.div`
 const ClearText = styled.span`
   text-decoration-line: underline;
   font-size: 16px;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   cursor: pointer;
 `
 
 const ApplyButton = styled.button`
   border: none;
-  background-color: ${grey01};
+  background-color: ${({ theme }) => theme.colors.black01};
   border-radius: 12px;
   height: 44px;
   padding: 0 20px;

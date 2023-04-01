@@ -4,7 +4,7 @@ import ImagesWorm from "components/ImagesWorm/ImagesWorm"
 import { useState } from "react"
 import { MoreVert } from "@mui/icons-material"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import TagList from "components/TagList/TagList"
 import DeleteConfirmDialog from "./DeleteConfirmDialog"
 
@@ -45,8 +45,8 @@ const EditBox = ({ onDelete }) => {
 }
 
 const ICON_MAP = {
-  yes: "/thumb-up.svg",
-  no: "/thumb-down.svg",
+  yes: "/v2/thumb-up-green.svg",
+  no: "/v2/thumb-down-black.svg",
 }
 
 const ReviewCard = ({
@@ -144,7 +144,7 @@ const Content = styled.div`
     margin-bottom: 0;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     h6 {
       font-size: 14px;
     }

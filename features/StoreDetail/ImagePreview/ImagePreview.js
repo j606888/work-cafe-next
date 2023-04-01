@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import ImageCanvas from "./ImageCanvas"
 
 const Container = styled.div`
@@ -14,7 +14,7 @@ const Container = styled.div`
     "A C";
   position: relative;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: flex;
     gap: 8px;
     overflow-x: auto;
@@ -36,7 +36,7 @@ const Box = styled.div`
     object-fit: cover;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     ${({ hide }) => hide && `display: none;`}
     width: ${({fullWidth}) => fullWidth ? '100%' : '90%'};
     height: 240px;
@@ -91,7 +91,7 @@ const Button = styled.button`
   border: 1px solid #757575;
   cursor: pointer;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }
 `

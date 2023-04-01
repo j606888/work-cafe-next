@@ -1,4 +1,4 @@
-import { devices } from "constants/styled-theme"
+
 import GoogleMap from "features/GoogleMap"
 import Header from "features/Header"
 import styled from "styled-components"
@@ -123,7 +123,7 @@ const StoreDetailContainer = styled.div`
   bottom: 0;
   overflow-y: auto;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;
     top: 56px;
     height: calc(100% - 56px);
@@ -142,7 +142,7 @@ const ContentContainer = styled.div`
   overflow-y: auto;
   box-sizing: border-box;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;
     height: 248px;
     bottom: 0;
@@ -163,7 +163,7 @@ const MapContainer = styled.div`
   bottom: 0;
   ${labelStyles};
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     position: fixed;
     width: 100%;
     height: ${({ isLanding }) =>

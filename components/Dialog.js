@@ -1,8 +1,7 @@
 import React from 'react'
 import { Dialog as MuiDialog, IconButton } from "@mui/material"
 import CloseButton from '@mui/icons-material/Close'
-import { grey01 } from 'constants/color'
-
+import { colors } from 'constants/styled-theme'
 
 const PaperProps = {
   borderRadius: "20px",
@@ -17,7 +16,7 @@ const IconButtonSx = {
   position: "absolute",
   right: "12px",
   top: "12px",
-  color: grey01,
+  color: colors.black01,
   "&:hover": {
     cursor: "pointer",
   },

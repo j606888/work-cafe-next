@@ -3,7 +3,7 @@ import styled, { css } from "styled-components"
 import CarouselControls, { Button } from "./CarouselControls"
 import CarouselIndicators from "./CarouselIndicators"
 import CarouselItem from "./CarouselItem"
-import { devices } from "constants/styled-theme"
+
 import { useMediaQuery } from "@mui/material"
 
 const ImageCarousel = ({
@@ -14,7 +14,7 @@ const ImageCarousel = ({
   mHeight = 154,
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0)
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const fullScreen = useMediaQuery('(max-width: 720px)')
 
   const prev = (e) => {
     e.stopPropagation()
@@ -78,7 +78,7 @@ const Container = styled.div`
     opacity: 1;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     ${({ mWidth, mHeight }) => css`
       width: ${mWidth}px;
       height: ${mHeight}px;

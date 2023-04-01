@@ -1,13 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import useSWR from "swr"
 import WorkCafeReview from "./ReviewCard"
 import ReviewApi from "api/review"
 import useUserStore from "stores/useUserStore"
 import formControlStore from "stores/formControlStore"
 import { Divider } from "@mui/material"
-import { grey02, grey03 } from "constants/color"
 
 const MyReview = ({ placeId }) => {
   const { setNewReviewOpen, setDefaultDecision } = formControlStore((state) => ({
@@ -51,7 +50,7 @@ const MyReview = ({ placeId }) => {
           </div>
         ) : (
           <>
-            <img src="/guests/guest-orange.svg" alt="guest" />
+            <img src="/v2/face-green.svg" alt="guest" />
             <FakeTextBox onClick={handleOpen}>
               留下我的評論（這裡適合辦公嗎？）
             </FakeTextBox>
@@ -78,13 +77,13 @@ const Container = styled.div`
   align-items: center;
   margin: 28px 0;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 24px 0;
   }
 `
 
 const FakeTextBox = styled.div`
-  border: 1px solid ${grey03};
+  border: 1px solid ${({ theme }) => theme.colors.grey01};
   height: 44px;
   display: flex;
   align-items: center;
@@ -92,7 +91,7 @@ const FakeTextBox = styled.div`
   padding: 0 12px;
   border-radius: 12px;
   cursor: pointer;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.grey01};
   font-style: normal;
   font-size: 14px;
   line-height: 19px;
@@ -100,7 +99,7 @@ const FakeTextBox = styled.div`
     background-color: #f5f5f5;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 36px;
     font-size: 12px;
   }

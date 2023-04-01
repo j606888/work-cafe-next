@@ -1,6 +1,5 @@
 import { Tooltip, useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import LoginForm from "./LoginForm"
 import { GoogleOAuthProvider } from "@react-oauth/google"
@@ -21,7 +20,7 @@ const AccountMenu = () => {
     openForm: state.openForm,
     setOpenForm: state.setOpenForm,
   }))
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const fullScreen = useMediaQuery('(max-width: 720px)')
   const user = useUserStore((state) => state.user)
 
   function handleOpenForm() {

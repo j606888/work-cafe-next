@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styled, { css } from "styled-components"
-import { devices } from "constants/styled-theme"
+
 
 const ToggleButton2 = ({ open, isOpenNow, closeTime, onClick }) => {
   const displayText = isOpenNow ? "營業中" : "休息中"
@@ -71,7 +71,7 @@ export default OpenTime
 const Container = styled.div`
   padding-left: 41px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 0 24px;
     padding-left: 0;
   }
@@ -90,7 +90,7 @@ const ToggleButton = styled.div`
     color: #222120;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     a {
       display: none;
     }

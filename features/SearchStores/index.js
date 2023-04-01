@@ -1,5 +1,3 @@
-import { grey04 } from 'constants/color'
-import { devices } from 'constants/styled-theme'
 import Searchbar from 'features/Searchbar'
 import SearchFilter from 'features/SearchFilter'
 import React from 'react'
@@ -26,9 +24,9 @@ const Container = styled.div`
   align-items: center;
   padding: 0 28px;
   gap: 12px;
-  ${({ showBorder }) => showBorder && `border-bottom: 1px solid ${grey04};`}
+  ${({ showBorder, theme }) => showBorder && `border-bottom: 1px solid ${theme.colors.grey02};`}
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 84px;
     width: 100%;
     top: 56px;

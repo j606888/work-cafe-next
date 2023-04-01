@@ -1,5 +1,3 @@
-import { grey03 } from 'constants/color'
-import { devices } from 'constants/styled-theme'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -16,17 +14,17 @@ const OrDivider = () => {
 const Container = styled.div`
   display: flex;
   align-items: center;
-  color: ${grey03};
+  color: ${({ theme }) => theme.colors.grey01};
   height: 80px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 64px;
   }
 `
 
 const Line = styled.div`
   width: 100%;
-  border-top: 1px solid ${grey03};
+  border-top: 1px solid ${({ theme }) => theme.colors.grey01};
 `
 
 const Or = styled.span`

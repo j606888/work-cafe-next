@@ -6,11 +6,11 @@ import useSearchStores from "hooks/useSearchStores"
 import store from "stores/store"
 import useUpdateURL from "hooks/useUpdateURL"
 import { useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
+
 
 export default function StoreList() {
   const { setCenterWithPlaceIdToURL } = useUpdateURL()
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const fullScreen = useMediaQuery('(max-width: 720px)')
   const { data: stores } = useSearchStores()
   const {
     map,

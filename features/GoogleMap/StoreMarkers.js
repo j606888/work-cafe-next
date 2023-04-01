@@ -1,5 +1,5 @@
 import { useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
+
 import useSearchStores from "hooks/useSearchStores"
 import useUpdateURL from "hooks/useUpdateURL"
 import React, { useEffect } from "react"
@@ -26,7 +26,7 @@ const StoreMarkers = ({ store }) => {
     map: state.map,
     showLabel: state.showLabel,
   }))
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const fullScreen = useMediaQuery('(max-width: 720px)')
   const showLabel2 =
     (!fullScreen && showLabel) || (fullScreen && map?.zoom >= 16)
 

@@ -2,7 +2,6 @@ import React from "react"
 import styled from "styled-components"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import { devices } from "constants/styled-theme"
 
 const CarouselControls = ({ prev, next }) => {
   return (
@@ -36,7 +35,7 @@ export const Button = styled.div`
     background-color: #fff;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 28px;
     width: 28px;
   }
@@ -45,14 +44,14 @@ export const Button = styled.div`
 const LeftButton = styled(Button)`
   left: 20px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     left: 12px;
   }
 `
 const RightButton = styled(Button)`
   right: 20px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     right: 12px;
   }
 `

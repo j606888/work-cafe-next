@@ -5,7 +5,7 @@ import Header from "./Header/Header"
 import TagList from "../../components/TagList/TagList"
 import Recommend from "./Recommend/Recommend"
 import ImagePreview from "./ImagePreview/ImagePreview"
-import { devices } from "constants/styled-theme"
+
 import Reviews from "./Reviews"
 import OpenTime from "./OpenTime/OpenTime"
 import useHintSearch from "features/Searchbar/useHintSearch"
@@ -122,7 +122,7 @@ const Container = styled.div`
   background-color: #ffffff;
   overflow: scroll;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;
   }
 `
@@ -130,7 +130,7 @@ const Container = styled.div`
 const TagListContainer = styled.div`
   padding: 0 41px 12px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 24px;
   }
 `
@@ -143,7 +143,7 @@ const H3 = styled.h3`
   color: #222120;
   padding: 0 48px 0 41px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 24px;
     margin-bottom: 12px;
   }
@@ -164,7 +164,7 @@ const ListItem = styled.div`
     text-overflow: ellipsis;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 3px 24px;
   }
 `

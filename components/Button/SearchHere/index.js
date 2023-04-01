@@ -4,7 +4,6 @@ import CircularProgress from "@mui/material/CircularProgress"
 import store from "stores/store"
 import { mapCenter } from "utils/map-helper"
 import useUpdateURL from "hooks/useUpdateURL"
-import { devices } from "constants/styled-theme"
 
 const SearchHere = () => {
   const { setCenterToURL } = useUpdateURL()
@@ -29,7 +28,7 @@ const SearchHere = () => {
   const icon = isLoading ? (
     <CircularProgress size={18} />
   ) : (
-    <img src="/search-btn-outline.svg" alt="search-btn" />
+    <img src="/v2/search.svg" alt="search-btn" />
   )
 
   return (
@@ -70,7 +69,7 @@ const Container = styled.div`
     color: #222120;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     top: auto;
     transform: none;
     bottom: 20px;

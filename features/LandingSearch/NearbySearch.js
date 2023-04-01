@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
 import { useRouter } from "next/router"
 import store from "stores/store"
 import { CircularProgress } from "@mui/material"
-import { grey01, grey06, orange20 } from "constants/color"
 
 const NearbySearch = () => {
   const [loading, setLoading] = useState(false)
@@ -103,12 +101,13 @@ const Container = styled.div`
   width: 100%;
   height: 112px;
   padding: 30px;
-  background-color: ${orange20};
+  background-color: ${({ theme }) => theme.colors.green03};
+
   border-radius: 28px;
   align-items: center;
   justify-content: space-between;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: block;
     text-align: center;
     height: auto;
@@ -122,7 +121,7 @@ const Content = styled.div`
   gap: 8px;
 
   h3 {
-    color: ${grey01};
+    color: ${({ theme }) => theme.colors.black01};
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -137,10 +136,10 @@ const Content = styled.div`
     line-height: 19px;
     display: flex;
     align-items: center;
-    color: ${grey01};
+    color: ${({ theme }) => theme.colors.black01};
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     p {
       display: block;
     }
@@ -148,13 +147,13 @@ const Content = styled.div`
 `
 
 const SearchBtn = styled.button`
-  background-color: ${grey01};
+  background-color: ${({ theme }) => theme.colors.black01};
   border: none;
   cursor: pointer;
   border-radius: 12px;
   width: 120px;
   height: 52px;
-  color: ${grey06};
+  color: ${({ theme }) => theme.colors.white};
   font-size: 18px;
   line-height: 25px;
   display: flex;
@@ -163,7 +162,7 @@ const SearchBtn = styled.button`
   gap: 4px;
   margin-left: auto;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: auto;
     height: auto;
     padding: 12px 20px;

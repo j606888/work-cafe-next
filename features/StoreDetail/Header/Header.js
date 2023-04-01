@@ -3,13 +3,12 @@ import {  Menu, MenuItem } from "@mui/material"
 import Tooltip from "components/Tooltip"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import styled, { css } from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import ActionButton from "components/Button/ActionButton"
 import useUserStore from "stores/useUserStore"
 import { syncPhoto } from "api/admin/store"
 import useSWR from "swr"
 import ComingSoonForm from "components/ComingSoonForm"
-import { grey05 } from "constants/color"
 import ShareStore from "components/ShareStore"
 
 const Header = ({ placeId, name, url, onClick }) => {
@@ -126,7 +125,7 @@ const Container = styled.div`
     max-width: 50%;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 12px 24px;
 
     h3 {
@@ -155,7 +154,7 @@ const BackButton = styled.div`
     background-color: #f3f3f3;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin-right: auto;
     span {
       display: none;
@@ -169,7 +168,7 @@ const ButtonGroup = styled.div`
   gap: 12px;
   margin-left: auto;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     gap: 0;
   }
 `
@@ -186,10 +185,10 @@ const MoreButton = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: ${grey05};
+    background-color: ${({ theme }) => theme.colors.grey03};
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     border: none;
   }
 `
@@ -221,7 +220,7 @@ const Button = styled.button`
       }
     `}
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     border: none;
     width: auto;
     height: auto;
@@ -231,5 +230,3 @@ const Button = styled.button`
     }
   }
 `
-
-const UrlButton = Button.withComponent("a")
