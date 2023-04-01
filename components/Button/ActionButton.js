@@ -1,5 +1,4 @@
 import { grey01, grey04 } from 'constants/color'
-import { devices } from 'constants/styled-theme'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -26,7 +25,7 @@ const Container = styled.div`
     background-color: #f5f5f5;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     border: none;
 
     span {

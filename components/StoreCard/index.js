@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import TagList from "components/TagList/TagList"
 import ImageCarousel from "components/ImageCarousel"
 import NiceBadge from "components/NiceBadge"
@@ -24,7 +24,7 @@ const StoreCard = React.forwardRef(
     },
     ref
   ) => {
-    const fullScreen = useMediaQuery(devices.mobileXl)
+    const fullScreen = useMediaQuery('(max-width: 720px)')
 
     function handleClick() {
       onClick({ placeId, lat, lng })
@@ -82,7 +82,7 @@ const Container = styled.div`
     font-size: 16px;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 154px;
   }
 `
@@ -105,7 +105,7 @@ const MainInfo = styled.div`
     white-space: nowrap;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     flex-direction: column;
     align-items: flex-start;
 
@@ -119,7 +119,7 @@ const SecondInfo = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 90%;
     white-space: nowrap;
   }

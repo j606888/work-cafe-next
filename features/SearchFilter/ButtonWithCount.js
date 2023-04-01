@@ -1,5 +1,5 @@
 import { grey04, orange100 } from "constants/color"
-import { devices } from "constants/styled-theme"
+
 import styled from "styled-components"
 
 const ButtonWithCount = ({ onClick, count }) => {
@@ -33,7 +33,7 @@ const Button = styled.div`
     height: 36px;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 52px;
 
     span {

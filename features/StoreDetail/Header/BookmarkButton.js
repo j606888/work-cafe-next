@@ -5,7 +5,7 @@ import { CircularProgress } from "@mui/material"
 import styled from "styled-components"
 import useSWR from "swr"
 import useUserStore from "stores/useUserStore"
-import { devices } from "constants/styled-theme"
+
 import { grey04 } from "constants/color"
 import { formControl } from "features/AccountMenu"
 
@@ -66,7 +66,7 @@ const LoadingContainer = styled.div`
   color: ${grey04};
   padding: 0 24px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     border: none;
     padding: 0;
 

@@ -1,5 +1,5 @@
 import { grey02 } from "constants/color"
-import { devices } from "constants/styled-theme"
+
 import React from "react"
 import useUserStore from "stores/useUserStore"
 import styled from "styled-components"
@@ -40,7 +40,7 @@ const LeaveFirstReview = styled.div`
   font-size: 16px;
   line-height: 22px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 14px;
   }
 `

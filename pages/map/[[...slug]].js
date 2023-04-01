@@ -1,4 +1,4 @@
-import { devices } from "constants/styled-theme"
+
 import GoogleMap from "features/GoogleMap"
 import Header from "features/Header"
 import styled from "styled-components"

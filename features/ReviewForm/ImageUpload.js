@@ -1,5 +1,5 @@
 import { grey01 } from "constants/color"
-import { devices } from "constants/styled-theme"
+
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
@@ -86,7 +86,7 @@ const ImagePreview = styled.div`
   border-radius: 12px;
   overflow: hidden;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 128px;
     height: 128px;
   }

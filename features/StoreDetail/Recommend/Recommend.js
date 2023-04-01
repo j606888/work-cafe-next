@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import { grey01, grey06, orange20 } from "constants/color"
 import formControlStore from "stores/formControlStore"
 
@@ -55,7 +55,7 @@ const Container = styled.div`
   padding: 0 30px;
   cursor: pointer;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 16px 24px;
     gap: 1.2rem;
     padding: 0 16px;
@@ -78,7 +78,7 @@ const BlockContainer = styled.div`
     width: 42px;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     gap: 0.6rem;
     img {
       width: 32px;
@@ -89,7 +89,7 @@ const Number = styled.span`
   font-size: 28px;
   font-weight: 500;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 20px;
   }
 `
@@ -100,7 +100,7 @@ const Text = styled.span`
   line-height: 24px;
   color: ${grey01};
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 12px;
   }
 `

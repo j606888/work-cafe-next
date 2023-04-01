@@ -1,5 +1,5 @@
 import { Dialog, Drawer, useMediaQuery } from "@mui/material"
-import { devices } from "constants/styled-theme"
+
 import React from "react"
 
 const MobileDrawerStyle = {
@@ -9,7 +9,7 @@ const MobileDrawerStyle = {
 }
 
 const Wrapper = ({ children, open, onClose }) => {
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const fullScreen = useMediaQuery('(max-width: 720px)')
 
   if (fullScreen) {
     return (

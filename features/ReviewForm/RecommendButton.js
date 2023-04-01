@@ -1,5 +1,5 @@
 import { orange20 } from "constants/color"
-import { devices } from "constants/styled-theme"
+
 import React from "react"
 import styled from "styled-components"
 
@@ -31,7 +31,7 @@ const Container = styled.div`
     color: #222120;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 132px;
     height: 60px;
     padding-left: 18px;

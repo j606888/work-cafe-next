@@ -1,7 +1,7 @@
 import { FormControlLabel, Switch } from "@mui/material"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import store from "stores/store"
 import { alpha, styled as muiStyled } from  '@mui/material/styles'
 import { grey03, orange100, orange50 } from "constants/color"
@@ -59,7 +59,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }
 `

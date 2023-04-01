@@ -2,7 +2,7 @@ import { Divider } from "@mui/material"
 import CloseButton from "components/CloseButton"
 import { grey01 } from "constants/color"
 import { OPEN_HOURS, OPEN_WEEKS } from "constants/openTime"
-import { devices } from "constants/styled-theme"
+
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import MapDisplayGroup from "./MapDisplayGroup"
@@ -110,7 +110,7 @@ const Header = styled.div`
     margin: 0 auto;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 62px;
     flex-shrink: 0;
   }
@@ -133,7 +133,7 @@ const Body = styled.div`
     margin: 0;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 26px 29px;
     max-height: calc(100% - 62px - 80px);
 
@@ -153,7 +153,7 @@ const Footer = styled.div`
   justify-content: space-between;
   background-color: #ffffff;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 80px;
     flex-shrink: 0;
   }

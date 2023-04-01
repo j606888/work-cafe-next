@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 import Button from "components/Button"
 import { grey02 } from "constants/color"
-import { devices } from "constants/styled-theme"
+
 import NewStore from "features/NewStore"
 import React, { useState } from "react"
 import styled from "styled-components"
@@ -49,7 +49,7 @@ const Container = styled.div`
   background-color: #fff;
   box-sizing: border-box;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;
     padding: 24px;
     img {

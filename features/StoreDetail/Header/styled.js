@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { devices } from "constants/styled-theme"
+
 
 export const Container = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ export const Container = styled.div`
     max-width: 50%;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 0 24px;
     flex-direction: column;
     gap: 12px;
@@ -37,7 +37,7 @@ export const MobileGoogleUrl = styled.a`
   height: 36px;
   margin-right: 8px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: flex;
   }
 `
@@ -68,7 +68,7 @@ export const ButtonGroup = styled.div`
   align-items: center;
   gap: 8px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     position: absolute;
     top: 0;
     right: 0;
@@ -102,7 +102,7 @@ export const Button = styled.button`
       }
     `}
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     /* border-radius: 50%; */
     border: none;
 

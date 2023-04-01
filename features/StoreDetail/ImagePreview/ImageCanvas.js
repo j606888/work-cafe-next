@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import { Dialog, ImageList, ImageListItem, Snackbar } from "@mui/material"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import SvgButton from "components/SvgButton"
@@ -14,7 +14,7 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
   const [openComing, setOpenComing] = useState(false)
   const [openShareStore, setOpenShareStore] = useState(false)
   const { data: store } = useSWR(`/stores/${placeId}`)
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const fullScreen = useMediaQuery('(max-width: 720px)')
 
   function handleShare() {
     setOpenShareStore(true)
@@ -84,7 +84,7 @@ const ImageCanvas = ({ placeId, photos, open, onClose, name }) => {
 const MobileBackButton = styled(SvgButton)`
   display: none;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: block;
   }
 `
@@ -106,7 +106,7 @@ const Header = styled.div`
     max-width: 815px;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0 16px;
     min-height: 56px;
     position: sticky;
@@ -125,7 +125,7 @@ const ButtonGroup = styled.div`
   justify-content: center;
   gap: 12px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     & > :last-child {
       display: none;
     }
@@ -138,7 +138,7 @@ const DialogContainer = styled.div`
   padding: 0 72px;
   overflow-x: scroll;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 0;
   }
 `
@@ -159,7 +159,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     border: none;
     width: auto;
     height: auto;

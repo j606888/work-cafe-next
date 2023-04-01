@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material"
 import RatingStars from "components/RatingStars"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import { useState } from "react"
 import { useRef } from "react"
 import { useEffect } from "react"
@@ -84,7 +84,7 @@ const P = styled.p`
   max-height: ${({ showMore }) => (showMore ? "none" : "3.9em")};
   text-overflow: ellipsis;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 12px;
   }
 `
@@ -94,7 +94,7 @@ const CreatedAtSpan = styled.span`
   color: #222120;
   margin-bottom: 8px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 10px;
   }
 `
@@ -111,7 +111,7 @@ const Content = styled.div`
     color: #222120;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     h6 {
       font-size: 14px;
     }

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import useSWR from "swr"
 import WorkCafeReview from "./ReviewCard"
 import ReviewApi from "api/review"
@@ -78,7 +78,7 @@ const Container = styled.div`
   align-items: center;
   margin: 28px 0;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 24px 0;
   }
 `
@@ -100,7 +100,7 @@ const FakeTextBox = styled.div`
     background-color: #f5f5f5;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 36px;
     font-size: 12px;
   }

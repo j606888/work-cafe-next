@@ -1,6 +1,5 @@
 import { useState } from "react"
 import HelpUsModal from "./HelpUsModal"
-import { devices } from "constants/styled-theme"
 import styled from "styled-components"
 
 const HEIGHT = {
@@ -32,11 +31,8 @@ const Container = styled.div`
   font-size: 14px;
   color: #fff;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
-    /* height: ${HEIGHT.mobileXl};
-    font-size: 12px;
-    font-weight: 500; */
   }
 `
 
@@ -48,10 +44,6 @@ const HelpButton = styled.button`
   text-decoration: underline;
   cursor: pointer;
   color: #fff;
-
-  @media ${devices.mobileXl} {
-    font-size: 12px;
-  }
 `
 
 export default HelpUs

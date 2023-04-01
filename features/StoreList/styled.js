@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { devices } from "constants/styled-theme"
+
 
 const mobileStyle = {
   expand: css`
@@ -29,7 +29,7 @@ export const Container = styled.div`
   padding: 0 28px;
   flex-shrink: 0;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     ${({ expand }) => (expand ? mobileStyle.expand : mobileStyle.unExpand)}
   }
 `
@@ -41,7 +41,7 @@ export const StoreCount = styled.p`
   color: #222120;
   margin-top: 0;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }
 `

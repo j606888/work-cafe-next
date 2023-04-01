@@ -29,5 +29,5 @@ Live website: https://www.work-cafe.tw/
 WIP
 
 
-import { devices } from "constants/styled-theme" should all be removed
+ should all be removed
 all color import should be removed

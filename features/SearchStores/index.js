@@ -28,7 +28,7 @@ const Container = styled.div`
   gap: 12px;
   ${({ showBorder }) => showBorder && `border-bottom: 1px solid ${grey04};`}
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 84px;
     width: 100%;
     top: 56px;

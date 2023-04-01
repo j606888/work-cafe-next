@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { devices } from "constants/styled-theme"
+
 
 export const ArrowContainer = styled.div`
   width: 32px;
@@ -24,7 +24,7 @@ export const ArrowContainer = styled.div`
     background-color: #fff;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 20px;
     height: 20px;
   }
@@ -51,7 +51,7 @@ export const Container = styled.div`
     opacity: 1;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 180px;
     height: 154px;
 
@@ -66,7 +66,7 @@ export const Img = styled.img`
   height: 240px;
   object-fit: cover;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 180px;
     height: 154px;
   }

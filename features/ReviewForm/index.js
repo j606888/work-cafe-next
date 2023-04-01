@@ -17,7 +17,7 @@ import useSWR from "swr"
 import ReviewApi from "api/review"
 import formControlStore from "stores/formControlStore"
 import Wrapper from "./Wrapper"
-import { devices } from "constants/styled-theme"
+
 import useRefreshStore from "hooks/useRefreshStore"
 import ImageUpload from "./ImageUpload"
 import axios from "axios"
@@ -254,7 +254,7 @@ const H2 = styled.h2`
   overflow: hidden;
   white-space: nowrap;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin: 0 66px;
   }
 `
@@ -265,7 +265,7 @@ const H4 = styled.h4`
   color: ${grey01};
   margin: 0;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 16px;
   }
 `
@@ -284,7 +284,7 @@ const Header = styled.div`
   position: relative;
   flex-shrink: 0;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 61px;
   }
 `
@@ -297,7 +297,7 @@ const Body = styled.div`
   overflow-y: auto;
   height: calc(100% - 68px - 94px);
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 29px;
     height: calc(100% - 61px - 84px);
   }
@@ -332,7 +332,7 @@ const Footer = styled.div`
   gap: 16px;
   flex-shrink: 0;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 84px;
     padding: 0 26px;
   }

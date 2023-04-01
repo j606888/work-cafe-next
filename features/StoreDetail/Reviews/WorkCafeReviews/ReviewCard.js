@@ -4,7 +4,7 @@ import ImagesWorm from "components/ImagesWorm/ImagesWorm"
 import { useState } from "react"
 import { MoreVert } from "@mui/icons-material"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 import TagList from "components/TagList/TagList"
 import DeleteConfirmDialog from "./DeleteConfirmDialog"
 
@@ -144,7 +144,7 @@ const Content = styled.div`
     margin-bottom: 0;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     h6 {
       font-size: 14px;
     }

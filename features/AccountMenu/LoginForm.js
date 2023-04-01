@@ -6,7 +6,7 @@ import React from "react"
 import styled from "styled-components"
 import { googleLogin as googleLoginAPI } from "api/auth"
 import useUserStore from "stores/useUserStore"
-import { devices } from "constants/styled-theme"
+
 
 const DialogStyles = {
   borderRadius: "20px",
@@ -60,7 +60,7 @@ const Header = styled.div`
   font-size: 20px;
   position: relative;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 18px;
     height: 56px;
     line-height: 56px;
@@ -70,7 +70,7 @@ const Header = styled.div`
 const Content = styled.div`
   padding: 44px 52px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     padding: 22px 24px;
   }
 `
@@ -85,7 +85,7 @@ const Title = styled.h3`
   margin: 0;
   margin-bottom: 12px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 24px;
     margin-bottom: 4px;
   }
@@ -101,7 +101,7 @@ const Description = styled.p`
   margin-bottom: 32px;
   color: ${grey01};
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     margin-bottom: 18px;
   }
 `
@@ -164,7 +164,7 @@ const CloseButton = styled.img`
   right: 28px;
   cursor: pointer;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     top: 16px;
     right: 20px;
   }

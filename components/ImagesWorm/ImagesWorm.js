@@ -1,7 +1,7 @@
 import { ImageList, ImageListItem } from "@mui/material"
 import React from "react"
 import styled from "styled-components"
-import { devices } from "constants/styled-theme"
+
 
 const ImagesWorm = ({ images = [] }) => {
   const length = images.length
@@ -22,7 +22,7 @@ const More = styled.div`
   font-size: 24px;
   color: #fff;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 16px;
   }
 `

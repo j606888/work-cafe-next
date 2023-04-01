@@ -5,7 +5,7 @@ import { useMediaQuery } from '@mui/material'
 import { devices } from 'constants/styled-theme'
 
 const NiceBadge = ({ number=0, className }) => {
-  const fullScreen = useMediaQuery(devices.mobileXl)
+  const fullScreen = useMediaQuery('(max-width: 720px)')
   const src = fullScreen ? '/nice-small.svg' : '/nice-large.svg'
 
   return (
@@ -32,7 +32,7 @@ const Container = styled.div`
     font-weight: 700;
   }
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 20px;
 
     span {
