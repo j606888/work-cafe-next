@@ -115,7 +115,7 @@ const SearchBox = ({ type, children, onSearch, onCancel }) => {
       <>
         &nbsp;
         {children}
-        <SvgButton path="search-btn" onClick={onSearch} />
+        <SvgButton path="v2/searchFilled" onClick={onSearch} />
       </>
     )
 }

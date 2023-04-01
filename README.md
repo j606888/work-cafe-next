@@ -27,3 +27,7 @@ Live website: https://www.work-cafe.tw/
 ### How to contribute to this project?
 
 WIP
+
+
+import { devices } from "constants/styled-theme" should all be removed
+all color import should be removed

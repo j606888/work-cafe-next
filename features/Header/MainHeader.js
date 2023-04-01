@@ -1,5 +1,3 @@
-import { grey01, grey02, grey04 } from "constants/color"
-import { devices } from "constants/styled-theme"
 import AccountMenu from "features/AccountMenu"
 import React from "react"
 import useUserStore from "stores/useUserStore"
@@ -34,9 +32,9 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   padding: 0 60px;
-  border-bottom: 1px solid ${grey04};
+  border-bottom: 1px solid #e5e5e5;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 56px;
     padding: 0 24px;
   }
@@ -50,10 +48,10 @@ const HomeLink = styled.a`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: ${grey01};
+  color: ${({ theme }) => theme.colors.black01};
   margin-right: 48px;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     font-size: 16px;
     line-height: 22px;
   }
@@ -67,11 +65,11 @@ export const Link = styled.a`
   display: flex;
   align-items: center;
   text-align: center;
-  color: ${grey02};
+  color: ${({ theme }) => theme.colors.black02};
   margin-right: 32px;
   text-decoration: none;
 
-  @media ${devices.mobileXl} {
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     display: none;
   }
 `
