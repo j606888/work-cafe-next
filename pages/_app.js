@@ -8,7 +8,9 @@ import mixpanel from "mixpanel-browser"
 import { useEffect } from "react"
 import useUserStore from "stores/useUserStore"
 import track, { TRACK_NAME_MAP } from "constants/event-track"
-mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_API_KEY || '')
+mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_API_KEY || "", {
+  debug: process.env.NODE_ENV === "development",
+})
 
 function MyApp({ Component, pageProps }) {
   const user = useUserStore((state) => state.user)
