@@ -4,7 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress"
 import store from "stores/store"
 import { mapCenter } from "utils/map-helper"
 import useUpdateURL from "hooks/useUpdateURL"
-import mixpanel from "mixpanel-browser"
+import track, { TRACK_NAME_MAP } from "constants/event-track"
 
 const SearchHere = () => {
   const { setCenterToURL } = useUpdateURL()
@@ -19,7 +19,7 @@ const SearchHere = () => {
 
   function onClick() {
     const { lat, lng } = mapCenter(map)
-    mixpanel.track('search-here')
+    track(TRACK_NAME_MAP.SEARCH_HERE)
 
     setPlaceId(null)
     setFocusPlaceId(null)

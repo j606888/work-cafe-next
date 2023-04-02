@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 import store from "stores/store"
 import { mapCenter } from "utils/map-helper"
 import useRWD from "hooks/useRWD"
-import mixpanel from "mixpanel-browser"
+import track, { TRACK_NAME_MAP } from "constants/event-track"
 
 const Searchbar = ({ type = "landing" }) => {
   const { isFullScreen } = useRWD()
@@ -24,7 +24,7 @@ const Searchbar = ({ type = "landing" }) => {
   }))
 
   const handleSearch = async (k) => {
-    mixpanel.track('search-keyword', { keyword: k })
+    track(TRACK_NAME_MAP.SEARCH_KEYWORD, { keyword: k })
     const { lat, lng } = mapCenter(map)
     const path = `/map/@${lat},${lng},15z?keyword=${k}`
     router.push(path)

@@ -6,13 +6,24 @@ import styledTheme from "constants/styled-theme"
 import Head from "next/head"
 import mixpanel from "mixpanel-browser"
 import { useEffect } from "react"
-
-mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_API_KEY || '', { debug: true })
+import useUserStore from "stores/useUserStore"
+import track, { TRACK_NAME_MAP } from "constants/event-track"
+mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_API_KEY || '')
 
 function MyApp({ Component, pageProps }) {
+  const user = useUserStore((state) => state.user)
+
   useEffect(() => {
-    mixpanel.track('page-view')
+    if (user && user.user_id !== mixpanel.get_distinct_id()) {
+      mixpanel.identify(user.user_id)
+      mixpanel.people.set({
+        $email: user.email,
+        $name: user.name,
+      })
+    }
+    track(TRACK_NAME_MAP.PAGE_VIEW, { page: window.location.pathname })
   }, [])
+
   return (
     <>
       <Head>
