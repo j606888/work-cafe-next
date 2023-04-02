@@ -4,8 +4,28 @@ import { fetcher } from "api"
 import { ThemeProvider } from "styled-components"
 import styledTheme from "constants/styled-theme"
 import Head from "next/head"
+import mixpanel from "mixpanel-browser"
+import { useEffect } from "react"
+import useUserStore from "stores/useUserStore"
+import track, { TRACK_NAME_MAP } from "constants/event-track"
+mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_API_KEY || "", {
+  debug: process.env.NODE_ENV === "development",
+})
 
 function MyApp({ Component, pageProps }) {
+  const user = useUserStore((state) => state.user)
+
+  useEffect(() => {
+    if (user && user.user_id !== mixpanel.get_distinct_id()) {
+      mixpanel.identify(user.user_id)
+      mixpanel.people.set({
+        $email: user.email,
+        $name: user.name,
+      })
+    }
+    track(TRACK_NAME_MAP.PAGE_VIEW, { page: window.location.pathname })
+  }, [])
+
   return (
     <>
       <Head>
