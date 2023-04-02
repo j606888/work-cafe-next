@@ -3612,6 +3612,11 @@ minimist@^1.2.0, minimist@^1.2.6:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.6.tgz#8637a5b759ea0d6e98702cfb3a9283323c93af44"
   integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
+mixpanel-browser@^2.46.0:
+  version "2.46.0"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.46.0.tgz#45cc829a432aa99bab24c0f36879001832424efd"
+  integrity sha512-qPFhAFMf5YzzGPd/sgoEl7G0N/ypJ6IaZmjkMYEPiW60i1Muo+v2Zl/dqRcCXwYfF5GvC5175muS1ZuaaYGXAQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"

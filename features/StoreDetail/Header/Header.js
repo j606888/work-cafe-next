@@ -3,13 +3,13 @@ import {  Menu, MenuItem } from "@mui/material"
 import Tooltip from "components/Tooltip"
 import NotCafeReport from "features/StoreDetail/NotCafeReport"
 import styled, { css } from "styled-components"
-
 import ActionButton from "components/Button/ActionButton"
 import useUserStore from "stores/useUserStore"
 import { syncPhoto } from "api/admin/store"
 import useSWR from "swr"
 import ComingSoonForm from "components/ComingSoonForm"
 import ShareStore from "components/ShareStore"
+import mixpanel from "mixpanel-browser"
 
 const Header = ({ placeId, name, url, onClick }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -28,6 +28,7 @@ const Header = ({ placeId, name, url, onClick }) => {
     setOpenNotCafe(false)
   }
   function handleNavigate() {
+    mixpanel.track('click-navigate', { placeId, name })
     const baseUrl = "https://www.google.com/maps/dir/"
     const queryParams = {
       api: 1,
@@ -39,10 +40,12 @@ const Header = ({ placeId, name, url, onClick }) => {
     window.open(`${baseUrl}?${queryString}`, "_blank")
   }
   function handleShare() {
+    mixpanel.track("click-share", { placeId, name })
     setOpenShareStore(true)
     setAnchorEl(null)
   }
   function handleComingSoon() {
+    mixpanel.track("click-coming-soon", { placeId, name })
     setOpenComing(true)
   }
   async function syncPhotos() {

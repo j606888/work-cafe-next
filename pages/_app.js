@@ -4,8 +4,15 @@ import { fetcher } from "api"
 import { ThemeProvider } from "styled-components"
 import styledTheme from "constants/styled-theme"
 import Head from "next/head"
+import mixpanel from "mixpanel-browser"
+import { useEffect } from "react"
+
+mixpanel.init(process.env.NEXT_PUBLIC_MIXPANEL_API_KEY || '', { debug: true })
 
 function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    mixpanel.track('page-view')
+  }, [])
   return (
     <>
       <Head>
