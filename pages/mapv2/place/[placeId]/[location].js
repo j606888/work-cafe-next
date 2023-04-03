@@ -1,20 +1,26 @@
-import SearchStores from 'features/SearchStores'
-import StoreList from 'features/StoreList'
-import React from 'react'
-import styled from 'styled-components'
+import StoreDetail from "features/StoreDetail"
+import { LayoutUser } from "layout/user"
+import { useRouter } from "next/router"
+import React from "react"
+import styled from "styled-components"
+import useSWR from "swr"
 
-const StoreListPage = () => {
+const StoreDetailPage = () => {
+  const { asPath } = useRouter()
+  const match = asPath.match(/\/mapv2\/place\/([^\/]+)/)
+  const placeId = match && match[1]
+  const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
+
   return (
     <Container>
       <ContentContainer>
-        <SearchStores />
-        <StoreListContainer>
-          <StoreList />
-        </StoreListContainer>
+        <StoreDetail store={store} />
       </ContentContainer>
     </Container>
   )
 }
+
+StoreDetailPage.PageLayout = LayoutUser
 
 const Container = styled.div`
   position: fixed;
@@ -22,9 +28,12 @@ const Container = styled.div`
   left: 0;
   bottom: 0;
   display: flex;
+  background-color: #FFFFFF;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     top: 56px;
+    width: 100%;
+    overflow-x: auto;
   }
 `
 
@@ -32,10 +41,10 @@ const ContentContainer = styled.div`
   width: 628px;
   display: flex;
   flex-direction: column;
+  z-index: 10;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;
-    z-index: -2;
   }
 `
 
@@ -43,25 +52,16 @@ const StoreListContainer = styled.div`
   overflow: auto;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 4;
-    top: auto;
+    overflow-x: auto;
   }
 `
 
 const MapContainer = styled.div`
   flex: 1;
-
-  /* width: ${({ isLanding }) => (isLanding ? "100%" : "calc(100% - 628px)")};
-  height: calc(100% - 80px - 40px);
-  position: fixed;
-  top: calc(80px + 40px);
-  right: 0;
-  bottom: 0; */
-  /* ${labelStyles}; */
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     position: fixed;
@@ -71,5 +71,4 @@ const MapContainer = styled.div`
   }
 `
 
-
-export default StoreListPage
+export default StoreDetailPage

@@ -1,31 +1,23 @@
+import SearchHere from "components/Button/SearchHere"
 import GoogleMap from "features/GoogleMap"
+import { labelStyles } from "features/GoogleMap/labelStyles"
+import MyLocationMarker from "features/GoogleMap/MyLocationMarker"
+import ShowLabelCheckbox from "features/GoogleMap/ShowLabelCheckbox"
+import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import Header from "features/Header"
+import MyPosition from "features/MyPosition"
 import { useRouter } from "next/router"
 import styled, { css } from "styled-components"
 
 const MapStyle = {
   homePage: css`
-    width: 100%;
-    height: calc(100% - 80px - 40px);
-    position: fixed;
-    top: 120px;
     left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
 
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
       display: none;
     }
   `,
   storeList: css`
-    position: fixed;
-    height: calc(100% - 80px - 40px);
-    left: 628px;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
       left: 0;
       top: 56px;
@@ -34,13 +26,6 @@ const MapStyle = {
     }
   `,
   storeDetail: css`
-    position: fixed;
-    height: calc(100% - 80px - 40px);
-    left: 628px;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-
     @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
       height: 1px;
       width: 1px;
@@ -54,14 +39,14 @@ const MapStyle = {
 
 export function LayoutUser({ children }) {
   const router = useRouter()
-  const { slug } = router.query
+  const { pathname, isReady } = router
 
-  if (!router.isReady) return null
+  if (!isReady) return null
 
   let style = null
-  if (slug === undefined) {
+  if (pathname === '/mapv2') {
     style = "homePage"
-  } else if (slug[0] === "place") {
+  } else if (pathname === "/mapv2/place/[placeId]/[location]") {
     style = "storeDetail"
   } else {
     style = "storeList"
@@ -71,26 +56,30 @@ export function LayoutUser({ children }) {
       <Header />
       {children}
       <GoogleMapContainer cssStyle={style}>
-        <GoogleMap></GoogleMap>
+        <SearchHere />
+        <ShowLabelCheckbox />
+        <GoogleMap>
+          <StoreMarkers />
+          <MyLocationMarker />
+          <MyPosition />
+          {/* {!isLanding && <StoreMarkers />}
+          {!isLanding && <MyLocationMarker />}
+          {!isLanding && <MyPosition />}
+          {store && <StoreMarker store={store} isFocus />} */}
+        </GoogleMap>
       </GoogleMapContainer>
     </>
   )
 }
 
 const GoogleMapContainer = styled.div`
-  ${({ cssStyle }) => MapStyle[cssStyle]}
-  /* width: ${({ isLanding }) => (isLanding ? "100%" : "calc(100% - 628px)")};
-  height: calc(100% - 80px - 40px);
+  ${labelStyles};
   position: fixed;
-  top: calc(80px + 40px);
+  top: 120px;
+  left: 628px;
   right: 0;
   bottom: 0;
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    position: fixed;
-    width: 100%;
-    height: ${({ isLanding }) =>
-      isLanding ? "calc(100% - 56px)" : "calc(100% - 56px - 248px)"};
-    top: 56px;
-  } */
+  z-index: -1;
+  height: calc(100% - 80px - 40px);
+  ${({ cssStyle }) => MapStyle[cssStyle]}
 `

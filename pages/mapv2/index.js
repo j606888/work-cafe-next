@@ -1,14 +1,22 @@
-import LandingSearch from 'features/LandingSearch'
-import React from 'react'
-import styled from 'styled-components'
+import LandingSearch from "features/LandingSearch"
+import { LayoutUser } from "layout/user"
+import { useRouter } from "next/router"
+import React from "react"
+import styled from "styled-components"
 
 const HomePage = () => {
+  const router = useRouter()
+
+  if (!router.isReady) return null
+
   return (
     <Container>
       <LandingSearch />
     </Container>
   )
 }
+
+HomePage.PageLayout = LayoutUser
 
 export default HomePage
 
