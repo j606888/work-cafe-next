@@ -1,9 +1,13 @@
+import { useRouter } from "next/router"
 import React from "react"
 import styled from "styled-components"
 import HelpUs from "./HelpUs"
 import MainHeader from "./MainHeader"
 
 const Header = () => {
+  const router = useRouter()
+  if (!router.isReady) return null
+
   return (
     <Container>
       <HelpUs />
