@@ -79,7 +79,7 @@ const GoogleMap = ({ onClick, children }) => {
   }
 
   function onIdle() {
-    if (!map || ["/map", "/mapv2"].includes(router.asPath)) return
+    if (!map || ["/map"].includes(router.asPath)) return
 
     const lat = map.center.lat().toFixed(6)
     const lng = map.center.lng().toFixed(6)

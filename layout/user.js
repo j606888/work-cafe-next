@@ -7,6 +7,7 @@ import StoreMarkers from "features/GoogleMap/StoreMarkers"
 import Header from "features/Header"
 import MyPosition from "features/MyPosition"
 import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import styled, { css } from "styled-components"
 
 const MapStyle = {
@@ -39,33 +40,30 @@ const MapStyle = {
 
 export function LayoutUser({ children }) {
   const router = useRouter()
-  const { pathname, isReady } = router
+  const { pathname } = router
+  const [mapStyle, setMapStyle] = useState("homePage")
 
-  if (!isReady) return null
+  useEffect(() => {
+    if (pathname === "/map") {
+      setMapStyle("homePage")
+    } else if (pathname === "/map/place/[placeId]/[location]") {
+      setMapStyle("storeDetail")
+    } else {
+      setMapStyle("storeList")
+    }
+  }, [pathname])
 
-  let style = null
-  if (pathname === '/mapv2') {
-    style = "homePage"
-  } else if (pathname === "/mapv2/place/[placeId]/[location]") {
-    style = "storeDetail"
-  } else {
-    style = "storeList"
-  }
   return (
     <>
       <Header />
       {children}
-      <GoogleMapContainer cssStyle={style}>
+      <GoogleMapContainer cssStyle={mapStyle}>
         <SearchHere />
         <ShowLabelCheckbox />
         <GoogleMap>
           <StoreMarkers />
           <MyLocationMarker />
           <MyPosition />
-          {/* {!isLanding && <StoreMarkers />}
-          {!isLanding && <MyLocationMarker />}
-          {!isLanding && <MyPosition />}
-          {store && <StoreMarker store={store} isFocus />} */}
         </GoogleMap>
       </GoogleMapContainer>
     </>

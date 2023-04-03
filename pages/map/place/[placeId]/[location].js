@@ -7,7 +7,7 @@ import useSWR from "swr"
 
 const StoreDetailPage = () => {
   const { asPath } = useRouter()
-  const match = asPath.match(/\/mapv2\/place\/([^\/]+)/)
+  const match = asPath.match(/\/map\/place\/([^\/]+)/)
   const placeId = match && match[1]
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 

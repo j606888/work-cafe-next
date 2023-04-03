@@ -41,7 +41,7 @@ const StoreDetail = ({ store }) => {
     if (keyword) storedFilters.keyword = keyword
     const queryParams = qs.stringify(storedFilters)
 
-    let path = `/mapv2/@${lat},${lng},${zoom}z`
+    let path = `/map/@${lat},${lng},${zoom}z`
     if (queryParams) path = path + `?${queryParams}`
 
     router.push(path)

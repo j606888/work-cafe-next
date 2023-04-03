@@ -1,5 +1,5 @@
 import AccountMenu from "features/AccountMenu"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import useUserStore from "stores/useUserStore"
 import styled from "styled-components"
 
@@ -13,10 +13,16 @@ export const LINKS = [
 const MainHeader = () => {
   const user = useUserStore((state) => state.user)
 
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [user])
+
   return (
     <Container>
       <HomeLink href="/map">Work Cafe | Taiwan</HomeLink>
-      {!user && LINKS.map(({ href, text }, index) => (
+      {loaded && !user && LINKS.map(({ href, text }, index) => (
         <Link href={href} key={index} target="_blank" rel="noreferrer">
           {text}
         </Link>
