@@ -42,6 +42,7 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 10;
+  overflow: auto;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     width: 100%;
