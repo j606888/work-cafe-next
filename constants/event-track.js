@@ -12,5 +12,5 @@ export const TRACK_NAME_MAP = {
 }
 
 export default function track(track_name, properties = {}) {
-  // mixpanel.track(track_name, properties)
+  mixpanel.track(track_name, properties)
 }
