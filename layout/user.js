@@ -42,6 +42,7 @@ export function LayoutUser({ children }) {
   const router = useRouter()
   const { pathname } = router
   const [mapStyle, setMapStyle] = useState("homePage")
+  const mapEnabled = mapStyle !== "homePage"
 
   useEffect(() => {
     if (pathname === "/map") {
@@ -58,12 +59,20 @@ export function LayoutUser({ children }) {
       <Header />
       {children}
       <GoogleMapContainer cssStyle={mapStyle}>
-        <SearchHere />
-        <ShowLabelCheckbox />
+        {mapEnabled && (
+          <>
+            <SearchHere />
+            <ShowLabelCheckbox />
+          </>
+        )}
         <GoogleMap>
-          <StoreMarkers />
-          <MyLocationMarker />
-          <MyPosition />
+          {mapEnabled && (
+            <>
+              <StoreMarkers />
+              <MyLocationMarker />
+              <MyPosition />
+            </>
+          )}
         </GoogleMap>
       </GoogleMapContainer>
     </>
