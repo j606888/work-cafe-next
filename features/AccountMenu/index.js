@@ -1,5 +1,5 @@
 import { Tooltip, useMediaQuery } from "@mui/material"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import LoginForm from "./LoginForm"
 import { GoogleOAuthProvider } from "@react-oauth/google"
@@ -22,6 +22,11 @@ const AccountMenu = () => {
   }))
   const fullScreen = useMediaQuery('(max-width: 720px)')
   const user = useUserStore((state) => state.user)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [user])
 
   function handleOpenForm() {
     setOpenForm(true)
@@ -37,7 +42,7 @@ const AccountMenu = () => {
       </Container>
     )
 
-  if (user)
+  if (user && loaded)
     return (
       <Container gap="24px">
         <a

@@ -13,11 +13,7 @@ const SearchStores = ({ showBorder }) => {
 }
 
 const Container = styled.div`
-  position: fixed;
-  z-index: 2;
-  left: 0;
-  top: calc(80px + 40px);
-  width: 628px;
+  flex-shrink: 0;
   height: 112px;
   background-color: #ffffff;
   display: flex;
@@ -29,9 +25,9 @@ const Container = styled.div`
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     height: 84px;
     width: 100%;
-    top: 56px;
     background: none;
     border-bottom: none;
+    position: fixed;
   }
 `
 

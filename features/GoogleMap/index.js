@@ -75,6 +75,7 @@ const GoogleMap = ({ onClick, children }) => {
 
   function onLoad(map) {
     setMap(map)
+    console.log("LOAD MAP");
   }
 
   function onIdle() {
@@ -90,9 +91,7 @@ const GoogleMap = ({ onClick, children }) => {
       originPart = `${originPart}/`
     }
 
-    router.push(`${originPart}@${lat},${lng},${zoom}z${search}`, undefined, {
-      shallow: true,
-    })
+    history.replaceState(null, '', `${originPart}@${lat},${lng},${zoom}z${search}`)
   }
 
   if (!isLoaded) return <div>Loading...</div>
