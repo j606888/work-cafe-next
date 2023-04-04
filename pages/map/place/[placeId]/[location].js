@@ -1,22 +1,35 @@
 import StoreDetail from "features/StoreDetail"
 import { LayoutUser } from "layout/user"
+import Head from "next/head"
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import useSWR from "swr"
 
 const StoreDetailPage = () => {
-  const { asPath } = useRouter()
-  const match = asPath.match(/\/map\/place\/([^\/]+)/)
-  const placeId = match && match[1]
+  const router = useRouter()
+  const { placeId } = router.query
   const { data: store } = useSWR(placeId ? `/stores/${placeId}` : null)
 
+  useEffect(() => {
+    let title = "Work Cafe | Taiwan"
+    if (store) title = `${store.name} - ${title}`
+
+    document.title = title
+  }, [store])
+
   return (
-    <Container>
-      <ContentContainer>
-        <StoreDetail store={store} />
-      </ContentContainer>
-    </Container>
+    <>
+     <Head>
+        <link rel="icon" href="/v2/face-green.svg" type="image/svg" />
+        <meta name="description" content="Work Cafe - Taiwan" />
+      </Head>
+      <Container>
+        <ContentContainer>
+          <StoreDetail store={store} />
+        </ContentContainer>
+      </Container>
+    </>
   )
 }
 

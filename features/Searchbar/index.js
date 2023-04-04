@@ -132,7 +132,7 @@ const Container = styled.div`
   display: flex;
   width: 100%;
   height: 52px;
-  padding: 0 8px 0 10px;
+  padding: 0 6px 0 10px;
   border: 1px solid #afaaa3;
   border-radius: 20px;
   justify-content: space-between;

@@ -1,19 +1,24 @@
 import LandingSearch from "features/LandingSearch"
 import { LayoutUser } from "layout/user"
-import React from "react"
+import Head from "next/head"
 import styled from "styled-components"
 
 const HomePage = () => {
   return (
-    <Container>
-      <LandingSearch />
-    </Container>
+    <>
+      <Head>
+        <title>Work Cafe | Taiwan</title>
+        <link rel="icon" href="/v2/face-green.svg" type="image/svg" />
+        <meta name="description" content="Work Cafe - Taiwan" />
+      </Head>
+      <Container>
+        <LandingSearch />
+      </Container>
+    </>
   )
 }
 
 HomePage.PageLayout = LayoutUser
-
-export default HomePage
 
 const Container = styled.div`
   position: fixed;
@@ -26,3 +31,5 @@ const Container = styled.div`
     bottom: 0;
   }
 `
+
+export default HomePage

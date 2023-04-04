@@ -1,19 +1,27 @@
 import SearchStores from "features/SearchStores"
 import StoreList from "features/StoreList"
 import { LayoutUser } from "layout/user"
+import Head from "next/head"
 import React from "react"
 import styled from "styled-components"
 
 const StoreListPage = () => {
   return (
-    <Container>
-      <ContentContainer>
-        <SearchStores />
-        <StoreListContainer>
-          <StoreList />
-        </StoreListContainer>
-      </ContentContainer>
-    </Container>
+    <>
+      <Head>
+        <title>Work Cafe | Taiwan</title>
+        <link rel="icon" href="/v2/face-green.svg" type="image/svg" />
+        <meta name="description" content="Work Cafe - Taiwan" />
+      </Head>
+      <Container>
+        <ContentContainer>
+          <SearchStores />
+          <StoreListContainer>
+            <StoreList />
+          </StoreListContainer>
+        </ContentContainer>
+      </Container>
+    </>
   )
 }
 
@@ -25,7 +33,7 @@ const Container = styled.div`
   left: 0;
   bottom: 0;
   display: flex;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     top: 56px;
