@@ -52,7 +52,10 @@ const ContentContainer = styled.div`
 `
 
 const StoreListContainer = styled.div`
-  overflow: auto;
+  overflow-y: auto;
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
     position: fixed;
@@ -61,25 +64,6 @@ const StoreListContainer = styled.div`
     right: 0;
     z-index: 4;
     top: auto;
-  }
-`
-
-const MapContainer = styled.div`
-  flex: 1;
-
-  /* width: ${({ isLanding }) => (isLanding ? "100%" : "calc(100% - 628px)")};
-  height: calc(100% - 80px - 40px);
-  position: fixed;
-  top: calc(80px + 40px);
-  right: 0;
-  bottom: 0; */
-  /* ${labelStyles}; */
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    position: fixed;
-    width: 100%;
-    height: calc(100% - 56px - 248px);
-    top: 56px;
   }
 `
 

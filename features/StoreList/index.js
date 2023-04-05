@@ -1,12 +1,11 @@
 import * as React from "react"
-import { Container, StoreCount } from "./styled"
 import StoreCard from "components/StoreCard"
 import NoMatch from "features/StoreList/NoMatch"
 import useSearchStores from "hooks/useSearchStores"
 import store from "stores/store"
 import useUpdateURL from "hooks/useUpdateURL"
 import { useMediaQuery } from "@mui/material"
-
+import styled, { css } from "styled-components"
 
 export default function StoreList() {
   const { setCenterWithPlaceIdToURL } = useUpdateURL()
@@ -91,4 +90,51 @@ export default function StoreList() {
       </Container>
     </>
   )
+}
+
+export const Container = styled.div`
+  /* min-height: 240px; */
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-around;
+  padding: 0 28px;
+  flex-shrink: 0;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    ${({ expand }) => (expand ? mobileStyle.expand : mobileStyle.unExpand)}
+  }
+`
+
+export const StoreCount = styled.p`
+  padding: 0 45px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #222120;
+  margin-top: 0;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    display: none;
+  }
+`
+
+
+const mobileStyle = {
+  expand: css`
+    width: 100%;
+    background-color: #ffffff;
+    padding: 0 24px;
+  `,
+  unExpand: css`
+    flex-wrap: initial;
+    justify-content: flex-start;
+    width: 100%;
+    overflow-x: scroll;
+    padding: 12px 12px;
+    gap: 10px;
+    background-color: #ffffff;
+  `,
 }
