@@ -19,7 +19,6 @@ const SearchHere = () => {
 
   function onClick() {
     const { lat, lng } = mapCenter(map)
-    track(TRACK_NAME_MAP.SEARCH_HERE)
 
     setPlaceId(null)
     setFocusPlaceId(null)

@@ -3,7 +3,6 @@ import styled from "styled-components"
 import { useRouter } from "next/router"
 import store from "stores/store"
 import { CircularProgress } from "@mui/material"
-import track, { TRACK_NAME_MAP } from "constants/event-track"
 
 const NearbySearch = () => {
   const [loading, setLoading] = useState(false)
@@ -21,7 +20,6 @@ const NearbySearch = () => {
   const handleClick = async () => {
     if (loading) return
 
-    track(TRACK_NAME_MAP.SEARCH_NEARBY)
     setLoading(true)
     try {
       let location

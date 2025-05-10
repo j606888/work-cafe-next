@@ -1,7 +1,6 @@
 import { useState } from "react"
 import HelpUsModal from "./HelpUsModal"
 import styled from "styled-components"
-import track, { TRACK_NAME_MAP } from "constants/event-track"
 
 const HEIGHT = {
   normal: "40px",
@@ -13,7 +12,6 @@ const HelpUs = () => {
 
   function handleOpen() {
     setOpen(true)
-    track(TRACK_NAME_MAP.OPEN_HELP_US)
   }
 
   return (

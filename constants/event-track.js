@@ -10,7 +10,3 @@ export const TRACK_NAME_MAP = {
   CLICK_SHARE: "click-share",
   CLICK_COMING_SOON: "click-coming-soon",
 }
-
-export default function track(track_name, properties = {}) {
-  mixpanel.track(track_name, properties)
-}
